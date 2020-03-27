@@ -9,6 +9,7 @@ before_install:
 before_script:
   - sed -i 's/postgres123//' src/main/resources/application.yml
   - psql -c 'create database PMDA;' -U postgres
+  - psql -c 'SELECT datname FROM pg_database;' -U postgres
 script:
   - chmod +x mvnw
   - ./mvnw clean test
