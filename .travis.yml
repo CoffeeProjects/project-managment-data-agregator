@@ -6,6 +6,8 @@ services:
   - postgresql
 before_install:
   - java -version
+before_script:
+  - psql -c 'create database PMDA;' -U postgres
 script:
   - chmod +x mvnw
   - ./mvnw clean test
