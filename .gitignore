@@ -27,8 +27,11 @@ target/
 /.nb-gradle/
 build/
 
-### Maven
+### Maven ###
 .mvn
 
 ### VS Code ###
 .vscode/
+
+### Mac OS ###
+.DS_Store
