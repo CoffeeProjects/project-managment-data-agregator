@@ -1,0 +1,9 @@
+language: java
+jdk:
+  - oraclejdk11
+sudo: false
+before_install:
+  - java -version
+script:
+  - chmod +x mvnw
+  - ./mvnw clean test
