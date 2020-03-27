@@ -2,6 +2,8 @@ language: java
 jdk:
   - oraclejdk11
 sudo: false
+services:
+  - postgresql
 before_install:
   - java -version
 script:
