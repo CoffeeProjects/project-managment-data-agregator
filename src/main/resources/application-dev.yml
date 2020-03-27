@@ -2,5 +2,5 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/pmda
     username: postgres
-    password: $POSTGRES_PASSWORD
+    password: postgres123
     driver-class-name: org.postgresql.Driver

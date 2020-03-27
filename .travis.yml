@@ -1,0 +1,13 @@
+language: java
+jdk:
+  - oraclejdk11
+sudo: false
+services:
+  - postgresql
+before_install:
+  - java -version
+before_script:
+  - psql -c 'create database pmda;' -U postgres
+script:
+  - chmod +x mvnw
+  - ./mvnw clean test
