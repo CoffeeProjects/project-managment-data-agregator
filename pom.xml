@@ -47,11 +47,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.2.6.RELEASE</version>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${project.parent.version}</version>
+				<configuration>
+					<profiles>
+						<profile>dev</profile>
+					</profiles>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -7,7 +7,6 @@ services:
 before_install:
   - java -version
 before_script:
-  - sed -i 's/postgres123//' src/main/resources/application.yml
   - psql -c 'create database pmda;' -U postgres
 script:
   - chmod +x mvnw
