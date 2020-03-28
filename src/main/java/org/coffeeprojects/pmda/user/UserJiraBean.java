@@ -14,32 +14,35 @@ public class UserJiraBean {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public UserJiraBean setAccountId(String accountId) {
         this.accountId = accountId;
+        return this;
     }
 
     public String getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
+    public UserJiraBean setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+        return this;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
+    public UserJiraBean setDisplayName(String displayName) {
         this.displayName = displayName;
+        return this;
     }
 
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public UserJiraBean setActive(boolean active) {
         this.active = active;
+        return this;
     }
-
 }

@@ -1,18 +1,14 @@
 package org.coffeeprojects.pmda.project;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.coffeeprojects.pmda.entity.AuditableEntity;
 
 import javax.persistence.*;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "Project")
-public class ProjectEntity implements Serializable {
+public class ProjectEntity extends AuditableEntity implements Serializable {
     @Id
     private String id;
 
@@ -25,69 +21,48 @@ public class ProjectEntity implements Serializable {
 
     private boolean active;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @CreatedDate
-    private Date createdAt;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
-    @LastModifiedDate
-    private Date updatedAt;
-
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public ProjectEntity setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public ProjectEntity setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public ProjectEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Date getLastCheck() {
         return lastCheck;
     }
 
-    public void setLastCheck(Date lastCheck) {
+    public ProjectEntity setLastCheck(Date lastCheck) {
         this.lastCheck = lastCheck;
+        return this;
     }
 
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public ProjectEntity setActive(boolean active) {
         this.active = active;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+        return this;
     }
 }

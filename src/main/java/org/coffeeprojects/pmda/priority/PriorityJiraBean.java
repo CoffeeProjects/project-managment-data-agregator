@@ -10,16 +10,17 @@ public class PriorityJiraBean {
         return id;
     }
 
-    public void setId(String id) {
+    public PriorityJiraBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public PriorityJiraBean setName(String name) {
         this.name = name;
+        return this;
     }
-
 }

@@ -55,144 +55,161 @@ public class IssueJiraBean {
         return id;
     }
 
-    public void setId(String id) {
+    public IssueJiraBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public IssueJiraBean setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public UserJiraBean getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(UserJiraBean assignee) {
+    public IssueJiraBean setAssignee(UserJiraBean assignee) {
         this.assignee = assignee;
+        return this;
     }
 
     public UserJiraBean getReporter() {
         return reporter;
     }
 
-    public void setReporter(UserJiraBean reporter) {
+    public IssueJiraBean setReporter(UserJiraBean reporter) {
         this.reporter = reporter;
+        return this;
     }
 
     public UserJiraBean getCreator() {
         return creator;
     }
 
-    public void setCreator(UserJiraBean creator) {
+    public IssueJiraBean setCreator(UserJiraBean creator) {
         this.creator = creator;
+        return this;
     }
 
     public String getSummary() {
         return summary;
     }
 
-    public void setSummary(String summary) {
+    public IssueJiraBean setSummary(String summary) {
         this.summary = summary;
+        return this;
     }
 
     public StatusJiraBean getStatus() {
         return status;
     }
 
-    public void setStatus(StatusJiraBean status) {
+    public IssueJiraBean setStatus(StatusJiraBean status) {
         this.status = status;
+        return this;
     }
 
     public ResolutionJiraBean getResolution() {
         return resolution;
     }
 
-    public void setResolution(ResolutionJiraBean resolution) {
+    public IssueJiraBean setResolution(ResolutionJiraBean resolution) {
         this.resolution = resolution;
+        return this;
     }
 
     public Date getResolutionDate() {
         return resolutionDate;
     }
 
-    public void setResolutionDate(Date resolutionDate) {
+    public IssueJiraBean setResolutionDate(Date resolutionDate) {
         this.resolutionDate = resolutionDate;
+        return this;
     }
 
     public PriorityJiraBean getPriority() {
         return priority;
     }
 
-    public void setPriority(PriorityJiraBean priority) {
+    public IssueJiraBean setPriority(PriorityJiraBean priority) {
         this.priority = priority;
+        return this;
     }
 
     public IssueTypeJiraBean getIssueType() {
         return issueType;
     }
 
-    public void setIssueType(IssueTypeJiraBean issueType) {
+    public IssueJiraBean setIssueType(IssueTypeJiraBean issueType) {
         this.issueType = issueType;
+        return this;
     }
 
     public ProjectJiraBean getProject() {
         return project;
     }
 
-    public void setProject(ProjectJiraBean project) {
+    public IssueJiraBean setProject(ProjectJiraBean project) {
         this.project = project;
+        return this;
     }
 
     public Set<VersionJiraBean> getFixVersions() {
         return fixVersions;
     }
 
-    public void setFixVersions(Set<VersionJiraBean> fixVersions) {
+    public IssueJiraBean setFixVersions(Set<VersionJiraBean> fixVersions) {
         this.fixVersions = fixVersions;
+        return this;
     }
 
     public List<String> getLabels() {
         return labels;
     }
 
-    public void setLabels(List<String> labels) {
+    public IssueJiraBean setLabels(List<String> labels) {
         this.labels = labels;
+        return this;
     }
 
     public Set<ComponentJiraBean> getComponents() {
         return components;
     }
 
-    public void setComponents(Set<ComponentJiraBean> components) {
+    public IssueJiraBean setComponents(Set<ComponentJiraBean> components) {
         this.components = components;
+        return this;
     }
 
     public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public IssueJiraBean setCreated(Date created) {
         this.created = created;
+        return this;
     }
 
     public Date getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public IssueJiraBean setUpdated(Date updated) {
         this.updated = updated;
+        return this;
     }
 
     public Set<IssueJiraBean> getIssueLinks() {
         return issueLinks;
     }
 
-    public void setIssueLinks(Set<IssueJiraBean> issueLinks) {
+    public IssueJiraBean setIssueLinks(Set<IssueJiraBean> issueLinks) {
         this.issueLinks = issueLinks;
+        return this;
     }
-
 }
