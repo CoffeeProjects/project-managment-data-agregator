@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.controller.impl;
+package org.coffeeprojects.pmda.project.impl;
 
 import org.coffeeprojects.pmda.project.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/update")
-public class UpdateControllerImpl {
+public class UpdateProjectControllerImpl {
 
     @Autowired
     ProjectsService projectsService;
