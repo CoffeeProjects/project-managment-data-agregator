@@ -1,27 +1,22 @@
-package org.coffeeprojects.pmda.domain;
+package org.coffeeprojects.pmda.user;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Project")
-public class ProjectEntity implements Serializable {
+@Table(name = "User")
+public class UserEntity implements Serializable {
     @Id
-    private String id;
+    private String accountId;
 
-    private String key;
+    private String emailAddress;
 
-    private String name;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastCheck;
+    private String displayName;
 
     private boolean active;
 
@@ -35,36 +30,28 @@ public class ProjectEntity implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    public String getId() {
-        return id;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
-    public String getKey() {
-        return key;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getLastCheck() {
-        return lastCheck;
-    }
-
-    public void setLastCheck(Date lastCheck) {
-        this.lastCheck = lastCheck;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public boolean isActive() {

@@ -1,10 +1,12 @@
-package org.coffeeprojects.pmda.tracker.jira.bean;
+package org.coffeeprojects.pmda.resolution;
 
-public class ComponentJiraBean {
+public class ResolutionJiraBean {
 
     private String id;
 
     private String name;
+
+    private String description;
 
     public String getId() {
         return id;
@@ -20,6 +22,14 @@ public class ComponentJiraBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.domain;
+package org.coffeeprojects.pmda.issueType;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,12 +9,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Version")
-public class VersionEntity implements Serializable {
+@Table(name = "IssueType")
+public class IssueTypeEntity implements Serializable {
     @Id
     private String id;
 
     private String name;
+
+    private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -40,6 +42,14 @@ public class VersionEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreatedAt() {

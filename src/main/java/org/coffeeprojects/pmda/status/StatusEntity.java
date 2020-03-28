@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.domain;
+package org.coffeeprojects.pmda.status;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Resolution")
-public class ResolutionEntity implements Serializable {
+@Table(name = "Status")
+public class StatusEntity implements Serializable {
     @Id
     private String id;
 

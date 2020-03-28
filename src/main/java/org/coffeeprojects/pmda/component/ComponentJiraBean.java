@@ -1,10 +1,8 @@
-package org.coffeeprojects.pmda.tracker.jira.bean;
+package org.coffeeprojects.pmda.component;
 
-public class ProjectJiraBean {
+public class ComponentJiraBean {
 
     private String id;
-
-    private String key;
 
     private String name;
 
@@ -14,14 +12,6 @@ public class ProjectJiraBean {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public String getName() {

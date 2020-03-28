@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.tracker.jira.bean;
+package org.coffeeprojects.pmda.priority;
 
 public class PriorityJiraBean {
 

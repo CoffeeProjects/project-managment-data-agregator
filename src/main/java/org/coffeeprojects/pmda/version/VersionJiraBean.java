@@ -1,12 +1,10 @@
-package org.coffeeprojects.pmda.tracker.jira.bean;
+package org.coffeeprojects.pmda.version;
 
-public class StatusJiraBean {
+public class VersionJiraBean {
 
     private String id;
 
     private String name;
-
-    private String description;
 
     public String getId() {
         return id;
@@ -22,14 +20,6 @@ public class StatusJiraBean {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }

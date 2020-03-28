@@ -1,6 +1,6 @@
-package org.coffeeprojects.pmda.tracker.jira.bean;
+package org.coffeeprojects.pmda.status;
 
-public class IssueTypeJiraBean {
+public class StatusJiraBean {
 
     private String id;
 

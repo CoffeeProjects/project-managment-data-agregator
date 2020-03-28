@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.domain;
+package org.coffeeprojects.pmda.priority;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,16 +9,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "User")
-public class UserEntity implements Serializable {
+@Table(name = "Priority")
+public class PriorityEntity implements Serializable {
     @Id
-    private String accountId;
+    private String id;
 
-    private String emailAddress;
-
-    private String displayName;
-
-    private boolean active;
+    private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -30,36 +26,20 @@ public class UserEntity implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    public String getAccountId() {
-        return accountId;
+    public String getId() {
+        return id;
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getName() {
+        return name;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getCreatedAt() {

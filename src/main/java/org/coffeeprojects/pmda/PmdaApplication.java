@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda;
 
-import org.coffeeprojects.pmda.service.ProjectsService;
+import org.coffeeprojects.pmda.project.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

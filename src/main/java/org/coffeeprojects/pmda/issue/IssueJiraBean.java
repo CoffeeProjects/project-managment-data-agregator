@@ -1,4 +1,13 @@
-package org.coffeeprojects.pmda.tracker.jira.bean;
+package org.coffeeprojects.pmda.issue;
+
+import org.coffeeprojects.pmda.component.ComponentJiraBean;
+import org.coffeeprojects.pmda.issueType.IssueTypeJiraBean;
+import org.coffeeprojects.pmda.priority.PriorityJiraBean;
+import org.coffeeprojects.pmda.project.ProjectJiraBean;
+import org.coffeeprojects.pmda.resolution.ResolutionJiraBean;
+import org.coffeeprojects.pmda.status.StatusJiraBean;
+import org.coffeeprojects.pmda.user.UserJiraBean;
+import org.coffeeprojects.pmda.version.VersionJiraBean;
 
 import java.util.Date;
 import java.util.List;

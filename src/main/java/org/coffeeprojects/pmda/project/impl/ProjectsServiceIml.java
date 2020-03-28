@@ -1,8 +1,8 @@
-package org.coffeeprojects.pmda.service.impl;
+package org.coffeeprojects.pmda.project.impl;
 
-import org.coffeeprojects.pmda.domain.ProjectEntity;
+import org.coffeeprojects.pmda.project.ProjectEntity;
 import org.coffeeprojects.pmda.tracker.jira.proxy.JiraProxy;
-import org.coffeeprojects.pmda.service.ProjectsService;
+import org.coffeeprojects.pmda.project.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
