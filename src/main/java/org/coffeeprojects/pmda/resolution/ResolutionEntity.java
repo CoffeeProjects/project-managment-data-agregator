@@ -1,16 +1,15 @@
 package org.coffeeprojects.pmda.resolution;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.coffeeprojects.pmda.entity.AuditableEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "Resolution")
-public class ResolutionEntity implements Serializable {
+public class ResolutionEntity extends AuditableEntity implements Serializable {
     @Id
     private String id;
 
@@ -18,53 +17,30 @@ public class ResolutionEntity implements Serializable {
 
     private String description;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @CreatedDate
-    private Date createdAt;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
-    @LastModifiedDate
-    private Date updatedAt;
-
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public ResolutionEntity setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public ResolutionEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public ResolutionEntity setDescription(String description) {
         this.description = description;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+        return this;
     }
 }

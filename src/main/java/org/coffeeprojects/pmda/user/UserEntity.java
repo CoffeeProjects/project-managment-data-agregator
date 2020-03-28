@@ -1,16 +1,15 @@
 package org.coffeeprojects.pmda.user;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.coffeeprojects.pmda.entity.AuditableEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "User")
-public class UserEntity implements Serializable {
+public class UserEntity extends AuditableEntity implements Serializable {
     @Id
     private String accountId;
 
@@ -20,61 +19,39 @@ public class UserEntity implements Serializable {
 
     private boolean active;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @CreatedDate
-    private Date createdAt;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
-    @LastModifiedDate
-    private Date updatedAt;
-
     public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public UserEntity setAccountId(String accountId) {
         this.accountId = accountId;
+        return this;
     }
 
     public String getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
+    public UserEntity setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+        return this;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
+    public UserEntity setDisplayName(String displayName) {
         this.displayName = displayName;
+        return this;
     }
 
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public UserEntity setActive(boolean active) {
         this.active = active;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+        return this;
     }
 }

@@ -12,24 +12,26 @@ public class StatusJiraBean {
         return id;
     }
 
-    public void setId(String id) {
+    public StatusJiraBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public StatusJiraBean setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public StatusJiraBean setDescription(String description) {
         this.description = description;
+        return this;
     }
-
 }

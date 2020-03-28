@@ -12,24 +12,26 @@ public class ProjectJiraBean {
         return id;
     }
 
-    public void setId(String id) {
+    public ProjectJiraBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public ProjectJiraBean setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public ProjectJiraBean setName(String name) {
         this.name = name;
+        return this;
     }
-
 }

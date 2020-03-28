@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.issue;
 
 import org.coffeeprojects.pmda.component.ComponentEntity;
+import org.coffeeprojects.pmda.entity.AuditableEntity;
 import org.coffeeprojects.pmda.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.priority.PriorityEntity;
 import org.coffeeprojects.pmda.project.ProjectEntity;
@@ -8,8 +9,6 @@ import org.coffeeprojects.pmda.resolution.ResolutionEntity;
 import org.coffeeprojects.pmda.status.StatusEntity;
 import org.coffeeprojects.pmda.user.UserEntity;
 import org.coffeeprojects.pmda.version.VersionEntity;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +18,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Issue")
-public class IssueEntity implements Serializable {
+public class IssueEntity extends AuditableEntity implements Serializable {
     @Id
     private String id;
 
@@ -64,173 +63,165 @@ public class IssueEntity implements Serializable {
     @OneToMany
     private Set<IssueEntity> issueLinks;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @CreatedDate
-    private Date createdAt;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
-    @LastModifiedDate
-    private Date updatedAt;
-
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public IssueEntity setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public IssueEntity setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public UserEntity getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(UserEntity assignee) {
+    public IssueEntity setAssignee(UserEntity assignee) {
         this.assignee = assignee;
+        return this;
     }
 
     public UserEntity getReporter() {
         return reporter;
     }
 
-    public void setReporter(UserEntity reporter) {
+    public IssueEntity setReporter(UserEntity reporter) {
         this.reporter = reporter;
+        return this;
     }
 
     public UserEntity getCreator() {
         return creator;
     }
 
-    public void setCreator(UserEntity creator) {
+    public IssueEntity setCreator(UserEntity creator) {
         this.creator = creator;
+        return this;
     }
 
     public String getSummary() {
         return summary;
     }
 
-    public void setSummary(String summary) {
+    public IssueEntity setSummary(String summary) {
         this.summary = summary;
+        return this;
     }
 
     public StatusEntity getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEntity status) {
+    public IssueEntity setStatus(StatusEntity status) {
         this.status = status;
+        return this;
     }
 
     public ResolutionEntity getResolution() {
         return resolution;
     }
 
-    public void setResolution(ResolutionEntity resolution) {
+    public IssueEntity setResolution(ResolutionEntity resolution) {
         this.resolution = resolution;
+        return this;
     }
 
     public Date getResolutionDate() {
         return resolutionDate;
     }
 
-    public void setResolutionDate(Date resolutionDate) {
+    public IssueEntity setResolutionDate(Date resolutionDate) {
         this.resolutionDate = resolutionDate;
+        return this;
     }
 
     public PriorityEntity getPriority() {
         return priority;
     }
 
-    public void setPriority(PriorityEntity priority) {
+    public IssueEntity setPriority(PriorityEntity priority) {
         this.priority = priority;
+        return this;
     }
 
     public IssueTypeEntity getIssueType() {
         return issueType;
     }
 
-    public void setIssueType(IssueTypeEntity issueType) {
+    public IssueEntity setIssueType(IssueTypeEntity issueType) {
         this.issueType = issueType;
+        return this;
     }
 
     public ProjectEntity getProject() {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public IssueEntity setProject(ProjectEntity project) {
         this.project = project;
+        return this;
     }
 
     public Set<VersionEntity> getFixVersions() {
         return fixVersions;
     }
 
-    public void setFixVersions(Set<VersionEntity> fixVersions) {
+    public IssueEntity setFixVersions(Set<VersionEntity> fixVersions) {
         this.fixVersions = fixVersions;
+        return this;
     }
 
     public List<String> getLabels() {
         return labels;
     }
 
-    public void setLabels(List<String> labels) {
+    public IssueEntity setLabels(List<String> labels) {
         this.labels = labels;
+        return this;
     }
 
     public Set<ComponentEntity> getComponents() {
         return components;
     }
 
-    public void setComponents(Set<ComponentEntity> components) {
+    public IssueEntity setComponents(Set<ComponentEntity> components) {
         this.components = components;
+        return this;
     }
 
     public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public IssueEntity setCreated(Date created) {
         this.created = created;
+        return this;
     }
 
     public Date getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public IssueEntity setUpdated(Date updated) {
         this.updated = updated;
+        return this;
     }
 
     public Set<IssueEntity> getIssueLinks() {
         return issueLinks;
     }
 
-    public void setIssueLinks(Set<IssueEntity> issueLinks) {
+    public IssueEntity setIssueLinks(Set<IssueEntity> issueLinks) {
         this.issueLinks = issueLinks;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+        return this;
     }
 }
