@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.domain;
+package org.coffeeprojects.pmda.version;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Priority")
-public class PriorityEntity implements Serializable {
+@Table(name = "Version")
+public class VersionEntity implements Serializable {
     @Id
     private String id;
 

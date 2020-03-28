@@ -1,5 +1,13 @@
-package org.coffeeprojects.pmda.domain;
+package org.coffeeprojects.pmda.issue;
 
+import org.coffeeprojects.pmda.component.ComponentEntity;
+import org.coffeeprojects.pmda.issueType.IssueTypeEntity;
+import org.coffeeprojects.pmda.priority.PriorityEntity;
+import org.coffeeprojects.pmda.project.ProjectEntity;
+import org.coffeeprojects.pmda.resolution.ResolutionEntity;
+import org.coffeeprojects.pmda.status.StatusEntity;
+import org.coffeeprojects.pmda.user.UserEntity;
+import org.coffeeprojects.pmda.version.VersionEntity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 

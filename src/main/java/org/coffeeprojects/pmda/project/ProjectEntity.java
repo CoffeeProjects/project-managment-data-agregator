@@ -1,22 +1,29 @@
-package org.coffeeprojects.pmda.domain;
+package org.coffeeprojects.pmda.project;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "IssueType")
-public class IssueTypeEntity implements Serializable {
+@Table(name = "Project")
+public class ProjectEntity implements Serializable {
     @Id
     private String id;
 
+    private String key;
+
     private String name;
 
-    private String description;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastCheck;
+
+    private boolean active;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -36,6 +43,14 @@ public class IssueTypeEntity implements Serializable {
         this.id = id;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     public String getName() {
         return name;
     }
@@ -44,12 +59,20 @@ public class IssueTypeEntity implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Date getLastCheck() {
+        return lastCheck;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLastCheck(Date lastCheck) {
+        this.lastCheck = lastCheck;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Date getCreatedAt() {
