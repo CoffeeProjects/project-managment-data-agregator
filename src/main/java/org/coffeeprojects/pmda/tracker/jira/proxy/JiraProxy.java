@@ -1,8 +1,8 @@
-package org.coffeeprojects.pmda.proxy;
+package org.coffeeprojects.pmda.tracker.jira.proxy;
 
 import feign.Param;
 import feign.RequestLine;
-import org.coffeeprojects.pmda.JiraConfiguration;
+import org.coffeeprojects.pmda.tracker.jira.JiraConfiguration;
 import org.coffeeprojects.pmda.domain.ProjectEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 

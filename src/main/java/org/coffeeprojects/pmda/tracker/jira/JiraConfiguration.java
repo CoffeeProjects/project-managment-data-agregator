@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda;
+package org.coffeeprojects.pmda.tracker.jira;
 
 import feign.Contract;
 import feign.Logger;
@@ -21,6 +21,6 @@ public class JiraConfiguration {
 
     @Bean
     public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
-        return new BasicAuthRequestInterceptor("julien@herubel.com", "KxmWqia8pY0XXUMws60M0217");
+        return new BasicAuthRequestInterceptor("", "");
     }
 }
