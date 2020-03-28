@@ -12,4 +12,7 @@ public interface JiraProxy {
     @RequestLine("GET project/{projectKey}")
     public ProjectEntity getById(@Param("projectKey") String projectKey);
 
+    @RequestLine("GET search")
+    public ProjectEntity getByDateId(@Param("projectKey") String projectKey);
+
 }

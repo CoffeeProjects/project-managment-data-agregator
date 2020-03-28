@@ -15,5 +15,5 @@ feign:
 
 tracker:
   jira:
-    user: null
-    password: null
+    user: "julien@herubel.com"
+    password: "KxmWqia8pY0XXUMws60M0217"
