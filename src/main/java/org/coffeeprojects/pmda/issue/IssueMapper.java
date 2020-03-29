@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
+//@Mapper
 public interface IssueMapper {
 
     // TODO: à mapper
