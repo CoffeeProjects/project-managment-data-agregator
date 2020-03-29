@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.issue;
 
+import com.google.gson.annotations.SerializedName;
 import org.coffeeprojects.pmda.component.ComponentJiraBean;
 import org.coffeeprojects.pmda.issueType.IssueTypeJiraBean;
 import org.coffeeprojects.pmda.priority.PriorityJiraBean;
@@ -31,6 +32,7 @@ public class FieldsJiraBean {
 
     private PriorityJiraBean priority;
 
+    @SerializedName("issuetype")
     private IssueTypeJiraBean issueType;
 
     private ProjectJiraBean project;
