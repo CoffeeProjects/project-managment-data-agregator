@@ -1,0 +1,457 @@
+{
+  "expand": "schema,names",
+  "startAt": 0,
+  "maxResults": 50,
+  "total": 3,
+  "issues": [
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "10002",
+      "self": "https://herubel.atlassian.net/rest/api/3/issue/10002",
+      "key": "PMDA-3",
+      "changelog": {
+        "startAt": 0,
+        "maxResults": 0,
+        "total": 0,
+        "histories": []
+      },
+      "fields": {
+        "summary": "Bug 1",
+        "issuetype": {
+          "self": "https://herubel.atlassian.net/rest/api/3/issuetype/10004",
+          "id": "10004",
+          "description": "A problem or error.",
+          "iconUrl": "https://herubel.atlassian.net/secure/viewavatar?size=medium&avatarId=10303&avatarType=issuetype",
+          "name": "Bug",
+          "subtask": false,
+          "avatarId": 10303
+        },
+        "creator": {
+          "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+          "accountId": "5e7e04ff5146960c33fe3466",
+          "emailAddress": "julien@herubel.com",
+          "avatarUrls": {
+            "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+            "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+            "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+            "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+          },
+          "displayName": "Julien HERUBEL",
+          "active": true,
+          "timeZone": "Europe/Paris",
+          "accountType": "atlassian"
+        },
+        "created": "2020-03-27T15:16:34.561+0100",
+        "project": {
+          "self": "https://herubel.atlassian.net/rest/api/3/project/10000",
+          "id": "10000",
+          "key": "PMDA",
+          "name": "Project Managment Data Agregator",
+          "projectTypeKey": "software",
+          "simplified": false,
+          "avatarUrls": {
+            "48x48": "https://herubel.atlassian.net/secure/projectavatar?pid=10000&avatarId=10416",
+            "24x24": "https://herubel.atlassian.net/secure/projectavatar?size=small&s=small&pid=10000&avatarId=10416",
+            "16x16": "https://herubel.atlassian.net/secure/projectavatar?size=xsmall&s=xsmall&pid=10000&avatarId=10416",
+            "32x32": "https://herubel.atlassian.net/secure/projectavatar?size=medium&s=medium&pid=10000&avatarId=10416"
+          }
+        },
+        "reporter": {
+          "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+          "accountId": "5e7e04ff5146960c33fe3466",
+          "emailAddress": "julien@herubel.com",
+          "avatarUrls": {
+            "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+            "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+            "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+            "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+          },
+          "displayName": "Julien HERUBEL",
+          "active": true,
+          "timeZone": "Europe/Paris",
+          "accountType": "atlassian"
+        },
+        "priority": {
+          "self": "https://herubel.atlassian.net/rest/api/3/priority/3",
+          "iconUrl": "https://herubel.atlassian.net/images/icons/priorities/medium.svg",
+          "name": "Medium",
+          "id": "3"
+        },
+        "resolution": null,
+        "labels": [],
+        "duedate": null,
+        "assignee": null,
+        "updated": "2020-03-27T15:16:34.561+0100",
+        "status": {
+          "self": "https://herubel.atlassian.net/rest/api/3/status/10000",
+          "description": "",
+          "iconUrl": "https://herubel.atlassian.net/",
+          "name": "To Do",
+          "id": "10000",
+          "statusCategory": {
+            "self": "https://herubel.atlassian.net/rest/api/3/statuscategory/2",
+            "id": 2,
+            "key": "new",
+            "colorName": "blue-gray",
+            "name": "To Do"
+          }
+        }
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "10001",
+      "self": "https://herubel.atlassian.net/rest/api/3/issue/10001",
+      "key": "PMDA-2",
+      "changelog": {
+        "startAt": 0,
+        "maxResults": 0,
+        "total": 0,
+        "histories": []
+      },
+      "fields": {
+        "summary": "Test 2",
+        "issuetype": {
+          "self": "https://herubel.atlassian.net/rest/api/3/issuetype/10001",
+          "id": "10001",
+          "description": "Functionality or a feature expressed as a user goal.",
+          "iconUrl": "https://herubel.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype",
+          "name": "Story",
+          "subtask": false,
+          "avatarId": 10315
+        },
+        "creator": {
+          "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+          "accountId": "5e7e04ff5146960c33fe3466",
+          "emailAddress": "julien@herubel.com",
+          "avatarUrls": {
+            "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+            "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+            "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+            "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+          },
+          "displayName": "Julien HERUBEL",
+          "active": true,
+          "timeZone": "Europe/Paris",
+          "accountType": "atlassian"
+        },
+        "created": "2020-03-27T15:16:19.512+0100",
+        "project": {
+          "self": "https://herubel.atlassian.net/rest/api/3/project/10000",
+          "id": "10000",
+          "key": "PMDA",
+          "name": "Project Managment Data Agregator",
+          "projectTypeKey": "software",
+          "simplified": false,
+          "avatarUrls": {
+            "48x48": "https://herubel.atlassian.net/secure/projectavatar?pid=10000&avatarId=10416",
+            "24x24": "https://herubel.atlassian.net/secure/projectavatar?size=small&s=small&pid=10000&avatarId=10416",
+            "16x16": "https://herubel.atlassian.net/secure/projectavatar?size=xsmall&s=xsmall&pid=10000&avatarId=10416",
+            "32x32": "https://herubel.atlassian.net/secure/projectavatar?size=medium&s=medium&pid=10000&avatarId=10416"
+          }
+        },
+        "reporter": {
+          "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+          "accountId": "5e7e04ff5146960c33fe3466",
+          "emailAddress": "julien@herubel.com",
+          "avatarUrls": {
+            "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+            "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+            "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+            "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+          },
+          "displayName": "Julien HERUBEL",
+          "active": true,
+          "timeZone": "Europe/Paris",
+          "accountType": "atlassian"
+        },
+        "priority": {
+          "self": "https://herubel.atlassian.net/rest/api/3/priority/3",
+          "iconUrl": "https://herubel.atlassian.net/images/icons/priorities/medium.svg",
+          "name": "Medium",
+          "id": "3"
+        },
+        "resolution": null,
+        "labels": [],
+        "duedate": null,
+        "assignee": null,
+        "updated": "2020-03-27T15:16:19.512+0100",
+        "status": {
+          "self": "https://herubel.atlassian.net/rest/api/3/status/10000",
+          "description": "",
+          "iconUrl": "https://herubel.atlassian.net/",
+          "name": "To Do",
+          "id": "10000",
+          "statusCategory": {
+            "self": "https://herubel.atlassian.net/rest/api/3/statuscategory/2",
+            "id": 2,
+            "key": "new",
+            "colorName": "blue-gray",
+            "name": "To Do"
+          }
+        }
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "10000",
+      "self": "https://herubel.atlassian.net/rest/api/3/issue/10000",
+      "key": "PMDA-1",
+      "changelog": {
+        "startAt": 0,
+        "maxResults": 5,
+        "total": 5,
+        "histories": [
+          {
+            "id": "10007",
+            "author": {
+              "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+              "accountId": "5e7e04ff5146960c33fe3466",
+              "emailAddress": "julien@herubel.com",
+              "avatarUrls": {
+                "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+                "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+                "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+                "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+              },
+              "displayName": "Julien HERUBEL",
+              "active": true,
+              "timeZone": "Europe/Paris",
+              "accountType": "atlassian"
+            },
+            "created": "2020-03-27T18:06:44.093+0100",
+            "items": [
+              {
+                "field": "Component",
+                "fieldtype": "jira",
+                "fieldId": "components",
+                "from": null,
+                "fromString": null,
+                "to": "10000",
+                "toString": "Composant de test"
+              }
+            ]
+          },
+          {
+            "id": "10006",
+            "author": {
+              "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+              "accountId": "5e7e04ff5146960c33fe3466",
+              "emailAddress": "julien@herubel.com",
+              "avatarUrls": {
+                "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+                "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+                "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+                "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+              },
+              "displayName": "Julien HERUBEL",
+              "active": true,
+              "timeZone": "Europe/Paris",
+              "accountType": "atlassian"
+            },
+            "created": "2020-03-27T18:06:40.572+0100",
+            "items": [
+              {
+                "field": "Fix Version",
+                "fieldtype": "jira",
+                "fieldId": "fixVersions",
+                "from": null,
+                "fromString": null,
+                "to": "10000",
+                "toString": "Version de test"
+              }
+            ]
+          },
+          {
+            "id": "10005",
+            "author": {
+              "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+              "accountId": "5e7e04ff5146960c33fe3466",
+              "emailAddress": "julien@herubel.com",
+              "avatarUrls": {
+                "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+                "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+                "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+                "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+              },
+              "displayName": "Julien HERUBEL",
+              "active": true,
+              "timeZone": "Europe/Paris",
+              "accountType": "atlassian"
+            },
+            "created": "2020-03-27T18:06:30.112+0100",
+            "items": [
+              {
+                "field": "Story Points",
+                "fieldtype": "custom",
+                "fieldId": "customfield_10024",
+                "from": null,
+                "fromString": null,
+                "to": null,
+                "toString": "1"
+              }
+            ]
+          },
+          {
+            "id": "10004",
+            "author": {
+              "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+              "accountId": "5e7e04ff5146960c33fe3466",
+              "emailAddress": "julien@herubel.com",
+              "avatarUrls": {
+                "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+                "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+                "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+                "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+              },
+              "displayName": "Julien HERUBEL",
+              "active": true,
+              "timeZone": "Europe/Paris",
+              "accountType": "atlassian"
+            },
+            "created": "2020-03-27T18:06:19.173+0100",
+            "items": [
+              {
+                "field": "labels",
+                "fieldtype": "jira",
+                "fieldId": "labels",
+                "from": null,
+                "fromString": "",
+                "to": null,
+                "toString": "label-test"
+              }
+            ]
+          },
+          {
+            "id": "10003",
+            "author": {
+              "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+              "accountId": "5e7e04ff5146960c33fe3466",
+              "emailAddress": "julien@herubel.com",
+              "avatarUrls": {
+                "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+                "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+                "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+                "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+              },
+              "displayName": "Julien HERUBEL",
+              "active": true,
+              "timeZone": "Europe/Paris",
+              "accountType": "atlassian"
+            },
+            "created": "2020-03-27T18:03:22.122+0100",
+            "items": [
+              {
+                "field": "resolution",
+                "fieldtype": "jira",
+                "fieldId": "resolution",
+                "from": null,
+                "fromString": null,
+                "to": "10000",
+                "toString": "Done"
+              },
+              {
+                "field": "status",
+                "fieldtype": "jira",
+                "fieldId": "status",
+                "from": "10000",
+                "fromString": "To Do",
+                "to": "10001",
+                "toString": "Done"
+              }
+            ]
+          }
+        ]
+      },
+      "fields": {
+        "summary": "Test 1",
+        "issuetype": {
+          "self": "https://herubel.atlassian.net/rest/api/3/issuetype/10001",
+          "id": "10001",
+          "description": "Functionality or a feature expressed as a user goal.",
+          "iconUrl": "https://herubel.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype",
+          "name": "Story",
+          "subtask": false,
+          "avatarId": 10315
+        },
+        "creator": {
+          "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+          "accountId": "5e7e04ff5146960c33fe3466",
+          "emailAddress": "julien@herubel.com",
+          "avatarUrls": {
+            "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+            "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+            "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+            "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+          },
+          "displayName": "Julien HERUBEL",
+          "active": true,
+          "timeZone": "Europe/Paris",
+          "accountType": "atlassian"
+        },
+        "created": "2020-03-27T15:16:06.648+0100",
+        "project": {
+          "self": "https://herubel.atlassian.net/rest/api/3/project/10000",
+          "id": "10000",
+          "key": "PMDA",
+          "name": "Project Managment Data Agregator",
+          "projectTypeKey": "software",
+          "simplified": false,
+          "avatarUrls": {
+            "48x48": "https://herubel.atlassian.net/secure/projectavatar?pid=10000&avatarId=10416",
+            "24x24": "https://herubel.atlassian.net/secure/projectavatar?size=small&s=small&pid=10000&avatarId=10416",
+            "16x16": "https://herubel.atlassian.net/secure/projectavatar?size=xsmall&s=xsmall&pid=10000&avatarId=10416",
+            "32x32": "https://herubel.atlassian.net/secure/projectavatar?size=medium&s=medium&pid=10000&avatarId=10416"
+          }
+        },
+        "reporter": {
+          "self": "https://herubel.atlassian.net/rest/api/3/user?accountId=5e7e04ff5146960c33fe3466",
+          "accountId": "5e7e04ff5146960c33fe3466",
+          "emailAddress": "julien@herubel.com",
+          "avatarUrls": {
+            "48x48": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=48&s=48",
+            "24x24": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=24&s=24",
+            "16x16": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=16&s=16",
+            "32x32": "https://secure.gravatar.com/avatar/fddaf14c383f9f88149d5a0804fb87e8?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FJH-6.png&size=32&s=32"
+          },
+          "displayName": "Julien HERUBEL",
+          "active": true,
+          "timeZone": "Europe/Paris",
+          "accountType": "atlassian"
+        },
+        "priority": {
+          "self": "https://herubel.atlassian.net/rest/api/3/priority/3",
+          "iconUrl": "https://herubel.atlassian.net/images/icons/priorities/medium.svg",
+          "name": "Medium",
+          "id": "3"
+        },
+        "resolution": {
+          "self": "https://herubel.atlassian.net/rest/api/3/resolution/10000",
+          "id": "10000",
+          "description": "Work has been completed on this issue.",
+          "name": "Done"
+        },
+        "labels": [
+          "label-test"
+        ],
+        "duedate": null,
+        "assignee": null,
+        "updated": "2020-03-27T18:06:44.090+0100",
+        "status": {
+          "self": "https://herubel.atlassian.net/rest/api/3/status/10001",
+          "description": "",
+          "iconUrl": "https://herubel.atlassian.net/",
+          "name": "Done",
+          "id": "10001",
+          "statusCategory": {
+            "self": "https://herubel.atlassian.net/rest/api/3/statuscategory/3",
+            "id": 3,
+            "key": "done",
+            "colorName": "green",
+            "name": "Done"
+          }
+        }
+      }
+    }
+  ]
+}

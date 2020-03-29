@@ -11,6 +11,7 @@ import org.coffeeprojects.pmda.version.VersionJiraBean;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class IssueJiraBean {
@@ -57,5 +58,31 @@ public class IssueJiraBean {
     public IssueJiraBean setFields(FieldsJiraBean fields) {
         this.fields = fields;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IssueJiraBean that = (IssueJiraBean) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(key, that.key) &&
+                Objects.equals(expand, that.expand) &&
+                Objects.equals(fields, that.fields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, key, expand, fields);
+    }
+
+    @Override
+    public String toString() {
+        return "IssueJiraBean{" +
+                "id='" + id + '\'' +
+                ", key='" + key + '\'' +
+                ", expand='" + expand + '\'' +
+                ", fields=" + fields +
+                '}';
     }
 }

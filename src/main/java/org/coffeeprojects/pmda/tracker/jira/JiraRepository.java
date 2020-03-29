@@ -22,9 +22,10 @@ public class JiraRepository {
     }
 
     public List<IssueJiraBean> getModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
-        // TODO: à refaire
+        // TODO: verifier si on peut récuperer tous les issues en même temps
         final String jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectName, DATE_TIME_FORMATTER.format(fromDate));
-        final SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.getModifiedIssues(jql, fields, expand);
+        final SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields);
+
         return searchIssuesResultJiraBean.getIssues();
     }
 }
