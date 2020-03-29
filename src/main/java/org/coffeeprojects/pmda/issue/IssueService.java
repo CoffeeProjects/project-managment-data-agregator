@@ -9,16 +9,22 @@ import java.util.List;
 
 @Service
 public class IssueService {
+    private final IssueRepository issueRepository;
+
+    private final IssueMapper issueMapper;
 
     private final JiraRepository jiraRepository;
 
-    public IssueService(JiraRepository jiraRepository) {
+    public IssueService(IssueRepository issueRepository, IssueMapper issueMapper, JiraRepository jiraRepository) {
+        this.issueRepository = issueRepository;
+        this.issueMapper = issueMapper;
         this.jiraRepository = jiraRepository;
     }
 
     @Transactional
-    public void updateIssues(String projectName, Instant fromDate, String expand, String fields) {
+    public void updateLastModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectName, fromDate, expand, fields);
-        // TODO : mapper issueJiraBeans en IssueEntity puis mettre à jour en base
+        this.issueRepository.saveAll(issueMapper.toEntities(issueJiraBeans));
+        // TODO : à tester
     }
 }
