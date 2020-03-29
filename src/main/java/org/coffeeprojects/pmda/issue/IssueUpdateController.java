@@ -19,7 +19,7 @@ public class IssueUpdateController {
     @GetMapping("/update")
     @ResponseBody
     String getProjects() {
-        issueService.updateIssues("pmda",
+        issueService.updateLastModifiedIssues("pmda",
                 Instant.parse("2020-03-29T09:15:24.00Z"),"schema,names", "summary,issuetype");
         return "OK";
     }
