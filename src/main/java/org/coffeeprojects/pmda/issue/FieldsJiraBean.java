@@ -47,7 +47,8 @@ public class FieldsJiraBean {
 
     private Date updated;
 
-    private Set<IssueJiraBean> issueLinks;
+    @JsonProperty("issuelinks")
+    private Set<IssueLinkJiraBean> issueLinks;
 
     public UserJiraBean getAssignee() {
         return assignee;
@@ -184,11 +185,11 @@ public class FieldsJiraBean {
         return this;
     }
 
-    public Set<IssueJiraBean> getIssueLinks() {
+    public Set<IssueLinkJiraBean> getIssueLinks() {
         return issueLinks;
     }
 
-    public FieldsJiraBean setIssueLinks(Set<IssueJiraBean> issueLinks) {
+    public FieldsJiraBean setIssueLinks(Set<IssueLinkJiraBean> issueLinks) {
         this.issueLinks = issueLinks;
         return this;
     }
