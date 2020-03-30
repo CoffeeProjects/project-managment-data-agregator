@@ -2,6 +2,8 @@ package org.coffeeprojects.pmda.issue;
 
 import org.coffeeprojects.pmda.issue.jirabean.FieldsJiraBean;
 import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
+import org.coffeeprojects.pmda.status.StatusEntity;
+import org.coffeeprojects.pmda.status.StatusJiraBean;
 import org.coffeeprojects.pmda.user.UserEntity;
 import org.coffeeprojects.pmda.user.UserJiraBean;
 import org.coffeeprojects.pmda.user.UserMapperImpl;
@@ -28,7 +30,9 @@ public class IssueMapperTest {
                 .setExpand("expand")
                 .setFields(
                         new FieldsJiraBean()
-                                .setCreator(new UserJiraBean().setDisplayName("Bruce Wayne"))
+                                .setSummary("summary")
+                                .setStatus(new StatusJiraBean().setId("11"))
+                                .setCreator(new UserJiraBean().setAccountId("11111"))
                 );
         // TODO: completer le bean avec tous les champs
 
@@ -39,9 +43,10 @@ public class IssueMapperTest {
         IssueEntity expectedIssueEntity = new IssueEntity()
                 .setId("id1")
                 .setKey("key1")
-                .setCreator(new UserEntity().setDisplayName("Bruce Wayne"));
+                .setSummary("summary")
+                .setStatus(new StatusEntity().setId("11"))
+                .setCreator(new UserEntity().setAccountId("11111"));
 
-        // TODO: equals qui ne marche pas alors que lorsque qu on regarde dans la console ils sont egaux ?
-        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntity).isEqualTo(expectedIssueEntity);
     }
 }
