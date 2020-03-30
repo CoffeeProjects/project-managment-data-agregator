@@ -50,6 +50,9 @@ public class FieldsJiraBean {
     @JsonProperty("issuelinks")
     private Set<IssueLinkJiraBean> issueLinks;
 
+    @JsonProperty("customfield_10020")
+    private List<String> sprints;
+
     public UserJiraBean getAssignee() {
         return assignee;
     }
@@ -194,6 +197,14 @@ public class FieldsJiraBean {
         return this;
     }
 
+    public List<String> getSprints() {
+        return sprints;
+    }
+
+    public void setSprints(List<String> sprints) {
+        this.sprints = sprints;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -214,12 +225,13 @@ public class FieldsJiraBean {
                 Objects.equals(components, that.components) &&
                 Objects.equals(created, that.created) &&
                 Objects.equals(updated, that.updated) &&
-                Objects.equals(issueLinks, that.issueLinks);
+                Objects.equals(issueLinks, that.issueLinks) &&
+                Objects.equals(sprints, that.sprints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, issueLinks);
+        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, issueLinks, sprints);
     }
 
     @Override
@@ -241,6 +253,7 @@ public class FieldsJiraBean {
                 ", created=" + created +
                 ", updated=" + updated +
                 ", issueLinks=" + issueLinks +
+                ", sprints=" + sprints +
                 '}';
     }
 }

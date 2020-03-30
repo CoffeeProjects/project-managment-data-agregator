@@ -6,6 +6,7 @@ import org.coffeeprojects.pmda.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.priority.PriorityEntity;
 import org.coffeeprojects.pmda.project.ProjectEntity;
 import org.coffeeprojects.pmda.resolution.ResolutionEntity;
+import org.coffeeprojects.pmda.sprint.SprintEntity;
 import org.coffeeprojects.pmda.status.StatusEntity;
 import org.coffeeprojects.pmda.user.UserEntity;
 import org.coffeeprojects.pmda.version.VersionEntity;
@@ -62,6 +63,9 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     @OneToMany
     private Set<IssueEntity> issueLinks;
+
+    @OneToMany
+    private Set<SprintEntity> sprints;
 
     public String getId() {
         return id;
@@ -223,5 +227,13 @@ public class IssueEntity extends AuditableEntity implements Serializable {
     public IssueEntity setIssueLinks(Set<IssueEntity> issueLinks) {
         this.issueLinks = issueLinks;
         return this;
+    }
+
+    public Set<SprintEntity> getSprints() {
+        return sprints;
+    }
+
+    public void setSprints(Set<SprintEntity> sprints) {
+        this.sprints = sprints;
     }
 }

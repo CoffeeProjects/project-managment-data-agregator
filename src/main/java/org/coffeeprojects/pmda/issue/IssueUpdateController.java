@@ -22,7 +22,8 @@ public class IssueUpdateController {
         issueService.updateLastModifiedIssues("pmda",
                 Instant.parse("2020-03-29T09:15:24.00Z"),
                 "schema,names",
-                "key,project,issuetype,priority,summary,status,creator,reporter,assignee,updated,created,duedate,labels,components,issuelinks,fixversions,resolution");
+                "key,project,issuetype,priority,summary,status,creator,reporter,assignee,updated,created,duedate," +
+                        "labels,components,issuelinks,fixversions,resolution,customfield_10020");
         return "OK";
     }
 }
