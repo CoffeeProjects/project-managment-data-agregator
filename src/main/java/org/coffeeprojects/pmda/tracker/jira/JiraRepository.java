@@ -33,7 +33,7 @@ public class JiraRepository {
         return searchIssuesResultJiraBean.getIssues();
     }
 
-    public static List<SprintJiraBean> getSprintsByIssueJiraBean(IssueJiraBean issueJiraBean) {
+    public List<SprintJiraBean> getSprintsByIssueJiraBean(IssueJiraBean issueJiraBean) {
         List<SprintJiraBean> sprintJiraBeans = new ArrayList<>();
 
         if (issueJiraBean != null && issueJiraBean.getFields() != null && issueJiraBean.getFields().getSprints() != null) {
@@ -48,7 +48,6 @@ public class JiraRepository {
                     String endDate = StringUtils.substringAfterLast(sprint, ",endDate=");
                     String completeDate = StringUtils.substringAfterLast(sprint, ",completeDate=");
 
-                    // Set Bean
                     sprintJiraBean.setId(StringUtils.replace(id, ",rapidViewId=" + rapidView, StringUtils.EMPTY));
                     sprintJiraBean.setRapidViewId(StringUtils.replace(rapidView, ",state=" + state, StringUtils.EMPTY));
                     sprintJiraBean.setState(StringUtils.replace(state, ",name=" + name, StringUtils.EMPTY));
@@ -57,17 +56,19 @@ public class JiraRepository {
                     sprintJiraBean.setStartDate(getDateWithTimezone(StringUtils.replace(startDate, ",endDate=" + endDate, StringUtils.EMPTY)));
                     sprintJiraBean.setEndDate(getDateWithTimezone(StringUtils.replace(endDate, ",completeDate=" + completeDate, StringUtils.EMPTY)));
                     sprintJiraBean.setCompleteDate(getDateWithTimezone(StringUtils.substringAfterLast(completeDate, ",completeDate=")));
+
+                    sprintJiraBeans.add(sprintJiraBean);
                 }
         }
         return sprintJiraBeans;
     }
 
     private static Date getDateWithTimezone(String timezone) {
-        Date date = null;
 
         SimpleDateFormat startDateTZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         startDateTZ.setTimeZone(TimeZone.getTimeZone("UTC"));
 
+        Date date = null;
         try {
             if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
                 date = startDateTZ.parse(timezone);

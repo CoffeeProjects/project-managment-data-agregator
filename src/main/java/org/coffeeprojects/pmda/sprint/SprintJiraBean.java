@@ -18,8 +18,9 @@ public class SprintJiraBean {
         return id;
     }
 
-    public void setId(String id) {
+    public SprintJiraBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getRapidViewId() {

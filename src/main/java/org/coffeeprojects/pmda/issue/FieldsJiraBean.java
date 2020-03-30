@@ -201,8 +201,9 @@ public class FieldsJiraBean {
         return sprints;
     }
 
-    public void setSprints(List<String> sprints) {
+    public FieldsJiraBean setSprints(List<String> sprints) {
         this.sprints = sprints;
+        return this;
     }
 
     @Override
