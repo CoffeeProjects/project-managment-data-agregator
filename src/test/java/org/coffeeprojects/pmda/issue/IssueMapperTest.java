@@ -4,6 +4,7 @@ import org.coffeeprojects.pmda.issue.jirabean.FieldsJiraBean;
 import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.status.StatusEntity;
 import org.coffeeprojects.pmda.status.StatusJiraBean;
+import org.coffeeprojects.pmda.status.StatusMapperImpl;
 import org.coffeeprojects.pmda.user.UserEntity;
 import org.coffeeprojects.pmda.user.UserJiraBean;
 import org.coffeeprojects.pmda.user.UserMapperImpl;
@@ -15,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {UserMapperImpl.class, IssueMapperImpl.class})
+@SpringBootTest(classes = {UserMapperImpl.class, StatusMapperImpl.class, IssueMapperImpl.class})
 @RunWith(SpringRunner.class)
 public class IssueMapperTest {
     @Autowired
