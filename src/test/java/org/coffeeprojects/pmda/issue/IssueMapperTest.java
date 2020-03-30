@@ -6,7 +6,6 @@ import org.coffeeprojects.pmda.component.ComponentMapperImpl;
 import org.coffeeprojects.pmda.issue.jirabean.FieldsJiraBean;
 import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.issue.jirabean.IssueLinkJiraBean;
-import org.coffeeprojects.pmda.issue.jirabean.IssueLinkJiraTypeBean;
 import org.coffeeprojects.pmda.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.issueType.IssueTypeJiraBean;
 import org.coffeeprojects.pmda.issueType.IssueTypeMapperImpl;
@@ -74,11 +73,9 @@ public class IssueMapperTest {
                                 .setComponents(Set.of(new ComponentJiraBean().setId("16")))
                                 .setCreated(new Date())
                                 .setUpdated(new Date())
-                                // TODO: Mapping des issueLinks à faire
-                                //.setIssueLinks(Set.of(new IssueLinkJiraBean().setInwardIssue(new IssueJiraBean().setId("17"))))
+                                .setIssueLinks(Set.of(new IssueLinkJiraBean().setInwardIssue(new IssueJiraBean().setId("17"))))
                                 .setSprints(Set.of(new SprintJiraBean().setId("18")))
                 );
-        // TODO: completer le bean avec tous les champs
 
         // When
         IssueEntity issueEntity = issueMapper.toEntity(issueJiraBean);
@@ -101,7 +98,7 @@ public class IssueMapperTest {
                 .setComponents(Set.of(new ComponentEntity().setId("16")))
                 .setCreated(new Date())
                 .setUpdated(new Date())
-                //.setIssueLinks(Set.of(new IssueEntity().setId("17")))
+                .setIssueLinks(Set.of(new IssueEntity().setId("17")))
                 .setSprints(Set.of(new SprintEntity().setId("18")));
 
         assertThat(issueEntity).isEqualTo(expectedIssueEntity);

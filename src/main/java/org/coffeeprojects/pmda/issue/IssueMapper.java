@@ -2,6 +2,7 @@ package org.coffeeprojects.pmda.issue;
 
 import org.coffeeprojects.pmda.component.ComponentMapper;
 import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
+import org.coffeeprojects.pmda.issue.jirabean.IssueLinkJiraBean;
 import org.coffeeprojects.pmda.issueType.IssueTypeMapper;
 import org.coffeeprojects.pmda.priority.PriorityMapper;
 import org.coffeeprojects.pmda.project.ProjectMapper;
@@ -10,6 +11,7 @@ import org.coffeeprojects.pmda.sprint.SprintMapper;
 import org.coffeeprojects.pmda.status.StatusMapper;
 import org.coffeeprojects.pmda.user.UserMapper;
 import org.coffeeprojects.pmda.version.VersionMapper;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -32,7 +34,10 @@ public interface IssueMapper {
     @Mapping(target = "components", source = "fields.components")
     @Mapping(target = "created", source = "fields.created")
     @Mapping(target = "updated", source = "fields.updated")
-    //@Mapping(target = "issueLinks", source = "fields.issueLinks.inwardIssue")
+    @Mapping(target = "issueLinks", source = "fields.issueLinks")
     @Mapping(target = "sprints", source = "fields.sprints")
     IssueEntity toEntity(IssueJiraBean issueJiraBean);
+
+    @IterableMapping(elementTargetType = IssueEntity.class)
+    IssueEntity toEntity(IssueLinkJiraBean issueLinkJiraBean);
 }
