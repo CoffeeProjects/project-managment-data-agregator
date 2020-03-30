@@ -2,7 +2,7 @@ package org.coffeeprojects.pmda.tracker.jira.proxy;
 
 import feign.Param;
 import feign.RequestLine;
-import org.coffeeprojects.pmda.issue.SearchIssuesResultJiraBean;
+import org.coffeeprojects.pmda.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.project.ProjectEntity;
 import org.coffeeprojects.pmda.tracker.jira.JiraConfiguration;
 import org.springframework.cloud.openfeign.FeignClient;

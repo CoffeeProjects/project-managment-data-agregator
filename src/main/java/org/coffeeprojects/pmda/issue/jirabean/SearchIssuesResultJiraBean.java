@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.issue;
+package org.coffeeprojects.pmda.issue.jirabean;
 
 import java.util.List;
 

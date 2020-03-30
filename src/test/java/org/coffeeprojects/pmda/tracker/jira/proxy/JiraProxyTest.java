@@ -1,7 +1,7 @@
 package org.coffeeprojects.pmda.tracker.jira.proxy;
 
-import org.coffeeprojects.pmda.issue.IssueJiraBean;
-import org.coffeeprojects.pmda.issue.SearchIssuesResultJiraBean;
+import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
+import org.coffeeprojects.pmda.issue.jirabean.SearchIssuesResultJiraBean;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
