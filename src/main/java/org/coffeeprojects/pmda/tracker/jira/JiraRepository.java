@@ -28,16 +28,20 @@ public class JiraRepository {
     public List<IssueJiraBean> getModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
         // TODO: verifier si on peut récuperer tous les issues en même temps
         final String jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectName, DATE_TIME_FORMATTER.format(fromDate));
-        final SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields);
+        SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields);
+
+        for (IssueJiraBean issueJiraBean : searchIssuesResultJiraBean.getIssues()) {
+            issueJiraBean.getFields().setSprints(getSprintsByIssueJiraBean(issueJiraBean));
+        }
 
         return searchIssuesResultJiraBean.getIssues();
     }
 
-    public List<SprintJiraBean> getSprintsByIssueJiraBean(IssueJiraBean issueJiraBean) {
-        List<SprintJiraBean> sprintJiraBeans = new ArrayList<>();
+    Set<SprintJiraBean> getSprintsByIssueJiraBean(IssueJiraBean issueJiraBean) {
+        Set<SprintJiraBean> sprintJiraBeans = new HashSet<>();
 
-        if (issueJiraBean != null && issueJiraBean.getFields() != null && issueJiraBean.getFields().getSprints() != null) {
-                for (String sprint : issueJiraBean.getFields().getSprints()) {
+        if (issueJiraBean != null && issueJiraBean.getFields() != null && issueJiraBean.getFields().getSprintsToString() != null) {
+                for (String sprint : issueJiraBean.getFields().getSprintsToString()) {
                     SprintJiraBean sprintJiraBean = new SprintJiraBean();
                     String id = StringUtils.substringAfter(sprint, "id=");
                     String rapidView = StringUtils.substringAfterLast(id, ",rapidViewId=");
@@ -63,7 +67,7 @@ public class JiraRepository {
         return sprintJiraBeans;
     }
 
-    private static Date getDateWithTimezone(String timezone) {
+    private Date getDateWithTimezone(String timezone) {
 
         SimpleDateFormat startDateTZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         startDateTZ.setTimeZone(TimeZone.getTimeZone("UTC"));

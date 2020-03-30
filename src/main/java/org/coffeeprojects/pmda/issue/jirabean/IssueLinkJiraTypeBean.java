@@ -13,8 +13,9 @@ public class IssueLinkJiraTypeBean {
         return id;
     }
 
-    public void setId(String id) {
+    public IssueLinkJiraTypeBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {

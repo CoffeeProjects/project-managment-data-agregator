@@ -11,16 +11,18 @@ public class IssueLinkJiraBean {
         return type;
     }
 
-    public void setType(IssueLinkJiraTypeBean type) {
+    public IssueLinkJiraBean setType(IssueLinkJiraTypeBean type) {
         this.type = type;
+        return this;
     }
 
     public IssueJiraBean getInwardIssue() {
         return inwardIssue;
     }
 
-    public void setInwardIssue(IssueJiraBean inwardIssue) {
+    public IssueLinkJiraBean setInwardIssue(IssueJiraBean inwardIssue) {
         this.inwardIssue = inwardIssue;
+        return this;
     }
 
     @Override

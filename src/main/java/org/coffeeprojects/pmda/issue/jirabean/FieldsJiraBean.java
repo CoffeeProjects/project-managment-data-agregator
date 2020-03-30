@@ -6,6 +6,7 @@ import org.coffeeprojects.pmda.issueType.IssueTypeJiraBean;
 import org.coffeeprojects.pmda.priority.PriorityJiraBean;
 import org.coffeeprojects.pmda.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.resolution.ResolutionJiraBean;
+import org.coffeeprojects.pmda.sprint.SprintJiraBean;
 import org.coffeeprojects.pmda.status.StatusJiraBean;
 import org.coffeeprojects.pmda.user.UserJiraBean;
 import org.coffeeprojects.pmda.version.VersionJiraBean;
@@ -51,7 +52,9 @@ public class FieldsJiraBean {
     private Set<IssueLinkJiraBean> issueLinks;
 
     @JsonProperty("customfield_10020")
-    private List<String> sprints;
+    private List<String> sprintsToString;
+
+    private Set<SprintJiraBean> sprints;
 
     public UserJiraBean getAssignee() {
         return assignee;
@@ -197,11 +200,20 @@ public class FieldsJiraBean {
         return this;
     }
 
-    public List<String> getSprints() {
+    public List<String> getSprintsToString() {
+        return sprintsToString;
+    }
+
+    public FieldsJiraBean setSprintsToString(List<String> sprintsToString) {
+        this.sprintsToString = sprintsToString;
+        return this;
+    }
+
+    public Set<SprintJiraBean> getSprints() {
         return sprints;
     }
 
-    public FieldsJiraBean setSprints(List<String> sprints) {
+    public FieldsJiraBean setSprints(Set<SprintJiraBean> sprints) {
         this.sprints = sprints;
         return this;
     }
@@ -227,12 +239,13 @@ public class FieldsJiraBean {
                 Objects.equals(created, that.created) &&
                 Objects.equals(updated, that.updated) &&
                 Objects.equals(issueLinks, that.issueLinks) &&
+                Objects.equals(sprintsToString, that.sprintsToString) &&
                 Objects.equals(sprints, that.sprints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, issueLinks, sprints);
+        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, issueLinks, sprintsToString, sprints);
     }
 
     @Override
@@ -254,6 +267,7 @@ public class FieldsJiraBean {
                 ", created=" + created +
                 ", updated=" + updated +
                 ", issueLinks=" + issueLinks +
+                ", sprintsToString=" + sprintsToString +
                 ", sprints=" + sprints +
                 '}';
     }

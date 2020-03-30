@@ -27,8 +27,9 @@ public class SprintEntity extends AuditableEntity implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
+    public SprintEntity setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getRapidViewId() {

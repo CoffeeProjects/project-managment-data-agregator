@@ -28,11 +28,6 @@ public class IssueService {
     @Transactional
     public void updateLastModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectName, fromDate, expand, fields);
-
-        // TODO : Mapper ces sprints dans SprintJiraBean et les intégrer dans issueEntity
-        for (IssueJiraBean issueJiraBean : issueJiraBeans) {
-            jiraRepository.getSprintsByIssueJiraBean(issueJiraBean);
-        }
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
 //        this.issueRepository.saveAll(issueEntities);
         // TODO : à tester

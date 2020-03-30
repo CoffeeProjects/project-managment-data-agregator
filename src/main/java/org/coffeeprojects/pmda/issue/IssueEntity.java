@@ -233,7 +233,8 @@ public class IssueEntity extends AuditableEntity implements Serializable {
         return sprints;
     }
 
-    public void setSprints(Set<SprintEntity> sprints) {
+    public IssueEntity setSprints(Set<SprintEntity> sprints) {
         this.sprints = sprints;
+        return this;
     }
 }
