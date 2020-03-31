@@ -1,4 +1,13 @@
+hibernate:
+  default_schema: public
+
 spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:src/main/resources/db/changelog/db.changelog-master.yaml
+  jpa:
+    hibernate:
+      show-sql: true
   datasource:
     url: jdbc:postgresql://localhost:5432/pmda
     username: postgres
@@ -22,3 +31,4 @@ tracker:
 logging:
   level:
     root: DEBUG
+    liquibase: DEBUG
