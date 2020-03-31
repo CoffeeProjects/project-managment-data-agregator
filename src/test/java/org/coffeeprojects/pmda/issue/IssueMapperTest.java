@@ -52,6 +52,7 @@ public class IssueMapperTest {
 
     @Test
     public void to_entity_should_map_issue_jira_bean_to_issue_entity() {
+
         // Given
         IssueJiraBean issueJiraBean = new IssueJiraBean()
                 .setId("id1")

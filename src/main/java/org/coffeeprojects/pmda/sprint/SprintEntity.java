@@ -36,55 +36,62 @@ public class SprintEntity extends AuditableEntity implements Serializable {
         return rapidViewId;
     }
 
-    public void setRapidViewId(String rapidViewId) {
+    public SprintEntity setRapidViewId(String rapidViewId) {
         this.rapidViewId = rapidViewId;
+        return this;
     }
 
     public String getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public SprintEntity setState(String state) {
         this.state = state;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public SprintEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getGoal() {
         return goal;
     }
 
-    public void setGoal(String goal) {
+    public SprintEntity setGoal(String goal) {
         this.goal = goal;
+        return this;
     }
 
     public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public SprintEntity setStartDate(Date startDate) {
         this.startDate = startDate;
+        return this;
     }
 
     public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public SprintEntity setEndDate(Date endDate) {
         this.endDate = endDate;
+        return this;
     }
 
     public Date getCompleteDate() {
         return completeDate;
     }
 
-    public void setCompleteDate(Date completeDate) {
+    public SprintEntity setCompleteDate(Date completeDate) {
         this.completeDate = completeDate;
+        return this;
     }
 }
