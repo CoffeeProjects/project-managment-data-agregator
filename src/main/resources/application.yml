@@ -9,11 +9,6 @@ spring:
     hibernate:
       show-sql: false
       ddl-auto: none
-  datasource:
-    url: jdbc:postgresql://localhost:5432/pmda
-    username: postgres
-    password: postgres123
-    driver-class-name: org.postgresql.Driver
 
 feign:
   client:
@@ -22,12 +17,6 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: full
-
-tracker:
-  jira:
-    url:
-    user:
-    password:
 
 logging:
   level:
