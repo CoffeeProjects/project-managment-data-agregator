@@ -4,10 +4,11 @@ hibernate:
 spring:
   liquibase:
     enabled: true
-    change-log: classpath:src/main/resources/db/changelog/db.changelog-master.yml
+    change-log: classpath:db/changelog/db.changelog-master.yml
   jpa:
     hibernate:
       show-sql: true
+      ddl-auto: none
   datasource:
     url: jdbc:postgresql://localhost:5432/pmda
     username: postgres
