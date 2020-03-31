@@ -4,7 +4,7 @@ hibernate:
 spring:
   liquibase:
     enabled: true
-    change-log: classpath:src/main/resources/db/changelog/db.changelog-master.yaml
+    change-log: classpath:src/main/resources/db/changelog/db.changelog-master.yml
   jpa:
     hibernate:
       show-sql: true

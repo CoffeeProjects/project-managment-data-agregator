@@ -25,7 +25,7 @@
 		<liquibase.version>3.8.8</liquibase.version>
 		<liquibase-hibernate.version>3.8</liquibase-hibernate.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
-		<diffChangeLogFile>src/main/resources/db/changelog/to-be-changed.yaml</diffChangeLogFile>
+		<diffChangeLogFile>src/main/resources/db/changelog/to-be-changed.yml</diffChangeLogFile>
 	</properties>
 
 	<dependencies>
