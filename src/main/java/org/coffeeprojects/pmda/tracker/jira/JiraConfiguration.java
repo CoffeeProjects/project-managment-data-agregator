@@ -18,11 +18,6 @@ public class JiraConfiguration {
     private String password;
 
     @Bean
-    Logger.Level feign() {
-        return Logger.Level.FULL;
-    }
-
-    @Bean
     public Contract feignContract() {
         return new feign.Contract.Default();
     }

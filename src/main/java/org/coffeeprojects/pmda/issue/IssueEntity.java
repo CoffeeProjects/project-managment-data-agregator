@@ -6,6 +6,7 @@ import org.coffeeprojects.pmda.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.priority.PriorityEntity;
 import org.coffeeprojects.pmda.project.ProjectEntity;
 import org.coffeeprojects.pmda.resolution.ResolutionEntity;
+import org.coffeeprojects.pmda.sprint.SprintEntity;
 import org.coffeeprojects.pmda.status.StatusEntity;
 import org.coffeeprojects.pmda.user.UserEntity;
 import org.coffeeprojects.pmda.version.VersionEntity;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -62,6 +64,9 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     @OneToMany
     private Set<IssueEntity> issueLinks;
+
+    @OneToMany
+    private Set<SprintEntity> sprints;
 
     public String getId() {
         return id;
@@ -223,5 +228,52 @@ public class IssueEntity extends AuditableEntity implements Serializable {
     public IssueEntity setIssueLinks(Set<IssueEntity> issueLinks) {
         this.issueLinks = issueLinks;
         return this;
+    }
+
+    public Set<SprintEntity> getSprints() {
+        return sprints;
+    }
+
+    public IssueEntity setSprints(Set<SprintEntity> sprints) {
+        this.sprints = sprints;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IssueEntity that = (IssueEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "IssueEntity{" +
+                "id='" + id + '\'' +
+                ", key='" + key + '\'' +
+                ", assignee=" + assignee +
+                ", reporter=" + reporter +
+                ", creator=" + creator +
+                ", summary='" + summary + '\'' +
+                ", status=" + status +
+                ", resolution=" + resolution +
+                ", resolutionDate=" + resolutionDate +
+                ", priority=" + priority +
+                ", issueType=" + issueType +
+                ", project=" + project +
+                ", fixVersions=" + fixVersions +
+                ", labels=" + labels +
+                ", components=" + components +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", issueLinks=" + issueLinks +
+                ", sprints=" + sprints +
+                '}';
     }
 }

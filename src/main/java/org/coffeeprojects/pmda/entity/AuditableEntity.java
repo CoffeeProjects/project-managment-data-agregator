@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
-public class AuditableEntity {
+public abstract class AuditableEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)

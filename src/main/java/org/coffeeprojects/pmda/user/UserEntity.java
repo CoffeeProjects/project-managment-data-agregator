@@ -54,4 +54,14 @@ public class UserEntity extends AuditableEntity implements Serializable {
         this.active = active;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "accountId='" + accountId + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", active=" + active +
+                '}';
+    }
 }
