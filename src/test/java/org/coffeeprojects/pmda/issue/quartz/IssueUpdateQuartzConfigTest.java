@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.batch;
+package org.coffeeprojects.pmda.issue.quartz;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-public class QuartzConfigTest {
+public class IssueUpdateQuartzConfigTest {
 
     @Test
     public void cron_expression_is_valid() throws ParseException {

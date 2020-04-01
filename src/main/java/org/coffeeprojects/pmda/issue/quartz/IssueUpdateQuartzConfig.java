@@ -1,5 +1,7 @@
-package org.coffeeprojects.pmda.batch;
+package org.coffeeprojects.pmda.issue.quartz;
 
+import org.coffeeprojects.pmda.batch.AutowiringSpringBeanJobFactory;
+import org.coffeeprojects.pmda.batch.BatchConstant;
 import org.quartz.spi.JobFactory;
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
@@ -18,8 +20,8 @@ import java.util.Map;
 
 @Configuration
 @ConditionalOnExpression("'${scheduler.enabled}'=='true'")
-public class QuartzConfig {
-    @Value("${scheduler.trigger.cron-expression}")
+public class IssueUpdateQuartzConfig {
+    @Value("${scheduler.trigger.issue-update-cron-expression}")
     private String cronExpression;
 
     @Autowired
@@ -35,7 +37,7 @@ public class QuartzConfig {
     @Bean
     public JobDetailFactoryBean jobDetailFactoryBean() {
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
-        jobDetailFactoryBean.setJobClass(QuartzJobLauncher.class);
+        jobDetailFactoryBean.setJobClass(IssueUpdateQuartzJobLauncher.class);
         Map<String, Object> map = new HashMap<>();
         map.put("jobName", BatchConstant.JOB_ISSUE_UPDATE);
         jobDetailFactoryBean.setJobDataAsMap(map);

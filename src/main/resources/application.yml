@@ -1,7 +1,7 @@
 scheduler:
   enabled: true
   trigger:
-    cron-expression: "0 0/1 * 1/1 * ? *"
+    issue-update-cron-expression: "0 0/1 * 1/1 * ? *"
 
 spring:
   batch:

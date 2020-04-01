@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.issue;
+package org.coffeeprojects.pmda.issue.quartz;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +19,7 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
     }
 
     @Override
-    public RepeatStatus execute(StepContribution stepContribution,
-                                ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         try {
             // Add your business logic here.
             logger.info("Custom Step is running ...");

@@ -8,8 +8,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableBatchProcessing
 public class BatchConfig extends DefaultBatchConfigurer {
 
-    /*@Override
-    public void setDataSource(DataSource dataSource) {
-        // initialize will use a Map based JobRepository (instead of database)
-    }*/
 }
