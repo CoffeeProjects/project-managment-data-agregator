@@ -29,7 +29,7 @@ public class IssueService {
     public void updateLastModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectName, fromDate, expand, fields);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
-//        this.issueRepository.saveAll(issueEntities);
+        this.issueRepository.saveAll(issueEntities);
         // TODO : à tester
     }
 }

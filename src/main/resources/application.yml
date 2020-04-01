@@ -1,7 +1,24 @@
+hibernate:
+  default_schema: public
+
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  jpa:
+    hibernate:
+      show-sql: false
+      ddl-auto: none
+
 feign:
   client:
     config:
       default:
         connectTimeout: 5000
         readTimeout: 5000
-        loggerLevel: basic
+        loggerLevel: full
+
+logging:
+  level:
+    root: ERROR
+    liquibase: ERROR
