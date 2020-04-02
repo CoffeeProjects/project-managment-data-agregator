@@ -4,6 +4,7 @@ import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @Service
 public class ProjectService {
@@ -23,10 +24,14 @@ public class ProjectService {
     }
 
     @Transactional
-    public ProjectEntity getProjectByKey(String key) {
+    public void updateProjectByKey(String key) {
         ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(key);
         ProjectEntity projectEntity = projectMapper.toEntity(projectJiraBean);
-        this.projectRepository.save(projectEntity);
-        return projectEntity;
+
+        Date currentDateTime = new Date();
+        projectEntity.setLastCheck(currentDateTime);
+        projectEntity.setUpdatedAt(currentDateTime);
+
+        this.projectRepository.saveAndFlush(projectEntity);
     }
 }

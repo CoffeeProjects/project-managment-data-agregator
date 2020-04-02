@@ -12,7 +12,6 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 @Component
 public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
@@ -31,7 +30,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         try {
             logger.info("Project update step is running ...");
-            projectService.getProjectByKey("PMDA");
+            projectService.updateProjectByKey("PMDA");
         } catch (Exception e) {
             e.printStackTrace();
         }

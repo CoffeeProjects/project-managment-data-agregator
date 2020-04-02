@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.project.quartz;
 
+import org.coffeeprojects.pmda.project.ProjectService;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import javax.transaction.Transactional;
 import java.util.Map;
 
 @PersistJobDataAfterExecution
@@ -30,7 +32,11 @@ public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private ProjectService projectService;
+
     @Override
+    @Transactional
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
             jobLocator = applicationContext.getBean(JobLocator.class);
