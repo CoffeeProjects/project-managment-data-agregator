@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.project.quartz;
 
+import org.coffeeprojects.pmda.project.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
@@ -9,20 +10,28 @@ import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+@Component
 public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
+
     private final Logger logger = LoggerFactory.getLogger(ProjectUpdateStep.class);
+
+    @Autowired
+    ProjectService projectService;
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
-        logger.debug("Custom step initialized.");
+        logger.debug("Project update step initialized.");
     }
 
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         try {
-            // Add your business logic here.
-            logger.info("Custom Step is running ...");
+            logger.info("Project update step is running ...");
+            projectService.getProjectByKey("PMDA");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,7 +40,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
-        logger.debug("Custom step ended.");
+        logger.debug("Project update step ended.");
         return ExitStatus.COMPLETED;
     }
 }

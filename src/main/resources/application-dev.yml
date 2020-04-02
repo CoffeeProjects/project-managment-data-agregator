@@ -24,9 +24,9 @@ feign:
 
 tracker:
   jira:
-    url:
-    user:
-    password:
+    url: https://herubel.atlassian.net/rest/api/3/
+    user: "julien@herubel.com"
+    password: "KxmWqia8pY0XXUMws60M0217"
 
 logging:
   level:

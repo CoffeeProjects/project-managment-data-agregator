@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.project.quartz;
 
 import org.coffeeprojects.pmda.batch.BatchConstant;
+import org.coffeeprojects.pmda.issue.quartz.IssueUpdateStep;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class ProjectUpdateJobConfig {
 
     @Bean
-    protected Step projectUpdateStep(StepBuilderFactory stepBuilders) {
+    protected Step projectUpdateConfigStep(StepBuilderFactory stepBuilders) {
         return stepBuilders
                 .get("projectUpdateStep")
                 .tasklet(new ProjectUpdateStep())
@@ -23,7 +24,7 @@ public class ProjectUpdateJobConfig {
     public Job projectUpdateJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
         return jobBuilders
                 .get(BatchConstant.JOB_PROJECT_UPDATE)
-                .start(projectUpdateStep(stepBuilders))
+                .start(projectUpdateConfigStep(stepBuilders))
                 .build();
     }
 }

@@ -1,7 +1,6 @@
 package org.coffeeprojects.pmda.project;
 
-import org.coffeeprojects.pmda.tracker.jira.proxy.JiraProxy;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -9,11 +8,25 @@ import javax.transaction.Transactional;
 @Service
 public class ProjectService {
 
-    @Autowired
-    private JiraProxy jiraProxy;
+    private final ProjectRepository projectRepository;
+
+    private final ProjectMapper projectMapper;
+
+    private final JiraRepository jiraRepository;
+
+    public ProjectService(ProjectRepository projectRepository,
+                          ProjectMapper projectMapper,
+                        JiraRepository jiraRepository) {
+        this.projectRepository = projectRepository;
+        this.projectMapper = projectMapper;
+        this.jiraRepository = jiraRepository;
+    }
 
     @Transactional
     public ProjectEntity getProjectByKey(String key) {
-        return jiraProxy.getProjectByKey(key);
+        ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(key);
+        ProjectEntity projectEntity = projectMapper.toEntity(projectJiraBean);
+        this.projectRepository.save(projectEntity);
+        return projectEntity;
     }
 }

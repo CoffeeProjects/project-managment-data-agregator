@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class IssueUpdateJobConfig {
 
     @Bean
-    protected Step issueUpdateStep(StepBuilderFactory stepBuilders) {
+    protected Step issueUpdateConfigStep(StepBuilderFactory stepBuilders) {
         return stepBuilders
                 .get("issueUpdateStep")
                 .tasklet(new IssueUpdateStep())
@@ -23,7 +23,7 @@ public class IssueUpdateJobConfig {
     public Job issueUpdateJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
         return jobBuilders
                 .get(BatchConstant.JOB_ISSUE_UPDATE)
-                .start(issueUpdateStep(stepBuilders))
+                .start(issueUpdateConfigStep(stepBuilders))
                 .build();
     }
 }

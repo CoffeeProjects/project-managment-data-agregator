@@ -3,6 +3,7 @@ package org.coffeeprojects.pmda.tracker.jira;
 import org.apache.commons.lang3.StringUtils;
 import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.issue.jirabean.SearchIssuesResultJiraBean;
+import org.coffeeprojects.pmda.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.sprint.SprintJiraBean;
 import org.coffeeprojects.pmda.tracker.jira.proxy.JiraProxy;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,10 @@ public class JiraRepository {
 
     public JiraRepository(JiraProxy jiraProxy) {
         this.jiraProxy = jiraProxy;
+    }
+
+    public ProjectJiraBean getProjectDetails(String key) {
+        return jiraProxy.getProjectByKey(key);
     }
 
     public List<IssueJiraBean> getModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
