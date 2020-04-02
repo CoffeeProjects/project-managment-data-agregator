@@ -1,0 +1,20 @@
+databaseChangeLog:
+- changeSet:
+    id: 1585818065646-2
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: type
+            type: int4
+        tableName: project
+- changeSet:
+    id: 1585818065646-1
+    author: julienherubel (generated)
+    changes:
+    - dropNotNullConstraint:
+        columnDataType: boolean
+        columnName: active
+        tableName: project
+
