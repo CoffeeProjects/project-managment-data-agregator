@@ -19,6 +19,10 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastCheck;
 
+    @Column(insertable = false, updatable = false)
+    private ProjectEnum type;
+
+    @Column(insertable = false, updatable = false)
     private boolean active;
 
     public String getId() {
@@ -55,6 +59,14 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
     public ProjectEntity setLastCheck(Date lastCheck) {
         this.lastCheck = lastCheck;
         return this;
+    }
+
+    public ProjectEnum getType() {
+        return type;
+    }
+
+    public void setType(ProjectEnum type) {
+        this.type = type;
     }
 
     public boolean isActive() {

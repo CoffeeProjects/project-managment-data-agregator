@@ -23,6 +23,10 @@
 		<junit.version>4.13</junit.version>
 		<h2.version>1.4.200</h2.version>
 		<liquibase.version>3.8.8</liquibase.version>
+		<liquibase.diffChangeLogFile>src/main/resources/db/changelog/to-be-changed.yml</liquibase.diffChangeLogFile>
+		<liquibase.diffExcludeObjects>batch_job_seq,batch_job_execution_seq,batch_step_execution_seq,
+			batch_job_execution,batch_job_execution_context,batch_job_execution_params,batch_job_instance,
+			batch_step_execution,batch_step_execution_context</liquibase.diffExcludeObjects>
 		<liquibase-hibernate.version>3.8</liquibase-hibernate.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 	</properties>
@@ -145,7 +149,8 @@
 				<artifactId>liquibase-maven-plugin</artifactId>
 				<version>${liquibase.version}</version>
 				<configuration>
-					<diffChangeLogFile>${diffChangeLogFile}</diffChangeLogFile>
+					<diffChangeLogFile>${liquibase.diffChangeLogFile}</diffChangeLogFile>
+					<diffExcludeObjects>${liquibase.diffExcludeObjects}</diffExcludeObjects>
 					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
 				</configuration>
 				<dependencies>
