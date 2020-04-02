@@ -23,7 +23,7 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
     private ProjectEnum type;
 
     @Column(insertable = false, updatable = false)
-    private boolean active;
+    private Boolean active;
 
     public String getId() {
         return id;
@@ -69,11 +69,11 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
         this.type = type;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public ProjectEntity setActive(boolean active) {
+    public ProjectEntity setActive(Boolean active) {
         this.active = active;
         return this;
     }

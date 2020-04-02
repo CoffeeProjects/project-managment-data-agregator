@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ProjectService {
@@ -24,14 +25,23 @@ public class ProjectService {
     }
 
     @Transactional
-    public void updateProjectByKey(String key) {
-        ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(key);
-        ProjectEntity projectEntity = projectMapper.toEntity(projectJiraBean);
+    public void updateProjectByKey(ProjectEntity projectEntity) {
+        ProjectEntity projectEntityFromTracker = null;
+
+        if (ProjectEnum.JIRA.equals(projectEntity.getType())) {
+            ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity.getKey());
+            projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
+        }
 
         Date currentDateTime = new Date();
-        projectEntity.setLastCheck(currentDateTime);
-        projectEntity.setUpdatedAt(currentDateTime);
+        projectEntityFromTracker.setLastCheck(currentDateTime);
+        projectEntityFromTracker.setUpdatedAt(currentDateTime);
 
-        this.projectRepository.saveAndFlush(projectEntity);
+        this.projectRepository.save(projectEntityFromTracker);
+    }
+
+    @Transactional
+    public List<ProjectEntity> getAllProjectsFromDatabase() {
+        return this.projectRepository.findAll();
     }
 }
