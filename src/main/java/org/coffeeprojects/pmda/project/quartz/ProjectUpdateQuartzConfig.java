@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.issue.quartz;
+package org.coffeeprojects.pmda.project.quartz;
 
 import org.coffeeprojects.pmda.batch.BatchConstant;
 import org.quartz.spi.JobFactory;
@@ -17,37 +17,37 @@ import java.util.Map;
 
 @Configuration
 @ConditionalOnExpression("'${scheduler.enabled}'=='true'")
-public class IssueUpdateQuartzConfig {
+public class ProjectUpdateQuartzConfig {
 
-    @Value("${scheduler.trigger.issue-update-cron-expression}")
+    @Value("${scheduler.trigger.project-update-cron-expression}")
     private String cronExpression;
 
     @Autowired
     private ApplicationContext applicationContext;
 
     @Bean
-    public JobDetailFactoryBean jobDetailFactoryBean() {
+    public JobDetailFactoryBean projectJobDetailFactoryBean() {
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
-        jobDetailFactoryBean.setJobClass(IssueUpdateQuartzJobLauncher.class);
+        jobDetailFactoryBean.setJobClass(ProjectUpdateQuartzJobLauncher.class);
         Map<String, Object> map = new HashMap<>();
-        map.put("jobName", BatchConstant.JOB_ISSUE_UPDATE);
+        map.put("jobName", BatchConstant.JOB_PROJECT_UPDATE);
         jobDetailFactoryBean.setJobDataAsMap(map);
         return jobDetailFactoryBean;
     }
 
     @Bean
-    public CronTriggerFactoryBean cronTriggerFactoryBean() {
+    public CronTriggerFactoryBean projectCronTriggerFactoryBean() {
         CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-        cronTriggerFactoryBean.setJobDetail(jobDetailFactoryBean().getObject());
+        cronTriggerFactoryBean.setJobDetail(projectJobDetailFactoryBean().getObject());
         cronTriggerFactoryBean.setCronExpression(this.cronExpression);
         return cronTriggerFactoryBean;
     }
 
-    @Bean(name = "scheduler")
-    public SchedulerFactoryBean schedulerFactoryBean(JobFactory jobFactory) {
+    @Bean(name = "projectScheduler")
+    public SchedulerFactoryBean projectSchedulerFactoryBean(JobFactory jobFactory) {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
         scheduler.setJobFactory(jobFactory);
-        scheduler.setTriggers(cronTriggerFactoryBean().getObject());
+        scheduler.setTriggers(projectCronTriggerFactoryBean().getObject());
         scheduler.setApplicationContext(applicationContext);
         return scheduler;
     }

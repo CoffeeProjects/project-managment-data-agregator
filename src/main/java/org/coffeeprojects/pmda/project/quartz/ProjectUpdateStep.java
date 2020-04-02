@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.issue.quartz;
+package org.coffeeprojects.pmda.project.quartz;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +10,8 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
-public class IssueUpdateStep implements Tasklet, StepExecutionListener {
-
-    private final Logger logger = LoggerFactory.getLogger(IssueUpdateStep.class);
+public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
+    private final Logger logger = LoggerFactory.getLogger(ProjectUpdateStep.class);
 
     @Override
     public void beforeStep(StepExecution stepExecution) {

@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.issue.quartz;
+package org.coffeeprojects.pmda.project.quartz;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
-public class IssueUpdateQuartzJobLauncher extends QuartzJobBean {
+public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 

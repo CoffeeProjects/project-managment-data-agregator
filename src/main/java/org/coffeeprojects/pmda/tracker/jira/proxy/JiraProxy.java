@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 public interface JiraProxy {
 
     @RequestLine("GET project/{projectKey}")
-    ProjectEntity getById(@Param("projectKey") String projectKey);
+    ProjectEntity getProjectByKey(@Param("projectKey") String key);
 
     @RequestLine("GET search?query={jql}&expand={expand}&fields={fields}")
     SearchIssuesResultJiraBean searchIssues(@Param("jql") String query,
