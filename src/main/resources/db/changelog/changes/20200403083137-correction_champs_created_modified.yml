@@ -1,0 +1,249 @@
+databaseChangeLog:
+- changeSet:
+    id: 1585895505473-1
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: component
+- changeSet:
+    id: 1585895505473-2
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: issue
+- changeSet:
+    id: 1585895505473-3
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: issue_type
+- changeSet:
+    id: 1585895505473-4
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: priority
+- changeSet:
+    id: 1585895505473-5
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: project
+- changeSet:
+    id: 1585895505473-6
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: resolution
+- changeSet:
+    id: 1585895505473-7
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: sprint
+- changeSet:
+    id: 1585895505473-8
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: status
+- changeSet:
+    id: 1585895505473-9
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: user
+- changeSet:
+    id: 1585895505473-10
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: timestamp
+        tableName: version
+- changeSet:
+    id: 1585895505473-11
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: component
+- changeSet:
+    id: 1585895505473-12
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: issue
+- changeSet:
+    id: 1585895505473-13
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: issue_type
+- changeSet:
+    id: 1585895505473-14
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: priority
+- changeSet:
+    id: 1585895505473-15
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: project
+- changeSet:
+    id: 1585895505473-16
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: resolution
+- changeSet:
+    id: 1585895505473-17
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: sprint
+- changeSet:
+    id: 1585895505473-18
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: status
+- changeSet:
+    id: 1585895505473-19
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: user
+- changeSet:
+    id: 1585895505473-20
+    author: julienherubel (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: timestamp
+        tableName: version
+- changeSet:
+    id: 1585895505473-21
+    author: julienherubel (generated)
+    changes:
+    - dropColumn:
+        columnName: last_check
+        tableName: project
+
