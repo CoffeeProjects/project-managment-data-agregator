@@ -6,6 +6,7 @@ public class IssueLinkJiraBean {
 
     private IssueLinkJiraTypeBean type;
     private IssueJiraBean inwardIssue;
+    private IssueJiraBean outwardIssue;
 
     public IssueLinkJiraTypeBean getType() {
         return type;
@@ -23,6 +24,14 @@ public class IssueLinkJiraBean {
     public IssueLinkJiraBean setInwardIssue(IssueJiraBean inwardIssue) {
         this.inwardIssue = inwardIssue;
         return this;
+    }
+
+    public IssueJiraBean getOutwardIssue() {
+        return outwardIssue;
+    }
+
+    public void setOutwardIssue(IssueJiraBean outwardIssue) {
+        this.outwardIssue = outwardIssue;
     }
 
     @Override
@@ -44,6 +53,7 @@ public class IssueLinkJiraBean {
         return "IssueLinkJiraBean{" +
                 "type=" + type +
                 ", inwardIssue=" + inwardIssue +
+                ", outwardIssue=" + outwardIssue +
                 '}';
     }
 }

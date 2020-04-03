@@ -21,6 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Issue")
 public class IssueEntity extends AuditableEntity implements Serializable {
+
     @Id
     private String id;
 
