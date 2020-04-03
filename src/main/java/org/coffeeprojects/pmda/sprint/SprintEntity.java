@@ -1,10 +1,12 @@
 package org.coffeeprojects.pmda.sprint;
 
 import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.issue.IssueEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "Sprint")
@@ -12,16 +14,26 @@ public class SprintEntity extends AuditableEntity implements Serializable {
 
     @Id
     private String id;
+
     private String rapidViewId;
+
     private String state;
+
     private String name;
+
     private String goal;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date completeDate;
+
+    @ManyToMany(mappedBy="sprints")
+    private Set<IssueEntity> issues;
 
     public String getId() {
         return id;
@@ -93,5 +105,13 @@ public class SprintEntity extends AuditableEntity implements Serializable {
     public SprintEntity setCompleteDate(Date completeDate) {
         this.completeDate = completeDate;
         return this;
+    }
+
+    public Set<IssueEntity> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(Set<IssueEntity> issues) {
+        this.issues = issues;
     }
 }

@@ -47,13 +47,13 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     private ProjectEntity project;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<VersionEntity> fixVersions;
 
     @ElementCollection
     private List<String> labels;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<ComponentEntity> components;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,10 +62,10 @@ public class IssueEntity extends AuditableEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<IssueEntity> issueLinks;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<SprintEntity> sprints;
 
     public String getId() {

@@ -1,8 +1,8 @@
 scheduler:
   enabled: true
   trigger:
-    issue-update-cron-expression: "0 0/30 * 1/1 * ? *"
-    project-update-cron-expression: "0 0/1 * 1/1 * ? *"
+    issue-update-cron-expression: "0 0/1 * 1/1 * ? *"
+    project-update-cron-expression: "0 0/30 * 1/1 * ? *"
 
 spring:
   batch:

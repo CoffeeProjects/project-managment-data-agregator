@@ -8,6 +8,7 @@ import org.coffeeprojects.pmda.sprint.SprintJiraBean;
 import org.coffeeprojects.pmda.tracker.jira.proxy.JiraProxy;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.DateFormatter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -20,6 +21,7 @@ public class JiraRepository {
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project in (%s) AND updated >= \"%s\" ORDER BY updated ASC";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.systemDefault());
+    //private static final DateFormatter DA = DateFormatter(DATE) .ofPattern(DATE_FORMAT).withZone(ZoneId.systemDefault());
     private final JiraProxy jiraProxy;
 
     public JiraRepository(JiraProxy jiraProxy) {
@@ -30,16 +32,29 @@ public class JiraRepository {
         return jiraProxy.getProjectByKey(key);
     }
 
-    public List<IssueJiraBean> getModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
-        // TODO: verifier si on peut récuperer tous les issues en même temps
-        final String jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectName, DATE_TIME_FORMATTER.format(fromDate));
-        SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields);
+    public List<IssueJiraBean> getModifiedIssues(String projectName, Instant fromDate, String fields) {
 
-        for (IssueJiraBean issueJiraBean : searchIssuesResultJiraBean.getIssues()) {
-            issueJiraBean.getFields().setSprints(getSprintsByIssueJiraBean(issueJiraBean));
+        final String jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectName, DATE_TIME_FORMATTER.format(fromDate));
+        final String expand = "changelog";
+        final Integer maxResults = 100;
+        Integer startAt = 0;
+        List<IssueJiraBean> issueJiraBeans = new ArrayList();
+
+        SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields, maxResults.toString(), startAt.toString());
+        double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
+
+        for (int i = 1; i <= pages; i++) {
+            if (i > 1) {
+                startAt = (maxResults.intValue() * i) + 1;
+                searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields, maxResults.toString(), startAt.toString());
+            }
+            for (IssueJiraBean issueJiraBean : searchIssuesResultJiraBean.getIssues()) {
+                issueJiraBean.getFields().setSprints(getSprintsByIssueJiraBean(issueJiraBean));
+            }
+            issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
         }
 
-        return searchIssuesResultJiraBean.getIssues();
+        return issueJiraBeans;
     }
 
     Set<SprintJiraBean> getSprintsByIssueJiraBean(IssueJiraBean issueJiraBean) {

@@ -39,6 +39,8 @@ public class JiraRepositoryTest {
         Instant lastModifiedDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
         String expand = "schema,names";
         String fields = "summary,issuetype";
+        String maxResults = "50";
+        String startAt = "0";
 
         List<IssueJiraBean> issues = Arrays.asList(
                 new IssueJiraBean().setId("id1").setKey("key1"),
@@ -51,10 +53,10 @@ public class JiraRepositoryTest {
                 .setIssues(issues);
 
         String jql = "project in (pmda) AND updated >= \"2020-03-29 11:15\"";
-        when(jiraProxy.searchIssues(jql, expand, fields)).thenReturn(searchIssuesResultJiraBean);
+        when(jiraProxy.searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean);
 
         // When
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectName, lastModifiedDate, expand, fields);
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectName, lastModifiedDate, fields);
 
         // Then
         assertThat(issueJiraBeans).isEqualTo(issueJiraBeans);

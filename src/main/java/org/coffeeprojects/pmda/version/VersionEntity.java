@@ -1,11 +1,11 @@
 package org.coffeeprojects.pmda.version;
 
 import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.issue.IssueEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "Version")
@@ -14,6 +14,9 @@ public class VersionEntity extends AuditableEntity implements Serializable {
     private String id;
 
     private String name;
+
+    @ManyToMany(mappedBy="fixVersions")
+    private Set<IssueEntity> issues;
 
     public String getId() {
         return id;
@@ -31,5 +34,13 @@ public class VersionEntity extends AuditableEntity implements Serializable {
     public VersionEntity setName(String name) {
         this.name = name;
         return this;
+    }
+
+    public Set<IssueEntity> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(Set<IssueEntity> issues) {
+        this.issues = issues;
     }
 }

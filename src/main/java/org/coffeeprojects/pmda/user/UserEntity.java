@@ -17,7 +17,7 @@ public class UserEntity extends AuditableEntity implements Serializable {
 
     private String displayName;
 
-    private boolean active;
+    private Boolean active;
 
     public String getAccountId() {
         return accountId;
@@ -46,11 +46,11 @@ public class UserEntity extends AuditableEntity implements Serializable {
         return this;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public UserEntity setActive(boolean active) {
+    public UserEntity setActive(Boolean active) {
         this.active = active;
         return this;
     }

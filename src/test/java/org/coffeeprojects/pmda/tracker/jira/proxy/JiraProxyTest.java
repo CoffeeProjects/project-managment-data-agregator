@@ -30,6 +30,8 @@ public class JiraProxyTest {
         String jql = "project in (PMDA) AND updated >= \"2020-03-29 10:09\"";
         String fields = "key";
         String expand = "changelog";
+        String maxResults = "50";
+        String startAt = "0";
 
         ClassLoader classLoader = this.getClass().getClassLoader();
         File file = new File(classLoader.getResource("data/search-issues-result.json").getFile());
@@ -45,7 +47,7 @@ public class JiraProxyTest {
         );
 
         // When
-        SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields);
+        SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields, maxResults, startAt);
 
         // Then
         assertThat(searchIssuesResultJiraBean).isNotNull();

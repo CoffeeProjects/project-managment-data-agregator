@@ -14,9 +14,10 @@ public interface JiraProxy {
     @RequestLine("GET project/{projectKey}")
     ProjectJiraBean getProjectByKey(@Param("projectKey") String key);
 
-    @RequestLine("GET search?query={jql}&expand={expand}&fields={fields}")
+    @RequestLine("GET search?query={jql}&expand={expand}&fields={fields}&maxResults={maxResults}&startAt={startAt}")
     SearchIssuesResultJiraBean searchIssues(@Param("jql") String query,
                                             @Param("expand") String expand,
-                                            @Param("fields") String fields);
-
+                                            @Param("fields") String fields,
+                                            @Param("maxResults") String maxResults,
+                                            @Param("startAt") String startAt);
 }
