@@ -15,7 +15,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -27,34 +26,49 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     private String key;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private UserEntity assignee;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private UserEntity reporter;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private UserEntity creator;
 
     private String summary;
 
     private StatusEntity status;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private ResolutionEntity resolution;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date resolutionDate;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private PriorityEntity priority;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private IssueTypeEntity issueType;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private ProjectEntity project;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "version_like",
+            joinColumns = @JoinColumn(name = "issue_id"),
+            inverseJoinColumns = @JoinColumn(name = "version_id"))
     private Set<VersionEntity> fixVersions;
 
     @ElementCollection
     private List<String> labels;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "component_like",
+            joinColumns = @JoinColumn(name = "issue_id"),
+            inverseJoinColumns = @JoinColumn(name = "component_id"))
     private Set<ComponentEntity> components;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -64,9 +78,10 @@ public class IssueEntity extends AuditableEntity implements Serializable {
     private Date updated;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private Set<IssueEntity> issueLinks;
-
-    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "sprint_like",
+            joinColumns = @JoinColumn(name = "issue_id"),
+            inverseJoinColumns = @JoinColumn(name = "sprint_id"))
     private Set<SprintEntity> sprints;
 
     public String getId() {
@@ -222,15 +237,6 @@ public class IssueEntity extends AuditableEntity implements Serializable {
         return this;
     }
 
-    public Set<IssueEntity> getIssueLinks() {
-        return issueLinks;
-    }
-
-    public IssueEntity setIssueLinks(Set<IssueEntity> issueLinks) {
-        this.issueLinks = issueLinks;
-        return this;
-    }
-
     public Set<SprintEntity> getSprints() {
         return sprints;
     }
@@ -238,43 +244,5 @@ public class IssueEntity extends AuditableEntity implements Serializable {
     public IssueEntity setSprints(Set<SprintEntity> sprints) {
         this.sprints = sprints;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        IssueEntity that = (IssueEntity) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "IssueEntity{" +
-                "id='" + id + '\'' +
-                ", key='" + key + '\'' +
-                ", assignee=" + assignee +
-                ", reporter=" + reporter +
-                ", creator=" + creator +
-                ", summary='" + summary + '\'' +
-                ", status=" + status +
-                ", resolution=" + resolution +
-                ", resolutionDate=" + resolutionDate +
-                ", priority=" + priority +
-                ", issueType=" + issueType +
-                ", project=" + project +
-                ", fixVersions=" + fixVersions +
-                ", labels=" + labels +
-                ", components=" + components +
-                ", created=" + created +
-                ", updated=" + updated +
-                ", issueLinks=" + issueLinks +
-                ", sprints=" + sprints +
-                '}';
     }
 }

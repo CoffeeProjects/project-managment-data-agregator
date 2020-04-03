@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "User")
+@Table(name = "UserAccount")
 public class UserEntity extends AuditableEntity implements Serializable {
     @Id
     private String accountId;

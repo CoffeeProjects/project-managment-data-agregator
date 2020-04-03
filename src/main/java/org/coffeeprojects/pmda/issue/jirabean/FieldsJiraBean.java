@@ -48,9 +48,6 @@ public class FieldsJiraBean {
 
     private Date updated;
 
-    @JsonProperty("issuelinks")
-    private Set<IssueLinkJiraBean> issueLinks;
-
     @JsonProperty("customfield_10020")
     private List<String> sprintsToString;
 
@@ -191,15 +188,6 @@ public class FieldsJiraBean {
         return this;
     }
 
-    public Set<IssueLinkJiraBean> getIssueLinks() {
-        return issueLinks;
-    }
-
-    public FieldsJiraBean setIssueLinks(Set<IssueLinkJiraBean> issueLinks) {
-        this.issueLinks = issueLinks;
-        return this;
-    }
-
     public List<String> getSprintsToString() {
         return sprintsToString;
     }
@@ -238,14 +226,13 @@ public class FieldsJiraBean {
                 Objects.equals(components, that.components) &&
                 Objects.equals(created, that.created) &&
                 Objects.equals(updated, that.updated) &&
-                Objects.equals(issueLinks, that.issueLinks) &&
                 Objects.equals(sprintsToString, that.sprintsToString) &&
                 Objects.equals(sprints, that.sprints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, issueLinks, sprintsToString, sprints);
+        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, sprintsToString, sprints);
     }
 
     @Override
@@ -266,7 +253,6 @@ public class FieldsJiraBean {
                 ", components=" + components +
                 ", created=" + created +
                 ", updated=" + updated +
-                ", issueLinks=" + issueLinks +
                 ", sprintsToString=" + sprintsToString +
                 ", sprints=" + sprints +
                 '}';

@@ -5,7 +5,6 @@ import org.coffeeprojects.pmda.component.ComponentJiraBean;
 import org.coffeeprojects.pmda.component.ComponentMapperImpl;
 import org.coffeeprojects.pmda.issue.jirabean.FieldsJiraBean;
 import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
-import org.coffeeprojects.pmda.issue.jirabean.IssueLinkJiraBean;
 import org.coffeeprojects.pmda.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.issueType.IssueTypeJiraBean;
 import org.coffeeprojects.pmda.issueType.IssueTypeMapperImpl;
@@ -60,22 +59,8 @@ public class IssueMapperTest {
                 .setExpand("expand")
                 .setFields(
                         new FieldsJiraBean()
-                                .setAssignee(new UserJiraBean().setAccountId("11111"))
-                                .setReporter(new UserJiraBean().setAccountId("22222"))
-                                .setCreator(new UserJiraBean().setAccountId("33333"))
                                 .setSummary("summary")
-                                .setStatus(new StatusJiraBean().setId("11"))
-                                .setResolution(new ResolutionJiraBean().setId("1"))
-                                .setPriority(new PriorityJiraBean().setId("12"))
-                                .setIssueType(new IssueTypeJiraBean().setId("13"))
-                                .setProject(new ProjectJiraBean().setId("14"))
-                                .setFixVersions(Set.of(new VersionJiraBean().setId("15")))
                                 .setLabels(Arrays.asList("test-label", "label2"))
-                                .setComponents(Set.of(new ComponentJiraBean().setId("16")))
-                                .setCreated(new Date())
-                                .setUpdated(new Date())
-                                .setIssueLinks(Set.of(new IssueLinkJiraBean().setInwardIssue(new IssueJiraBean().setId("17"))))
-                                .setSprints(Set.of(new SprintJiraBean().setId("18")))
                 );
 
         // When
@@ -85,23 +70,9 @@ public class IssueMapperTest {
         IssueEntity expectedIssueEntity = new IssueEntity()
                 .setId("id1")
                 .setKey("key1")
-                .setAssignee(new UserEntity().setAccountId("11111"))
-                .setReporter(new UserEntity().setAccountId("22222"))
-                .setCreator(new UserEntity().setAccountId("33333"))
                 .setSummary("summary")
-                .setStatus(new StatusEntity().setId("11"))
-                .setResolution(new ResolutionEntity().setId("1"))
-                .setPriority(new PriorityEntity().setId("12"))
-                .setIssueType(new IssueTypeEntity().setId("13"))
-                .setProject(new ProjectEntity().setId("14"))
-                .setFixVersions(Set.of(new VersionEntity().setId("15")))
-                .setLabels(Arrays.asList("test-label", "label2"))
-                .setComponents(Set.of(new ComponentEntity().setId("16")))
-                .setCreated(new Date())
-                .setUpdated(new Date())
-                .setIssueLinks(Set.of(new IssueEntity().setId("17")))
-                .setSprints(Set.of(new SprintEntity().setId("18")));
+                .setLabels(Arrays.asList("test-label", "label2"));
 
-        assertThat(issueEntity).isEqualTo(expectedIssueEntity);
+        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
     }
 }
