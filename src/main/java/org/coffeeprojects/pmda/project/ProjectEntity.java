@@ -2,9 +2,11 @@ package org.coffeeprojects.pmda.project;
 
 import org.coffeeprojects.pmda.entity.AuditableEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "Project")
@@ -15,9 +17,6 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
     private String key;
 
     private String name;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastCheck;
 
     @Column(insertable = false, updatable = false)
     private ProjectEnum type;
@@ -49,15 +48,6 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
 
     public ProjectEntity setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public Date getLastCheck() {
-        return lastCheck;
-    }
-
-    public ProjectEntity setLastCheck(Date lastCheck) {
-        this.lastCheck = lastCheck;
         return this;
     }
 

@@ -33,11 +33,9 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
         try {
-            logger.info("Project update step is running ...");
-
             List<ProjectEntity> projectEntities = projectService.getAllProjectsFromDatabase();
             for (ProjectEntity projectEntity: projectEntities) {
-                if (projectEntity.isActive() && projectEntity.getLastCheck().compareTo(new Date()) < 0) {
+                if (projectEntity.isActive()) {
                     projectService.updateProjectByKey(projectEntity);
                 }
             }

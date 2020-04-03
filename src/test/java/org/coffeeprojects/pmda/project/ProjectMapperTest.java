@@ -36,7 +36,6 @@ public class ProjectMapperTest {
                 .setId("1")
                 .setKey("Key")
                 .setName("Name")
-                .setLastCheck(date)
                 .setActive(true);
         assertThat(projectEntity.getId()).isEqualTo(expectedProjectEntity.getId());
         assertThat(projectEntity.getKey()).isEqualTo(expectedProjectEntity.getKey());

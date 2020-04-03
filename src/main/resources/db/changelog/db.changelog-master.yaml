@@ -3,3 +3,5 @@ databaseChangeLog:
       file: classpath:db/changelog/changes/20200331164301-init.yml
   - include:
       file: classpath:db/changelog/changes/20200402110057-gestion_type_projet.yml
+  - include:
+      file: classpath:db/changelog/changes/20200403083137-correction_champs_created_modified.yml

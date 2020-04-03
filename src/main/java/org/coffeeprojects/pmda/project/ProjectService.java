@@ -26,18 +26,11 @@ public class ProjectService {
 
     @Transactional
     public void updateProjectByKey(ProjectEntity projectEntity) {
-        ProjectEntity projectEntityFromTracker = null;
-
         if (ProjectEnum.JIRA.equals(projectEntity.getType())) {
             ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity.getKey());
-            projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
+            ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
+            this.projectRepository.save(projectEntityFromTracker);
         }
-
-        Date currentDateTime = new Date();
-        projectEntityFromTracker.setLastCheck(currentDateTime);
-        projectEntityFromTracker.setUpdatedAt(currentDateTime);
-
-        this.projectRepository.save(projectEntityFromTracker);
     }
 
     @Transactional
