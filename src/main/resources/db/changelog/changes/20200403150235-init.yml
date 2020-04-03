@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1585665749259-1
+    id: 1585918971337-1
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -13,11 +13,21 @@ databaseChangeLog:
             name: id
             type: VARCHAR(255)
         - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
             name: name
             type: VARCHAR(255)
         tableName: component
 - changeSet:
-    id: 1585665749259-2
+    id: 1585918971337-2
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -29,6 +39,16 @@ databaseChangeLog:
               primaryKeyName: issuePK
             name: id
             type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
         - column:
             name: assignee
             type: BYTEA
@@ -70,7 +90,7 @@ databaseChangeLog:
             type: TIMESTAMP WITHOUT TIME ZONE
         tableName: issue
 - changeSet:
-    id: 1585665749259-3
+    id: 1585918971337-3
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -79,7 +99,7 @@ databaseChangeLog:
             constraints:
               nullable: false
               primaryKey: true
-            name: issue_entity_id
+            name: issues_id
             type: VARCHAR(255)
         - column:
             constraints:
@@ -89,7 +109,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_components
 - changeSet:
-    id: 1585665749259-4
+    id: 1585918971337-4
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -104,7 +124,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_entity_labels
 - changeSet:
-    id: 1585665749259-5
+    id: 1585918971337-5
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -113,7 +133,7 @@ databaseChangeLog:
             constraints:
               nullable: false
               primaryKey: true
-            name: issue_entity_id
+            name: issues_id
             type: VARCHAR(255)
         - column:
             constraints:
@@ -123,7 +143,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_fix_versions
 - changeSet:
-    id: 1585665749259-6
+    id: 1585918971337-6
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -142,7 +162,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_issue_links
 - changeSet:
-    id: 1585665749259-7
+    id: 1585918971337-7
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -151,7 +171,7 @@ databaseChangeLog:
             constraints:
               nullable: false
               primaryKey: true
-            name: issue_entity_id
+            name: issues_id
             type: VARCHAR(255)
         - column:
             constraints:
@@ -161,7 +181,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_sprints
 - changeSet:
-    id: 1585665749259-8
+    id: 1585918971337-8
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -174,6 +194,16 @@ databaseChangeLog:
             name: id
             type: VARCHAR(255)
         - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
             name: description
             type: VARCHAR(255)
         - column:
@@ -181,7 +211,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_type
 - changeSet:
-    id: 1585665749259-9
+    id: 1585918971337-9
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -194,11 +224,21 @@ databaseChangeLog:
             name: id
             type: VARCHAR(255)
         - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
             name: name
             type: VARCHAR(255)
         tableName: priority
 - changeSet:
-    id: 1585665749259-10
+    id: 1585918971337-10
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -213,6 +253,14 @@ databaseChangeLog:
         - column:
             constraints:
               nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
             name: active
             type: BOOLEAN
         - column:
@@ -224,9 +272,12 @@ databaseChangeLog:
         - column:
             name: name
             type: VARCHAR(255)
+        - column:
+            name: type
+            type: INTEGER
         tableName: project
 - changeSet:
-    id: 1585665749259-11
+    id: 1585918971337-11
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -239,6 +290,16 @@ databaseChangeLog:
             name: id
             type: VARCHAR(255)
         - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
             name: description
             type: VARCHAR(255)
         - column:
@@ -246,7 +307,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: resolution
 - changeSet:
-    id: 1585665749259-12
+    id: 1585918971337-12
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -258,6 +319,16 @@ databaseChangeLog:
               primaryKeyName: sprintPK
             name: id
             type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
         - column:
             name: complete_date
             type: TIMESTAMP WITHOUT TIME ZONE
@@ -281,7 +352,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: sprint
 - changeSet:
-    id: 1585665749259-13
+    id: 1585918971337-13
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -294,6 +365,16 @@ databaseChangeLog:
             name: id
             type: VARCHAR(255)
         - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
             name: description
             type: VARCHAR(255)
         - column:
@@ -301,7 +382,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: status
 - changeSet:
-    id: 1585665749259-14
+    id: 1585918971337-14
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -316,6 +397,16 @@ databaseChangeLog:
         - column:
             constraints:
               nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
             name: active
             type: BOOLEAN
         - column:
@@ -326,7 +417,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: user
 - changeSet:
-    id: 1585665749259-15
+    id: 1585918971337-15
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -339,43 +430,21 @@ databaseChangeLog:
             name: id
             type: VARCHAR(255)
         - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
             name: name
             type: VARCHAR(255)
         tableName: version
 - changeSet:
-    id: 1585665749259-16
-    author: julienherubel (generated)
-    changes:
-    - addUniqueConstraint:
-        columnNames: issue_links_id
-        constraintName: UK_3n3j4f8kkkaj6f05yfxb65dwl
-        tableName: issue_issue_links
-- changeSet:
-    id: 1585665749259-17
-    author: julienherubel (generated)
-    changes:
-    - addUniqueConstraint:
-        columnNames: fix_versions_id
-        constraintName: UK_70c82wnt9ili9ecxvmg2ws35v
-        tableName: issue_fix_versions
-- changeSet:
-    id: 1585665749259-18
-    author: julienherubel (generated)
-    changes:
-    - addUniqueConstraint:
-        columnNames: sprints_id
-        constraintName: UK_chh0n537rkf78cc8pur8kwjt5
-        tableName: issue_sprints
-- changeSet:
-    id: 1585665749259-19
-    author: julienherubel (generated)
-    changes:
-    - addUniqueConstraint:
-        columnNames: components_id
-        constraintName: UK_jxldjkoq4w0be1cyb0u0fwipa
-        tableName: issue_components
-- changeSet:
-    id: 1585665749259-20
+    id: 1585918971337-16
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -388,33 +457,20 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1585665749259-21
+    id: 1585918971337-17
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
-        baseColumnNames: issue_entity_id
-        baseTableName: issue_fix_versions
-        constraintName: FK47wr7f0xt6ugybqury8rln9ol
+        baseColumnNames: issues_id
+        baseTableName: issue_sprints
+        constraintName: FK736k3iwx0b9ql4adgr2byef1r
         deferrable: false
         initiallyDeferred: false
         referencedColumnNames: id
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1585665749259-22
-    author: julienherubel (generated)
-    changes:
-    - addForeignKeyConstraint:
-        baseColumnNames: issue_entity_id
-        baseTableName: issue_components
-        constraintName: FKdc6qdbqlsp8kawvm0m4wlf5pb
-        deferrable: false
-        initiallyDeferred: false
-        referencedColumnNames: id
-        referencedTableName: issue
-        validate: true
-- changeSet:
-    id: 1585665749259-23
+    id: 1585918971337-18
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -427,7 +483,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1585665749259-24
+    id: 1585918971337-19
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -440,7 +496,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1585665749259-25
+    id: 1585918971337-20
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -453,20 +509,33 @@ databaseChangeLog:
         referencedTableName: sprint
         validate: true
 - changeSet:
-    id: 1585665749259-26
+    id: 1585918971337-21
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
-        baseColumnNames: issue_entity_id
-        baseTableName: issue_sprints
-        constraintName: FKp3a38804keuuhoay8x1p7rhqc
+        baseColumnNames: issues_id
+        baseTableName: issue_fix_versions
+        constraintName: FKm6nym4emw3y62tavo5i4jmukl
         deferrable: false
         initiallyDeferred: false
         referencedColumnNames: id
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1585665749259-27
+    id: 1585918971337-22
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issues_id
+        baseTableName: issue_components
+        constraintName: FKpjd2i9hbfsmtk9xbehtvamdrp
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1585918971337-23
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -479,7 +548,7 @@ databaseChangeLog:
         referencedTableName: version
         validate: true
 - changeSet:
-    id: 1585665749259-28
+    id: 1585918971337-24
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
