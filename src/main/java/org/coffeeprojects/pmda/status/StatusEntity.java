@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Status")
+@Table(name = "status")
 public class StatusEntity extends AuditableEntity implements Serializable {
     @Id
     private String id;

@@ -8,10 +8,11 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "UserAccount")
+@Table(name = "account")
 public class UserEntity extends AuditableEntity implements Serializable {
+
     @Id
-    private String accountId;
+    private String id;
 
     private String emailAddress;
 
@@ -19,12 +20,12 @@ public class UserEntity extends AuditableEntity implements Serializable {
 
     private Boolean active;
 
-    public String getAccountId() {
-        return accountId;
+    public String getId() {
+        return id;
     }
 
-    public UserEntity setAccountId(String accountId) {
-        this.accountId = accountId;
+    public UserEntity setId(String id) {
+        this.id = id;
         return this;
     }
 
@@ -53,15 +54,5 @@ public class UserEntity extends AuditableEntity implements Serializable {
     public UserEntity setActive(Boolean active) {
         this.active = active;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "accountId='" + accountId + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", displayName='" + displayName + '\'' +
-                ", active=" + active +
-                '}';
     }
 }

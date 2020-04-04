@@ -42,9 +42,9 @@ public interface IssueMapper {
         UserEntity reporter = output.getReporter();
 
         if (output != null) {
-            assignee = assignee != null && creator != null && assignee.getAccountId().equals(creator.getAccountId()) ? creator : assignee;
-            assignee = assignee != null && reporter != null && assignee.getAccountId().equals(reporter.getAccountId()) ? reporter : assignee;
-            creator = creator != null && reporter != null && creator.getAccountId().equals(reporter.getAccountId()) ? reporter : creator;
+            assignee = assignee != null && creator != null && assignee.getId().equals(creator.getId()) ? creator : assignee;
+            assignee = assignee != null && reporter != null && assignee.getId().equals(reporter.getId()) ? reporter : assignee;
+            creator = creator != null && reporter != null && creator.getId().equals(reporter.getId()) ? reporter : creator;
         }
 
         output.setAssignee(assignee);

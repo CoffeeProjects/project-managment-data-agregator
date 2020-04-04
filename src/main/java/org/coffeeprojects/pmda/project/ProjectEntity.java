@@ -7,8 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Project")
+@Table(name = "project")
 public class ProjectEntity extends AuditableEntity implements Serializable {
+
     @Id
     private String id;
 

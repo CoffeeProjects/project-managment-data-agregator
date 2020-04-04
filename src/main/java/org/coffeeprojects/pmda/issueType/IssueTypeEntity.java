@@ -8,8 +8,9 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "IssueType")
+@Table(name = "issue_type")
 public class IssueTypeEntity extends AuditableEntity implements Serializable {
+
     @Id
     private String id;
 

@@ -8,8 +8,9 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "Version")
+@Table(name = "version")
 public class VersionEntity extends AuditableEntity implements Serializable {
+
     @Id
     private String id;
 

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "Issue")
+@Table(name = "issue")
 public class IssueEntity extends AuditableEntity implements Serializable {
 
     @Id
@@ -37,6 +37,7 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     private String summary;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private StatusEntity status;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -56,7 +57,7 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "version_like",
+            name = "issue_version",
             joinColumns = @JoinColumn(name = "issue_id"),
             inverseJoinColumns = @JoinColumn(name = "version_id"))
     private Set<VersionEntity> fixVersions;
@@ -66,7 +67,7 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "component_like",
+            name = "issue_component",
             joinColumns = @JoinColumn(name = "issue_id"),
             inverseJoinColumns = @JoinColumn(name = "component_id"))
     private Set<ComponentEntity> components;
@@ -79,7 +80,7 @@ public class IssueEntity extends AuditableEntity implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "sprint_like",
+            name = "issue_sprint",
             joinColumns = @JoinColumn(name = "issue_id"),
             inverseJoinColumns = @JoinColumn(name = "sprint_id"))
     private Set<SprintEntity> sprints;

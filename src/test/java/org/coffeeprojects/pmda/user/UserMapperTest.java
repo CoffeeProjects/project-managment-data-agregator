@@ -29,7 +29,7 @@ public class UserMapperTest {
 
         // Then
         UserEntity expectedUserEntity = new UserEntity()
-                .setAccountId("id1")
+                .setId("id1")
                 .setEmailAddress("bruce_wayne@yopmail.com")
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);
