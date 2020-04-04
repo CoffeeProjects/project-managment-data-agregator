@@ -1,0 +1,639 @@
+databaseChangeLog:
+- changeSet:
+    id: 1586008803583-1
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: accountPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: active
+            type: BOOLEAN
+        - column:
+            name: display_name
+            type: VARCHAR(255)
+        - column:
+            name: email_address
+            type: VARCHAR(255)
+        tableName: account
+- changeSet:
+    id: 1586008803583-2
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: componentPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: component
+- changeSet:
+    id: 1586008803583-3
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issuePK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: created
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: key
+            type: VARCHAR(255)
+        - column:
+            name: resolution_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: summary
+            type: VARCHAR(255)
+        - column:
+            name: updated
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: assignee_id
+            type: VARCHAR(255)
+        - column:
+            name: creator_id
+            type: VARCHAR(255)
+        - column:
+            name: issue_type_id
+            type: VARCHAR(255)
+        - column:
+            name: priority_id
+            type: VARCHAR(255)
+        - column:
+            name: project_id
+            type: VARCHAR(255)
+        - column:
+            name: reporter_id
+            type: VARCHAR(255)
+        - column:
+            name: resolution_id
+            type: VARCHAR(255)
+        - column:
+            name: status_id
+            type: VARCHAR(255)
+        tableName: issue
+- changeSet:
+    id: 1586008803583-4
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: component_id
+            type: VARCHAR(255)
+        tableName: issue_component
+- changeSet:
+    id: 1586008803583-5
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: issue_entity_id
+            type: VARCHAR(255)
+        - column:
+            name: labels
+            type: VARCHAR(255)
+        tableName: issue_entity_labels
+- changeSet:
+    id: 1586008803583-6
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: sprint_id
+            type: VARCHAR(255)
+        tableName: issue_sprint
+- changeSet:
+    id: 1586008803583-7
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issue_typePK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: issue_type
+- changeSet:
+    id: 1586008803583-8
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version_id
+            type: VARCHAR(255)
+        tableName: issue_version
+- changeSet:
+    id: 1586008803583-9
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: priorityPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: priority
+- changeSet:
+    id: 1586008803583-10
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: projectPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: active
+            type: BOOLEAN
+        - column:
+            name: key
+            type: VARCHAR(255)
+        - column:
+            name: last_check
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: tracker_number
+            type: INTEGER
+        - column:
+            name: tracker_type
+            type: INTEGER
+        tableName: project
+- changeSet:
+    id: 1586008803583-11
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: resolutionPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: resolution
+- changeSet:
+    id: 1586008803583-12
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sprintPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: complete_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: end_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: goal
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: rapid_view_id
+            type: VARCHAR(255)
+        - column:
+            name: start_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: state
+            type: VARCHAR(255)
+        tableName: sprint
+- changeSet:
+    id: 1586008803583-13
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: statusPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: project_id
+            type: VARCHAR(255)
+        tableName: status
+- changeSet:
+    id: 1586008803583-14
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: versionPK
+            name: id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: version
+- changeSet:
+    id: 1586008803583-15
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: creator_id
+        baseTableName: issue
+        constraintName: FK17lsagp1v09oy1hew9grp3e6k
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1586008803583-16
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: sprint_id
+        baseTableName: issue_sprint
+        constraintName: FK25nxidwdj7a1p7bj98404kt4s
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: sprint
+        validate: true
+- changeSet:
+    id: 1586008803583-17
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_id
+        baseTableName: issue_component
+        constraintName: FK2bu952bejxsecyf3d6tw6axt5
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1586008803583-18
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_id
+        baseTableName: status
+        constraintName: FK9arga9vhpuxeog3i4dtaa5rat
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: project
+        validate: true
+- changeSet:
+    id: 1586008803583-19
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: component_id
+        baseTableName: issue_component
+        constraintName: FKayw04b51aksd3l6m6bywjdyub
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: component
+        validate: true
+- changeSet:
+    id: 1586008803583-20
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: priority_id
+        baseTableName: issue
+        constraintName: FKbae6ipdak6lb3guflw2sltx4r
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: priority
+        validate: true
+- changeSet:
+    id: 1586008803583-21
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: reporter_id
+        baseTableName: issue
+        constraintName: FKckbe53laqvnt4u65cl4o3p7a2
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1586008803583-22
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_id
+        baseTableName: issue
+        constraintName: FKcombytcpeogaqi2012phvvvhy
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: project
+        validate: true
+- changeSet:
+    id: 1586008803583-23
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_entity_id
+        baseTableName: issue_entity_labels
+        constraintName: FKdllf9a5al2fg15xo86qeswptd
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1586008803583-24
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_id
+        baseTableName: issue_version
+        constraintName: FKjdueut21os6lrlnuvoie07est
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1586008803583-25
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: assignee_id
+        baseTableName: issue
+        constraintName: FKjpn7gj3jlbwj9yi20xfmkncsc
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1586008803583-26
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_type_id
+        baseTableName: issue
+        constraintName: FKkbd7nxp2aq0bc4yomxoafmysg
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: issue_type
+        validate: true
+- changeSet:
+    id: 1586008803583-27
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: status_id
+        baseTableName: issue
+        constraintName: FKlsj5wb653fg6gxphoi3d3m2e9
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: status
+        validate: true
+- changeSet:
+    id: 1586008803583-28
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_id
+        baseTableName: issue_sprint
+        constraintName: FKmwibj52pb05sxyiida37mrrfa
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1586008803583-29
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: version_id
+        baseTableName: issue_version
+        constraintName: FKqw58qq6lckqtl9164055jd24h
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: version
+        validate: true
+- changeSet:
+    id: 1586008803583-30
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: resolution_id
+        baseTableName: issue
+        constraintName: FKwpxdbvt1mij51u0s1od8fmpd
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: resolution
+        validate: true
+
