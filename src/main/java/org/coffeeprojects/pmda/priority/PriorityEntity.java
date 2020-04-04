@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.priority;
 
-import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.entity.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,21 +9,9 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "priority")
-public class PriorityEntity extends AuditableEntity implements Serializable {
-
-    @Id
-    private String id;
+public class PriorityEntity extends BaseEntity implements Serializable {
 
     private String name;
-
-    public String getId() {
-        return id;
-    }
-
-    public PriorityEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getName() {
         return name;

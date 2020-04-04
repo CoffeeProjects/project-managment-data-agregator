@@ -6,12 +6,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AuditableEntity {
+public abstract class BaseEntity {
+
+    @Id
+    private String id;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -20,6 +24,15 @@ public abstract class AuditableEntity {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
+
+    public String getId() {
+        return id;
+    }
+
+    public BaseEntity setId(String id) {
+        this.id = id;
+        return this;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

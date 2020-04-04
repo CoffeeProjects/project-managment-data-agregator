@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.resolution;
 
-import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.entity.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,23 +9,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "resolution")
-public class ResolutionEntity extends AuditableEntity implements Serializable {
-
-    @Id
-    private String id;
+public class ResolutionEntity extends BaseEntity implements Serializable {
 
     private String name;
 
     private String description;
-
-    public String getId() {
-        return id;
-    }
-
-    public ResolutionEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getName() {
         return name;

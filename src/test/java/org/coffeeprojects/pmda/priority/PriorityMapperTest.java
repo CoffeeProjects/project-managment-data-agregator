@@ -27,8 +27,8 @@ public class PriorityMapperTest {
         PriorityEntity priorityEntity = priorityMapper.toEntity(priorityJiraBean);
 
         // Then
-        PriorityEntity expectedPriorityEntity = new PriorityEntity()
-                .setId("1")
+        PriorityEntity expectedPriorityEntity = ((PriorityEntity) new PriorityEntity()
+                .setId("1"))
                 .setName("Name");
         assertThat(priorityEntity).isEqualToComparingFieldByField(expectedPriorityEntity);
     }

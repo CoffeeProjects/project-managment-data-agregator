@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.issueType;
 
-import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.entity.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,23 +9,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "issue_type")
-public class IssueTypeEntity extends AuditableEntity implements Serializable {
-
-    @Id
-    private String id;
+public class IssueTypeEntity extends BaseEntity implements Serializable {
 
     private String name;
 
     private String description;
-
-    public String getId() {
-        return id;
-    }
-
-    public IssueTypeEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getName() {
         return name;

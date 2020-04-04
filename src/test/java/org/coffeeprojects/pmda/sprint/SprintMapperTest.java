@@ -37,8 +37,8 @@ public class SprintMapperTest {
         SprintEntity sprintEntity = sprintMapper.toEntity(sprintJiraBean);
 
         // Then
-        SprintEntity expectedSprintEntity = new SprintEntity()
-                .setId("1")
+        SprintEntity expectedSprintEntity = ((SprintEntity) new SprintEntity()
+                .setId("1"))
                 .setRapidViewId("1")
                 .setState("State")
                 .setName("Name")

@@ -31,8 +31,8 @@ public class StatusMapperTest {
         StatusEntity statusEntity = statusMapper.toEntity(statusJiraBean);
 
         // Then
-        StatusEntity expectedStatusEntity = new StatusEntity()
-                .setId("1")
+        StatusEntity expectedStatusEntity = ((StatusEntity) new StatusEntity()
+                .setId("1"))
                 .setName("KO")
                 .setDescription("Nom KO");
         assertThat(statusEntity).isEqualToComparingFieldByField(expectedStatusEntity);

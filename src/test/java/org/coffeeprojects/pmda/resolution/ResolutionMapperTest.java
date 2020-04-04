@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.resolution;
 
+import org.coffeeprojects.pmda.project.ProjectEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class ResolutionMapperTest {
         ResolutionEntity resolutionEntity = resolutionMapper.toEntity(resolutionJiraBean);
 
         // Then
-        ResolutionEntity expectedResolutionEntity = new ResolutionEntity()
-                .setId("1")
+        ResolutionEntity expectedResolutionEntity = ((ResolutionEntity) new ResolutionEntity()
+                .setId("1"))
                 .setName("KO")
                 .setDescription("Nom KO");
         assertThat(resolutionEntity).isEqualToComparingFieldByField(expectedResolutionEntity);

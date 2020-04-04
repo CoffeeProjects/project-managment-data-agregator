@@ -1,7 +1,7 @@
 package org.coffeeprojects.pmda.issue;
 
 import org.coffeeprojects.pmda.component.ComponentEntity;
-import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.entity.BaseEntity;
 import org.coffeeprojects.pmda.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.priority.PriorityEntity;
 import org.coffeeprojects.pmda.project.ProjectEntity;
@@ -19,10 +19,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "issue")
-public class IssueEntity extends AuditableEntity implements Serializable {
-
-    @Id
-    private String id;
+public class IssueEntity extends BaseEntity implements Serializable {
 
     private String key;
 
@@ -84,15 +81,6 @@ public class IssueEntity extends AuditableEntity implements Serializable {
             joinColumns = @JoinColumn(name = "issue_id"),
             inverseJoinColumns = @JoinColumn(name = "sprint_id"))
     private Set<SprintEntity> sprints;
-
-    public String getId() {
-        return id;
-    }
-
-    public IssueEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getKey() {
         return key;

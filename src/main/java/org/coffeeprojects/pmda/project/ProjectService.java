@@ -4,7 +4,6 @@ import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,7 +25,7 @@ public class ProjectService {
 
     @Transactional
     public void updateProjectByKey(ProjectEntity projectEntity) {
-        if (ProjectEnum.JIRA.equals(projectEntity.getType())) {
+        if (ProjectEnum.JIRA.equals(projectEntity.getTrackerType())) {
             ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity.getKey());
             ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
             this.projectRepository.save(projectEntityFromTracker);

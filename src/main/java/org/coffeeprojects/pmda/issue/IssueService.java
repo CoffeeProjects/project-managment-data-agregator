@@ -3,6 +3,7 @@ package org.coffeeprojects.pmda.issue;
 import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.project.ProjectEntity;
 import org.coffeeprojects.pmda.project.ProjectRepository;
+import org.coffeeprojects.pmda.tool.PrefixIdTool;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,7 @@ public class IssueService {
     public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate, String fields) {
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity.getKey(), fromDate, fields);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
+        PrefixIdTool.fillPrefixIdFromissueEntities(projectEntity, issueEntities);
         try {
             this.issueRepository.saveAll(issueEntities);
 
@@ -45,6 +47,5 @@ public class IssueService {
         } catch (Exception e) {
 
         }
-        // TODO : à tester
     }
 }

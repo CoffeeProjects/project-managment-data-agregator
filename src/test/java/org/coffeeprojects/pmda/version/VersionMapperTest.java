@@ -30,8 +30,8 @@ public class VersionMapperTest {
         VersionEntity versionEntity = versionMapper.toEntity(versionJiraBean);
 
         // Then
-        VersionEntity expectedVersionEntity = new VersionEntity()
-                .setId("1")
+        VersionEntity expectedVersionEntity = ((VersionEntity) new VersionEntity()
+                .setId("1"))
                 .setName("V1.1");
         assertThat(versionEntity).isEqualToComparingFieldByField(expectedVersionEntity);
     }

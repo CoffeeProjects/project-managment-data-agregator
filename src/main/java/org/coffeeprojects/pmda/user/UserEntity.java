@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.user;
 
-import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.entity.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,25 +9,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "account")
-public class UserEntity extends AuditableEntity implements Serializable {
-
-    @Id
-    private String id;
+public class UserEntity extends BaseEntity implements Serializable {
 
     private String emailAddress;
 
     private String displayName;
 
     private Boolean active;
-
-    public String getId() {
-        return id;
-    }
-
-    public UserEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getEmailAddress() {
         return emailAddress;

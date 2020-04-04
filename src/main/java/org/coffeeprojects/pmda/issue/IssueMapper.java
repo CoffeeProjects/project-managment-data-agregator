@@ -11,7 +11,10 @@ import org.coffeeprojects.pmda.status.StatusMapper;
 import org.coffeeprojects.pmda.user.UserEntity;
 import org.coffeeprojects.pmda.user.UserMapper;
 import org.coffeeprojects.pmda.version.VersionMapper;
-import org.mapstruct.*;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class, ResolutionMapper.class,
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,
@@ -36,7 +39,9 @@ public interface IssueMapper {
     IssueEntity toEntity(IssueJiraBean issueJiraBean);
 
     @AfterMapping
-    default void removeDuplicatesFromIssueJiraBeanToIssueEntity(@MappingTarget IssueEntity output) {
+    default void fromIssueJiraBeanToIssueEntity(IssueJiraBean input, @MappingTarget IssueEntity output) {
+
+        // Suppression des types en doublon
         UserEntity assignee = output.getAssignee();
         UserEntity creator = output.getCreator();
         UserEntity reporter = output.getReporter();

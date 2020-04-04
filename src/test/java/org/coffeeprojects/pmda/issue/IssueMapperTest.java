@@ -67,8 +67,8 @@ public class IssueMapperTest {
         IssueEntity issueEntity = issueMapper.toEntity(issueJiraBean);
 
         // Then
-        IssueEntity expectedIssueEntity = new IssueEntity()
-                .setId("id1")
+        IssueEntity expectedIssueEntity = ((IssueEntity) new IssueEntity()
+                .setId("id1"))
                 .setKey("key1")
                 .setSummary("summary")
                 .setLabels(Arrays.asList("test-label", "label2"));

@@ -28,8 +28,8 @@ public class UserMapperTest {
         UserEntity userEntity = userMapper.toEntity(userJiraBean);
 
         // Then
-        UserEntity expectedUserEntity = new UserEntity()
-                .setId("id1")
+        UserEntity expectedUserEntity = ((UserEntity) new UserEntity()
+                .setId("id1"))
                 .setEmailAddress("bruce_wayne@yopmail.com")
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);

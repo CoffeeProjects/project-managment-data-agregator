@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("application")
 public class JiraConfiguration {
 
-    @Value("${tracker.jira.user}")
+    @Value("${tracker.jira.1.user}")
     private String user;
-    @Value("${tracker.jira.password}")
+    @Value("${tracker.jira.1.password}")
     private String password;
 
     @Bean

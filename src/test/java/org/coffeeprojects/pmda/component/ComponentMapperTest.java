@@ -27,8 +27,8 @@ public class ComponentMapperTest {
         ComponentEntity componentEntity = componentMapper.toEntity(componentJiraBean);
 
         // Then
-        ComponentEntity expectedComponentEntity = new ComponentEntity()
-                .setId("1")
+        ComponentEntity expectedComponentEntity = ((ComponentEntity) new ComponentEntity()
+                .setId("1"))
                 .setName("Name");
         assertThat(componentEntity).isEqualToComparingFieldByField(expectedComponentEntity);
     }

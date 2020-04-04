@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.project;
 
-import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,10 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "project")
-public class ProjectEntity extends AuditableEntity implements Serializable {
-
-    @Id
-    private String id;
+public class ProjectEntity extends BaseEntity implements Serializable {
 
     private String key;
 
@@ -21,19 +18,13 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
     private Date lastCheck;
 
     @Column(insertable = false, updatable = false)
-    private ProjectEnum type;
+    private ProjectEnum trackerType;
+
+    @Column(insertable = false, updatable = false)
+    private Integer trackerNumber;
 
     @Column(insertable = false, updatable = false)
     private Boolean active;
-
-    public String getId() {
-        return id;
-    }
-
-    public ProjectEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getKey() {
         return key;
@@ -61,12 +52,20 @@ public class ProjectEntity extends AuditableEntity implements Serializable {
         this.lastCheck = lastCheck;
     }
 
-    public ProjectEnum getType() {
-        return type;
+    public ProjectEnum getTrackerType() {
+        return trackerType;
     }
 
-    public void setType(ProjectEnum type) {
-        this.type = type;
+    public void setTrackerType(ProjectEnum trackerType) {
+        this.trackerType = trackerType;
+    }
+
+    public Integer getTrackerNumber() {
+        return trackerNumber;
+    }
+
+    public void setTrackerNumber(Integer trackerNumber) {
+        this.trackerNumber = trackerNumber;
     }
 
     public Boolean isActive() {

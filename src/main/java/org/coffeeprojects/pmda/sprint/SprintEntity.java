@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.sprint;
 
-import org.coffeeprojects.pmda.entity.AuditableEntity;
+import org.coffeeprojects.pmda.entity.BaseEntity;
 import org.coffeeprojects.pmda.issue.IssueEntity;
 
 import javax.persistence.*;
@@ -10,10 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "sprint")
-public class SprintEntity extends AuditableEntity implements Serializable {
-
-    @Id
-    private String id;
+public class SprintEntity extends BaseEntity implements Serializable {
 
     private String rapidViewId;
 
@@ -34,15 +31,6 @@ public class SprintEntity extends AuditableEntity implements Serializable {
 
     @ManyToMany(mappedBy="sprints")
     private Set<IssueEntity> issues;
-
-    public String getId() {
-        return id;
-    }
-
-    public SprintEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getRapidViewId() {
         return rapidViewId;

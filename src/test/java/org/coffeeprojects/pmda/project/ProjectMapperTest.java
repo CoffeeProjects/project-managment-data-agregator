@@ -32,8 +32,8 @@ public class ProjectMapperTest {
         ProjectEntity projectEntity = projectMapper.toEntity(projectJiraBean);
 
         // Then
-        ProjectEntity expectedProjectEntity = new ProjectEntity()
-                .setId("1")
+        ProjectEntity expectedProjectEntity = ((ProjectEntity) new ProjectEntity()
+                .setId("1"))
                 .setKey("Key")
                 .setName("Name")
                 .setActive(true);
