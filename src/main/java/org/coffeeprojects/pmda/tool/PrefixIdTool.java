@@ -1,8 +1,8 @@
 package org.coffeeprojects.pmda.tool;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
-import org.coffeeprojects.pmda.issue.IssueEntity;
-import org.coffeeprojects.pmda.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.issue.IssueEntity;
+import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 
 import java.util.List;
 import java.util.Set;

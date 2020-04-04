@@ -1,9 +1,9 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
-import org.coffeeprojects.pmda.issue.jirabean.FieldsJiraBean;
-import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
-import org.coffeeprojects.pmda.issue.jirabean.SearchIssuesResultJiraBean;
-import org.coffeeprojects.pmda.sprint.SprintJiraBean;
+import org.coffeeprojects.pmda.feature.issue.jirabean.FieldsJiraBean;
+import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
+import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
+import org.coffeeprojects.pmda.feature.sprint.SprintJiraBean;
 import org.coffeeprojects.pmda.tracker.jira.proxy.JiraProxy;
 import org.junit.Before;
 import org.junit.Test;

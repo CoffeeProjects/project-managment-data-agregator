@@ -1,12 +1,14 @@
 package org.coffeeprojects.pmda.tracker.jira.proxy;
 
-import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
-import org.coffeeprojects.pmda.issue.jirabean.SearchIssuesResultJiraBean;
+import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
+import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import wiremock.com.github.jknack.handlebars.internal.Files;
 
@@ -17,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWireMock(port = 8086)
 public class JiraProxyTest {

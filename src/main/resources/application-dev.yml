@@ -7,7 +7,8 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa:
     hibernate:
-      show-sql: true
+      show-sql: false
+#      show-sql: false
   datasource:
     url: jdbc:postgresql://localhost:5432/pmda
     username: postgres
@@ -31,5 +32,7 @@ tracker:
 
 logging:
   level:
-    root: DEBUG
-    liquibase: DEBUG
+    root: INFO
+#    root: DEBUG
+    liquibase: INFO
+#    liquibase: DEBUG

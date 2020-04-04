@@ -29,3 +29,6 @@ logging:
   level:
     root: ERROR
     liquibase: ERROR
+
+tracker:
+  value: mantis
