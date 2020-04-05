@@ -5,7 +5,6 @@ import org.coffeeprojects.pmda.feature.issue.IssueMapper;
 import org.coffeeprojects.pmda.feature.issue.IssueRepository;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
-import org.coffeeprojects.pmda.feature.issue.service.IssuesUpdateParameters;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tool.PrefixIdTool;
@@ -22,6 +21,9 @@ import java.util.stream.Collectors;
 @Service
 @ConditionalOnProperty(value = "tracker.value", havingValue = "jira")
 public class JiraIssueService implements IssueService {
+
+    private static final String JIRA_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
+            "updated,created,duedate,labels,components,issuelinks,fixversions,resolution,customfield_10020";
 
     private final ProjectRepository projectRepository;
 
@@ -43,8 +45,8 @@ public class JiraIssueService implements IssueService {
 
     @Transactional
     @Override
-    public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate, IssuesUpdateParameters issuesUpdateParameters) {
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fromDate, issuesUpdateParameters.getFields());
+    public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate) {
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fromDate, JIRA_FIELDS);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
         PrefixIdTool.fillPrefixIdFromissueEntities(projectEntity, issueEntities);
         try {

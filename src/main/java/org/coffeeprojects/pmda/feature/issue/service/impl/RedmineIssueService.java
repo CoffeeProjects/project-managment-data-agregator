@@ -3,7 +3,6 @@ package org.coffeeprojects.pmda.feature.issue.service.impl;
 import org.coffeeprojects.pmda.feature.issue.IssueMapper;
 import org.coffeeprojects.pmda.feature.issue.IssueRepository;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
-import org.coffeeprojects.pmda.feature.issue.service.IssuesUpdateParameters;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
@@ -37,7 +36,7 @@ public class RedmineIssueService implements IssueService {
 
     @Transactional
     @Override
-    public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate, IssuesUpdateParameters issuesUpdateParameters) {
+    public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate) {
         System.out.println("Update from mantis");
     }
 }

@@ -24,15 +24,14 @@ public class JiraRepository {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.systemDefault());
 
     @Autowired
-    TrackerRouter trackerRouter;
-    //private final JiraClient jiraClient;
+    private TrackerRouter trackerRouter;
 
     public JiraRepository(TrackerRouter trackerRouter) {
         trackerRouter = trackerRouter;
     }
 
-    public ProjectJiraBean getProjectDetails(String key) {
-        return trackerRouter.getJiraClients().get(0).getProjectByKey(key);
+    public ProjectJiraBean getProjectDetails(ProjectEntity projectEntity) {
+        return ((JiraClient) TrackerRouter.getClient(trackerRouter, projectEntity)).getProjectByKey(projectEntity.getKey());
     }
 
     public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, Instant fromDate, String fields) {

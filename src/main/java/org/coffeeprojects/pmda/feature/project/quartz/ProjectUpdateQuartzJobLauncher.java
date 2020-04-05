@@ -52,7 +52,8 @@ public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
             log.info("########### Status: " + jobExecution.getStatus());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error during the execution of the Project Update Job");
+            throw new JobExecutionException("Interruption of Project Update Job");
         }
     }
 }

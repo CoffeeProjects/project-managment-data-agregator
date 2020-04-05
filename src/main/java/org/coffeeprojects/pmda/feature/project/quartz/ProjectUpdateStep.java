@@ -1,7 +1,7 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
-import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectService;
+import org.coffeeprojects.pmda.tool.JobFailingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
@@ -13,8 +13,6 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
@@ -30,16 +28,16 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
     }
 
     @Override
-    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
+    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws JobFailingException {
         try {
-            List<ProjectEntity> projectEntities = projectService.getAllProjectsFromDatabase();
-            for (ProjectEntity projectEntity: projectEntities) {
-                if (projectEntity.isActive()) {
-                    projectService.updateProjectByKey(projectEntity);
-                }
-            }
+            projectService.getAllProjectsFromDatabase().stream()
+                    .filter(p -> p.isActive())
+                    .forEach(p -> {
+                        projectService.updateProjectByKey(p);
+                    });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error during the execution of the Project Update Step");
+            throw new JobFailingException("Interruption of Project Update Step");
         }
         return RepeatStatus.FINISHED;
     }

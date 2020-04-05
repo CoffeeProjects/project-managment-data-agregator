@@ -14,7 +14,7 @@ public class MainIssueService {
         this.issueService = issueService;
     }
 
-    public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate, IssuesUpdateParameters issuesUpdateParameters) {
-        this.issueService.updateLastModifiedIssues(projectEntity, fromDate, issuesUpdateParameters);
+    public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate) {
+        this.issueService.updateLastModifiedIssues(projectEntity, fromDate);
     }
 }

@@ -46,7 +46,8 @@ public class IssueUpdateQuartzJobLauncher extends QuartzJobBean {
 
             log.info("########### Status: " + jobExecution.getStatus());
         } catch (Exception e) {
-            log.error("Error during the execution of Issue Job");
+            log.error("Error during the execution of the Issue Update Job");
+            throw new JobExecutionException("Interruption of Issue Update Job");
         }
     }
 }

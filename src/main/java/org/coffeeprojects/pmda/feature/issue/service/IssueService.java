@@ -6,5 +6,5 @@ import java.time.Instant;
 
 public interface IssueService {
 
-    void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate, IssuesUpdateParameters issuesUpdateParameters);
+    void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate);
 }
