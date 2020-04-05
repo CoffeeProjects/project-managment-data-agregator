@@ -1,7 +1,7 @@
 package org.coffeeprojects.pmda.feature.issue;
 
-import org.coffeeprojects.pmda.feature.component.ComponentEntity;
 import org.coffeeprojects.pmda.entity.BaseEntity;
+import org.coffeeprojects.pmda.feature.component.ComponentEntity;
 import org.coffeeprojects.pmda.feature.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.feature.priority.PriorityEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
@@ -55,8 +55,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_version",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "version_id"))
+            joinColumns = {@JoinColumn(name = "issue_storage_id"),
+                    @JoinColumn(name = "issue_tracker_type"),
+                    @JoinColumn(name = "issue_tracker_id")},
+            inverseJoinColumns = {@JoinColumn(name = "version_storage_id"),
+                    @JoinColumn(name = "version_tracker_type"),
+                    @JoinColumn(name = "version_tracker_id")})
     private Set<VersionEntity> fixVersions;
 
     @ElementCollection
@@ -65,8 +69,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_component",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "component_id"))
+            joinColumns = {@JoinColumn(name = "issue_storage_id"),
+                    @JoinColumn(name = "issue_tracker_type"),
+                    @JoinColumn(name = "issue_tracker_id")},
+            inverseJoinColumns = {@JoinColumn(name = "component_storage_id"),
+                    @JoinColumn(name = "component_tracker_type"),
+                    @JoinColumn(name = "component_tracker_id")})
     private Set<ComponentEntity> components;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -78,8 +86,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_sprint",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "sprint_id"))
+            joinColumns = {@JoinColumn(name = "issue_storage_id"),
+                    @JoinColumn(name = "issue_tracker_type"),
+                    @JoinColumn(name = "issue_tracker_id")},
+            inverseJoinColumns = {@JoinColumn(name = "sprint_storage_id"),
+                    @JoinColumn(name = "sprint_tracker_type"),
+                    @JoinColumn(name = "sprint_tracker_id")})
     private Set<SprintEntity> sprints;
 
     public String getKey() {

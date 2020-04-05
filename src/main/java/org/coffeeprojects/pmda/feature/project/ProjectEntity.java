@@ -18,12 +18,6 @@ public class ProjectEntity extends BaseEntity implements Serializable {
     private Date lastCheck;
 
     @Column(insertable = false, updatable = false)
-    private ProjectEnum trackerType;
-
-    @Column(insertable = false, updatable = false)
-    private Integer trackerNumber;
-
-    @Column(insertable = false, updatable = false)
     private Boolean active;
 
     public String getKey() {
@@ -50,22 +44,6 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     public void setLastCheck(Date lastCheck) {
         this.lastCheck = lastCheck;
-    }
-
-    public ProjectEnum getTrackerType() {
-        return trackerType;
-    }
-
-    public void setTrackerType(ProjectEnum trackerType) {
-        this.trackerType = trackerType;
-    }
-
-    public Integer getTrackerNumber() {
-        return trackerNumber;
-    }
-
-    public void setTrackerNumber(Integer trackerNumber) {
-        this.trackerNumber = trackerNumber;
     }
 
     public Boolean isActive() {

@@ -3,14 +3,14 @@ package org.coffeeprojects.pmda.tracker;
 public class TrackerBean {
 
     private String type;
-    private String number;
+    private String id;
     private String url;
     private String user;
     private String password;
 
-    public TrackerBean(String type, String number, String url, String user, String password) {
+    public TrackerBean(String type, String id, String url, String user, String password) {
         this.type = type;
-        this.number = number;
+        this.id = id;
         this.url = url;
         this.user = user;
         this.password = password;
@@ -27,12 +27,12 @@ public class TrackerBean {
         this.type = type;
     }
 
-    public String getNumber() {
-        return number;
+    public String getId() {
+        return id;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUrl() {

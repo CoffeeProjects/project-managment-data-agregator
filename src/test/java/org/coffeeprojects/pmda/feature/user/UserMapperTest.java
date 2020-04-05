@@ -21,7 +21,6 @@ public class UserMapperTest {
     public void to_entity_should_map_user_jira_bean_to_user_entity() {
         // Given
         UserJiraBean userJiraBean = new UserJiraBean()
-                .setAccountId("id1")
                 .setEmailAddress("bruce_wayne@yopmail.com")
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);
@@ -30,8 +29,7 @@ public class UserMapperTest {
         UserEntity userEntity = userMapper.toEntity(userJiraBean);
 
         // Then
-        UserEntity expectedUserEntity = ((UserEntity) new UserEntity()
-                .setId("id1"))
+        UserEntity expectedUserEntity = new UserEntity()
                 .setEmailAddress("bruce_wayne@yopmail.com")
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);

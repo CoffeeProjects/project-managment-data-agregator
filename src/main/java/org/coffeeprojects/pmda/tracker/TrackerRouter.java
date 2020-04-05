@@ -37,13 +37,13 @@ public class TrackerRouter {
 
         for (TrackerBean trackerBean : this.trackerService.getTrackers()) {
              if (ProjectEnum.JIRA.name().equalsIgnoreCase(trackerBean.getType())) {
-                 this.jiraClients.put(trackerBean.getNumber(), (JiraClient) buildClient(decoder, encoder, client,
+                 this.jiraClients.put(trackerBean.getId(), (JiraClient) buildClient(decoder, encoder, client,
                          JiraClient.class, trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
              } else if (ProjectEnum.MANTIS.name().equalsIgnoreCase(trackerBean.getType())) {
-                this.mantisClient.put(trackerBean.getNumber(), (MantisClient) buildClient(decoder, encoder, client,
+                this.mantisClient.put(trackerBean.getId(), (MantisClient) buildClient(decoder, encoder, client,
                         MantisClient.class, trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
             } else if (ProjectEnum.REDMINE.name().equalsIgnoreCase(trackerBean.getType())) {
-                this.redmineClient.put(trackerBean.getNumber(), (RedmineClient) buildClient(decoder, encoder, client,
+                this.redmineClient.put(trackerBean.getId(), (RedmineClient) buildClient(decoder, encoder, client,
                         RedmineClient.class, trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
             }
         }
@@ -59,21 +59,21 @@ public class TrackerRouter {
     }
 
     public static final Object getClient(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (ProjectEnum.JIRA.equals(projectEntity.getTrackerType())) {
+        if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
             for (Map.Entry<String, JiraClient> entry : trackerRouter.getJiraClients().entrySet()) {
-                if (entry.getKey().equals(projectEntity.getTrackerNumber().toString())) {
+                if (entry.getKey().equals(projectEntity.getId().getTrackerId().toString())) {
                     return entry.getValue();
                 }
             }
-        } else if (ProjectEnum.MANTIS.equals(projectEntity.getTrackerType())) {
+        } else if (ProjectEnum.MANTIS.equals(projectEntity.getId().getTrackerType())) {
             for (Map.Entry<String, MantisClient> entry : trackerRouter.getMantisClient().entrySet()) {
-                if (entry.getKey().equals(projectEntity.getTrackerNumber().toString())) {
+                if (entry.getKey().equals(projectEntity.getId().getTrackerId().toString())) {
                     return entry.getValue();
                 }
             }
-        } else if (ProjectEnum.REDMINE.equals(projectEntity.getTrackerType())) {
+        } else if (ProjectEnum.REDMINE.equals(projectEntity.getId().getTrackerType())) {
             for (Map.Entry<String, RedmineClient> entry : trackerRouter.getRedmineClient().entrySet()) {
-                if (entry.getKey().equals(projectEntity.getTrackerNumber().toString())) {
+                if (entry.getKey().equals(projectEntity.getId().getTrackerId().toString())) {
                     return entry.getValue();
                 }
             }

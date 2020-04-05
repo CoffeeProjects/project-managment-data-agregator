@@ -18,7 +18,7 @@ public class TrackerService {
     public void init() {
         for(TrackerBean current : this.getTrackers()) {
             String type = current.getType();
-            String number = current.getNumber();
+            String number = current.getId();
             String url = current.getUrl();
             String user = current.getUser();
             String password = current.getPassword();

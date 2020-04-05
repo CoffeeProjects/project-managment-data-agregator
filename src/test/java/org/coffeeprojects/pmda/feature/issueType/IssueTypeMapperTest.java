@@ -22,7 +22,6 @@ public class IssueTypeMapperTest {
 
         // Given
         IssueTypeJiraBean issueTypeJiraBean = new IssueTypeJiraBean()
-                .setId("1")
                 .setName("Name")
                 .setDescription("Description");
 
@@ -30,10 +29,10 @@ public class IssueTypeMapperTest {
         IssueTypeEntity issueTypeEntity = issueTypeMapper.toEntity(issueTypeJiraBean);
 
         // Then
-        IssueTypeEntity expectedIssueTypeEntity = ((IssueTypeEntity) new IssueTypeEntity()
-                .setId("1"))
+        IssueTypeEntity expectedIssueTypeEntity = new IssueTypeEntity()
                 .setName("Name")
                 .setDescription("Description");
+
         assertThat(issueTypeEntity).isEqualToComparingFieldByField(expectedIssueTypeEntity);
     }
 }

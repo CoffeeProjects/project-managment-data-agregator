@@ -25,7 +25,7 @@ public class ProjectService {
 
     @Transactional
     public void updateProjectByKey(ProjectEntity projectEntity) {
-        if (ProjectEnum.JIRA.equals(projectEntity.getTrackerType())) {
+        if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
             ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity.getKey());
             ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
             this.projectRepository.save(projectEntityFromTracker);

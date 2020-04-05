@@ -21,7 +21,6 @@ public class StatusMapperTest {
     public void to_entity_should_map_status_jira_bean_to_user_entity() {
         // Given
         StatusJiraBean statusJiraBean = new StatusJiraBean()
-                .setId("1")
                 .setName("KO")
                 .setDescription("Nom KO");
 
@@ -29,8 +28,7 @@ public class StatusMapperTest {
         StatusEntity statusEntity = statusMapper.toEntity(statusJiraBean);
 
         // Then
-        StatusEntity expectedStatusEntity = ((StatusEntity) new StatusEntity()
-                .setId("1"))
+        StatusEntity expectedStatusEntity = new StatusEntity()
                 .setName("KO")
                 .setDescription("Nom KO");
         assertThat(statusEntity).isEqualToComparingFieldByField(expectedStatusEntity);

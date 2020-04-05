@@ -21,7 +21,6 @@ public class ResolutionMapperTest {
     public void to_entity_should_map_resolution_jira_bean_to_user_entity() {
         // Given
         ResolutionJiraBean resolutionJiraBean = new ResolutionJiraBean()
-                .setId("1")
                 .setName("KO")
                 .setDescription("Nom KO");
 
@@ -29,10 +28,10 @@ public class ResolutionMapperTest {
         ResolutionEntity resolutionEntity = resolutionMapper.toEntity(resolutionJiraBean);
 
         // Then
-        ResolutionEntity expectedResolutionEntity = ((ResolutionEntity) new ResolutionEntity()
-                .setId("1"))
+        ResolutionEntity expectedResolutionEntity = new ResolutionEntity()
                 .setName("KO")
                 .setDescription("Nom KO");
+
         assertThat(resolutionEntity).isEqualToComparingFieldByField(expectedResolutionEntity);
     }
 }

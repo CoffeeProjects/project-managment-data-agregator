@@ -4,18 +4,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable  {
 
-    @Id
-    private String id;
+    @EmbeddedId
+    private CompositeIdBaseEntity id;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -25,11 +23,11 @@ public abstract class BaseEntity {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
-    public String getId() {
+    public CompositeIdBaseEntity getId() {
         return id;
     }
 
-    public BaseEntity setId(String id) {
+    public BaseEntity setId(CompositeIdBaseEntity id) {
         this.id = id;
         return this;
     }

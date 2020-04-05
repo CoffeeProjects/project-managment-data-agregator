@@ -26,7 +26,6 @@ public class ProjectMapperTest {
 
         // Given
         ProjectJiraBean projectJiraBean = new ProjectJiraBean()
-                .setId("1")
                 .setKey("Key")
                 .setName("Name");
 
@@ -34,12 +33,11 @@ public class ProjectMapperTest {
         ProjectEntity projectEntity = projectMapper.toEntity(projectJiraBean);
 
         // Then
-        ProjectEntity expectedProjectEntity = ((ProjectEntity) new ProjectEntity()
-                .setId("1"))
+        ProjectEntity expectedProjectEntity = new ProjectEntity()
                 .setKey("Key")
                 .setName("Name")
                 .setActive(true);
-        assertThat(projectEntity.getId()).isEqualTo(expectedProjectEntity.getId());
+
         assertThat(projectEntity.getKey()).isEqualTo(expectedProjectEntity.getKey());
         assertThat(projectEntity.getName()).isEqualTo(expectedProjectEntity.getName());
     }

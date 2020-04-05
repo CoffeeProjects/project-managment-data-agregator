@@ -22,16 +22,15 @@ public class PriorityMapperTest {
 
         // Given
         PriorityJiraBean priorityJiraBean = new PriorityJiraBean()
-                .setId("1")
                 .setName("Name");
 
         // When
         PriorityEntity priorityEntity = priorityMapper.toEntity(priorityJiraBean);
 
         // Then
-        PriorityEntity expectedPriorityEntity = ((PriorityEntity) new PriorityEntity()
-                .setId("1"))
+        PriorityEntity expectedPriorityEntity = new PriorityEntity()
                 .setName("Name");
+
         assertThat(priorityEntity).isEqualToComparingFieldByField(expectedPriorityEntity);
     }
 }

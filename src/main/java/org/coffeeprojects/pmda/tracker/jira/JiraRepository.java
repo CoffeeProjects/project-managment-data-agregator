@@ -19,7 +19,7 @@ import java.util.*;
 
 @Repository
 public class JiraRepository {
-    private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project in (%s) AND updated >= \"%s\" ORDER BY updated ASC";
+    private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project =\"%s\" AND updated >= \"%s\"";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.systemDefault());
 
@@ -37,7 +37,7 @@ public class JiraRepository {
 
     public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, Instant fromDate, String fields) {
 
-        final String jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getName(), DATE_TIME_FORMATTER.format(fromDate));
+        final String jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey(), DATE_TIME_FORMATTER.format(fromDate));
         final String expand = "changelog";
         final Integer maxResults = 100;
         Integer startAt = 0;

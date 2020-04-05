@@ -21,6 +21,7 @@ import org.mapstruct.MappingTarget;
         ComponentMapper.class, SprintMapper.class})
 public interface IssueMapper {
 
+    @Mapping(target = "id.storageId", source = "id")
     @Mapping(target = "assignee", source = "fields.assignee")
     @Mapping(target = "reporter", source = "fields.reporter")
     @Mapping(target = "creator", source = "fields.creator")
@@ -47,9 +48,9 @@ public interface IssueMapper {
         UserEntity reporter = output.getReporter();
 
         if (output != null) {
-            assignee = assignee != null && creator != null && assignee.getId().equals(creator.getId()) ? creator : assignee;
-            assignee = assignee != null && reporter != null && assignee.getId().equals(reporter.getId()) ? reporter : assignee;
-            creator = creator != null && reporter != null && creator.getId().equals(reporter.getId()) ? reporter : creator;
+            assignee = assignee != null && creator != null && assignee.getId().getStorageId().equals(creator.getId().getStorageId()) ? creator : assignee;
+            assignee = assignee != null && reporter != null && assignee.getId().getStorageId().equals(reporter.getId().getStorageId()) ? reporter : assignee;
+            creator = creator != null && reporter != null && creator.getId().getStorageId().equals(reporter.getId().getStorageId()) ? reporter : creator;
         }
 
         output.setAssignee(assignee);

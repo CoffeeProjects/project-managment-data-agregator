@@ -32,6 +32,8 @@ public class PrefixIdTool {
                 fillPrefixId(projectEntity, issueEntity.getPriority());
             } if (issueEntity.getIssueType() != null) {
                 fillPrefixId(projectEntity, issueEntity.getIssueType());
+            } if (issueEntity.getProject() != null) {
+                fillPrefixId(projectEntity, issueEntity.getProject());
             } if (issueEntity.getFixVersions() != null) {
                 fillPrefixId(projectEntity, issueEntity.getFixVersions());
             } if (issueEntity.getComponents() != null) {
@@ -50,7 +52,8 @@ public class PrefixIdTool {
 
     public static void fillPrefixId(ProjectEntity projectEntity, BaseEntity baseEntity) {
         if (baseEntity != null) {
-            baseEntity.setId(projectEntity.getTrackerType() + "-" + projectEntity.getTrackerNumber() + "-" + baseEntity.getId());
+            baseEntity.getId().setTrackerType(projectEntity.getId().getTrackerType());
+            baseEntity.getId().setTrackerId(projectEntity.getId().getTrackerId());
         }
     }
 }

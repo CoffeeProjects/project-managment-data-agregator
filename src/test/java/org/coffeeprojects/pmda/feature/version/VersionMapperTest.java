@@ -21,15 +21,13 @@ public class VersionMapperTest {
     public void to_entity_should_map_version_jira_bean_to_user_entity() {
         // Given
         VersionJiraBean versionJiraBean = new VersionJiraBean()
-                .setId("1")
                 .setName("V1.1");
 
         // When
         VersionEntity versionEntity = versionMapper.toEntity(versionJiraBean);
 
         // Then
-        VersionEntity expectedVersionEntity = ((VersionEntity) new VersionEntity()
-                .setId("1"))
+        VersionEntity expectedVersionEntity = new VersionEntity()
                 .setName("V1.1");
         assertThat(versionEntity).isEqualToComparingFieldByField(expectedVersionEntity);
     }
