@@ -3,8 +3,9 @@ package org.coffeeprojects.pmda.tracker.jira;
 import org.coffeeprojects.pmda.feature.issue.jirabean.FieldsJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
+import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.sprint.SprintJiraBean;
-import org.coffeeprojects.pmda.tracker.jira.proxy.JiraProxy;
+import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,19 +24,19 @@ import static org.mockito.Mockito.when;
 public class JiraRepositoryTest {
 
     @Mock
-    private JiraProxy jiraProxy;
+    private TrackerRouter trackerRouter;
 
     private JiraRepository jiraRepository;
 
     @Before
     public void setup() {
-        jiraRepository = new JiraRepository(jiraProxy);
+        jiraRepository = new JiraRepository(trackerRouter);
     }
 
     @Test
     public void get_modified_issues_should_return_issues() {
         // Given
-        String projectName = "pmda";
+        ProjectEntity projectEntity = new ProjectEntity().setKey("pmda");
         Instant lastModifiedDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
         String expand = "schema,names";
         String fields = "summary,issuetype";
@@ -53,10 +54,10 @@ public class JiraRepositoryTest {
                 .setIssues(issues);
 
         String jql = "project in (pmda) AND updated >= \"2020-03-29 11:15\"";
-        when(jiraProxy.searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean);
+        when(trackerRouter.getJiraClients().get(0).searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean);
 
         // When
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectName, lastModifiedDate, fields);
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, lastModifiedDate, fields);
 
         // Then
         assertThat(issueJiraBeans).isEqualTo(issueJiraBeans);

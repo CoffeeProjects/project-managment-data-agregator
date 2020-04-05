@@ -29,6 +29,7 @@
 			batch_step_execution,batch_step_execution_context</liquibase.diffExcludeObjects>
 		<liquibase-hibernate.version>3.8</liquibase-hibernate.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
+		<feign-httpclient.version>8.18.0</feign-httpclient.version>
 	</properties>
 
 	<dependencies>
@@ -36,6 +37,11 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netflix.feign</groupId>
+			<artifactId>feign-httpclient</artifactId>
+			<version>${feign-httpclient.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

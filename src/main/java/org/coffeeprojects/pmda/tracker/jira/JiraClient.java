@@ -1,14 +1,11 @@
-package org.coffeeprojects.pmda.tracker.jira.proxy;
+package org.coffeeprojects.pmda.tracker.jira;
 
 import feign.Param;
 import feign.RequestLine;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
-import org.coffeeprojects.pmda.tracker.jira.JiraConfiguration;
-import org.springframework.cloud.openfeign.FeignClient;
 
-@FeignClient(name = "jira-api", url = "${tracker.jira.1.url}", configuration = JiraConfiguration.class)
-public interface JiraProxy {
+public interface JiraClient {
 
     @RequestLine("GET project/{projectKey}")
     ProjectJiraBean getProjectByKey(@Param("projectKey") String key);

@@ -44,7 +44,7 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate, IssuesUpdateParameters issuesUpdateParameters) {
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity.getKey(), fromDate, issuesUpdateParameters.getFields());
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fromDate, issuesUpdateParameters.getFields());
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
         PrefixIdTool.fillPrefixIdFromissueEntities(projectEntity, issueEntities);
         try {
