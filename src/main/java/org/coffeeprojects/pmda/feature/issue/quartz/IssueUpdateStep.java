@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.feature.issue.quartz;
 
-import org.coffeeprojects.pmda.feature.issue.service.MainIssueService;
+import org.coffeeprojects.pmda.feature.issue.service.IssueService;
+import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
 import org.coffeeprojects.pmda.feature.project.ProjectService;
 import org.coffeeprojects.pmda.tool.JobFailingException;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
     private ProjectService projectService;
 
     @Autowired
-    private MainIssueService mainIssueService;
+    private IssueServiceFactory issueServiceFactory;
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
@@ -39,12 +40,12 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
                     .filter(p -> p.isActive())
                     .filter(p -> p.getLastCheck() != null)
                     .forEach(p -> {
-                        mainIssueService.updateLastModifiedIssues(p, p.getLastCheck());
+                        IssueService issueService = issueServiceFactory.createIssueService(p);
+                        issueService.updateLastModifiedIssues(p, p.getLastCheck());
                     });
         } catch (Exception e) {
             logger.error("Error during the execution of the Issue Update Step");
             throw new JobFailingException("Interruption of Issue Update Step");
-
         }
         return RepeatStatus.FINISHED;
     }

@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import java.time.Instant;
 
 @Service
-@ConditionalOnProperty(value = "tracker.value", havingValue = "redmine")
 public class RedmineIssueService implements IssueService {
 
     private final ProjectRepository projectRepository;
@@ -37,6 +36,6 @@ public class RedmineIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate) {
-        System.out.println("Update from mantis");
+        System.out.println("Update from redmine");
     }
 }
