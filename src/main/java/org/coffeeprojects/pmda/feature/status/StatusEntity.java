@@ -39,7 +39,8 @@ public class StatusEntity extends BaseEntity implements Serializable {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public StatusEntity setProject(ProjectEntity project) {
         this.project = project;
+        return this;
     }
 }

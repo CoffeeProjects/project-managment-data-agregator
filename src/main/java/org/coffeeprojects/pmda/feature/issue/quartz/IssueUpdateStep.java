@@ -25,10 +25,10 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
     private final Logger logger = LoggerFactory.getLogger(IssueUpdateStep.class);
 
     @Autowired
-    ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
-    MainIssueService mainIssueService;
+    private MainIssueService mainIssueService;
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
@@ -45,7 +45,7 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
                     if (projectEntity.getLastCheck() != null) {
                         String fields = "key,project,issuetype,priority,summary,status,creator,reporter,assignee,updated," +
                                 "created,duedate,labels,components,issuelinks,fixversions,resolution,customfield_10020";
-                        mainIssueService.updateLastModifiedIssues(projectEntity, projectEntity.getLastCheck().toInstant(),
+                        mainIssueService.updateLastModifiedIssues(projectEntity, projectEntity.getLastCheck(),
                                 new IssuesUpdateParameters().setFields(fields));
                     } else {
                         logger.error("Please enter a checked date for the " + projectEntity.getKey() + " project");

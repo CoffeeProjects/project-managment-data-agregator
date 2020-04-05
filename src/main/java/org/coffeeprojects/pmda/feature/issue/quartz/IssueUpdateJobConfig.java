@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class IssueUpdateJobConfig {
 
     @Autowired
-    IssueUpdateStep issueUpdateStep;
+    private IssueUpdateStep issueUpdateStep;
 
     @Bean
     protected Step issueUpdateConfigStep(StepBuilderFactory stepBuilders) {

@@ -99,7 +99,8 @@ public class SprintEntity extends BaseEntity implements Serializable {
         return issues;
     }
 
-    public void setIssues(Set<IssueEntity> issues) {
+    public SprintEntity setIssues(Set<IssueEntity> issues) {
         this.issues = issues;
+        return this;
     }
 }

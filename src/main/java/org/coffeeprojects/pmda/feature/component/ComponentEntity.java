@@ -31,7 +31,8 @@ public class ComponentEntity extends BaseEntity implements Serializable {
         return issues;
     }
 
-    public void setIssues(Set<IssueEntity> issues) {
+    public ComponentEntity setIssues(Set<IssueEntity> issues) {
         this.issues = issues;
+        return this;
     }
 }

@@ -50,7 +50,7 @@ public class JiraIssueService implements IssueService {
         try {
             this.issueRepository.saveAll(issueEntities);
 
-            projectEntity.setLastCheck(new Date());
+            projectEntity.setLastCheck((new Date()).toInstant());
             this.projectRepository.save(projectEntity);
         } catch (Exception e) {
 

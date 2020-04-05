@@ -29,7 +29,8 @@ public class VersionEntity extends BaseEntity implements Serializable {
         return issues;
     }
 
-    public void setIssues(Set<IssueEntity> issues) {
+    public VersionEntity setIssues(Set<IssueEntity> issues) {
         this.issues = issues;
+        return this;
     }
 }
