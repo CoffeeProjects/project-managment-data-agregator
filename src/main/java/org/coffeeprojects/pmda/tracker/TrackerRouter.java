@@ -10,6 +10,8 @@ import org.coffeeprojects.pmda.feature.project.ProjectEnum;
 import org.coffeeprojects.pmda.tracker.jira.JiraClient;
 import org.coffeeprojects.pmda.tracker.mantis.MantisClient;
 import org.coffeeprojects.pmda.tracker.redmine.RedmineClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Import;
@@ -22,30 +24,36 @@ import java.util.Map;
 @Import(FeignClientsConfiguration.class)
 public class TrackerRouter {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private final TrackerService trackerService;
 
-    private Map<String, JiraClient> jiraClients = new HashMap();
-
-    private Map<String, MantisClient>  mantisClient = new HashMap();
-
-    private Map<String, RedmineClient> redmineClient = new HashMap();;
+    private Map<Map<String, String>, Object> clients = new HashMap();
 
     @Autowired
     public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
         this.trackerService = trackerService;
 
         for (TrackerBean trackerBean : this.trackerService.getTrackers()) {
-             if (ProjectEnum.JIRA.name().equalsIgnoreCase(trackerBean.getType())) {
-                 this.jiraClients.put(trackerBean.getId(), (JiraClient) buildClient(decoder, encoder, client,
-                         JiraClient.class, trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
-             } else if (ProjectEnum.MANTIS.name().equalsIgnoreCase(trackerBean.getType())) {
-                this.mantisClient.put(trackerBean.getId(), (MantisClient) buildClient(decoder, encoder, client,
-                        MantisClient.class, trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
-            } else if (ProjectEnum.REDMINE.name().equalsIgnoreCase(trackerBean.getType())) {
-                this.redmineClient.put(trackerBean.getId(), (RedmineClient) buildClient(decoder, encoder, client,
-                        RedmineClient.class, trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
-            }
+            Map<String, String> trackerId = new HashMap();
+            trackerId.put(trackerBean.getType(), trackerBean.getId());
+
+            this.clients.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(trackerBean),
+                    trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
+        }
+    }
+
+    private Class getClientInterface(TrackerBean trackerBean) {
+        if (ProjectEnum.JIRA.toString().equalsIgnoreCase(trackerBean.getType())) {
+            return JiraClient.class;
+        } else if (ProjectEnum.MANTIS.toString().equalsIgnoreCase(trackerBean.getType())) {
+            return MantisClient.class;
+        } else if (ProjectEnum.REDMINE.toString().equalsIgnoreCase(trackerBean.getType())) {
+            return RedmineClient.class;
+        } else {
+            logger.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getId());
+            return null;
         }
     }
 
@@ -59,23 +67,15 @@ public class TrackerRouter {
     }
 
     public static final Object getClient(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (projectEntity != null && projectEntity.getId() != null) {
-            if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
-                for (Map.Entry<String, JiraClient> entry : trackerRouter.getJiraClients().entrySet()) {
-                    if (entry.getKey().equals(projectEntity.getId().getTrackerId())) {
-                        return entry.getValue();
-                    }
-                }
-            } else if (ProjectEnum.MANTIS.equals(projectEntity.getId().getTrackerType())) {
-                for (Map.Entry<String, MantisClient> entry : trackerRouter.getMantisClient().entrySet()) {
-                    if (entry.getKey().equals(projectEntity.getId().getTrackerId())) {
-                        return entry.getValue();
-                    }
-                }
-            } else if (ProjectEnum.REDMINE.equals(projectEntity.getId().getTrackerType())) {
-                for (Map.Entry<String, RedmineClient> entry : trackerRouter.getRedmineClient().entrySet()) {
-                    if (entry.getKey().equals(projectEntity.getId().getTrackerId())) {
-                        return entry.getValue();
+        if (projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
+            for (Map.Entry<Map<String, String>, Object> trackerEntry : trackerRouter.getClients().entrySet()) {
+                for (Map.Entry<String, String> trackerIdEntry : trackerEntry.getKey().entrySet()) {
+                    String trackerType = trackerIdEntry.getKey();
+                    String trackerId = trackerIdEntry.getValue();
+                    Object client = trackerEntry.getValue();
+                    if (trackerType.equalsIgnoreCase(projectEntity.getId().getTrackerType().toString()) &&
+                            trackerId.equalsIgnoreCase(projectEntity.getId().getTrackerId())) {
+                        return client;
                     }
                 }
             }
@@ -83,27 +83,12 @@ public class TrackerRouter {
         return null;
     }
 
-    public Map<String, JiraClient> getJiraClients() {
-        return jiraClients;
+    public Map<Map<String, String>, Object> getClients() {
+        return clients;
     }
 
-    public void setJiraClients(Map<String, JiraClient> jiraClients) {
-        this.jiraClients = jiraClients;
-    }
-
-    public Map<String, MantisClient> getMantisClient() {
-        return mantisClient;
-    }
-
-    public void setMantisClient(Map<String, MantisClient> mantisClient) {
-        this.mantisClient = mantisClient;
-    }
-
-    public Map<String, RedmineClient> getRedmineClient() {
-        return redmineClient;
-    }
-
-    public void setRedmineClient(Map<String, RedmineClient> redmineClient) {
-        this.redmineClient = redmineClient;
+    public TrackerRouter setClients(Map<Map<String, String>, Object> clients) {
+        this.clients = clients;
+        return this;
     }
 }
