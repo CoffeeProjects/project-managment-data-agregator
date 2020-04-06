@@ -38,10 +38,9 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
             logger.info("Issue update step is running ...");
             projectService.getAllProjectsFromDatabase().stream()
                     .filter(p -> p.isActive())
-                    .filter(p -> p.getLastCheck() != null)
                     .forEach(p -> {
                         IssueService issueService = issueServiceFactory.createIssueService(p);
-                        issueService.updateLastModifiedIssues(p, p.getLastCheck());
+                        issueService.updateLastModifiedIssues(p);
                     });
         } catch (Exception e) {
             logger.error("Error during the execution of the Issue Update Step");

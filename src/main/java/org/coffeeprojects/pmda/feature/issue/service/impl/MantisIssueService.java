@@ -37,7 +37,7 @@ public class MantisIssueService implements IssueService {
 
     @Transactional
     @Override
-    public void updateLastModifiedIssues(ProjectEntity projectEntity, Instant fromDate) {
+    public void updateLastModifiedIssues(ProjectEntity projectEntity) {
         System.out.println("Update from mantis");
     }
 }

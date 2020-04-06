@@ -70,7 +70,7 @@ public class JiraRepositoryTest {
 
         //when(jiraRepository.getSearchIssuesResultJiraBean(any(), any(), any(), any(), any(), any())).thenReturn()
         // When
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, lastModifiedDate, fields);
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
 
         // Then
         assertThat(issueJiraBeans).isEqualTo(issueJiraBeans);
