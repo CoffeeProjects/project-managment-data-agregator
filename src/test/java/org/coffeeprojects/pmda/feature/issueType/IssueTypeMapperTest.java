@@ -33,6 +33,7 @@ public class IssueTypeMapperTest {
                 .setName("Name")
                 .setDescription("Description");
 
-        assertThat(issueTypeEntity).isEqualToComparingFieldByField(expectedIssueTypeEntity);
+        assertThat(issueTypeEntity.getName()).isEqualTo(expectedIssueTypeEntity.getName());
+        assertThat(issueTypeEntity.getDescription()).isEqualTo(expectedIssueTypeEntity.getDescription());
     }
 }

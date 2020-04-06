@@ -33,6 +33,9 @@ public class UserMapperTest {
                 .setEmailAddress("bruce_wayne@yopmail.com")
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);
-        assertThat(userEntity).isEqualToComparingFieldByField(expectedUserEntity);
+
+        assertThat(userEntity.getEmailAddress()).isEqualTo(expectedUserEntity.getEmailAddress());
+        assertThat(userEntity.getDisplayName()).isEqualTo(expectedUserEntity.getDisplayName());
+        assertThat(userEntity.isActive()).isEqualTo(expectedUserEntity.isActive());
     }
 }

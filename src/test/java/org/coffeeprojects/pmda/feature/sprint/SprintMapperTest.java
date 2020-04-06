@@ -46,6 +46,12 @@ public class SprintMapperTest {
                 .setStartDate(date)
                 .setEndDate(date)
                 .setCompleteDate(date);
-        assertThat(sprintEntity).isEqualToComparingFieldByField(expectedSprintEntity);
+
+        assertThat(sprintEntity.getRapidViewId()).isEqualTo(expectedSprintEntity.getRapidViewId());
+        assertThat(sprintEntity.getState()).isEqualTo(expectedSprintEntity.getState());
+        assertThat(sprintEntity.getName()).isEqualTo(expectedSprintEntity.getName());
+        assertThat(sprintEntity.getStartDate()).isEqualTo(expectedSprintEntity.getStartDate());
+        assertThat(sprintEntity.getEndDate()).isEqualTo(expectedSprintEntity.getEndDate());
+        assertThat(sprintEntity.getCompleteDate()).isEqualTo(expectedSprintEntity.getCompleteDate());
     }
 }

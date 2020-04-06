@@ -31,6 +31,6 @@ public class PriorityMapperTest {
         PriorityEntity expectedPriorityEntity = new PriorityEntity()
                 .setName("Name");
 
-        assertThat(priorityEntity).isEqualToComparingFieldByField(expectedPriorityEntity);
+        assertThat(priorityEntity.getName()).isEqualTo(expectedPriorityEntity.getName());
     }
 }

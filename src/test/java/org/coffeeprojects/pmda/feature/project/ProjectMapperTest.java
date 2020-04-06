@@ -35,8 +35,7 @@ public class ProjectMapperTest {
         // Then
         ProjectEntity expectedProjectEntity = new ProjectEntity()
                 .setKey("Key")
-                .setName("Name")
-                .setActive(true);
+                .setName("Name");
 
         assertThat(projectEntity.getKey()).isEqualTo(expectedProjectEntity.getKey());
         assertThat(projectEntity.getName()).isEqualTo(expectedProjectEntity.getName());

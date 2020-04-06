@@ -29,6 +29,7 @@ public class VersionMapperTest {
         // Then
         VersionEntity expectedVersionEntity = new VersionEntity()
                 .setName("V1.1");
-        assertThat(versionEntity).isEqualToComparingFieldByField(expectedVersionEntity);
+
+        assertThat(versionEntity.getName()).isEqualTo(expectedVersionEntity.getName());
     }
 }

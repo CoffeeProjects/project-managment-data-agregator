@@ -32,6 +32,7 @@ public class ResolutionMapperTest {
                 .setName("KO")
                 .setDescription("Nom KO");
 
-        assertThat(resolutionEntity).isEqualToComparingFieldByField(expectedResolutionEntity);
+        assertThat(resolutionEntity.getName()).isEqualTo(expectedResolutionEntity.getName());
+        assertThat(resolutionEntity.getDescription()).isEqualTo(expectedResolutionEntity.getDescription());
     }
 }

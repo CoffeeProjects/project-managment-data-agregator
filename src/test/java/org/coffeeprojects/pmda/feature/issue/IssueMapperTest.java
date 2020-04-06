@@ -52,6 +52,8 @@ public class IssueMapperTest {
                 .setSummary("summary")
                 .setLabels(Arrays.asList("test-label", "label2"));
 
-        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntity.getSummary()).isEqualTo(expectedIssueEntity.getSummary());
+        assertThat(issueEntity.getLabels().get(0)).isEqualTo(expectedIssueEntity.getLabels().get(0));
+        assertThat(issueEntity.getLabels().get(1)).isEqualTo(expectedIssueEntity.getLabels().get(1));
     }
 }

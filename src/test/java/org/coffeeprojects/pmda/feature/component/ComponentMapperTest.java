@@ -28,6 +28,7 @@ public class ComponentMapperTest {
         // Then
         ComponentEntity expectedComponentEntity = new ComponentEntity()
                 .setName("Name");
-        assertThat(componentEntity).isEqualToComparingFieldByField(expectedComponentEntity);
+
+        assertThat(componentEntity.getName()).isEqualTo(expectedComponentEntity.getName());
     }
 }

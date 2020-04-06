@@ -31,6 +31,8 @@ public class StatusMapperTest {
         StatusEntity expectedStatusEntity = new StatusEntity()
                 .setName("KO")
                 .setDescription("Nom KO");
-        assertThat(statusEntity).isEqualToComparingFieldByField(expectedStatusEntity);
+
+        assertThat(statusEntity.getName()).isEqualTo(expectedStatusEntity.getName());
+        assertThat(statusEntity.getDescription()).isEqualTo(expectedStatusEntity.getDescription());
     }
 }
