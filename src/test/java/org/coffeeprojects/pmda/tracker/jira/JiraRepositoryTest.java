@@ -1,25 +1,31 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
-import org.coffeeprojects.pmda.feature.issue.jirabean.FieldsJiraBean;
+import feign.Target;
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.sprint.SprintJiraBean;
+import org.coffeeprojects.pmda.feature.project.ProjectEnum;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.Mockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
 public class JiraRepositoryTest {
 
     @Mock
@@ -36,7 +42,10 @@ public class JiraRepositoryTest {
     @Ignore
     public void get_modified_issues_should_return_issues() {
         // Given
-        ProjectEntity projectEntity = new ProjectEntity().setKey("pmda");
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setStorageId("1").setTrackerId("1").setTrackerType(ProjectEnum.JIRA);
+        ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
+                .setKey("pmda");
+
         Instant lastModifiedDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
         String expand = "schema,names";
         String fields = "summary,issuetype";
@@ -54,57 +63,16 @@ public class JiraRepositoryTest {
                 .setIssues(issues);
 
         String jql = "project in (pmda) AND updated >= \"2020-03-29 11:15\"";
-        // TODO : Finir ce when qui rend le test KO
-        //when(TrackerRouter.getClient(trackerRouter, projectEntity)).thenReturn(new Object());
-        when(((JiraClient) trackerRouter.getClient(trackerRouter, projectEntity)).searchIssues(jql, expand, fields, maxResults, startAt))
+        mockStatic(TrackerRouter.class);
+        when(TrackerRouter.getClient(Mockito.any(), Mockito.any())).thenReturn(new Target.HardCodedTarget(JiraClient.class, "http://pmda.orgr"));
+        when(((JiraClient) TrackerRouter.getClient(trackerRouter, projectEntity)).searchIssues(jql, expand, fields, maxResults, startAt))
                 .thenReturn(searchIssuesResultJiraBean);
 
+        //when(jiraRepository.getSearchIssuesResultJiraBean(any(), any(), any(), any(), any(), any())).thenReturn()
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, lastModifiedDate, fields);
 
         // Then
         assertThat(issueJiraBeans).isEqualTo(issueJiraBeans);
-    }
-
-    // getSprintsByIssueJiraBean
-    @Test
-    public void get_sprints_by_issue_jira_bean_null() {
-        Set<SprintJiraBean> sprintJiraBeans = jiraRepository.getSprintsByIssueJiraBean(null);
-
-        // Then
-        assertThat(sprintJiraBeans.size()).isEqualTo(0);
-    }
-
-    @Test
-    public void get_sprints_by_issue_jira_bean_no_fields() {
-        IssueJiraBean issueJiraBean = new IssueJiraBean().setId("id1").setKey("key1");
-        Set<SprintJiraBean> sprintJiraBeans = jiraRepository.getSprintsByIssueJiraBean(issueJiraBean);
-
-        // Then
-        assertThat(sprintJiraBeans.size()).isEqualTo(0);
-    }
-
-    @Test
-    public void get_sprints_by_issue_jira_bean_no_sprints() {
-        IssueJiraBean issueJiraBean = new IssueJiraBean().setId("id1").setKey("key1").setFields(new FieldsJiraBean());
-        Set<SprintJiraBean> sprintJiraBeans = jiraRepository.getSprintsByIssueJiraBean(issueJiraBean);
-
-        // Then
-        assertThat(sprintJiraBeans.size()).isEqualTo(0);
-    }
-
-    @Test
-    public void get_sprints_by_issue_jira_bean_with_sprints() {
-        List<String> sprints = Arrays.asList(
-                "com.atlassian.greenhopper.service.sprint.Sprint@31b5556b[id=1,rapidViewId=1,state=CLOSED,name=PMDA Sprint 1,goal=,startDate=2020-03-25T20:06:44.960Z,endDate=2020-03-28T21:06:00.000Z,completeDate=2020-03-28T20:06:50.868Z,sequence=1]",
-                "com.atlassian.greenhopper.service.sprint.Sprint@2932643f[id=2,rapidViewId=1,state=FUTURE,name=PMDA ,goal=2 (%+\"'-$*€/\\|),goal=FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
-        );
-        FieldsJiraBean fieldsJiraBean = new FieldsJiraBean().setSprintsToString(sprints);
-        IssueJiraBean issueJiraBean = new IssueJiraBean().setId("id1").setKey("key1").setFields(fieldsJiraBean);
-
-        Set<SprintJiraBean> sprintJiraBeans = jiraRepository.getSprintsByIssueJiraBean(issueJiraBean);
-
-        // Then
-        assertThat(sprintJiraBeans.size()).isEqualTo(2);
     }
 }

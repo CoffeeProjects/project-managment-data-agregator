@@ -12,29 +12,32 @@ public class CompositeIdBaseEntity implements Serializable {
 
     private ProjectEnum trackerType;
 
-    private Integer trackerId;
+    private String trackerId;
 
     public String getStorageId() {
         return storageId;
     }
 
-    public void setStorageId(String storageId) {
+    public CompositeIdBaseEntity setStorageId(String storageId) {
         this.storageId = storageId;
+        return this;
     }
 
     public ProjectEnum getTrackerType() {
         return trackerType;
     }
 
-    public void setTrackerType(ProjectEnum trackerType) {
+    public CompositeIdBaseEntity setTrackerType(ProjectEnum trackerType) {
         this.trackerType = trackerType;
+        return this;
     }
 
-    public Integer getTrackerId() {
+    public String getTrackerId() {
         return trackerId;
     }
 
-    public void setTrackerId(Integer trackerId) {
+    public CompositeIdBaseEntity setTrackerId(String trackerId) {
         this.trackerId = trackerId;
+        return this;
     }
 }

@@ -13,13 +13,12 @@ import org.coffeeprojects.pmda.feature.user.UserMapperImpl;
 import org.coffeeprojects.pmda.feature.version.VersionMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,5 +54,27 @@ public class IssueMapperTest {
         assertThat(issueEntity.getSummary()).isEqualTo(expectedIssueEntity.getSummary());
         assertThat(issueEntity.getLabels().get(0)).isEqualTo(expectedIssueEntity.getLabels().get(0));
         assertThat(issueEntity.getLabels().get(1)).isEqualTo(expectedIssueEntity.getLabels().get(1));
+    }
+
+    @Test
+    public void get_sprints_by_issue_jira_bean_with_sprints() {
+        List<String> sprints = Arrays.asList(
+                "com.atlassian.greenhopper.service.sprint.Sprint@2932643f[id=2,rapidViewId=1,state=FUTURE,name=PMDA ,goal=2 (%+\"'-$*€/\\|),goal=FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
+        );
+        FieldsJiraBean fieldsJiraBean = new FieldsJiraBean().setSprintsToString(sprints);
+        IssueJiraBean issueJiraBean = new IssueJiraBean().setId("id1").setKey("key1").setFields(fieldsJiraBean);
+
+        IssueEntity issueEntity = issueMapper.toEntity(issueJiraBean);
+
+        // Then
+        issueEntity.getSprints().stream()
+                .forEach(p -> {
+                    assertThat(p.getId().getStorageId().equals("2"));
+                    assertThat(p.getRapidViewId()).isEqualTo("1");
+                    assertThat(p.getState()).isEqualTo("FUTURE");
+                    assertThat(p.getName()).isEqualTo("PMDA ,goal=2 (%+\"'-$*€/\\|)");
+                    assertThat(p.getGoal()).isEqualTo("FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou");
+                });
+
     }
 }

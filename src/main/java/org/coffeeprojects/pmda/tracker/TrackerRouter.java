@@ -62,19 +62,19 @@ public class TrackerRouter {
         if (projectEntity != null && projectEntity.getId() != null) {
             if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
                 for (Map.Entry<String, JiraClient> entry : trackerRouter.getJiraClients().entrySet()) {
-                    if (entry.getKey().equals(projectEntity.getId().getTrackerId().toString())) {
+                    if (entry.getKey().equals(projectEntity.getId().getTrackerId())) {
                         return entry.getValue();
                     }
                 }
             } else if (ProjectEnum.MANTIS.equals(projectEntity.getId().getTrackerType())) {
                 for (Map.Entry<String, MantisClient> entry : trackerRouter.getMantisClient().entrySet()) {
-                    if (entry.getKey().equals(projectEntity.getId().getTrackerId().toString())) {
+                    if (entry.getKey().equals(projectEntity.getId().getTrackerId())) {
                         return entry.getValue();
                     }
                 }
             } else if (ProjectEnum.REDMINE.equals(projectEntity.getId().getTrackerType())) {
                 for (Map.Entry<String, RedmineClient> entry : trackerRouter.getRedmineClient().entrySet()) {
-                    if (entry.getKey().equals(projectEntity.getId().getTrackerId().toString())) {
+                    if (entry.getKey().equals(projectEntity.getId().getTrackerId())) {
                         return entry.getValue();
                     }
                 }

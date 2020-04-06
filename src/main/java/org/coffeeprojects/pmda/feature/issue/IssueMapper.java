@@ -1,20 +1,27 @@
 package org.coffeeprojects.pmda.feature.issue;
 
+import org.apache.commons.lang3.StringUtils;
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.component.ComponentMapper;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issueType.IssueTypeMapper;
 import org.coffeeprojects.pmda.feature.priority.PriorityMapper;
 import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionMapper;
+import org.coffeeprojects.pmda.feature.sprint.SprintEntity;
 import org.coffeeprojects.pmda.feature.sprint.SprintMapper;
 import org.coffeeprojects.pmda.feature.status.StatusMapper;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.user.UserMapper;
 import org.coffeeprojects.pmda.feature.version.VersionMapper;
+import org.coffeeprojects.pmda.tool.DateTool;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class, ResolutionMapper.class,
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,
@@ -56,5 +63,34 @@ public interface IssueMapper {
         output.setAssignee(assignee);
         output.setCreator(creator);
         output.setReporter(reporter);
+
+        // Mapping des sprints
+        Set<SprintEntity> sprintEntities = new HashSet();
+        if (input.getFields()!= null && input.getFields().getSprintsToString() != null) {
+            input.getFields().getSprintsToString().stream()
+                    .forEach(p -> {
+                        SprintEntity sprintEntity = new SprintEntity();
+                        String id = StringUtils.substringAfter(p, "id=");
+                        String rapidView = StringUtils.substringAfterLast(id, ",rapidViewId=");
+                        String state = StringUtils.substringAfterLast(rapidView, ",state=");
+                        String name = StringUtils.substringAfterLast(state, ",name=");
+                        String goal = StringUtils.substringAfterLast(name, ",goal=");
+                        String startDate = StringUtils.substringAfterLast(goal, ",startDate=");
+                        String endDate = StringUtils.substringAfterLast(startDate, ",endDate=");
+                        String completeDate = StringUtils.substringAfterLast(endDate, ",completeDate=");
+
+                        sprintEntity.setId(new CompositeIdBaseEntity().setStorageId(StringUtils.replace(id, ",rapidViewId=" + rapidView, StringUtils.EMPTY)));
+                        sprintEntity.setRapidViewId(StringUtils.replace(rapidView, ",state=" + state, StringUtils.EMPTY));
+                        sprintEntity.setState(StringUtils.replace(state, ",name=" + name, StringUtils.EMPTY));
+                        sprintEntity.setName(StringUtils.replace(name, ",goal=" + goal, StringUtils.EMPTY));
+                        sprintEntity.setGoal(StringUtils.replace(goal, ",startDate=" + startDate, StringUtils.EMPTY));
+                        sprintEntity.setStartDate(DateTool.getDateWithTimezone(StringUtils.replace(startDate, ",endDate=" + endDate, StringUtils.EMPTY)));
+                        sprintEntity.setEndDate(DateTool.getDateWithTimezone(StringUtils.replace(endDate, ",completeDate=" + completeDate, StringUtils.EMPTY)));
+                        sprintEntity.setCompleteDate(DateTool.getDateWithTimezone(StringUtils.substringAfterLast(completeDate, ",completeDate=")));
+
+                        sprintEntities.add(sprintEntity);
+                    });
+            output.setSprints(sprintEntities);
+        }
     }
 }

@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1586115266134-1
+    id: 1586177497027-1
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -18,7 +18,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: accountPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -47,7 +47,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: account
 - changeSet:
-    id: 1586115266134-2
+    id: 1586177497027-2
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -65,7 +65,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: componentPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -88,7 +88,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: component
 - changeSet:
-    id: 1586115266134-3
+    id: 1586177497027-3
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -106,7 +106,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: issuePK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -144,7 +144,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: assignee_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: assignee_tracker_type
             type: INTEGER
@@ -153,7 +153,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: creator_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: creator_tracker_type
             type: INTEGER
@@ -162,7 +162,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: issue_type_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: issue_type_tracker_type
             type: INTEGER
@@ -171,7 +171,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: priority_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: priority_tracker_type
             type: INTEGER
@@ -180,7 +180,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: project_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: project_tracker_type
             type: INTEGER
@@ -189,7 +189,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: reporter_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: reporter_tracker_type
             type: INTEGER
@@ -198,7 +198,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: resolution_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: resolution_tracker_type
             type: INTEGER
@@ -207,13 +207,13 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: status_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: status_tracker_type
             type: INTEGER
         tableName: issue
 - changeSet:
-    id: 1586115266134-4
+    id: 1586177497027-4
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -229,7 +229,7 @@ databaseChangeLog:
               nullable: false
               primaryKey: true
             name: issue_tracker_type
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -247,7 +247,7 @@ databaseChangeLog:
               nullable: false
               primaryKey: true
             name: component_tracker_type
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -256,7 +256,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_component
 - changeSet:
-    id: 1586115266134-5
+    id: 1586177497027-5
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -270,7 +270,7 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: issue_entity_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -281,7 +281,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_entity_labels
 - changeSet:
-    id: 1586115266134-6
+    id: 1586177497027-6
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -297,7 +297,7 @@ databaseChangeLog:
               nullable: false
               primaryKey: true
             name: issue_tracker_type
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -315,7 +315,7 @@ databaseChangeLog:
               nullable: false
               primaryKey: true
             name: sprint_tracker_type
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -324,7 +324,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_sprint
 - changeSet:
-    id: 1586115266134-7
+    id: 1586177497027-7
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -342,7 +342,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: issue_typePK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -368,7 +368,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_type
 - changeSet:
-    id: 1586115266134-8
+    id: 1586177497027-8
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -384,7 +384,7 @@ databaseChangeLog:
               nullable: false
               primaryKey: true
             name: issue_tracker_type
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -402,7 +402,7 @@ databaseChangeLog:
               nullable: false
               primaryKey: true
             name: version_tracker_type
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -411,7 +411,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_version
 - changeSet:
-    id: 1586115266134-9
+    id: 1586177497027-9
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -429,7 +429,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: priorityPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -452,7 +452,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: priority
 - changeSet:
-    id: 1586115266134-10
+    id: 1586177497027-10
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -470,7 +470,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: projectPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -502,7 +502,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: project
 - changeSet:
-    id: 1586115266134-11
+    id: 1586177497027-11
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -520,7 +520,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: resolutionPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -546,7 +546,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: resolution
 - changeSet:
-    id: 1586115266134-12
+    id: 1586177497027-12
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -564,7 +564,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: sprintPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -605,7 +605,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: sprint
 - changeSet:
-    id: 1586115266134-13
+    id: 1586177497027-13
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -623,7 +623,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: statusPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -652,13 +652,13 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             name: project_tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             name: project_tracker_type
             type: INTEGER
         tableName: status
 - changeSet:
-    id: 1586115266134-14
+    id: 1586177497027-14
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -676,7 +676,7 @@ databaseChangeLog:
               primaryKey: true
               primaryKeyName: versionPK
             name: tracker_id
-            type: INTEGER
+            type: VARCHAR(255)
         - column:
             constraints:
               nullable: false
@@ -699,7 +699,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: version
 - changeSet:
-    id: 1586115266134-15
+    id: 1586177497027-15
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -712,7 +712,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1586115266134-16
+    id: 1586177497027-16
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -725,7 +725,7 @@ databaseChangeLog:
         referencedTableName: project
         validate: true
 - changeSet:
-    id: 1586115266134-17
+    id: 1586177497027-17
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -738,7 +738,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1586115266134-18
+    id: 1586177497027-18
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -751,7 +751,7 @@ databaseChangeLog:
         referencedTableName: resolution
         validate: true
 - changeSet:
-    id: 1586115266134-19
+    id: 1586177497027-19
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -764,7 +764,7 @@ databaseChangeLog:
         referencedTableName: issue_type
         validate: true
 - changeSet:
-    id: 1586115266134-20
+    id: 1586177497027-20
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -777,7 +777,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1586115266134-21
+    id: 1586177497027-21
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -790,7 +790,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1586115266134-22
+    id: 1586177497027-22
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -803,7 +803,7 @@ databaseChangeLog:
         referencedTableName: project
         validate: true
 - changeSet:
-    id: 1586115266134-23
+    id: 1586177497027-23
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -816,7 +816,7 @@ databaseChangeLog:
         referencedTableName: sprint
         validate: true
 - changeSet:
-    id: 1586115266134-24
+    id: 1586177497027-24
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -829,7 +829,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1586115266134-25
+    id: 1586177497027-25
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -842,7 +842,7 @@ databaseChangeLog:
         referencedTableName: priority
         validate: true
 - changeSet:
-    id: 1586115266134-26
+    id: 1586177497027-26
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -855,7 +855,7 @@ databaseChangeLog:
         referencedTableName: version
         validate: true
 - changeSet:
-    id: 1586115266134-27
+    id: 1586177497027-27
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -868,7 +868,7 @@ databaseChangeLog:
         referencedTableName: status
         validate: true
 - changeSet:
-    id: 1586115266134-28
+    id: 1586177497027-28
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -881,7 +881,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1586115266134-29
+    id: 1586177497027-29
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -894,7 +894,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1586115266134-30
+    id: 1586177497027-30
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
