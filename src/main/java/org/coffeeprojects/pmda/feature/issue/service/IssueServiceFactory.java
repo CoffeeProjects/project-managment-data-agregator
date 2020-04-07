@@ -23,14 +23,15 @@ public class IssueServiceFactory {
     }
 
     public IssueService createIssueService(ProjectEntity projectEntity) {
-        if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
-            return jiraIssueService;
-        } else if (ProjectEnum.MANTIS.equals(projectEntity.getId().getTrackerType())) {
-            return mantisIssueService;
-        } else if (ProjectEnum.REDMINE.equals(projectEntity.getId().getTrackerType())) {
-            return mantisIssueService;
-        } else {
-            return null;
+        if (projectEntity != null && projectEntity.getId() != null) {
+            if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
+                return jiraIssueService;
+            } else if (ProjectEnum.MANTIS.equals(projectEntity.getId().getTrackerType())) {
+                return mantisIssueService;
+            } else if (ProjectEnum.REDMINE.equals(projectEntity.getId().getTrackerType())) {
+                return redmineIssueService;
+            }
         }
+        return null;
     }
 }

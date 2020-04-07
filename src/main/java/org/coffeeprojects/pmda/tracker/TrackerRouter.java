@@ -29,7 +29,7 @@ public class TrackerRouter {
     @Autowired
     private final TrackerService trackerService;
 
-    private Map<Map<String, String>, Object> clients = new HashMap();
+    private Map<Map<String, String>, Object> trackers = new HashMap();
 
     @Autowired
     public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
@@ -39,7 +39,7 @@ public class TrackerRouter {
             Map<String, String> trackerId = new HashMap();
             trackerId.put(trackerBean.getType(), trackerBean.getId());
 
-            this.clients.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(trackerBean),
+            this.trackers.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(trackerBean),
                     trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
         }
     }
@@ -66,16 +66,17 @@ public class TrackerRouter {
                 .target(clientClass, url);
     }
 
-    public static final Object getClient(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
-            for (Map.Entry<Map<String, String>, Object> trackerEntry : trackerRouter.getClients().entrySet()) {
+    public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
+        if (trackerRouter != null && trackerRouter.getTrackers() !=null &&
+                projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
+            for (Map.Entry<Map<String, String>, Object> trackerEntry : trackerRouter.getTrackers().entrySet()) {
                 for (Map.Entry<String, String> trackerIdEntry : trackerEntry.getKey().entrySet()) {
                     String trackerType = trackerIdEntry.getKey();
                     String trackerId = trackerIdEntry.getValue();
-                    Object client = trackerEntry.getValue();
+                    Object tracker = trackerEntry.getValue();
                     if (trackerType.equalsIgnoreCase(projectEntity.getId().getTrackerType().toString()) &&
                             trackerId.equalsIgnoreCase(projectEntity.getId().getTrackerId())) {
-                        return client;
+                        return tracker;
                     }
                 }
             }
@@ -83,12 +84,12 @@ public class TrackerRouter {
         return null;
     }
 
-    public Map<Map<String, String>, Object> getClients() {
-        return clients;
+    public Map<Map<String, String>, Object> getTrackers() {
+        return trackers;
     }
 
-    public TrackerRouter setClients(Map<Map<String, String>, Object> clients) {
-        this.clients = clients;
+    public TrackerRouter setTrackers(Map<Map<String, String>, Object> trackers) {
+        this.trackers = trackers;
         return this;
     }
 }

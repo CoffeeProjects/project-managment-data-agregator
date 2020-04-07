@@ -63,9 +63,10 @@ public class JiraRepositoryTest {
                 .setIssues(issues);
 
         String jql = "project in (pmda) AND updated >= \"2020-03-29 11:15\"";
+        // TODO: Test à faire fonctionner
         mockStatic(TrackerRouter.class);
-        when(TrackerRouter.getClient(Mockito.any(), Mockito.any())).thenReturn(new Target.HardCodedTarget(JiraClient.class, "http://pmda.orgr"));
-        when(((JiraClient) TrackerRouter.getClient(trackerRouter, projectEntity)).searchIssues(jql, expand, fields, maxResults, startAt))
+        when(TrackerRouter.getTracker(Mockito.any(), Mockito.any())).thenReturn(new Target.HardCodedTarget(JiraClient.class, "http://pmda.orgr"));
+        when(((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).searchIssues(jql, expand, fields, maxResults, startAt))
                 .thenReturn(searchIssuesResultJiraBean);
 
         //when(jiraRepository.getSearchIssuesResultJiraBean(any(), any(), any(), any(), any(), any())).thenReturn()
@@ -73,6 +74,6 @@ public class JiraRepositoryTest {
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
 
         // Then
-        assertThat(issueJiraBeans).isEqualTo(issueJiraBeans);
+        //assertThat(issueJiraBeans).isEqualTo(issueJiraBeans);
     }
 }
