@@ -1,7 +1,7 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
 import org.coffeeprojects.pmda.feature.project.ProjectService;
-import org.coffeeprojects.pmda.tool.JobFailingException;
+import org.coffeeprojects.pmda.feature.exception.JobFailingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;

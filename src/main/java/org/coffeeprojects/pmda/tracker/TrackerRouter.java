@@ -24,7 +24,7 @@ import java.util.Map;
 @Import(FeignClientsConfiguration.class)
 public class TrackerRouter {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger log = LoggerFactory.getLogger(TrackerRouter.class);
 
     @Autowired
     private final TrackerService trackerService;
@@ -52,7 +52,7 @@ public class TrackerRouter {
         } else if (ProjectEnum.REDMINE.toString().equalsIgnoreCase(trackerBean.getType())) {
             return RedmineClient.class;
         } else {
-            logger.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getId());
+            log.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getId());
             return null;
         }
     }

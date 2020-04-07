@@ -3,7 +3,7 @@ package org.coffeeprojects.pmda.feature.issue.quartz;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
 import org.coffeeprojects.pmda.feature.project.ProjectService;
-import org.coffeeprojects.pmda.tool.JobFailingException;
+import org.coffeeprojects.pmda.feature.exception.JobFailingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IssueUpdateStep implements Tasklet, StepExecutionListener {
 
-    private final Logger logger = LoggerFactory.getLogger(IssueUpdateStep.class);
+    private static final Logger log = LoggerFactory.getLogger(IssueUpdateStep.class);
 
     @Autowired
     private ProjectService projectService;
@@ -29,13 +29,13 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
-        logger.debug("Issue update step initialized.");
+        log.debug("Issue update step initialized.");
     }
 
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
         try {
-            logger.info("Issue update step is running ...");
+            log.info("Issue update step is running ...");
             projectService.getAllProjectsFromDatabase().stream()
                     .filter(p -> p.isActive())
                     .forEach(p -> {
@@ -43,7 +43,7 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
                         issueService.updateLastModifiedIssues(p);
                     });
         } catch (Exception e) {
-            logger.error("Error during the execution of the Issue Update Step");
+            log.error("Error during the execution of the Issue Update Step");
             throw new JobFailingException("Interruption of Issue Update Step");
         }
         return RepeatStatus.FINISHED;
@@ -51,7 +51,7 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
-        logger.debug("Issue update step ended.");
+        log.debug("Issue update step ended.");
         return ExitStatus.COMPLETED;
     }
 }

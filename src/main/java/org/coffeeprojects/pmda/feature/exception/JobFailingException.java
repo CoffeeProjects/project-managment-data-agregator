@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.tool;
+package org.coffeeprojects.pmda.feature.exception;
 
 public class JobFailingException extends Exception {
     public JobFailingException(String message) {

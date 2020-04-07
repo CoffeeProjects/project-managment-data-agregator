@@ -14,7 +14,7 @@ import org.coffeeprojects.pmda.feature.status.StatusMapper;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.user.UserMapper;
 import org.coffeeprojects.pmda.feature.version.VersionMapper;
-import org.coffeeprojects.pmda.tool.DateTool;
+import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -84,9 +84,9 @@ public interface IssueMapper {
                         sprintEntity.setState(StringUtils.replace(state, ",name=" + name, StringUtils.EMPTY));
                         sprintEntity.setName(StringUtils.replace(name, ",goal=" + goal, StringUtils.EMPTY));
                         sprintEntity.setGoal(StringUtils.replace(goal, ",startDate=" + startDate, StringUtils.EMPTY));
-                        sprintEntity.setStartDate(DateTool.getDateWithTimezone(StringUtils.replace(startDate, ",endDate=" + endDate, StringUtils.EMPTY)));
-                        sprintEntity.setEndDate(DateTool.getDateWithTimezone(StringUtils.replace(endDate, ",completeDate=" + completeDate, StringUtils.EMPTY)));
-                        sprintEntity.setCompleteDate(DateTool.getDateWithTimezone(StringUtils.substringAfterLast(completeDate, ",completeDate=")));
+                        sprintEntity.setStartDate(TrackerUtils.getDateFromTimezone(StringUtils.replace(startDate, ",endDate=" + endDate, StringUtils.EMPTY)));
+                        sprintEntity.setEndDate(TrackerUtils.getDateFromTimezone(StringUtils.replace(endDate, ",completeDate=" + completeDate, StringUtils.EMPTY)));
+                        sprintEntity.setCompleteDate(TrackerUtils.getDateFromTimezone(StringUtils.substringAfterLast(completeDate, ",completeDate=")));
 
                         sprintEntities.add(sprintEntity);
                     });
