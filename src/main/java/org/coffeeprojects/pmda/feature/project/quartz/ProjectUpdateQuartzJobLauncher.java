@@ -25,15 +25,12 @@ import java.util.Map;
 public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    
+
+    @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
     private ProjectService projectService;
-
-    public ProjectUpdateQuartzJobLauncher(ApplicationContext applicationContext, ProjectService projectService) {
-        this.applicationContext = applicationContext;
-        this.projectService = projectService;
-    }
 
     @Override
     @Transactional
