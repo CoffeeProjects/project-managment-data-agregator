@@ -1,7 +1,14 @@
-hibernate:
-  default_schema: public
+scheduler:
+  enabled: true
+  trigger:
+    issue-update-cron-expression: "0 0/1 * 1/1 * ? *"
+    project-update-cron-expression: "0 0/30 * 1/1 * ? *"
 
 spring:
+  batch:
+    initialize-schema: always
+    job:
+      enabled: false
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml

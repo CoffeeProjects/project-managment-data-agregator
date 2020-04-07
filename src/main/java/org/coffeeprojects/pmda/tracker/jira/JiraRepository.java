@@ -1,86 +1,60 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
-import org.apache.commons.lang3.StringUtils;
-import org.coffeeprojects.pmda.issue.jirabean.IssueJiraBean;
-import org.coffeeprojects.pmda.issue.jirabean.SearchIssuesResultJiraBean;
-import org.coffeeprojects.pmda.sprint.SprintJiraBean;
-import org.coffeeprojects.pmda.tracker.jira.proxy.JiraProxy;
+import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
+import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
+import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
+import org.coffeeprojects.pmda.tracker.TrackerRouter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class JiraRepository {
-    private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project in (%s) AND updated >= \"%s\" ORDER BY updated ASC";
+    private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project =\"%s\"";
+    private static final String SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE = "project =\"%s\" AND updated >= \"%s\"";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.systemDefault());
-    private final JiraProxy jiraProxy;
+    private static final String EXPAND = "changelog";
+    private static final Integer MAX_RESULT = 100;
 
-    public JiraRepository(JiraProxy jiraProxy) {
-        this.jiraProxy = jiraProxy;
+    @Autowired
+    private TrackerRouter trackerRouter;
+
+    public JiraRepository(TrackerRouter trackerRouter) {
+        this.trackerRouter = trackerRouter;
     }
 
-    public List<IssueJiraBean> getModifiedIssues(String projectName, Instant fromDate, String expand, String fields) {
-        // TODO: verifier si on peut récuperer tous les issues en même temps
-        final String jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectName, DATE_TIME_FORMATTER.format(fromDate));
-        SearchIssuesResultJiraBean searchIssuesResultJiraBean = jiraProxy.searchIssues(jql, expand, fields);
+    public ProjectJiraBean getProjectDetails(ProjectEntity projectEntity) {
+        return ((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).getProjectByKey(projectEntity.getKey());
+    }
 
-        for (IssueJiraBean issueJiraBean : searchIssuesResultJiraBean.getIssues()) {
-            issueJiraBean.getFields().setSprints(getSprintsByIssueJiraBean(issueJiraBean));
+    public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, String fields) {
+        Integer startAt = 0;
+        List<IssueJiraBean> issueJiraBeans = new ArrayList();
+        String jql;
+
+        if (projectEntity.getLastCheck() != null) {
+            jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE, projectEntity.getKey(), DATE_TIME_FORMATTER.format(projectEntity.getLastCheck()));
+        } else {
+            jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());
         }
 
-        return searchIssuesResultJiraBean.getIssues();
-    }
+        SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+        double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
-    Set<SprintJiraBean> getSprintsByIssueJiraBean(IssueJiraBean issueJiraBean) {
-        Set<SprintJiraBean> sprintJiraBeans = new HashSet<>();
-
-        if (issueJiraBean != null && issueJiraBean.getFields() != null && issueJiraBean.getFields().getSprintsToString() != null) {
-                for (String sprint : issueJiraBean.getFields().getSprintsToString()) {
-                    SprintJiraBean sprintJiraBean = new SprintJiraBean();
-                    String id = StringUtils.substringAfter(sprint, "id=");
-                    String rapidView = StringUtils.substringAfterLast(id, ",rapidViewId=");
-                    String state = StringUtils.substringAfterLast(sprint, ",state=");
-                    String name = StringUtils.substringAfterLast(sprint, ",name=");
-                    String goal = StringUtils.substringAfterLast(sprint, ",goal=");
-                    String startDate = StringUtils.substringAfterLast(sprint, ",startDate=");
-                    String endDate = StringUtils.substringAfterLast(sprint, ",endDate=");
-                    String completeDate = StringUtils.substringAfterLast(sprint, ",completeDate=");
-
-                    sprintJiraBean.setId(StringUtils.replace(id, ",rapidViewId=" + rapidView, StringUtils.EMPTY));
-                    sprintJiraBean.setRapidViewId(StringUtils.replace(rapidView, ",state=" + state, StringUtils.EMPTY));
-                    sprintJiraBean.setState(StringUtils.replace(state, ",name=" + name, StringUtils.EMPTY));
-                    sprintJiraBean.setName(StringUtils.replace(name, ",goal=" + goal, StringUtils.EMPTY));
-                    sprintJiraBean.setGoal(StringUtils.replace(goal, ",startDate=" + startDate, StringUtils.EMPTY));
-                    sprintJiraBean.setStartDate(getDateWithTimezone(StringUtils.replace(startDate, ",endDate=" + endDate, StringUtils.EMPTY)));
-                    sprintJiraBean.setEndDate(getDateWithTimezone(StringUtils.replace(endDate, ",completeDate=" + completeDate, StringUtils.EMPTY)));
-                    sprintJiraBean.setCompleteDate(getDateWithTimezone(StringUtils.substringAfterLast(completeDate, ",completeDate=")));
-
-                    sprintJiraBeans.add(sprintJiraBean);
-                }
-        }
-        return sprintJiraBeans;
-    }
-
-    private Date getDateWithTimezone(String timezone) {
-
-        SimpleDateFormat startDateTZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        startDateTZ.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-        Date date = null;
-        try {
-            if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
-                date = startDateTZ.parse(timezone);
+        for (int i = 1; i <= pages; i++) {
+            if (i > 1) {
+                startAt = (MAX_RESULT.intValue() * i) + 1;
+                searchIssuesResultJiraBean = ((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
+            issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
         }
 
-        return date;
+        return issueJiraBeans;
     }
 }
