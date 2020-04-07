@@ -12,7 +12,6 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.configuration.JobLocator;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
@@ -24,17 +23,17 @@ public class IssueUpdateQuartzJobLauncher extends QuartzJobBean {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private JobLauncher jobLauncher;
-    private JobLocator jobLocator;
-
-    @Autowired
     private ApplicationContext applicationContext;
+
+    public IssueUpdateQuartzJobLauncher(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
-            jobLocator = applicationContext.getBean(JobLocator.class);
-            jobLauncher = applicationContext.getBean(JobLauncher.class);
+            JobLocator jobLocator = applicationContext.getBean(JobLocator.class);
+            JobLauncher jobLauncher = applicationContext.getBean(JobLauncher.class);
 
             Map<String, Object> jobDataMap = context.getMergedJobDataMap();
             String jobName = (String) jobDataMap.get("jobName");

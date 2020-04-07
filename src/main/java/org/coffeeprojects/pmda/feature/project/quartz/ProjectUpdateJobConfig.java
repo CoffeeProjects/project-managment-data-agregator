@@ -12,8 +12,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProjectUpdateJobConfig {
 
-    @Autowired
-    ProjectUpdateStep projectUpdateStep;
+    private ProjectUpdateStep projectUpdateStep;
+
+    public ProjectUpdateJobConfig(ProjectUpdateStep projectUpdateStep) {
+        this.projectUpdateStep = projectUpdateStep;
+    }
 
     @Bean
     protected Step projectUpdateConfigStep(StepBuilderFactory stepBuilders) {

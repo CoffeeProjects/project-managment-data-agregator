@@ -25,22 +25,22 @@ import java.util.Map;
 public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-
-    private JobLauncher jobLauncher;
-    private JobLocator jobLocator;
-
-    @Autowired
+    
     private ApplicationContext applicationContext;
 
-    @Autowired
     private ProjectService projectService;
+
+    public ProjectUpdateQuartzJobLauncher(ApplicationContext applicationContext, ProjectService projectService) {
+        this.applicationContext = applicationContext;
+        this.projectService = projectService;
+    }
 
     @Override
     @Transactional
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
-            jobLocator = applicationContext.getBean(JobLocator.class);
-            jobLauncher = applicationContext.getBean(JobLauncher.class);
+            JobLocator jobLocator = applicationContext.getBean(JobLocator.class);
+            JobLauncher jobLauncher = applicationContext.getBean(JobLauncher.class);
 
             Map<String, Object> jobDataMap = context.getMergedJobDataMap();
             String jobName = (String) jobDataMap.get("jobName");

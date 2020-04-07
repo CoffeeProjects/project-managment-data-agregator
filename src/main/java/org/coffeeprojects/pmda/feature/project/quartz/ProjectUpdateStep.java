@@ -19,8 +19,11 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
 
     private final Logger logger = LoggerFactory.getLogger(ProjectUpdateStep.class);
 
-    @Autowired
-    ProjectService projectService;
+    private ProjectService projectService;
+
+    public ProjectUpdateStep(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @Override
     public void beforeStep(StepExecution stepExecution) {

@@ -21,11 +21,14 @@ public class IssueUpdateStep implements Tasklet, StepExecutionListener {
 
     private static final Logger log = LoggerFactory.getLogger(IssueUpdateStep.class);
 
-    @Autowired
     private ProjectService projectService;
 
-    @Autowired
     private IssueServiceFactory issueServiceFactory;
+
+    public IssueUpdateStep(ProjectService projectService, IssueServiceFactory issueServiceFactory) {
+        this.projectService = projectService;
+        this.issueServiceFactory = issueServiceFactory;
+    }
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
