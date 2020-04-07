@@ -35,13 +35,12 @@ public class TrackerRouter {
     public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
         this.trackerService = trackerService;
 
-        for (TrackerBean trackerBean : this.trackerService.getTrackers()) {
+        trackerService.getTrackers().forEach(p -> {
             Map<String, String> trackerId = new HashMap();
-            trackerId.put(trackerBean.getType(), trackerBean.getId());
+            trackerId.put(p.getType(), p.getId());
 
-            this.trackers.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(trackerBean),
-                    trackerBean.getUrl(), trackerBean.getUser(), trackerBean.getPassword()));
-        }
+            this.trackers.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
+        });
     }
 
     private Class getClientInterface(TrackerBean trackerBean) {

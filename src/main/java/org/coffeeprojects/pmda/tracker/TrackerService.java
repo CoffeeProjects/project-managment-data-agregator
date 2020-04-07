@@ -16,18 +16,18 @@ public class TrackerService {
 
     @PostConstruct
     public void init() {
-        for(TrackerBean current : this.getTrackers()) {
-            String type = current.getType();
-            String number = current.getId();
-            String url = current.getUrl();
-            String user = current.getUser();
-            String password = current.getPassword();
+        this.getTrackers().forEach(p -> {
+            String type = p.getType();
+            String number = p.getId();
+            String url = p.getUrl();
+            String user = p.getUser();
+            String password = p.getPassword();
 
             if (StringUtils.isEmpty(type) || StringUtils.isEmpty(type) || StringUtils.isEmpty(number) ||
                     StringUtils.isEmpty(url) || StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
-                trackers.remove(current);
+                trackers.remove(p);
             }
-        }
+        });
     }
 
     public List<TrackerBean> getTrackers() {

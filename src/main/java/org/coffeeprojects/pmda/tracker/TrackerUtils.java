@@ -18,9 +18,9 @@ public class TrackerUtils {
     private static final Logger log = LoggerFactory.getLogger(TrackerUtils.class);
 
     public static void fillIdsFromIssueEntities(ProjectEntity projectEntity, List<IssueEntity> issueEntities) {
-        for (IssueEntity issueEntity : issueEntities) {
-            fillIdsFromIssueEntity(projectEntity, issueEntity);
-        }
+        issueEntities.forEach(p -> {
+            fillIdsFromIssueEntity(projectEntity, p);
+        });
     }
 
     public static void fillIdsFromIssueEntity(ProjectEntity projectEntity, IssueEntity issueEntity) {
@@ -53,9 +53,9 @@ public class TrackerUtils {
     }
 
     private static <T extends BaseEntity> void fillIds(ProjectEntity projectEntity, Set<T> baseEntities) {
-        for (BaseEntity baseEntity : baseEntities) {
-            fillIds(projectEntity, baseEntity);
-        }
+        baseEntities.forEach(p -> {
+            fillIds(projectEntity, p);
+        });
     }
 
     private static void fillIds(ProjectEntity projectEntity, BaseEntity baseEntity) {
