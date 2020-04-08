@@ -11,3 +11,9 @@ before_script:
 script:
   - chmod +x mvnw
   - ./mvnw clean test
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+addons:
+  sonarcloud:
+    organization: "coffeeprojects"
+    token:
+      secure: "mnngJna4udMGwlwfmcCNsmCtGRNI2FqhSV1T2DM7uqOH9/Le5/i+CJgb1GUIu16JJb4c6WAgKmK63vpYeCIpwuMgNmBVPdKcM2XBD68ni1IyKcRkwKYi1Mibg2Wv23gStedYJlm8Savpq7tuBhB90DWmqhv9nnrYcYDLTjR2M2euSv9exyxTNsArA22xQh8NpC6qrkNBmqqfEx8hy/kWLVLECaWc4R4AtcOUDVBxddZ0h1Cbn3HDAXNGQeYZUdScv9w/S3ReXgaYDj2H8eBCc6LrguS4+mrJfNpmZkVKy7lDBD/0rYtw3I1SXwZSceOVC9mLBbqED6LaI68mV9v9D9Jsq1/M2oTDHDJKNzKX1L06pikkSRPL0oqwEEEnew0N6JyQ9vKUP96lDkxJxL2qn7/8lD5pgrq8DBM6KDsTsUUdIm9RkgznUsWSnSuiDtoJbXCRa6MZhZHLbTyuFyb3uWsqhN+MZoyKtAHzsC9fCN6HTbj/HRMIyyaTPXUDrGMgv+/Six5cLdPnaASBx7YaFmdhfNK631bSzybGpcQIQNzcC7sFbP3n/UdXRtpBe2CH/GSJ7uiwqqD7n9DwmJhjuL+J0tyefq9NrzQXcDSaH9m3lgulXnA0d1VdJn5KIz1QcJaSQIYI39ZVzylVwJ/ltDea43W6MDzps67FfGODHOw="
