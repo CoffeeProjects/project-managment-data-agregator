@@ -4,11 +4,10 @@ import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SprintUtils {
-    public static Set<IssueEntity> updateLastSprintsValuesFromIssueEntities(Set<IssueEntity> issueEntities) {
+    public static List<IssueEntity> updateLastSprintsValuesFromIssueEntities(List<IssueEntity> issueEntities) {
          if (issueEntities != null) {
              List<IssueEntity> issueEntitiesSortedByDate = issueEntities.stream()
                      .filter(issueEntity -> issueEntity.getUpdated() != null)
@@ -21,7 +20,7 @@ public class SprintUtils {
         return issueEntities;
     }
 
-    private static void browseSprintsToUpdateFromSortedIssueEntities(Set<IssueEntity> issueEntities, List<IssueEntity> issueEntitiesSortedByModifiedDate) {
+    private static void browseSprintsToUpdateFromSortedIssueEntities(List<IssueEntity> issueEntities, List<IssueEntity> issueEntitiesSortedByModifiedDate) {
         issueEntitiesSortedByModifiedDate.stream()
                 .filter(entitySorted -> entitySorted.getSprints() != null)
                 .forEach(entitySorted -> entitySorted.getSprints().stream()
@@ -32,7 +31,7 @@ public class SprintUtils {
                         .forEach(sprintSorted -> browseSprintsToUpdateFromIssueEntities(issueEntities, sprintSorted)));
     }
 
-    private static void browseSprintsToUpdateFromIssueEntities(Set<IssueEntity> issueEntities, SprintEntity sortedSprint) {
+    private static void browseSprintsToUpdateFromIssueEntities(List<IssueEntity> issueEntities, SprintEntity sortedSprint) {
         issueEntities.stream()
                 .filter(entity -> entity.getSprints() != null)
                 .forEach(entity -> entity.getSprints().stream()

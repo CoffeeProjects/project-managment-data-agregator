@@ -11,6 +11,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -76,7 +77,7 @@ public class SprintUtilsTest {
         issueEntities.add(issue1);
         issueEntities.add(issue2);
 
-        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities);
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
         assertThat(sprint1_1.getRapidViewId()).isEqualTo(sprint2_1.getRapidViewId());
         assertThat(sprint1_1.getName()).isEqualTo(sprint2_1.getName());
         assertThat(sprint1_1.getGoal()).isEqualTo(sprint2_1.getGoal());
@@ -150,7 +151,7 @@ public class SprintUtilsTest {
         issueEntities.add(issue1);
         issueEntities.add(issue2);
 
-        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities);
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
         assertThat(sprint1_1.getRapidViewId()).isNotEqualTo(sprint2_1.getRapidViewId());
         assertThat(sprint1_1.getName()).isNotEqualTo(sprint2_1.getName());
         assertThat(sprint1_1.getGoal()).isNotEqualTo(sprint2_1.getGoal());
@@ -189,23 +190,42 @@ public class SprintUtilsTest {
         Set<IssueEntity> issueEntities = new HashSet();
         issueEntities.add(issue1);
         issueEntities.add(issue2);
-        assertThat(SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities)).isEqualTo(issueEntities);
+
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
+        assertThat(sprint1_1.getRapidViewId()).isNull();
+        assertThat(sprint1_1.getName()).isNull();
+        assertThat(sprint1_1.getGoal()).isNull();
+        assertThat(sprint1_1.getStartDate()).isNull();
+        assertThat(sprint1_1.getEndDate()).isNull();
+        assertThat(sprint1_1.getCompleteDate()).isNull();
+
+        assertThat(sprint1_2.getRapidViewId()).isNull();
+        assertThat(sprint1_2.getName()).isNull();
+        assertThat(sprint1_2.getGoal()).isNull();
+        assertThat(sprint1_2.getStartDate()).isNull();
+        assertThat(sprint1_2.getEndDate()).isNull();
+        assertThat(sprint1_2.getCompleteDate()).isNull();
     }
 
     @Test
     public void test_update_last_sprints_values_from_issue_entities_with_empty_entities() {
-        IssueEntity issueEntity1 = new IssueEntity();
-        IssueEntity issueEntity2 = new IssueEntity();
+        IssueEntity issue1 = new IssueEntity();
+        IssueEntity issue2 = new IssueEntity();
         Set<IssueEntity> issueEntities = new HashSet();
-        issueEntities.add(issueEntity1);
-        issueEntities.add(issueEntity2);
-        assertThat(SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities)).isEqualTo(issueEntities);
+        issueEntities.add(issue1);
+        issueEntities.add(issue2);
+
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
+        assertThat(issue1.getSprints()).isNull();
+        assertThat(issue2.getSprints()).isNull();
     }
 
     @Test
     public void test_update_last_sprints_values_from_issue_entities_with_empty_list() {
         Set<IssueEntity> issueEntities = new HashSet();
-        assertThat(SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities)).isEqualTo(issueEntities);
+
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
+        assertThat(issueEntities.size()).isEqualTo(0);
     }
 
     @Test
