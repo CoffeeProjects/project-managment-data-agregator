@@ -1,8 +1,8 @@
 # Project Managment Data Agregator
 
 ## Build status
-- Develop branch ![build status of develop branch](https://travis-ci.com/CoffeeProjects/project-managment-data-agregator.svg?branch=develop)
-- Master branch ![build status of master branch](https://travis-ci.com/CoffeeProjects/project-managment-data-agregator.svg?branch=master)
+- Develop branch ![build status of develop branch](https://travis-ci.org/CoffeeProjects/project-managment-data-agregator.svg?branch=develop)
+- Master branch ![build status of master branch](https://travis-ci.org/CoffeeProjects/project-managment-data-agregator.svg?branch=master)
 
 ## Build & run
 - This project is compiled & run with classic Maven commands :
