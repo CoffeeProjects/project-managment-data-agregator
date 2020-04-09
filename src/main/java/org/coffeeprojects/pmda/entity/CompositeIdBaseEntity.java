@@ -1,43 +1,68 @@
 package org.coffeeprojects.pmda.entity;
 
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
+import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class CompositeIdBaseEntity implements Serializable {
 
-    private String storageId;
+    private String clientId;
 
-    private ProjectEnum trackerType;
+    private TrackerTypeEnum trackerType;
 
-    private String trackerId;
+    private String trackerLocalId;
 
-    public String getStorageId() {
-        return storageId;
+    public String getClientId() {
+        return clientId;
     }
 
-    public CompositeIdBaseEntity setStorageId(String storageId) {
-        this.storageId = storageId;
+    public CompositeIdBaseEntity setClientId(String clientId) {
+        this.clientId = clientId;
         return this;
     }
 
-    public ProjectEnum getTrackerType() {
+    public TrackerTypeEnum getTrackerType() {
         return trackerType;
     }
 
-    public CompositeIdBaseEntity setTrackerType(ProjectEnum trackerType) {
+    public CompositeIdBaseEntity setTrackerType(TrackerTypeEnum trackerType) {
         this.trackerType = trackerType;
         return this;
     }
 
-    public String getTrackerId() {
-        return trackerId;
+    public String getTrackerLocalId() {
+        return trackerLocalId;
     }
 
-    public CompositeIdBaseEntity setTrackerId(String trackerId) {
-        this.trackerId = trackerId;
+    public CompositeIdBaseEntity setTrackerLocalId(String trackerLocalId) {
+        this.trackerLocalId = trackerLocalId;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CompositeIdBaseEntity that = (CompositeIdBaseEntity) o;
+        return Objects.equals(clientId, that.clientId) &&
+                trackerType == that.trackerType &&
+                Objects.equals(trackerLocalId, that.trackerLocalId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, trackerType, trackerLocalId);
+    }
+
+    @Override
+    public String toString() {
+        return "CompositeIdBaseEntity{" +
+                "clientId='" + clientId + '\'' +
+                ", trackerType=" + trackerType +
+                ", trackerLocalId='" + trackerLocalId + '\'' +
+                '}';
     }
 }

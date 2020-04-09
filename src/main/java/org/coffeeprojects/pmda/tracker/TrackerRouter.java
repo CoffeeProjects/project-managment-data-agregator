@@ -6,7 +6,6 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
 import org.coffeeprojects.pmda.tracker.jira.JiraClient;
 import org.coffeeprojects.pmda.tracker.mantis.MantisClient;
 import org.coffeeprojects.pmda.tracker.redmine.RedmineClient;
@@ -17,8 +16,8 @@ import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Import(FeignClientsConfiguration.class)
@@ -26,33 +25,31 @@ public class TrackerRouter {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerRouter.class);
 
-    @Autowired
-    private final TrackerService trackerService;
-
-    private Map<Map<String, String>, Object> trackers = new HashMap();
+    private List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
 
     @Autowired
-    public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
-        this.trackerService = trackerService;
-
-        trackerService.getTrackers().forEach(p -> {
-            Map<String, String> trackerId = new HashMap();
-            trackerId.put(p.getType(), p.getId());
-
-            this.trackers.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
+    public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackersProperties trackersProperties) {
+        trackersProperties.getTrackers().forEach(p -> {
+            TrackerParametersBean trackerParametersBean = new TrackerParametersBean();
+            trackerParametersBean.setType(TrackerTypeEnum.valueOf(p.getType().toUpperCase()));
+            trackerParametersBean.setLocalId(p.getLocalId());
+            trackerParametersBean.setClientId(p.getClientId());
+            trackerParametersBean.setClient(buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
+            trackerParametersBeans.add(trackerParametersBean);
         });
     }
 
-    private Class getClientInterface(TrackerBean trackerBean) {
-        if (ProjectEnum.JIRA.toString().equalsIgnoreCase(trackerBean.getType())) {
-            return JiraClient.class;
-        } else if (ProjectEnum.MANTIS.toString().equalsIgnoreCase(trackerBean.getType())) {
-            return MantisClient.class;
-        } else if (ProjectEnum.REDMINE.toString().equalsIgnoreCase(trackerBean.getType())) {
-            return RedmineClient.class;
-        } else {
-            log.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getId());
-            return null;
+    private Class getClientInterface(TrackerDataBean trackerDataBean) {
+        switch (TrackerTypeEnum.valueOf(trackerDataBean.getType().toUpperCase())) {
+            case JIRA:
+                return JiraClient.class;
+            case MANTIS:
+                return MantisClient.class;
+            case REDMINE:
+                return RedmineClient.class;
+            default:
+                log.error("No interface available for this tracker : {}", trackerDataBean);
+                return null;
         }
     }
 
@@ -65,30 +62,29 @@ public class TrackerRouter {
                 .target(clientClass, url);
     }
 
-    public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (trackerRouter != null && trackerRouter.getTrackers() !=null &&
-                projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
-            for (Map.Entry<Map<String, String>, Object> trackerEntry : trackerRouter.getTrackers().entrySet()) {
-                for (Map.Entry<String, String> trackerIdEntry : trackerEntry.getKey().entrySet()) {
-                    String trackerType = trackerIdEntry.getKey();
-                    String trackerId = trackerIdEntry.getValue();
-                    Object tracker = trackerEntry.getValue();
-                    if (trackerType.equalsIgnoreCase(projectEntity.getId().getTrackerType().toString()) &&
-                            trackerId.equalsIgnoreCase(projectEntity.getId().getTrackerId())) {
-                        return tracker;
-                    }
-                }
-            }
+    public Object getTracker(ProjectEntity projectEntity) {
+        if (projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null
+                && projectEntity.getId().getTrackerLocalId() != null && projectEntity.getId().getClientId() != null) {
+
+            TrackerParametersBean trackerParametersBean = trackerParametersBeans.stream()
+                    .filter(t -> projectEntity.getId().getTrackerType() == t.getType())
+                    .filter(t -> projectEntity.getId().getTrackerLocalId().equals(t.getLocalId()))
+                    .filter(t -> projectEntity.getId().getClientId().equals(t.getClientId()))
+                    .findFirst()
+                    .orElse(new TrackerParametersBean());
+
+            return trackerParametersBean.getClient();
         }
+        log.error("Tracker not found for project : {}", projectEntity);
         return null;
     }
 
-    public Map<Map<String, String>, Object> getTrackers() {
-        return trackers;
+    public List<TrackerParametersBean> getTrackerParametersBeans() {
+        return trackerParametersBeans;
     }
 
-    public TrackerRouter setTrackers(Map<Map<String, String>, Object> trackers) {
-        this.trackers = trackers;
+    public TrackerRouter setTrackerParametersBeans(List<TrackerParametersBean> trackerParametersBeans) {
+        this.trackerParametersBeans = trackerParametersBeans;
         return this;
     }
 }

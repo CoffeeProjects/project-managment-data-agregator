@@ -3,9 +3,12 @@ package org.coffeeprojects.pmda.feature.sprint;
 import org.coffeeprojects.pmda.entity.BaseEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,14 +23,11 @@ public class SprintEntity extends BaseEntity implements Serializable {
 
     private String goal;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDate;
+    private Instant startDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDate;
+    private Instant endDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date completeDate;
+    private Instant completeDate;
 
     @ManyToMany(mappedBy="sprints")
     private Set<IssueEntity> issues;
@@ -68,29 +68,29 @@ public class SprintEntity extends BaseEntity implements Serializable {
         return this;
     }
 
-    public Date getStartDate() {
+    public Instant getStartDate() {
         return startDate;
     }
 
-    public SprintEntity setStartDate(Date startDate) {
+    public SprintEntity setStartDate(Instant startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public Date getEndDate() {
+    public Instant getEndDate() {
         return endDate;
     }
 
-    public SprintEntity setEndDate(Date endDate) {
+    public SprintEntity setEndDate(Instant endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public Date getCompleteDate() {
+    public Instant getCompleteDate() {
         return completeDate;
     }
 
-    public SprintEntity setCompleteDate(Date completeDate) {
+    public SprintEntity setCompleteDate(Instant completeDate) {
         this.completeDate = completeDate;
         return this;
     }
@@ -102,5 +102,39 @@ public class SprintEntity extends BaseEntity implements Serializable {
     public SprintEntity setIssues(Set<IssueEntity> issues) {
         this.issues = issues;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SprintEntity that = (SprintEntity) o;
+        return Objects.equals(rapidViewId, that.rapidViewId) &&
+                Objects.equals(state, that.state) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(goal, that.goal) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate) &&
+                Objects.equals(completeDate, that.completeDate) &&
+                Objects.equals(issues, that.issues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rapidViewId, state, name, goal, startDate, endDate, completeDate, issues);
+    }
+
+    @Override
+    public String toString() {
+        return "SprintEntity{" +
+                "rapidViewId='" + rapidViewId + '\'' +
+                ", state='" + state + '\'' +
+                ", name='" + name + '\'' +
+                ", goal='" + goal + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", completeDate=" + completeDate +
+                ", issues=" + issues +
+                '}';
     }
 }

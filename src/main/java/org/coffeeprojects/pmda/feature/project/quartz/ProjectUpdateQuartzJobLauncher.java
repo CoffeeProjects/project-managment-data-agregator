@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
-import org.coffeeprojects.pmda.feature.project.ProjectService;
+import org.coffeeprojects.pmda.feature.project.service.impl.JiraProjectService;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -24,13 +24,13 @@ import java.util.Map;
 @DisallowConcurrentExecution
 public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private static final Logger log = LoggerFactory.getLogger(ProjectUpdateQuartzJobLauncher.class);
 
     @Autowired
     private ApplicationContext applicationContext;
 
     @Autowired
-    private ProjectService projectService;
+    private JiraProjectService projectService;
 
     @Override
     @Transactional

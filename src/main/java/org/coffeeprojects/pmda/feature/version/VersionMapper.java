@@ -6,6 +6,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface VersionMapper {
 
-    @Mapping(target = "id.storageId", source = "id")
+    @Mapping(target = "id.clientId", source = "id")
     VersionEntity toEntity(VersionJiraBean versionJiraBean);
 }

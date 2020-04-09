@@ -25,13 +25,15 @@ feign:
 trackers:
   -
     type: jira
-    id: 1
+    localId: 1
+    clientId: 10000
     url:
     user:
     password:
   -
     type: jira
-    id: 2
+    localId: 2
+    clientId: 50
     url: https://test2.atlassian.net/rest/api/3/
     user: "user2"
     password: "user2"

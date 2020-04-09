@@ -13,8 +13,10 @@ import org.coffeeprojects.pmda.feature.version.VersionEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -40,8 +42,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private ResolutionEntity resolution;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date resolutionDate;
+    private Instant resolutionDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     private PriorityEntity priority;
@@ -55,12 +56,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_version",
-            joinColumns = {@JoinColumn(name = "issue_storage_id"),
-                    @JoinColumn(name = "issue_tracker_type"),
-                    @JoinColumn(name = "issue_tracker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "version_storage_id"),
-                    @JoinColumn(name = "version_tracker_type"),
-                    @JoinColumn(name = "version_tracker_id")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "version_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "version_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "version_tracker_type", referencedColumnName="trackerType")})
     private Set<VersionEntity> fixVersions;
 
     @ElementCollection
@@ -69,12 +70,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_component",
-            joinColumns = {@JoinColumn(name = "issue_storage_id"),
-                    @JoinColumn(name = "issue_tracker_type"),
-                    @JoinColumn(name = "issue_tracker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "component_storage_id"),
-                    @JoinColumn(name = "component_tracker_type"),
-                    @JoinColumn(name = "component_tracker_id")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "component_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "component_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "component_tracker_type", referencedColumnName="trackerType")})
     private Set<ComponentEntity> components;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -86,13 +87,19 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_sprint",
-            joinColumns = {@JoinColumn(name = "issue_storage_id"),
-                    @JoinColumn(name = "issue_tracker_type"),
-                    @JoinColumn(name = "issue_tracker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "sprint_storage_id"),
-                    @JoinColumn(name = "sprint_tracker_type"),
-                    @JoinColumn(name = "sprint_tracker_id")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "sprint_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "sprint_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "sprint_tracker_type", referencedColumnName="trackerType")})
     private Set<SprintEntity> sprints;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "issue_client_id", referencedColumnName="clientId")
+    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId")
+    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")
+    private Set<IssueCustomField> issueCustomFields;
 
     public String getKey() {
         return key;
@@ -157,11 +164,11 @@ public class IssueEntity extends BaseEntity implements Serializable {
         return this;
     }
 
-    public Date getResolutionDate() {
+    public Instant getResolutionDate() {
         return resolutionDate;
     }
 
-    public IssueEntity setResolutionDate(Date resolutionDate) {
+    public IssueEntity setResolutionDate(Instant resolutionDate) {
         this.resolutionDate = resolutionDate;
         return this;
     }
@@ -245,5 +252,68 @@ public class IssueEntity extends BaseEntity implements Serializable {
     public IssueEntity setSprints(Set<SprintEntity> sprints) {
         this.sprints = sprints;
         return this;
+    }
+
+    public Set<IssueCustomField> getIssueCustomFields() {
+        return issueCustomFields;
+    }
+
+    public IssueEntity setIssueCustomFields(Set<IssueCustomField> issueCustomFields) {
+        this.issueCustomFields = issueCustomFields;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IssueEntity that = (IssueEntity) o;
+        return Objects.equals(key, that.key) &&
+                Objects.equals(assignee, that.assignee) &&
+                Objects.equals(reporter, that.reporter) &&
+                Objects.equals(creator, that.creator) &&
+                Objects.equals(summary, that.summary) &&
+                Objects.equals(status, that.status) &&
+                Objects.equals(resolution, that.resolution) &&
+                Objects.equals(resolutionDate, that.resolutionDate) &&
+                Objects.equals(priority, that.priority) &&
+                Objects.equals(issueType, that.issueType) &&
+                Objects.equals(project, that.project) &&
+                Objects.equals(fixVersions, that.fixVersions) &&
+                Objects.equals(labels, that.labels) &&
+                Objects.equals(components, that.components) &&
+                Objects.equals(created, that.created) &&
+                Objects.equals(updated, that.updated) &&
+                Objects.equals(sprints, that.sprints) &&
+                Objects.equals(issueCustomFields, that.issueCustomFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, sprints, issueCustomFields);
+    }
+
+    @Override
+    public String toString() {
+        return "IssueEntity{" +
+                "key='" + key + '\'' +
+                ", assignee=" + assignee +
+                ", reporter=" + reporter +
+                ", creator=" + creator +
+                ", summary='" + summary + '\'' +
+                ", status=" + status +
+                ", resolution=" + resolution +
+                ", resolutionDate=" + resolutionDate +
+                ", priority=" + priority +
+                ", issueType=" + issueType +
+                ", project=" + project +
+                ", fixVersions=" + fixVersions +
+                ", labels=" + labels +
+                ", components=" + components +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", sprints=" + sprints +
+                ", issueCustomFields=" + issueCustomFields +
+                '}';
     }
 }

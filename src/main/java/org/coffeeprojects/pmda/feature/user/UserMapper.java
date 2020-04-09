@@ -6,6 +6,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "id.storageId", source = "accountId")
+    @Mapping(target = "id.clientId", source = "accountId")
     UserEntity toEntity(UserJiraBean userJiraBean);
 }

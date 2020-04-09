@@ -18,7 +18,7 @@ public class StatusMapperTest {
     private StatusMapper statusMapper;
 
     @Test
-    public void to_entity_should_map_status_jira_bean_to_user_entity() {
+    public void test_to_entity_should_map_status_jira_bean_to_user_entity() {
         // Given
         StatusJiraBean statusJiraBean = new StatusJiraBean()
                 .setName("KO")

@@ -6,21 +6,24 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
 public class TrackerUtils {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerUtils.class);
 
+    private TrackerUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void fillIdsFromIssueEntities(ProjectEntity projectEntity, List<IssueEntity> issueEntities) {
-        issueEntities.forEach(p -> {
-            fillIdsFromIssueEntity(projectEntity, p);
-        });
+        issueEntities.forEach(p -> fillIdsFromIssueEntity(projectEntity, p));
     }
 
     public static void fillIdsFromIssueEntity(ProjectEntity projectEntity, IssueEntity issueEntity) {
@@ -63,35 +66,31 @@ public class TrackerUtils {
     }
 
     private static <T extends BaseEntity> void fillIds(ProjectEntity projectEntity, Set<T> baseEntities) {
-        baseEntities.forEach(p -> {
-            fillIds(projectEntity, p);
-        });
+        baseEntities.forEach(p -> fillIds(projectEntity, p));
     }
 
     private static void fillIds(ProjectEntity projectEntity, BaseEntity baseEntity) {
         if (baseEntity != null && baseEntity.getId() != null && projectEntity != null && projectEntity.getId() != null) {
-            if (projectEntity.getId().getTrackerId() != null && projectEntity.getId().getTrackerType() != null) {
+            if (projectEntity.getId().getTrackerLocalId() != null && projectEntity.getId().getTrackerType() != null) {
                 baseEntity.getId().setTrackerType(projectEntity.getId().getTrackerType());
-                baseEntity.getId().setTrackerId(projectEntity.getId().getTrackerId());
+                baseEntity.getId().setTrackerLocalId(projectEntity.getId().getTrackerLocalId());
             } else
-                log.error("trackerId and / or trackerType not entered for the project ID " + projectEntity.getId().getStorageId());
+                log.error("trackerId and / or trackerType not entered for this projet : {}", projectEntity);
         } else {
             log.error("baseEntity or projectEntity could not be null");
         }
     }
 
-    public static Date getDateFromTimezone(String timezone) {
-        SimpleDateFormat startDateTZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        startDateTZ.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-        Date date = null;
-        try {
-            if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
-                date = startDateTZ.parse(timezone);
+    public static Instant getInstantFromTimezone(String timezone) {
+        if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
+            try {
+                return LocalDateTime.parse(timezone, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+                        .atZone(ZoneId.systemDefault()).toInstant();
+            } catch (DateTimeParseException e) {
+                log.error("Unable to parse in Instant with timezone : {}", timezone);
+                return null;
             }
-        } catch (ParseException e) {
-            log.error("Unable to convert timezone of " + timezone);
         }
-        return date;
+        return null;
     }
 }

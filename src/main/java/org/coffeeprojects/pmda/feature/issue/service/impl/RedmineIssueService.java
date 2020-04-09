@@ -4,18 +4,13 @@ import org.coffeeprojects.pmda.feature.issue.IssueMapper;
 import org.coffeeprojects.pmda.feature.issue.IssueRepository;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.Instant;
 
 @Service
 public class RedmineIssueService implements IssueService {
-
-    private final ProjectRepository projectRepository;
 
     private final IssueRepository issueRepository;
 
@@ -23,11 +18,9 @@ public class RedmineIssueService implements IssueService {
 
     private final JiraRepository jiraRepository;
 
-    public RedmineIssueService(ProjectRepository projectRepository,
-                               IssueRepository issueRepository,
+    public RedmineIssueService(IssueRepository issueRepository,
                                IssueMapper issueMapper,
                                JiraRepository jiraRepository) {
-        this.projectRepository = projectRepository;
         this.issueRepository = issueRepository;
         this.issueMapper = issueMapper;
         this.jiraRepository = jiraRepository;

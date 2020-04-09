@@ -1,20 +1,17 @@
 package org.coffeeprojects.pmda.feature.issue.jirabean;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.coffeeprojects.pmda.feature.component.ComponentJiraBean;
 import org.coffeeprojects.pmda.feature.issueType.IssueTypeJiraBean;
 import org.coffeeprojects.pmda.feature.priority.PriorityJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionJiraBean;
-import org.coffeeprojects.pmda.feature.sprint.SprintJiraBean;
 import org.coffeeprojects.pmda.feature.status.StatusJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.feature.version.VersionJiraBean;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class FieldsJiraBean {
     private UserJiraBean assignee;
@@ -29,6 +26,7 @@ public class FieldsJiraBean {
 
     private ResolutionJiraBean resolution;
 
+    @JsonProperty("resolutiondate")
     private Date resolutionDate;
 
     private PriorityJiraBean priority;
@@ -48,10 +46,7 @@ public class FieldsJiraBean {
 
     private Date updated;
 
-    @JsonProperty("customfield_10020")
-    private List<String> sprintsToString;
-
-    private Set<SprintJiraBean> sprints;
+    private Map<String, Object> customFields;
 
     public UserJiraBean getAssignee() {
         return assignee;
@@ -188,22 +183,17 @@ public class FieldsJiraBean {
         return this;
     }
 
-    public List<String> getSprintsToString() {
-        return sprintsToString;
-    }
-
-    public FieldsJiraBean setSprintsToString(List<String> sprintsToString) {
-        this.sprintsToString = sprintsToString;
+    @JsonAnySetter
+    public FieldsJiraBean setCustomFields(String key, Object value) {
+        if (this.customFields == null) {
+            this.customFields = new HashMap();
+        }
+        this.customFields.put(key, value);
         return this;
     }
 
-    public Set<SprintJiraBean> getSprints() {
-        return sprints;
-    }
-
-    public FieldsJiraBean setSprints(Set<SprintJiraBean> sprints) {
-        this.sprints = sprints;
-        return this;
+    public Map<String, Object> getCustomFields() {
+        return customFields;
     }
 
     @Override
@@ -225,14 +215,12 @@ public class FieldsJiraBean {
                 Objects.equals(labels, that.labels) &&
                 Objects.equals(components, that.components) &&
                 Objects.equals(created, that.created) &&
-                Objects.equals(updated, that.updated) &&
-                Objects.equals(sprintsToString, that.sprintsToString) &&
-                Objects.equals(sprints, that.sprints);
+                Objects.equals(updated, that.updated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, sprintsToString, sprints);
+        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated);
     }
 
     @Override
@@ -253,8 +241,6 @@ public class FieldsJiraBean {
                 ", components=" + components +
                 ", created=" + created +
                 ", updated=" + updated +
-                ", sprintsToString=" + sprintsToString +
-                ", sprints=" + sprints +
                 '}';
     }
 }
