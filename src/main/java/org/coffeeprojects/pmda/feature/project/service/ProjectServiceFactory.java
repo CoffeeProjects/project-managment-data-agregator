@@ -22,16 +22,13 @@ public class ProjectServiceFactory {
     }
 
     public ProjectService getService(ProjectEnum projectEnum) {
-        if (projectEnum != null) {
-            if (ProjectEnum.JIRA.equals(projectEnum)) {
+        switch (projectEnum) {
+            case JIRA:
                 return jiraProjectService;
-            }
-            else if (ProjectEnum.MANTIS.equals(projectEnum)) {
+            case MANTIS:
                 return mantisProjectService;
-            }
-            else if (ProjectEnum.REDMINE.equals(projectEnum)) {
+            case REDMINE:
                 return redmineProjectService;
-            }
         }
         return null;
     }

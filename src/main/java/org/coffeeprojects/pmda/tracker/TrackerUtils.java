@@ -71,6 +71,7 @@ public class TrackerUtils {
     }
 
     public static Date getDateFromTimezone(String timezone) {
+        // TODO: J aurai retourné des instants; les instants sont exprimés en timezone 0 donc pas de prise de tete
         SimpleDateFormat startDateTZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         startDateTZ.setTimeZone(TimeZone.getTimeZone("UTC"));
 

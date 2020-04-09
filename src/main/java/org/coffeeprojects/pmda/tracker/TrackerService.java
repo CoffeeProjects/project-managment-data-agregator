@@ -26,6 +26,7 @@ public class TrackerService {
 
             if (StringUtils.isEmpty(type) || StringUtils.isEmpty(localId) || StringUtils.isEmpty(clientId) ||
                     StringUtils.isEmpty(url) || StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
+                // TODO: j aurai levé une exception avec un message : ta conf des trackers est pourries, verifie
                 trackers.remove(p);
             }
         });

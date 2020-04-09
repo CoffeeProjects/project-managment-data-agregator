@@ -23,6 +23,7 @@ public class IssueServiceFactory {
     }
 
     public IssueService getService(ProjectEntity projectEntity) {
+        // TODO: switch / case
         if (projectEntity != null && projectEntity.getId() != null) {
             if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
                 return jiraIssueService;

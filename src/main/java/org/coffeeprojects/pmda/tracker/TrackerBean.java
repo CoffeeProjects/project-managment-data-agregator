@@ -1,7 +1,7 @@
 package org.coffeeprojects.pmda.tracker;
 
 public class TrackerBean {
-
+    // TODO: je l'aurai nommé TrackerParametersBean un truc comme ça pour etre plus precis
     private String type;
     private String localId;
     private String clientId;

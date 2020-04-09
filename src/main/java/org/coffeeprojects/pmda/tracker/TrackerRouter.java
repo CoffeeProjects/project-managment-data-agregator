@@ -26,14 +26,10 @@ public class TrackerRouter {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerRouter.class);
 
-    private final TrackerService trackerService;
-
-    private Map<Map<String, String>, Object> trackers = new HashMap();
+    private Map<Map<String, String>, Object> trackers = new HashMap(); // TODO: Map trop complexe c'est une map avec des TrackerBean ?
 
     @Autowired
     public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
-        this.trackerService = trackerService;
-
         trackerService.getTrackers().forEach(p -> {
             Map<String, String> trackerId = new HashMap();
             trackerId.put(p.getType(), p.getLocalId());
@@ -43,16 +39,16 @@ public class TrackerRouter {
     }
 
     private Class getClientInterface(TrackerBean trackerBean) {
+        // TODO: à remplacer par un switch / case : il faudrait que dans trackerBean le type soit une enum
         if (ProjectEnum.JIRA.toString().equalsIgnoreCase(trackerBean.getType())) {
             return JiraClient.class;
         } else if (ProjectEnum.MANTIS.toString().equalsIgnoreCase(trackerBean.getType())) {
             return MantisClient.class;
         } else if (ProjectEnum.REDMINE.toString().equalsIgnoreCase(trackerBean.getType())) {
             return RedmineClient.class;
-        } else {
-            log.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getLocalId());
-            return null;
         }
+        log.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getLocalId());
+        return null;
     }
 
     private Object buildClient(Decoder decoder, Encoder encoder, Client client, Class clientClass,
@@ -67,12 +63,14 @@ public class TrackerRouter {
     public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
         if (trackerRouter != null && trackerRouter.getTrackers() !=null &&
                 projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
+            // TODO: je ne pense pas que ce if soit necessaire, vu que c'est cette classe qui remplie la map, sinon fait le controle avant
             for (Map.Entry<Map<String, String>, Object> trackerEntry : trackerRouter.getTrackers().entrySet()) {
                 for (Map.Entry<String, String> trackerIdEntry : trackerEntry.getKey().entrySet()) {
-                    String trackerType = trackerIdEntry.getKey();
+                    ProjectEnum trackerType = ProjectEnum.valueOf(trackerIdEntry.getKey());
+                    // TODO: Ce n est pas mieux TrackerType à la place de ProjectEnum ?
                     String trackerId = trackerIdEntry.getValue();
                     Object tracker = trackerEntry.getValue();
-                    if (trackerType.equalsIgnoreCase(projectEntity.getId().getTrackerType().toString()) &&
+                    if (trackerType == projectEntity.getId().getTrackerType() &&
                             trackerId.equalsIgnoreCase(projectEntity.getId().getTrackerLocalId())) {
                         return tracker;
                     }
