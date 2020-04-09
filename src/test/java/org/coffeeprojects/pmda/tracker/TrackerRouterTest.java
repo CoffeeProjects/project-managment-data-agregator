@@ -54,7 +54,7 @@ public class TrackerRouterTest {
     @Test
     public void test_get_client_with_trackerrouter_null() {
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setStorageId("1").setTrackerId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
@@ -72,7 +72,7 @@ public class TrackerRouterTest {
         TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackers(trackers);
 
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setStorageId("1").setTrackerId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
@@ -90,7 +90,7 @@ public class TrackerRouterTest {
         TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackers(trackers);
 
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setStorageId("1").setTrackerId("2").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(ProjectEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
@@ -108,7 +108,7 @@ public class TrackerRouterTest {
         TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackers(trackers);
 
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setStorageId("1").setTrackerId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 

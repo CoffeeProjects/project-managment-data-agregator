@@ -26,7 +26,6 @@ public class TrackerRouter {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerRouter.class);
 
-    @Autowired
     private final TrackerService trackerService;
 
     private Map<Map<String, String>, Object> trackers = new HashMap();
@@ -37,7 +36,7 @@ public class TrackerRouter {
 
         trackerService.getTrackers().forEach(p -> {
             Map<String, String> trackerId = new HashMap();
-            trackerId.put(p.getType(), p.getId());
+            trackerId.put(p.getType(), p.getLocalId());
 
             this.trackers.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
         });
@@ -51,7 +50,7 @@ public class TrackerRouter {
         } else if (ProjectEnum.REDMINE.toString().equalsIgnoreCase(trackerBean.getType())) {
             return RedmineClient.class;
         } else {
-            log.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getId());
+            log.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getLocalId());
             return null;
         }
     }
@@ -74,7 +73,7 @@ public class TrackerRouter {
                     String trackerId = trackerIdEntry.getValue();
                     Object tracker = trackerEntry.getValue();
                     if (trackerType.equalsIgnoreCase(projectEntity.getId().getTrackerType().toString()) &&
-                            trackerId.equalsIgnoreCase(projectEntity.getId().getTrackerId())) {
+                            trackerId.equalsIgnoreCase(projectEntity.getId().getTrackerLocalId())) {
                         return tracker;
                     }
                 }

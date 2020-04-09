@@ -37,7 +37,7 @@ public class IssueServiceFactoryTest {
     @Test
     public void test_get_issue_service_with_project_entity_null() {
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, null);
-        issueServiceFactory.createIssueService(null);
+        issueServiceFactory.getService(null);
 
     }
 
@@ -46,7 +46,7 @@ public class IssueServiceFactoryTest {
         ProjectEntity projectEntity = new ProjectEntity();
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, null);
-        assertThat(issueServiceFactory.createIssueService(projectEntity)).isNull();
+        assertThat(issueServiceFactory.getService(projectEntity)).isNull();
     }
 
     @Test
@@ -54,7 +54,7 @@ public class IssueServiceFactoryTest {
         ProjectEntity projectEntity = new ProjectEntity();
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, null);
-        assertThat(issueServiceFactory.createIssueService(projectEntity)).isNull();
+        assertThat(issueServiceFactory.getService(projectEntity)).isNull();
     }
 
     @Test
@@ -63,7 +63,7 @@ public class IssueServiceFactoryTest {
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, null);
-        assertThat(issueServiceFactory.createIssueService(projectEntity)).isNull();
+        assertThat(issueServiceFactory.getService(projectEntity)).isNull();
     }
 
     @Test
@@ -75,7 +75,7 @@ public class IssueServiceFactoryTest {
         JiraIssueService jiraIssueService = new JiraIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(jiraIssueService, null, null);
-        assertThat(issueServiceFactory.createIssueService(projectEntity)).isInstanceOf(JiraIssueService.class);
+        assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(JiraIssueService.class);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class IssueServiceFactoryTest {
         MantisIssueService mantisIssueService = new MantisIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, mantisIssueService, null);
-        assertThat(issueServiceFactory.createIssueService(projectEntity)).isInstanceOf(MantisIssueService.class);
+        assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(MantisIssueService.class);
     }
 
     @Test
@@ -99,6 +99,6 @@ public class IssueServiceFactoryTest {
         RedmineIssueService redmineIssueService = new RedmineIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, redmineIssueService);
-        assertThat(issueServiceFactory.createIssueService(projectEntity)).isInstanceOf(RedmineIssueService.class);
+        assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(RedmineIssueService.class);
     }
 }

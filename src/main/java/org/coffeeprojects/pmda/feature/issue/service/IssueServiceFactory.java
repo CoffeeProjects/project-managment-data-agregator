@@ -22,7 +22,7 @@ public class IssueServiceFactory {
         this.redmineIssueService = redmineIssueService;
     }
 
-    public IssueService createIssueService(ProjectEntity projectEntity) {
+    public IssueService getService(ProjectEntity projectEntity) {
         if (projectEntity != null && projectEntity.getId() != null) {
             if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
                 return jiraIssueService;

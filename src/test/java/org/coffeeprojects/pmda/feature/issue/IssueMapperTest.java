@@ -69,7 +69,7 @@ public class IssueMapperTest {
         // Then
         issueEntity.getSprints().stream()
                 .forEach(p -> {
-                    assertThat(p.getId().getStorageId().equals("2"));
+                    assertThat(p.getId().getClientId().equals("2"));
                     assertThat(p.getRapidViewId()).isEqualTo("1");
                     assertThat(p.getState()).isEqualTo("FUTURE");
                     assertThat(p.getName()).isEqualTo("PMDA ,goal=2 (%+\"'-$*€/\\|)");

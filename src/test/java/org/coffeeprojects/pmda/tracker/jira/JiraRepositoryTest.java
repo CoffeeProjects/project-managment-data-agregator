@@ -42,7 +42,7 @@ public class JiraRepositoryTest {
     @Ignore
     public void get_modified_issues_should_return_issues() {
         // Given
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setStorageId("1").setTrackerId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("pmda");
 

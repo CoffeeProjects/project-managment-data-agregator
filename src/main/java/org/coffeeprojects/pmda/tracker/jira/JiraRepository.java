@@ -22,7 +22,6 @@ public class JiraRepository {
     private static final String EXPAND = "changelog";
     private static final Integer MAX_RESULT = 100;
 
-    @Autowired
     private TrackerRouter trackerRouter;
 
     public JiraRepository(TrackerRouter trackerRouter) {

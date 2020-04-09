@@ -3,14 +3,16 @@ package org.coffeeprojects.pmda.tracker;
 public class TrackerBean {
 
     private String type;
-    private String id;
+    private String localId;
+    private String clientId;
     private String url;
     private String user;
     private String password;
 
-    public TrackerBean(String type, String id, String url, String user, String password) {
+    public TrackerBean(String type, String localId, String clientId, String url, String user, String password) {
         this.type = type;
-        this.id = id;
+        this.localId = localId;
+        this.clientId = clientId;
         this.url = url;
         this.user = user;
         this.password = password;
@@ -27,12 +29,20 @@ public class TrackerBean {
         this.type = type;
     }
 
-    public String getId() {
-        return id;
+    public String getLocalId() {
+        return localId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setLocalId(String localId) {
+        this.localId = localId;
     }
 
     public String getUrl() {

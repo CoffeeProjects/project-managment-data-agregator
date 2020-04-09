@@ -9,15 +9,18 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class JiraIssueService implements IssueService {
+
+    private static final Logger log = LoggerFactory.getLogger(JiraIssueService.class);
 
     private static final String JIRA_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
             "updated,created,duedate,labels,components,issuelinks,fixversions,resolution,customfield_10020";
@@ -48,11 +51,8 @@ public class JiraIssueService implements IssueService {
         TrackerUtils.fillIdsFromIssueEntities(projectEntity, issueEntities);
         try {
             this.issueRepository.saveAll(issueEntities);
-
-            projectEntity.setLastCheck((new Date()).toInstant());
-            this.projectRepository.save(projectEntity);
         } catch (Exception e) {
-
+            log.error("Error during update last modified issues");
         }
     }
 }

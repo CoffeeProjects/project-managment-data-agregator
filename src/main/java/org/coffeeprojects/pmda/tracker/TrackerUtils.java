@@ -60,11 +60,11 @@ public class TrackerUtils {
 
     private static void fillIds(ProjectEntity projectEntity, BaseEntity baseEntity) {
         if (baseEntity != null && baseEntity.getId() != null && projectEntity != null && projectEntity.getId() != null) {
-            if (projectEntity.getId().getTrackerId() != null && projectEntity.getId().getTrackerType() != null) {
+            if (projectEntity.getId().getTrackerLocalId() != null && projectEntity.getId().getTrackerType() != null) {
                 baseEntity.getId().setTrackerType(projectEntity.getId().getTrackerType());
-                baseEntity.getId().setTrackerId(projectEntity.getId().getTrackerId());
+                baseEntity.getId().setTrackerLocalId(projectEntity.getId().getTrackerLocalId());
             } else
-                log.error("trackerId and / or trackerType not entered for the project ID " + projectEntity.getId().getStorageId());
+                log.error("trackerId and / or trackerType not entered for the project ID " + projectEntity.getId().getClientId());
         } else {
             log.error("baseEntity or projectEntity could not be null");
         }

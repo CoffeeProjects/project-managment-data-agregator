@@ -1,13 +1,17 @@
-package org.coffeeprojects.pmda.feature.project;
+package org.coffeeprojects.pmda.feature.project.service.impl;
 
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
+import org.coffeeprojects.pmda.feature.project.*;
+import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
-public class ProjectService {
+public class JiraProjectService implements ProjectService {
 
     private final ProjectRepository projectRepository;
 
@@ -15,12 +19,17 @@ public class ProjectService {
 
     private final JiraRepository jiraRepository;
 
-    public ProjectService(ProjectRepository projectRepository,
-                          ProjectMapper projectMapper,
-                        JiraRepository jiraRepository) {
+    public JiraProjectService(ProjectRepository projectRepository,
+                              ProjectMapper projectMapper,
+                              JiraRepository jiraRepository) {
         this.projectRepository = projectRepository;
         this.projectMapper = projectMapper;
         this.jiraRepository = jiraRepository;
+    }
+
+    public ProjectEntity getProjectById(CompositeIdBaseEntity id) {
+        return this.projectRepository.findById(id)
+                .orElse(null);
     }
 
     @Transactional
@@ -28,12 +37,9 @@ public class ProjectService {
         if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
             ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
             ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
+            projectEntityFromTracker.setId(projectEntity.getId());
+            projectEntityFromTracker.setLastCheck((new Date()).toInstant());
             this.projectRepository.save(projectEntityFromTracker);
         }
-    }
-
-    @Transactional
-    public List<ProjectEntity> getAllProjectsFromDatabase() {
-        return this.projectRepository.findAll();
     }
 }

@@ -8,18 +8,18 @@ import java.io.Serializable;
 @Embeddable
 public class CompositeIdBaseEntity implements Serializable {
 
-    private String storageId;
+    private String clientId;
 
     private ProjectEnum trackerType;
 
-    private String trackerId;
+    private String trackerLocalId;
 
-    public String getStorageId() {
-        return storageId;
+    public String getClientId() {
+        return clientId;
     }
 
-    public CompositeIdBaseEntity setStorageId(String storageId) {
-        this.storageId = storageId;
+    public CompositeIdBaseEntity setClientId(String clientId) {
+        this.clientId = clientId;
         return this;
     }
 
@@ -32,12 +32,12 @@ public class CompositeIdBaseEntity implements Serializable {
         return this;
     }
 
-    public String getTrackerId() {
-        return trackerId;
+    public String getTrackerLocalId() {
+        return trackerLocalId;
     }
 
-    public CompositeIdBaseEntity setTrackerId(String trackerId) {
-        this.trackerId = trackerId;
+    public CompositeIdBaseEntity setTrackerLocalId(String trackerLocalId) {
+        this.trackerLocalId = trackerLocalId;
         return this;
     }
 }

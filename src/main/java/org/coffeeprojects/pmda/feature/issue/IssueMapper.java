@@ -28,7 +28,7 @@ import java.util.Set;
         ComponentMapper.class, SprintMapper.class})
 public interface IssueMapper {
 
-    @Mapping(target = "id.storageId", source = "id")
+    @Mapping(target = "id.clientId", source = "id")
     @Mapping(target = "assignee", source = "fields.assignee")
     @Mapping(target = "reporter", source = "fields.reporter")
     @Mapping(target = "creator", source = "fields.creator")
@@ -55,9 +55,9 @@ public interface IssueMapper {
         UserEntity reporter = output.getReporter();
 
         if (output != null) {
-            assignee = assignee != null && creator != null && assignee.getId().getStorageId().equals(creator.getId().getStorageId()) ? creator : assignee;
-            assignee = assignee != null && reporter != null && assignee.getId().getStorageId().equals(reporter.getId().getStorageId()) ? reporter : assignee;
-            creator = creator != null && reporter != null && creator.getId().getStorageId().equals(reporter.getId().getStorageId()) ? reporter : creator;
+            assignee = assignee != null && creator != null && assignee.getId().getClientId().equals(creator.getId().getClientId()) ? creator : assignee;
+            assignee = assignee != null && reporter != null && assignee.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : assignee;
+            creator = creator != null && reporter != null && creator.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : creator;
         }
 
         output.setAssignee(assignee);
@@ -79,7 +79,7 @@ public interface IssueMapper {
                         String endDate = StringUtils.substringAfterLast(startDate, ",endDate=");
                         String completeDate = StringUtils.substringAfterLast(endDate, ",completeDate=");
 
-                        sprintEntity.setId(new CompositeIdBaseEntity().setStorageId(StringUtils.replace(id, ",rapidViewId=" + rapidView, StringUtils.EMPTY)));
+                        sprintEntity.setId(new CompositeIdBaseEntity().setClientId(StringUtils.replace(id, ",rapidViewId=" + rapidView, StringUtils.EMPTY)));
                         sprintEntity.setRapidViewId(StringUtils.replace(rapidView, ",state=" + state, StringUtils.EMPTY));
                         sprintEntity.setState(StringUtils.replace(state, ",name=" + name, StringUtils.EMPTY));
                         sprintEntity.setName(StringUtils.replace(name, ",goal=" + goal, StringUtils.EMPTY));
