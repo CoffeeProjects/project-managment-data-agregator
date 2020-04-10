@@ -6,12 +6,12 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
 public class TrackerUtils {
 
@@ -70,19 +70,11 @@ public class TrackerUtils {
         }
     }
 
-    public static Date getDateFromTimezone(String timezone) {
-        // TODO: J aurai retourné des instants; les instants sont exprimés en timezone 0 donc pas de prise de tete
-        SimpleDateFormat startDateTZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        startDateTZ.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-        Date date = null;
-        try {
-            if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
-                date = startDateTZ.parse(timezone);
-            }
-        } catch (ParseException e) {
-            log.error("Unable to convert timezone of " + timezone);
+    public static Instant getDateFromTimezone(String timezone) {
+        if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
+            return LocalDateTime.parse(timezone, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+                    .atZone(ZoneId.systemDefault()).toInstant();
         }
-        return date;
+        return null;
     }
 }
