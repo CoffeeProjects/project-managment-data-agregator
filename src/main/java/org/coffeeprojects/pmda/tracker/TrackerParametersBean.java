@@ -1,35 +1,27 @@
 package org.coffeeprojects.pmda.tracker;
 
 public class TrackerParametersBean {
-    private String type;
-    private String localId;
-    private String clientId;
-    private String url;
-    private String user;
-    private String password;
+    TrackerTypeEnum type;
+    String localId;
+    String clientId;
+    Object client;
 
-    public TrackerParametersBean(String type, String localId, String clientId, String url, String user, String password) {
-        this.type = type;
-        this.localId = localId;
-        this.clientId = clientId;
-        this.url = url;
-        this.user = user;
-        this.password = password;
-    }
-
-    public TrackerParametersBean() {
-    }
-
-    public String getType() {
+    public TrackerTypeEnum getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public TrackerParametersBean setType(TrackerTypeEnum type) {
         this.type = type;
+        return this;
     }
 
     public String getLocalId() {
         return localId;
+    }
+
+    public TrackerParametersBean setLocalId(String localId) {
+        this.localId = localId;
+        return this;
     }
 
     public String getClientId() {
@@ -40,31 +32,12 @@ public class TrackerParametersBean {
         this.clientId = clientId;
     }
 
-    public void setLocalId(String localId) {
-        this.localId = localId;
+    public Object getClient() {
+        return client;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public TrackerParametersBean setClient(Object client) {
+        this.client = client;
+        return this;
     }
 }

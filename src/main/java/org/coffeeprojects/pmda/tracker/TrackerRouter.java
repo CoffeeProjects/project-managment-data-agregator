@@ -25,21 +25,22 @@ public class TrackerRouter {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerRouter.class);
 
-    private List<Tracker> trackers = new ArrayList();
+    private List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
 
     @Autowired
     public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
         trackerService.getTrackers().forEach(p -> {
-            Tracker tracker = new Tracker();
-            tracker.setType(TrackerTypeEnum.valueOf(p.getType().toUpperCase()));
-            tracker.setLocalId(p.getLocalId());
-            tracker.setClient(buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
-            trackers.add(tracker);
+            TrackerParametersBean trackerParametersBean = new TrackerParametersBean();
+            trackerParametersBean.setType(TrackerTypeEnum.valueOf(p.getType().toUpperCase()));
+            trackerParametersBean.setLocalId(p.getLocalId());
+            trackerParametersBean.setClientId(p.getClientId());
+            trackerParametersBean.setClient(buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
+            trackerParametersBeans.add(trackerParametersBean);
         });
     }
 
-    private Class getClientInterface(TrackerParametersBean trackerParametersBean) {
-        switch (TrackerTypeEnum.valueOf(trackerParametersBean.getType().toUpperCase())) {
+    private Class getClientInterface(TrackerDataBean trackerDataBean) {
+        switch (TrackerTypeEnum.valueOf(trackerDataBean.getType().toUpperCase())) {
             case JIRA:
                 return JiraClient.class;
             case MANTIS:
@@ -47,7 +48,7 @@ public class TrackerRouter {
             case REDMINE:
                 return RedmineClient.class;
             default:
-                log.error("No interface available for the tracker TYPE : " + trackerParametersBean.getType() + "ID : " + trackerParametersBean.getLocalId());
+                log.error("No interface available for the tracker TYPE : " + trackerDataBean.getType() + "ID : " + trackerDataBean.getLocalId());
                 return null;
         }
     }
@@ -62,26 +63,26 @@ public class TrackerRouter {
     }
 
     public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (trackerRouter != null && trackerRouter.trackers != null &&
+        if (trackerRouter != null && trackerRouter.trackerParametersBeans != null &&
                 projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
 
-            Tracker tracker = trackerRouter.trackers.stream()
+            TrackerParametersBean trackerParametersBean = trackerRouter.trackerParametersBeans.stream()
                     .filter(t -> t.getType() == projectEntity.getId().getTrackerType())
                     .filter(t -> t.getLocalId() == projectEntity.getId().getTrackerLocalId())
                     .findFirst()
-                    .orElse(new Tracker());
+                    .orElse(new TrackerParametersBean());
 
-            return tracker.getClient();
+            return trackerParametersBean.getClient();
         }
         return null;
     }
 
-    public List<Tracker> getTrackers() {
-        return trackers;
+    public List<TrackerParametersBean> getTrackerParametersBeans() {
+        return trackerParametersBeans;
     }
 
-    public TrackerRouter setTrackers(List<Tracker> trackers) {
-        this.trackers = trackers;
+    public TrackerRouter setTrackerParametersBeans(List<TrackerParametersBean> trackerParametersBeans) {
+        this.trackerParametersBeans = trackerParametersBeans;
         return this;
     }
 }

@@ -5,10 +5,9 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.feature.project.service.ProjectServiceFactory;
-import org.coffeeprojects.pmda.tracker.TrackerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
@@ -23,32 +22,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
 
-    private final Logger logger = LoggerFactory.getLogger(ProjectUpdateStep.class);
+    private static final Logger log = LoggerFactory.getLogger(ProjectUpdateStep.class);
 
-    TrackerService trackerService;
+    TrackerRouter trackerRouter;
 
     ProjectServiceFactory projectServiceFactory;
 
     IssueServiceFactory issueServiceFactory;
 
-    public ProjectUpdateStep(TrackerService trackerService, ProjectServiceFactory projectServiceFactory, IssueServiceFactory issueServiceFactory) {
-        this.trackerService = trackerService;
+    public ProjectUpdateStep(TrackerRouter trackerRouter, ProjectServiceFactory projectServiceFactory, IssueServiceFactory issueServiceFactory) {
+        this.trackerRouter = trackerRouter;
         this.projectServiceFactory = projectServiceFactory;
         this.issueServiceFactory = issueServiceFactory;
     }
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
-        logger.debug("Project update step initialized.");
+        log.debug("Project update step initialized.");
     }
 
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws JobFailingException {
         try {
-            trackerService.getTrackers().forEach(tracker -> {
-                ProjectService projectService = projectServiceFactory.getService(TrackerTypeEnum.valueOf(tracker.getType().toUpperCase()));
+            trackerRouter.getTrackerParametersBeans().forEach(tracker -> {
+                ProjectService projectService = projectServiceFactory.getService(tracker.getType());
                 ProjectEntity projectEntity = projectService.getProjectById(new CompositeIdBaseEntity()
-                        .setTrackerType(TrackerTypeEnum.valueOf(tracker.getType().toUpperCase()))
+                        .setTrackerType(tracker.getType())
                         .setTrackerLocalId(tracker.getLocalId())
                         .setClientId(tracker.getClientId()));
 
@@ -62,7 +61,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
                 }
             });
         } catch (Exception e) {
-            logger.error("Error during the execution of the Project Update Step");
+            log.error("Error during the execution of the Project Update Step");
             throw new JobFailingException("Interruption of Project Update Step");
         }
         return RepeatStatus.FINISHED;
@@ -70,7 +69,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
-        logger.debug("Project update step ended.");
+        log.debug("Project update step ended.");
         return ExitStatus.COMPLETED;
     }
 }
