@@ -6,7 +6,6 @@ import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 import org.coffeeprojects.pmda.feature.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.feature.priority.PriorityEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionEntity;
 import org.coffeeprojects.pmda.feature.sprint.SprintEntity;
 import org.coffeeprojects.pmda.feature.status.StatusEntity;
@@ -30,14 +29,14 @@ public class TrackerUtilsTest {
     public void test_fill_ids_from_issue_entity_field_by_field() {
         // ProjectEntity
         ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setId(new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA));
+        projectEntity.setId(new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA));
         // IssueEntity
         IssueEntity issueEntity = new IssueEntity();
         issueEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
 
 
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getId().getTrackerLocalId()).isEqualTo("1");
 
         // Assignee
@@ -45,7 +44,7 @@ public class TrackerUtilsTest {
         assignee.setId(new CompositeIdBaseEntity().setClientId("1"));
         issueEntity.setAssignee(assignee);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getAssignee().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getAssignee().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getAssignee().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Creator
@@ -53,7 +52,7 @@ public class TrackerUtilsTest {
         creator.setId(new CompositeIdBaseEntity().setClientId("1"));
         issueEntity.setCreator(creator);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getCreator().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getCreator().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getCreator().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Reporter
@@ -61,7 +60,7 @@ public class TrackerUtilsTest {
         reporter.setId(new CompositeIdBaseEntity().setClientId("1"));
         issueEntity.setReporter(reporter);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getReporter().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getReporter().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getReporter().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Status
@@ -69,7 +68,7 @@ public class TrackerUtilsTest {
         status.setId(new CompositeIdBaseEntity().setClientId("1"));
         issueEntity.setStatus(status);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getStatus().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getStatus().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getStatus().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Resolution
@@ -77,7 +76,7 @@ public class TrackerUtilsTest {
         resolution.setId(new CompositeIdBaseEntity().setClientId("1"));
         issueEntity.setResolution(resolution);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getResolution().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getResolution().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getResolution().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Priority
@@ -85,7 +84,7 @@ public class TrackerUtilsTest {
         priority.setId(new CompositeIdBaseEntity().setClientId("1"));
         issueEntity.setPriority(priority);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getPriority().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getPriority().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getPriority().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Priority
@@ -93,13 +92,13 @@ public class TrackerUtilsTest {
         issueType.setId(new CompositeIdBaseEntity().setClientId("1"));
         issueEntity.setIssueType(issueType);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getIssueType().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getIssueType().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getIssueType().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Priority
         issueEntity.setProject(projectEntity);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getProject().getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getProject().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getProject().getId().getTrackerLocalId()).isEqualTo("1");
 
         // Fix versions
@@ -114,7 +113,7 @@ public class TrackerUtilsTest {
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
         issueEntity.getFixVersions().stream()
                 .forEach(p -> {
-                    assertThat(p.getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+                    assertThat(p.getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
                     assertThat(p.getId().getTrackerLocalId()).isEqualTo("1");
                 });
 
@@ -130,7 +129,7 @@ public class TrackerUtilsTest {
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
         issueEntity.getComponents().stream()
                 .forEach(p -> {
-                    assertThat(p.getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+                    assertThat(p.getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
                     assertThat(p.getId().getTrackerLocalId()).isEqualTo("1");
                 });
 
@@ -146,7 +145,7 @@ public class TrackerUtilsTest {
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
         issueEntity.getSprints().stream()
                 .forEach(p -> {
-                    assertThat(p.getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+                    assertThat(p.getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
                     assertThat(p.getId().getTrackerLocalId()).isEqualTo("1");
                 });
     }
@@ -155,13 +154,13 @@ public class TrackerUtilsTest {
     public void test_fill_ids_from_issue_entity() {
         // ProjectEntity
         ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setId(new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA));
+        projectEntity.setId(new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA));
         // IssueEntity
         IssueEntity issueEntity = new IssueEntity();
         issueEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
 
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getId().getTrackerType()).isEqualTo(ProjectEnum.JIRA);
+        assertThat(issueEntity.getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getId().getTrackerLocalId()).isEqualTo("1");
     }
 
@@ -178,7 +177,7 @@ public class TrackerUtilsTest {
         assertThat(issueEntity.getId().getTrackerType()).isNull();
         assertThat(issueEntity.getId().getTrackerLocalId()).isNull();
 
-        projectEntity.getId().setTrackerType(ProjectEnum.JIRA);
+        projectEntity.getId().setTrackerType(TrackerTypeEnum.JIRA);
         projectEntity.getId().setTrackerLocalId(null);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
         assertThat(issueEntity.getId().getTrackerType()).isNull();

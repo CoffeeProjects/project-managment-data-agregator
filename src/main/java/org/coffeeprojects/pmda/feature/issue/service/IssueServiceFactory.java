@@ -4,7 +4,6 @@ import org.coffeeprojects.pmda.feature.issue.service.impl.JiraIssueService;
 import org.coffeeprojects.pmda.feature.issue.service.impl.MantisIssueService;
 import org.coffeeprojects.pmda.feature.issue.service.impl.RedmineIssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,14 +22,14 @@ public class IssueServiceFactory {
     }
 
     public IssueService getService(ProjectEntity projectEntity) {
-        // TODO: switch / case
         if (projectEntity != null && projectEntity.getId() != null) {
-            if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
-                return jiraIssueService;
-            } else if (ProjectEnum.MANTIS.equals(projectEntity.getId().getTrackerType())) {
-                return mantisIssueService;
-            } else if (ProjectEnum.REDMINE.equals(projectEntity.getId().getTrackerType())) {
-                return redmineIssueService;
+            switch (projectEntity.getId().getTrackerType()){
+                case JIRA:
+                    return jiraIssueService;
+                case MANTIS:
+                    return mantisIssueService;
+                case REDMINE:
+                    return redmineIssueService;
             }
         }
         return null;

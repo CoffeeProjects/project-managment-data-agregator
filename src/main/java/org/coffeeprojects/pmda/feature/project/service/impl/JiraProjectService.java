@@ -3,12 +3,12 @@ package org.coffeeprojects.pmda.feature.project.service.impl;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.*;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
+import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class JiraProjectService implements ProjectService {
@@ -34,7 +34,7 @@ public class JiraProjectService implements ProjectService {
 
     @Transactional
     public void updateProjectByKey(ProjectEntity projectEntity) {
-        if (ProjectEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
+        if (TrackerTypeEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
             ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
             ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
             projectEntityFromTracker.setId(projectEntity.getId());

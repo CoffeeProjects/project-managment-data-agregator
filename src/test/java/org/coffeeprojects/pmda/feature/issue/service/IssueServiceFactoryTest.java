@@ -7,7 +7,7 @@ import org.coffeeprojects.pmda.feature.issue.service.impl.JiraIssueService;
 import org.coffeeprojects.pmda.feature.issue.service.impl.MantisIssueService;
 import org.coffeeprojects.pmda.feature.issue.service.impl.RedmineIssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
+import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.junit.Test;
@@ -69,7 +69,7 @@ public class IssueServiceFactoryTest {
     @Test
     public void test_get_issue_service_jira_project() {
         // Project
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
         JiraIssueService jiraIssueService = new JiraIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
@@ -81,7 +81,7 @@ public class IssueServiceFactoryTest {
     @Test
     public void test_get_issue_service_mantis_project() {
         // Project
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(ProjectEnum.MANTIS);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.MANTIS);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
         MantisIssueService mantisIssueService = new MantisIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
@@ -93,7 +93,7 @@ public class IssueServiceFactoryTest {
     @Test
     public void test_get_issue_service_redmine_project() {
         // Project
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(ProjectEnum.REDMINE);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.REDMINE);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
         RedmineIssueService redmineIssueService = new RedmineIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);

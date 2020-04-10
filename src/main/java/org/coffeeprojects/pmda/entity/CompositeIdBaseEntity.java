@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.entity;
 
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
+import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -10,7 +10,7 @@ public class CompositeIdBaseEntity implements Serializable {
 
     private String clientId;
 
-    private ProjectEnum trackerType;
+    private TrackerTypeEnum trackerType;
 
     private String trackerLocalId;
 
@@ -23,11 +23,11 @@ public class CompositeIdBaseEntity implements Serializable {
         return this;
     }
 
-    public ProjectEnum getTrackerType() {
+    public TrackerTypeEnum getTrackerType() {
         return trackerType;
     }
 
-    public CompositeIdBaseEntity setTrackerType(ProjectEnum trackerType) {
+    public CompositeIdBaseEntity setTrackerType(TrackerTypeEnum trackerType) {
         this.trackerType = trackerType;
         return this;
     }

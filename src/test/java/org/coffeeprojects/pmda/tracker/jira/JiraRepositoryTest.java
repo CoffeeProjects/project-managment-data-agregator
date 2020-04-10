@@ -5,7 +5,7 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
+import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -42,7 +42,7 @@ public class JiraRepositoryTest {
     @Ignore
     public void get_modified_issues_should_return_issues() {
         // Given
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("pmda");
 

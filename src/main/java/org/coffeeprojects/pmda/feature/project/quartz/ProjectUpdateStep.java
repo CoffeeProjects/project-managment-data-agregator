@@ -5,7 +5,7 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
+import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.feature.project.service.ProjectServiceFactory;
 import org.coffeeprojects.pmda.tracker.TrackerService;
@@ -19,8 +19,6 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Component
 public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
@@ -48,9 +46,9 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws JobFailingException {
         try {
             trackerService.getTrackers().forEach(tracker -> {
-                ProjectService projectService = projectServiceFactory.getService(ProjectEnum.valueOf(tracker.getType().toUpperCase()));
+                ProjectService projectService = projectServiceFactory.getService(TrackerTypeEnum.valueOf(tracker.getType().toUpperCase()));
                 ProjectEntity projectEntity = projectService.getProjectById(new CompositeIdBaseEntity()
-                        .setTrackerType(ProjectEnum.valueOf(tracker.getType().toUpperCase()))
+                        .setTrackerType(TrackerTypeEnum.valueOf(tracker.getType().toUpperCase()))
                         .setTrackerLocalId(tracker.getLocalId())
                         .setClientId(tracker.getClientId()));
 

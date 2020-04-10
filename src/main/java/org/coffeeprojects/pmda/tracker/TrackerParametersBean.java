@@ -1,7 +1,6 @@
 package org.coffeeprojects.pmda.tracker;
 
-public class TrackerBean {
-    // TODO: je l'aurai nommé TrackerParametersBean un truc comme ça pour etre plus precis
+public class TrackerParametersBean {
     private String type;
     private String localId;
     private String clientId;
@@ -9,7 +8,7 @@ public class TrackerBean {
     private String user;
     private String password;
 
-    public TrackerBean(String type, String localId, String clientId, String url, String user, String password) {
+    public TrackerParametersBean(String type, String localId, String clientId, String url, String user, String password) {
         this.type = type;
         this.localId = localId;
         this.clientId = clientId;
@@ -18,7 +17,7 @@ public class TrackerBean {
         this.password = password;
     }
 
-    public TrackerBean() {
+    public TrackerParametersBean() {
     }
 
     public String getType() {

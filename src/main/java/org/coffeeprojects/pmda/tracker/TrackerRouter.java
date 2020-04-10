@@ -6,7 +6,6 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
 import org.coffeeprojects.pmda.tracker.jira.JiraClient;
 import org.coffeeprojects.pmda.tracker.mantis.MantisClient;
 import org.coffeeprojects.pmda.tracker.redmine.RedmineClient;
@@ -17,8 +16,8 @@ import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Import(FeignClientsConfiguration.class)
@@ -26,29 +25,31 @@ public class TrackerRouter {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerRouter.class);
 
-    private Map<Map<String, String>, Object> trackers = new HashMap(); // TODO: Map trop complexe c'est une map avec des TrackerBean ?
+    private List<Tracker> trackers = new ArrayList();
 
     @Autowired
     public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
         trackerService.getTrackers().forEach(p -> {
-            Map<String, String> trackerId = new HashMap();
-            trackerId.put(p.getType(), p.getLocalId());
-
-            this.trackers.put(trackerId, buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
+            Tracker tracker = new Tracker();
+            tracker.setType(TrackerTypeEnum.valueOf(p.getType().toUpperCase()));
+            tracker.setLocalId(p.getLocalId());
+            tracker.setClient(buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
+            trackers.add(tracker);
         });
     }
 
-    private Class getClientInterface(TrackerBean trackerBean) {
-        // TODO: à remplacer par un switch / case : il faudrait que dans trackerBean le type soit une enum
-        if (ProjectEnum.JIRA.toString().equalsIgnoreCase(trackerBean.getType())) {
-            return JiraClient.class;
-        } else if (ProjectEnum.MANTIS.toString().equalsIgnoreCase(trackerBean.getType())) {
-            return MantisClient.class;
-        } else if (ProjectEnum.REDMINE.toString().equalsIgnoreCase(trackerBean.getType())) {
-            return RedmineClient.class;
+    private Class getClientInterface(TrackerParametersBean trackerParametersBean) {
+        switch (TrackerTypeEnum.valueOf(trackerParametersBean.getType().toUpperCase())) {
+            case JIRA:
+                return JiraClient.class;
+            case MANTIS:
+                return MantisClient.class;
+            case REDMINE:
+                return RedmineClient.class;
+            default:
+                log.error("No interface available for the tracker TYPE : " + trackerParametersBean.getType() + "ID : " + trackerParametersBean.getLocalId());
+                return null;
         }
-        log.error("No interface available for the tracker TYPE : " + trackerBean.getType() + "ID : " + trackerBean.getLocalId());
-        return null;
     }
 
     private Object buildClient(Decoder decoder, Encoder encoder, Client client, Class clientClass,
@@ -61,30 +62,25 @@ public class TrackerRouter {
     }
 
     public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (trackerRouter != null && trackerRouter.getTrackers() !=null &&
+        if (trackerRouter != null && trackerRouter.trackers != null &&
                 projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
-            // TODO: je ne pense pas que ce if soit necessaire, vu que c'est cette classe qui remplie la map, sinon fait le controle avant
-            for (Map.Entry<Map<String, String>, Object> trackerEntry : trackerRouter.getTrackers().entrySet()) {
-                for (Map.Entry<String, String> trackerIdEntry : trackerEntry.getKey().entrySet()) {
-                    ProjectEnum trackerType = ProjectEnum.valueOf(trackerIdEntry.getKey());
-                    // TODO: Ce n est pas mieux TrackerType à la place de ProjectEnum ?
-                    String trackerId = trackerIdEntry.getValue();
-                    Object tracker = trackerEntry.getValue();
-                    if (trackerType == projectEntity.getId().getTrackerType() &&
-                            trackerId.equalsIgnoreCase(projectEntity.getId().getTrackerLocalId())) {
-                        return tracker;
-                    }
-                }
-            }
+
+            Tracker tracker = trackerRouter.trackers.stream()
+                    .filter(t -> t.getType() == projectEntity.getId().getTrackerType())
+                    .filter(t -> t.getLocalId() == projectEntity.getId().getTrackerLocalId())
+                    .findFirst()
+                    .orElse(new Tracker());
+
+            return tracker.getClient();
         }
         return null;
     }
 
-    public Map<Map<String, String>, Object> getTrackers() {
+    public List<Tracker> getTrackers() {
         return trackers;
     }
 
-    public TrackerRouter setTrackers(Map<Map<String, String>, Object> trackers) {
+    public TrackerRouter setTrackers(List<Tracker> trackers) {
         this.trackers = trackers;
         return this;
     }

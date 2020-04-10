@@ -5,14 +5,15 @@ import feign.codec.Decoder;
 import feign.codec.Encoder;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,12 +41,11 @@ public class TrackerRouterTest {
 
     @Test
     public void test_get_client_with_projectentity_null() {
-        // TrackerId
-        Map<String, String> trackerId = new HashMap();
-        trackerId.put("jira", "1");
+        // Tracker
+        Tracker tracker = new Tracker().setType(TrackerTypeEnum.JIRA).setLocalId("1").setClient(new Object());
         // Trackers
-        Map<Map<String, String>, Object> trackers = new HashMap();
-        trackers.put(trackerId, new Object());
+        List<Tracker> trackers = new ArrayList();
+        trackers.add(tracker);
         TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackers(trackers);
 
         assertThat(TrackerRouter.getTracker(trackerRouter, null)).isNull();
@@ -54,7 +54,7 @@ public class TrackerRouterTest {
     @Test
     public void test_get_client_with_trackerrouter_null() {
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
@@ -63,16 +63,15 @@ public class TrackerRouterTest {
 
     @Test
     public void test_get_client_with_trackerrouter_and_projectentity_match() {
-        // TrackerId
-        Map<String, String> trackerId = new HashMap();
-        trackerId.put("jira", "1");
+        // Tracker
+        Tracker tracker = new Tracker().setType(TrackerTypeEnum.JIRA).setLocalId("1").setClient(new Object());
         // Trackers
-        Map<Map<String, String>, Object> trackers = new HashMap();
-        trackers.put(trackerId, new Object());
+        List<Tracker> trackers = new ArrayList();
+        trackers.add(tracker);
         TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackers(trackers);
 
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
@@ -81,16 +80,15 @@ public class TrackerRouterTest {
 
     @Test
     public void test_get_client_with_trackerrouter_and_projectentity_trackerId_not_match() {
-        // TrackerId
-        Map<String, String> trackerId = new HashMap();
-        trackerId.put("jira", "1");
+        // Tracker
+        Tracker tracker = new Tracker().setType(TrackerTypeEnum.JIRA).setLocalId("1").setClient(new Object());
         // Trackers
-        Map<Map<String, String>, Object> trackers = new HashMap();
-        trackers.put(trackerId, new Object());
+        List<Tracker> trackers = new ArrayList();
+        trackers.add(tracker);
         TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackers(trackers);
 
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
@@ -99,16 +97,15 @@ public class TrackerRouterTest {
 
     @Test
     public void test_get_client_with_trackerrouter_and_projectentity_trackertype_not_match() {
-        // TrackerId
-        Map<String, String> trackerId = new HashMap();
-        trackerId.put("mantis", "1");
+        // Tracker
+        Tracker tracker = new Tracker().setType(TrackerTypeEnum.JIRA).setLocalId("1").setClient(new Object());
         // Trackers
-        Map<Map<String, String>, Object> trackers = new HashMap();
-        trackers.put(trackerId, new Object());
+        List<Tracker> trackers = new ArrayList();
+        trackers.add(tracker);
         TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackers(trackers);
 
         // ProjectEntity
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(ProjectEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
