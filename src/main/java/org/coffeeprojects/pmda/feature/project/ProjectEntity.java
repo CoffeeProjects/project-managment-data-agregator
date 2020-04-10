@@ -2,11 +2,10 @@ package org.coffeeprojects.pmda.feature.project;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
@@ -20,6 +19,12 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     @Column(insertable = false, updatable = false)
     private Boolean active;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumns({@JoinColumn(name = "project_client_id"),
+            @JoinColumn(name = "project_tracker_local_id"),
+            @JoinColumn(name = "project_tracker_type")})
+    private Set<ProjectCustomField> projectCustomFields;
 
     public String getKey() {
         return key;
@@ -54,6 +59,15 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     public ProjectEntity setActive(Boolean active) {
         this.active = active;
+        return this;
+    }
+
+    public Set<ProjectCustomField> getProjectCustomFields() {
+        return projectCustomFields;
+    }
+
+    public ProjectEntity setProjectCustomFields(Set<ProjectCustomField> projectCustomFields) {
+        this.projectCustomFields = projectCustomFields;
         return this;
     }
 }

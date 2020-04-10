@@ -13,6 +13,7 @@ import org.coffeeprojects.pmda.feature.version.VersionEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -40,8 +41,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private ResolutionEntity resolution;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date resolutionDate;
+    private Instant resolutionDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     private PriorityEntity priority;
@@ -55,12 +55,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_version",
-            joinColumns = {@JoinColumn(name = "issue_storage_id"),
-                    @JoinColumn(name = "issue_tracker_type"),
-                    @JoinColumn(name = "issue_tracker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "version_storage_id"),
-                    @JoinColumn(name = "version_tracker_type"),
-                    @JoinColumn(name = "version_tracker_id")})
+            joinColumns = {@JoinColumn(name = "issue_client_id"),
+                    @JoinColumn(name = "issue_tracker_local_id"),
+                    @JoinColumn(name = "issue_tracker_type")},
+            inverseJoinColumns = {@JoinColumn(name = "version_client_id"),
+                    @JoinColumn(name = "version_tracker_local_id"),
+                    @JoinColumn(name = "version_tracker_type")})
     private Set<VersionEntity> fixVersions;
 
     @ElementCollection
@@ -69,12 +69,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_component",
-            joinColumns = {@JoinColumn(name = "issue_storage_id"),
-                    @JoinColumn(name = "issue_tracker_type"),
-                    @JoinColumn(name = "issue_tracker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "component_storage_id"),
-                    @JoinColumn(name = "component_tracker_type"),
-                    @JoinColumn(name = "component_tracker_id")})
+            joinColumns = {@JoinColumn(name = "issue_client_id"),
+                    @JoinColumn(name = "issue_tracker_local_id"),
+                    @JoinColumn(name = "issue_tracker_type")},
+            inverseJoinColumns = {@JoinColumn(name = "component_client_id"),
+                    @JoinColumn(name = "component_tracker_local_id"),
+                    @JoinColumn(name = "component_tracker_type")})
     private Set<ComponentEntity> components;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -86,13 +86,19 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_sprint",
-            joinColumns = {@JoinColumn(name = "issue_storage_id"),
-                    @JoinColumn(name = "issue_tracker_type"),
-                    @JoinColumn(name = "issue_tracker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "sprint_storage_id"),
-                    @JoinColumn(name = "sprint_tracker_type"),
-                    @JoinColumn(name = "sprint_tracker_id")})
+            joinColumns = {@JoinColumn(name = "issue_client_id"),
+                    @JoinColumn(name = "issue_tracker_local_id"),
+                    @JoinColumn(name = "issue_tracker_type")},
+            inverseJoinColumns = {@JoinColumn(name = "sprint_client_id"),
+                    @JoinColumn(name = "sprint_tracker_local_id"),
+                    @JoinColumn(name = "sprint_tracker_type")})
     private Set<SprintEntity> sprints;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumns({@JoinColumn(name = "issue_client_id"),
+            @JoinColumn(name = "issue_tracker_local_id"),
+            @JoinColumn(name = "issue_tracker_type")})
+    private Set<IssueCustomField> issueCustomFields;
 
     public String getKey() {
         return key;
@@ -157,11 +163,11 @@ public class IssueEntity extends BaseEntity implements Serializable {
         return this;
     }
 
-    public Date getResolutionDate() {
+    public Instant getResolutionDate() {
         return resolutionDate;
     }
 
-    public IssueEntity setResolutionDate(Date resolutionDate) {
+    public IssueEntity setResolutionDate(Instant resolutionDate) {
         this.resolutionDate = resolutionDate;
         return this;
     }
@@ -244,6 +250,15 @@ public class IssueEntity extends BaseEntity implements Serializable {
 
     public IssueEntity setSprints(Set<SprintEntity> sprints) {
         this.sprints = sprints;
+        return this;
+    }
+
+    public Set<IssueCustomField> getIssueCustomFields() {
+        return issueCustomFields;
+    }
+
+    public IssueEntity setIssueCustomFields(Set<IssueCustomField> issueCustomFields) {
+        this.issueCustomFields = issueCustomFields;
         return this;
     }
 }

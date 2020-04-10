@@ -192,11 +192,11 @@ public class TrackerParametersBeanUtilsTest {
 
     @Test
     public void test_get_date_from_timezone_null() {
-        assertThat(TrackerUtils.getDateFromTimezone(null)).isNull();
+        assertThat(TrackerUtils.getInstantFromTimezone(null)).isNull();
     }
 
     @Test
     public void test_get_date_from_bad_timezone() {
-        assertThat(TrackerUtils.getDateFromTimezone("BAD_TIMEZONE")).isNull();
+        assertThat(TrackerUtils.getInstantFromTimezone("BAD_TIMEZONE")).isNull();
     }
 }

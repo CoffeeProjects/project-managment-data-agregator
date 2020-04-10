@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;

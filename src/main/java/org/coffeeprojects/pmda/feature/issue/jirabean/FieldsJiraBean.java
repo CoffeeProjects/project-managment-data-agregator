@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.feature.issue.jirabean;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.coffeeprojects.pmda.feature.component.ComponentJiraBean;
 import org.coffeeprojects.pmda.feature.issueType.IssueTypeJiraBean;
@@ -11,10 +12,7 @@ import org.coffeeprojects.pmda.feature.status.StatusJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.feature.version.VersionJiraBean;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class FieldsJiraBean {
     private UserJiraBean assignee;
@@ -48,10 +46,11 @@ public class FieldsJiraBean {
 
     private Date updated;
 
-    @JsonProperty("customfield_10020")
     private List<String> sprintsToString;
 
     private Set<SprintJiraBean> sprints;
+
+    private Map<String, Object> customFields;
 
     public UserJiraBean getAssignee() {
         return assignee;
@@ -204,6 +203,19 @@ public class FieldsJiraBean {
     public FieldsJiraBean setSprints(Set<SprintJiraBean> sprints) {
         this.sprints = sprints;
         return this;
+    }
+
+    @JsonAnySetter
+    public FieldsJiraBean setCustomFields(String key, Object value) {
+        if (this.customFields == null) {
+            this.customFields = new HashMap();
+        }
+        this.customFields.put(key, value);
+        return this;
+    }
+
+    public Map<String, Object> getCustomFields() {
+        return customFields;
     }
 
     @Override

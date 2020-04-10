@@ -57,7 +57,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
                     issueService.updateLastModifiedIssues(projectEntity);
 
                     // Update project
-                    projectService.updateProjectByKey((projectEntity));
+                    projectService.updateProjectByKey(projectEntity);
                 }
             });
         } catch (Exception e) {

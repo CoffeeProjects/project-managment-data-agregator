@@ -70,7 +70,7 @@ public class TrackerUtils {
         }
     }
 
-    public static Instant getDateFromTimezone(String timezone) {
+    public static Instant getInstantFromTimezone(String timezone) {
         if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
             return LocalDateTime.parse(timezone, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
                     .atZone(ZoneId.systemDefault()).toInstant();
