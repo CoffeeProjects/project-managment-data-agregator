@@ -48,7 +48,7 @@ public class TrackerRouter {
             case REDMINE:
                 return RedmineClient.class;
             default:
-                log.error("No interface available for this tracker : {0}", trackerDataBean.toString());
+                log.error("No interface available for this tracker : {}", trackerDataBean);
                 return null;
         }
     }
@@ -76,12 +76,7 @@ public class TrackerRouter {
 
             return trackerParametersBean.getClient();
         }
-        if (projectEntity != null) {
-            log.error("Tracker not found for project : {0}", projectEntity.toString());
-        } else {
-            log.error("Tracker not found");
-        }
-
+        log.error("Tracker not found for project : {}", projectEntity);
         return null;
     }
 
