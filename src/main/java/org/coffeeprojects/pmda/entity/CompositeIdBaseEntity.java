@@ -4,6 +4,7 @@ import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class CompositeIdBaseEntity implements Serializable {
@@ -39,5 +40,29 @@ public class CompositeIdBaseEntity implements Serializable {
     public CompositeIdBaseEntity setTrackerLocalId(String trackerLocalId) {
         this.trackerLocalId = trackerLocalId;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CompositeIdBaseEntity that = (CompositeIdBaseEntity) o;
+        return Objects.equals(clientId, that.clientId) &&
+                trackerType == that.trackerType &&
+                Objects.equals(trackerLocalId, that.trackerLocalId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, trackerType, trackerLocalId);
+    }
+
+    @Override
+    public String toString() {
+        return "CompositeIdBaseEntity{" +
+                "clientId='" + clientId + '\'' +
+                ", trackerType=" + trackerType +
+                ", trackerLocalId='" + trackerLocalId + '\'' +
+                '}';
     }
 }

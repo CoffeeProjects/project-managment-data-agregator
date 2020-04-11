@@ -55,25 +55,4 @@ public class IssueMapperTest {
         assertThat(issueEntity.getLabels().get(0)).isEqualTo(expectedIssueEntity.getLabels().get(0));
         assertThat(issueEntity.getLabels().get(1)).isEqualTo(expectedIssueEntity.getLabels().get(1));
     }
-
-    /*@Test
-    public void get_sprints_by_issue_jira_bean_with_sprints() {
-        List<String> sprints = Arrays.asList(
-                "com.atlassian.greenhopper.service.sprint.Sprint@2932643f[id=2,rapidViewId=1,state=FUTURE,name=PMDA ,goal=2 (%+\"'-$*€/\\|),goal=FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
-        );
-        IssueJiraBean issueJiraBean = new IssueJiraBean().setId("id1").setKey("key1");
-
-        IssueEntity issueEntity = issueMapper.toEntity(issueJiraBean);
-
-        // Then
-        issueEntity.getSprints().stream()
-                .forEach(p -> {
-                    assertThat(p.getId().getClientId().equals("2"));
-                    assertThat(p.getRapidViewId()).isEqualTo("1");
-                    assertThat(p.getState()).isEqualTo("FUTURE");
-                    assertThat(p.getName()).isEqualTo("PMDA ,goal=2 (%+\"'-$*€/\\|)");
-                    assertThat(p.getGoal()).isEqualTo("FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou");
-                });
-
-    }*/
 }

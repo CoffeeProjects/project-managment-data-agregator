@@ -22,13 +22,15 @@ public class ProjectServiceFactory {
     }
 
     public ProjectService getService(TrackerTypeEnum trackerTypeEnum) {
-        switch (trackerTypeEnum) {
-            case JIRA:
-                return jiraProjectService;
-            case MANTIS:
-                return mantisProjectService;
-            case REDMINE:
-                return redmineProjectService;
+        if (trackerTypeEnum != null) {
+            switch (trackerTypeEnum) {
+                case JIRA:
+                    return jiraProjectService;
+                case MANTIS:
+                    return mantisProjectService;
+                case REDMINE:
+                    return redmineProjectService;
+            }
         }
         return null;
     }

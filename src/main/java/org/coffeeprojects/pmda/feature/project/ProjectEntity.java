@@ -5,6 +5,7 @@ import org.coffeeprojects.pmda.entity.BaseEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -69,5 +70,33 @@ public class ProjectEntity extends BaseEntity implements Serializable {
     public ProjectEntity setProjectCustomFields(Set<ProjectCustomField> projectCustomFields) {
         this.projectCustomFields = projectCustomFields;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectEntity that = (ProjectEntity) o;
+        return Objects.equals(key, that.key) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(lastCheck, that.lastCheck) &&
+                Objects.equals(active, that.active) &&
+                Objects.equals(projectCustomFields, that.projectCustomFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, name, lastCheck, active, projectCustomFields);
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectEntity{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", lastCheck=" + lastCheck +
+                ", active=" + active +
+                ", projectCustomFields=" + projectCustomFields +
+                '}';
     }
 }

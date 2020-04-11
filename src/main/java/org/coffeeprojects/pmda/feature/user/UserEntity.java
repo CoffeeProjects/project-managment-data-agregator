@@ -5,6 +5,7 @@ import org.coffeeprojects.pmda.entity.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "account")
@@ -41,5 +42,29 @@ public class UserEntity extends BaseEntity implements Serializable {
     public UserEntity setActive(Boolean active) {
         this.active = active;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(emailAddress, that.emailAddress) &&
+                Objects.equals(displayName, that.displayName) &&
+                Objects.equals(active, that.active);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(emailAddress, displayName, active);
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "emailAddress='" + emailAddress + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", active=" + active +
+                '}';
     }
 }

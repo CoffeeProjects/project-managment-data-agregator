@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -260,5 +261,59 @@ public class IssueEntity extends BaseEntity implements Serializable {
     public IssueEntity setIssueCustomFields(Set<IssueCustomField> issueCustomFields) {
         this.issueCustomFields = issueCustomFields;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IssueEntity that = (IssueEntity) o;
+        return Objects.equals(key, that.key) &&
+                Objects.equals(assignee, that.assignee) &&
+                Objects.equals(reporter, that.reporter) &&
+                Objects.equals(creator, that.creator) &&
+                Objects.equals(summary, that.summary) &&
+                Objects.equals(status, that.status) &&
+                Objects.equals(resolution, that.resolution) &&
+                Objects.equals(resolutionDate, that.resolutionDate) &&
+                Objects.equals(priority, that.priority) &&
+                Objects.equals(issueType, that.issueType) &&
+                Objects.equals(project, that.project) &&
+                Objects.equals(fixVersions, that.fixVersions) &&
+                Objects.equals(labels, that.labels) &&
+                Objects.equals(components, that.components) &&
+                Objects.equals(created, that.created) &&
+                Objects.equals(updated, that.updated) &&
+                Objects.equals(sprints, that.sprints) &&
+                Objects.equals(issueCustomFields, that.issueCustomFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, sprints, issueCustomFields);
+    }
+
+    @Override
+    public String toString() {
+        return "IssueEntity{" +
+                "key='" + key + '\'' +
+                ", assignee=" + assignee +
+                ", reporter=" + reporter +
+                ", creator=" + creator +
+                ", summary='" + summary + '\'' +
+                ", status=" + status +
+                ", resolution=" + resolution +
+                ", resolutionDate=" + resolutionDate +
+                ", priority=" + priority +
+                ", issueType=" + issueType +
+                ", project=" + project +
+                ", fixVersions=" + fixVersions +
+                ", labels=" + labels +
+                ", components=" + components +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", sprints=" + sprints +
+                ", issueCustomFields=" + issueCustomFields +
+                '}';
     }
 }

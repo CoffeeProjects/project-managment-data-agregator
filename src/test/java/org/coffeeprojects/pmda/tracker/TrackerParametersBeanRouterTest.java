@@ -62,7 +62,7 @@ public class TrackerParametersBeanRouterTest {
     @Test
     public void test_get_client_with_trackerrouter_and_projectentity_match() {
         // Tracker
-        TrackerParametersBean trackerParametersBean = new TrackerParametersBean().setType(TrackerTypeEnum.JIRA).setLocalId("1").setClient(new Object());
+        TrackerParametersBean trackerParametersBean = new TrackerParametersBean().setType(TrackerTypeEnum.JIRA).setLocalId("1").setClientId("1").setClient(new Object());
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);

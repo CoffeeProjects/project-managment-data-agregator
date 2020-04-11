@@ -22,7 +22,7 @@ public class IssueServiceFactory {
     }
 
     public IssueService getService(ProjectEntity projectEntity) {
-        if (projectEntity != null && projectEntity.getId() != null) {
+        if (projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
             switch (projectEntity.getId().getTrackerType()){
                 case JIRA:
                     return jiraIssueService;

@@ -1,5 +1,7 @@
 package org.coffeeprojects.pmda.tracker;
 
+import java.util.Objects;
+
 public class TrackerDataBean {
     private String type;
     private String localId;
@@ -66,5 +68,35 @@ public class TrackerDataBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TrackerDataBean that = (TrackerDataBean) o;
+        return Objects.equals(type, that.type) &&
+                Objects.equals(localId, that.localId) &&
+                Objects.equals(clientId, that.clientId) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, localId, clientId, url, user, password);
+    }
+
+    @Override
+    public String toString() {
+        return "TrackerDataBean{" +
+                "type='" + type + '\'' +
+                ", localId='" + localId + '\'' +
+                ", clientId='" + clientId + '\'' +
+                ", url='" + url + '\'' +
+                ", user='" + user + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

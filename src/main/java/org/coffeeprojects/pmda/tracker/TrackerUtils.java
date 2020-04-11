@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Set;
 
@@ -64,7 +65,7 @@ public class TrackerUtils {
                 baseEntity.getId().setTrackerType(projectEntity.getId().getTrackerType());
                 baseEntity.getId().setTrackerLocalId(projectEntity.getId().getTrackerLocalId());
             } else
-                log.error("trackerId and / or trackerType not entered for the project ID " + projectEntity.getId().getClientId());
+                log.error("trackerId and / or trackerType not entered for this projet : " + projectEntity.toString());
         } else {
             log.error("baseEntity or projectEntity could not be null");
         }
@@ -72,8 +73,14 @@ public class TrackerUtils {
 
     public static Instant getInstantFromTimezone(String timezone) {
         if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
-            return LocalDateTime.parse(timezone, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
-                    .atZone(ZoneId.systemDefault()).toInstant();
+            try {
+                return LocalDateTime.parse(timezone, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+                        .atZone(ZoneId.systemDefault()).toInstant();
+            } catch (DateTimeParseException e) {
+                log.error("Unable to parse in Instant with timezone : " + timezone);
+                return null;
+            }
+
         }
         return null;
     }

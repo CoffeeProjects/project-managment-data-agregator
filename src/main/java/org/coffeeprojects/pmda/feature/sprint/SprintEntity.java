@@ -8,6 +8,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -101,5 +102,39 @@ public class SprintEntity extends BaseEntity implements Serializable {
     public SprintEntity setIssues(Set<IssueEntity> issues) {
         this.issues = issues;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SprintEntity that = (SprintEntity) o;
+        return Objects.equals(rapidViewId, that.rapidViewId) &&
+                Objects.equals(state, that.state) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(goal, that.goal) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate) &&
+                Objects.equals(completeDate, that.completeDate) &&
+                Objects.equals(issues, that.issues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rapidViewId, state, name, goal, startDate, endDate, completeDate, issues);
+    }
+
+    @Override
+    public String toString() {
+        return "SprintEntity{" +
+                "rapidViewId='" + rapidViewId + '\'' +
+                ", state='" + state + '\'' +
+                ", name='" + name + '\'' +
+                ", goal='" + goal + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", completeDate=" + completeDate +
+                ", issues=" + issues +
+                '}';
     }
 }

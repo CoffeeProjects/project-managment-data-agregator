@@ -3,19 +3,24 @@ package org.coffeeprojects.pmda.feature.sprint;
 import org.apache.commons.lang3.StringUtils;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
-import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class SprintUtils {
+
+    private static final Logger log = LoggerFactory.getLogger(SprintUtils.class);
+
     public static void toEntity(List<String> input, IssueEntity output) {
         // Mapping des sprints
-        Set<SprintEntity> sprintEntities = new HashSet();
-        if (input != null) {
+        if (input != null && input.size() > 0) {
+            Set<SprintEntity> sprintEntities = new HashSet();
             input.stream()
+                    .filter(p -> StringUtils.isNotEmpty(p))
                     .forEach(p -> {
                         SprintEntity sprintEntity = new SprintEntity();
                         String id = StringUtils.substringAfter(p, "id=");
@@ -38,7 +43,13 @@ public class SprintUtils {
 
                         sprintEntities.add(sprintEntity);
                     });
-            output.setSprints(sprintEntities);
+            if (sprintEntities.size() > 0) {
+                output.setSprints(sprintEntities);
+            } else {
+                log.info("Sprint value is empty for this issue : " + output.toString());
+            }
+        } else {
+            log.info("No sprint to fill for this issue : " + output.toString());
         }
     }
 }
