@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.feature.issue.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueCustomField;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
@@ -9,6 +10,7 @@ import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectCustomField;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.project.ProjectUtils;
 import org.coffeeprojects.pmda.feature.sprint.SprintUtils;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
@@ -26,9 +28,8 @@ public class JiraIssueService implements IssueService {
     private static final Logger log = LoggerFactory.getLogger(JiraIssueService.class);
 
     private static final String SPRINTS_FIELD = "SPRINTS";
-    private static final String STORY_POINTS_FIELD = "STORY_POINTS";
-    private static final String JIRA_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
-            "updated,created,duedate,labels,components,issuelinks,fixversions,resolution,customfield_10020, customfield_10024";
+    private static String JIRA_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
+            "updated,created,duedate,labels,components,issuelinks,fixversions,resolution";
 
     private final IssueRepository issueRepository;
 
@@ -47,6 +48,9 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
+        String customFields = String.join(",", ProjectUtils.getClientNameCustomFields(projectEntity));
+        JIRA_FIELDS = StringUtils.isNotEmpty(customFields) ? JIRA_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_FIELDS;
+
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, JIRA_FIELDS);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
 
