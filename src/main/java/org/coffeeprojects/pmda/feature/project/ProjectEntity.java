@@ -22,9 +22,9 @@ public class ProjectEntity extends BaseEntity implements Serializable {
     private Boolean active;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumns({@JoinColumn(name = "project_client_id", referencedColumnName="clientId"),
-            @JoinColumn(name = "project_tracker_local_id", referencedColumnName="trackerLocalId"),
-            @JoinColumn(name = "project_tracker_type", referencedColumnName="trackerType")})
+    @JoinColumn(name = "project_client_id", referencedColumnName="clientId")
+    @JoinColumn(name = "project_tracker_local_id", referencedColumnName="trackerLocalId")
+    @JoinColumn(name = "project_tracker_type", referencedColumnName="trackerType")
     private Set<ProjectCustomField> projectCustomFields;
 
     public String getKey() {

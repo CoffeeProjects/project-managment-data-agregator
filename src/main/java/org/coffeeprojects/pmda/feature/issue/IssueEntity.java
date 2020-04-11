@@ -96,9 +96,9 @@ public class IssueEntity extends BaseEntity implements Serializable {
     private Set<SprintEntity> sprints;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumns({@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
-            @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
-            @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")})
+    @JoinColumn(name = "issue_client_id", referencedColumnName="clientId")
+    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId")
+    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")
     private Set<IssueCustomField> issueCustomFields;
 
     public String getKey() {
