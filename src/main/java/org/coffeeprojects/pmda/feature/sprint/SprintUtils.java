@@ -30,39 +30,35 @@ public class SprintUtils {
 
     public static void toEntity(List<String> input, IssueEntity output) {
         // Mapping des sprints
-        if (input != null && input.isEmpty()) {
+        if (input != null && !input.isEmpty()) {
             Set<SprintEntity> sprintEntities = new HashSet();
             input.stream()
-                    .filter(p -> StringUtils.isNotEmpty(p))
-                    .forEach(p -> {
-                        SprintEntity sprintEntity = new SprintEntity();
-                        String id = StringUtils.substringAfter(p, ID_FIELD_NAME);
-                        String rapidView = StringUtils.substringAfterLast(id, RAPID_VIEW_FIELD_NAME);
-                        String state = StringUtils.substringAfterLast(rapidView, STATE_FIELD_NAME);
-                        String name = StringUtils.substringAfterLast(state, NAME_FIELD_NAME);
-                        String goal = StringUtils.substringAfterLast(name, GOAL_FIELD_NAME);
-                        String startDate = StringUtils.substringAfterLast(goal, START_DATE_FIELD_NAME);
-                        String endDate = StringUtils.substringAfterLast(startDate, END_DATE_FIELD_NAME);
-                        String completeDate = StringUtils.substringAfterLast(endDate, COMPLETE_DATE_FIELD_NAME);
+                .filter(p -> StringUtils.isNotEmpty(p))
+                .forEach(p -> {
+                    SprintEntity sprintEntity = new SprintEntity();
+                    String id = StringUtils.substringAfter(p, ID_FIELD_NAME);
+                    String rapidView = StringUtils.substringAfterLast(id, RAPID_VIEW_FIELD_NAME);
+                    String state = StringUtils.substringAfterLast(rapidView, STATE_FIELD_NAME);
+                    String name = StringUtils.substringAfterLast(state, NAME_FIELD_NAME);
+                    String goal = StringUtils.substringAfterLast(name, GOAL_FIELD_NAME);
+                    String startDate = StringUtils.substringAfterLast(goal, START_DATE_FIELD_NAME);
+                    String endDate = StringUtils.substringAfterLast(startDate, END_DATE_FIELD_NAME);
+                    String completeDate = StringUtils.substringAfterLast(endDate, COMPLETE_DATE_FIELD_NAME);
 
-                        sprintEntity.setId(new CompositeIdBaseEntity().setClientId(StringUtils.replace(id, RAPID_VIEW_FIELD_NAME + rapidView, StringUtils.EMPTY)));
-                        sprintEntity.setRapidViewId(StringUtils.replace(rapidView, STATE_FIELD_NAME + state, StringUtils.EMPTY));
-                        sprintEntity.setState(StringUtils.replace(state, NAME_FIELD_NAME + name, StringUtils.EMPTY));
-                        sprintEntity.setName(StringUtils.replace(name, GOAL_FIELD_NAME + goal, StringUtils.EMPTY));
-                        sprintEntity.setGoal(StringUtils.replace(goal, START_DATE_FIELD_NAME + startDate, StringUtils.EMPTY));
-                        sprintEntity.setStartDate(TrackerUtils.getInstantFromTimezone(StringUtils.replace(startDate, END_DATE_FIELD_NAME + endDate, StringUtils.EMPTY)));
-                        sprintEntity.setEndDate(TrackerUtils.getInstantFromTimezone(StringUtils.replace(endDate, COMPLETE_DATE_FIELD_NAME + completeDate, StringUtils.EMPTY)));
-                        sprintEntity.setCompleteDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringAfterLast(completeDate, COMPLETE_DATE_FIELD_NAME)));
+                    sprintEntity.setId(new CompositeIdBaseEntity().setClientId(StringUtils.replace(id, RAPID_VIEW_FIELD_NAME + rapidView, StringUtils.EMPTY)));
+                    sprintEntity.setRapidViewId(StringUtils.replace(rapidView, STATE_FIELD_NAME + state, StringUtils.EMPTY));
+                    sprintEntity.setState(StringUtils.replace(state, NAME_FIELD_NAME + name, StringUtils.EMPTY));
+                    sprintEntity.setName(StringUtils.replace(name, GOAL_FIELD_NAME + goal, StringUtils.EMPTY));
+                    sprintEntity.setGoal(StringUtils.replace(goal, START_DATE_FIELD_NAME + startDate, StringUtils.EMPTY));
+                    sprintEntity.setStartDate(TrackerUtils.getInstantFromTimezone(StringUtils.replace(startDate, END_DATE_FIELD_NAME + endDate, StringUtils.EMPTY)));
+                    sprintEntity.setEndDate(TrackerUtils.getInstantFromTimezone(StringUtils.replace(endDate, COMPLETE_DATE_FIELD_NAME + completeDate, StringUtils.EMPTY)));
+                    sprintEntity.setCompleteDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringAfterLast(completeDate, COMPLETE_DATE_FIELD_NAME)));
 
-                        sprintEntities.add(sprintEntity);
-                    });
-            if (sprintEntities.isEmpty()) {
-                output.setSprints(sprintEntities);
-            } else {
-                log.info("Sprint value is empty for this issue : {0}", output.toString());
-            }
+                    sprintEntities.add(sprintEntity);
+                });
+            output.setSprints(sprintEntities);
         } else {
-            log.info("No sprint to fill for this issue : {0}", output.toString());
+            log.info("No sprint to fill for this issue : {}", output);
         }
     }
 }

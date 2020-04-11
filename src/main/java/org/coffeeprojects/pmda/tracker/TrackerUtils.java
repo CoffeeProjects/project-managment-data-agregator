@@ -69,7 +69,7 @@ public class TrackerUtils {
                 baseEntity.getId().setTrackerType(projectEntity.getId().getTrackerType());
                 baseEntity.getId().setTrackerLocalId(projectEntity.getId().getTrackerLocalId());
             } else
-                log.error("trackerId and / or trackerType not entered for this projet : {0}", projectEntity.toString());
+                log.error("trackerId and / or trackerType not entered for this projet : {}", projectEntity);
         } else {
             log.error("baseEntity or projectEntity could not be null");
         }
@@ -81,7 +81,7 @@ public class TrackerUtils {
                 return LocalDateTime.parse(timezone, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
                         .atZone(ZoneId.systemDefault()).toInstant();
             } catch (DateTimeParseException e) {
-                log.error("Unable to parse in Instant with timezone : {0}", timezone);
+                log.error("Unable to parse in Instant with timezone : {}", timezone);
                 return null;
             }
 

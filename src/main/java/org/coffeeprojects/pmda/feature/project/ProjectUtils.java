@@ -25,7 +25,7 @@ public class ProjectUtils {
             return clientNameCustomFields.isEmpty() ? null : clientNameCustomFields;
         } else {
             if (projectEntity != null) {
-                log.info("No custom fields available for this project : {0}", projectEntity.toString());
+                log.info("No custom fields available for this project : {}", projectEntity);
             } else {
                 log.error("No project provided to get custom fields");
             }

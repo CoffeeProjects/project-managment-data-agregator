@@ -32,7 +32,7 @@ public class SprintUtilsTest {
         SprintUtils.toEntity(sprints, issueEntity);
 
         // Then
-        assertThat(issueEntity.getSprints()).isNull();
+        assertThat(issueEntity.getSprints()).isEmpty();
     }
 
     @Test
