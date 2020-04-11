@@ -65,8 +65,7 @@ public class TrackerRouter {
     public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
         if (trackerRouter != null && trackerRouter.trackerParametersBeans != null
                 && projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null
-                && projectEntity.getId().getTrackerType() != null && projectEntity.getId().getTrackerLocalId() != null
-                && projectEntity.getId().getClientId() != null) {
+                && projectEntity.getId().getTrackerLocalId() != null && projectEntity.getId().getClientId() != null) {
 
             TrackerParametersBean trackerParametersBean = trackerRouter.trackerParametersBeans.stream()
                     .filter(t -> projectEntity.getId().getTrackerType() == t.getType())

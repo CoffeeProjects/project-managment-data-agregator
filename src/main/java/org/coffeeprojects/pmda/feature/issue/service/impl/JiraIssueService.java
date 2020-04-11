@@ -48,7 +48,7 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        String projectFields = String.join(",", ProjectUtils.getClientNameCustomFields(projectEntity));
+        String projectFields = StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",");
         projectFields = StringUtils.isNotEmpty(projectFields) ? JIRA_DEFAULT_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_DEFAULT_FIELDS;
 
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, projectFields);
