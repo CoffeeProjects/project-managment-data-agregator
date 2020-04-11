@@ -37,9 +37,12 @@ public class JiraProjectService implements ProjectService {
         if (TrackerTypeEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
             ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
             ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
-            projectEntityFromTracker.setId(projectEntity.getId());
-            projectEntityFromTracker.setLastCheck((new Date()).toInstant());
-            this.projectRepository.save(projectEntityFromTracker);
+
+            projectEntity.setKey(projectEntityFromTracker.getKey());
+            projectEntity.setName(projectEntity.getName());
+            projectEntity.setLastCheck((new Date()).toInstant());
+
+            this.projectRepository.save(projectEntity);
         }
     }
 }

@@ -55,12 +55,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_version",
-            joinColumns = {@JoinColumn(name = "issue_client_id"),
-                    @JoinColumn(name = "issue_tracker_local_id"),
-                    @JoinColumn(name = "issue_tracker_type")},
-            inverseJoinColumns = {@JoinColumn(name = "version_client_id"),
-                    @JoinColumn(name = "version_tracker_local_id"),
-                    @JoinColumn(name = "version_tracker_type")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "version_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "version_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "version_tracker_type", referencedColumnName="trackerType")})
     private Set<VersionEntity> fixVersions;
 
     @ElementCollection
@@ -69,12 +69,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_component",
-            joinColumns = {@JoinColumn(name = "issue_client_id"),
-                    @JoinColumn(name = "issue_tracker_local_id"),
-                    @JoinColumn(name = "issue_tracker_type")},
-            inverseJoinColumns = {@JoinColumn(name = "component_client_id"),
-                    @JoinColumn(name = "component_tracker_local_id"),
-                    @JoinColumn(name = "component_tracker_type")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "component_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "component_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "component_tracker_type", referencedColumnName="trackerType")})
     private Set<ComponentEntity> components;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -86,18 +86,18 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_sprint",
-            joinColumns = {@JoinColumn(name = "issue_client_id"),
-                    @JoinColumn(name = "issue_tracker_local_id"),
-                    @JoinColumn(name = "issue_tracker_type")},
-            inverseJoinColumns = {@JoinColumn(name = "sprint_client_id"),
-                    @JoinColumn(name = "sprint_tracker_local_id"),
-                    @JoinColumn(name = "sprint_tracker_type")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "sprint_client_id", referencedColumnName="clientId"),
+                    @JoinColumn(name = "sprint_tracker_local_id", referencedColumnName="trackerLocalId"),
+                    @JoinColumn(name = "sprint_tracker_type", referencedColumnName="trackerType")})
     private Set<SprintEntity> sprints;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumns({@JoinColumn(name = "issue_client_id"),
-            @JoinColumn(name = "issue_tracker_local_id"),
-            @JoinColumn(name = "issue_tracker_type")})
+    @JoinColumns({@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
+            @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
+            @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")})
     private Set<IssueCustomField> issueCustomFields;
 
     public String getKey() {
