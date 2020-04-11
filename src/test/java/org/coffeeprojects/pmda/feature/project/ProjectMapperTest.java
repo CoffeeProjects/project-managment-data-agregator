@@ -20,7 +20,7 @@ public class ProjectMapperTest {
     private ProjectMapper projectMapper;
 
     @Test
-    public void to_entity_should_map_project_jira_bean_to_user_entity() {
+    public void test_to_entity_should_map_project_jira_bean_to_user_entity() {
 
         Date date = new Date();
 

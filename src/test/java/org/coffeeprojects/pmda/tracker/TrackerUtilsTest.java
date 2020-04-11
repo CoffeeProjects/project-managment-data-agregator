@@ -16,7 +16,9 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,6 +26,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
 public class TrackerUtilsTest {
+
+    @Test
+    public void test_fill_ids_from_issue_entities_null() {
+        // IssueEntity
+        IssueEntity issueEntity = new IssueEntity();
+        issueEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
+        List<IssueEntity> issueEntities = new ArrayList();
+        issueEntities.add(issueEntity);
+
+        TrackerUtils.fillIdsFromIssueEntities(null, issueEntities);
+        assertThat(issueEntities.get(0).getId().getClientId()).isEqualTo("1");
+        assertThat(issueEntities.get(0).getId().getTrackerType()).isNull();
+        assertThat(issueEntities.get(0).getId().getTrackerLocalId()).isNull();
+    }
 
     @Test
     public void test_fill_ids_from_issue_entity_field_by_field() {
@@ -191,12 +207,12 @@ public class TrackerUtilsTest {
     }
 
     @Test
-    public void test_get_date_from_timezone_null() {
+    public void test_get_instant_from_timezone_null() {
         assertThat(TrackerUtils.getInstantFromTimezone(null)).isNull();
     }
 
     @Test
-    public void test_get_date_from_bad_timezone() {
+    public void test_get_instant_from_bad_timezone() {
         assertThat(TrackerUtils.getInstantFromTimezone("BAD_TIMEZONE")).isNull();
     }
 }

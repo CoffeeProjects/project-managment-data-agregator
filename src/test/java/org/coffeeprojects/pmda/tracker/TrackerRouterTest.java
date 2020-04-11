@@ -111,12 +111,12 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void get_tracker_null() {
+    public void test_get_tracker_null() {
         assertThat(TrackerRouter.getTracker(null, null)).isNull();
     }
 
     @Test
-    public void get_tracker_with_project_entity_null() {
+    public void test_get_tracker_with_project_entity_null() {
         TrackerParametersBean trackerParametersBean1 = new TrackerParametersBean();
         trackerParametersBean1.setType(TrackerTypeEnum.JIRA).setLocalId("1").setClientId("1");
 
@@ -130,7 +130,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void get_tracker_with_project_entity_client_id_not_match() {
+    public void test_get_tracker_with_project_entity_client_id_not_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("1").setClientId("2"));
 
@@ -148,7 +148,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void get_tracker_with_project_entity_local_id_not_match() {
+    public void test_get_tracker_with_project_entity_local_id_not_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("2").setClientId("1"));
 
@@ -166,7 +166,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void get_tracker_with_project_entity_type_not_match() {
+    public void test_get_tracker_with_project_entity_type_not_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.MANTIS).setTrackerLocalId("1").setClientId("1"));
 
@@ -184,7 +184,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void get_tracker_with_trackers_and_project_entity_match() {
+    public void test_get_tracker_with_trackers_and_project_entity_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("1").setClientId("1"));
 

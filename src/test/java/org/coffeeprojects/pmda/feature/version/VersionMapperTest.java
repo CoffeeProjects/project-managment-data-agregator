@@ -18,7 +18,7 @@ public class VersionMapperTest {
     private VersionMapper versionMapper;
 
     @Test
-    public void to_entity_should_map_version_jira_bean_to_user_entity() {
+    public void test_to_entity_should_map_version_jira_bean_to_user_entity() {
         // Given
         VersionJiraBean versionJiraBean = new VersionJiraBean()
                 .setName("V1.1");

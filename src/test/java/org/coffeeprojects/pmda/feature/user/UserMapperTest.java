@@ -18,7 +18,7 @@ public class UserMapperTest {
     private UserMapper userMapper;
 
     @Test
-    public void to_entity_should_map_user_jira_bean_to_user_entity() {
+    public void test_to_entity_should_map_user_jira_bean_to_user_entity() {
         // Given
         UserJiraBean userJiraBean = new UserJiraBean()
                 .setEmailAddress("bruce_wayne@yopmail.com")

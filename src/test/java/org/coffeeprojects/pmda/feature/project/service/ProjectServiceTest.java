@@ -26,25 +26,25 @@ public class ProjectServiceTest {
     private RedmineProjectService redmineProjectService;
 
     @Test
-    public void get_service_null() {
+    public void test_get_service_null() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(null)).isNull();
     }
 
     @Test
-    public void get_service_bad_jira_enum() {
+    public void test_get_service_bad_jira_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerTypeEnum.JIRA)).isInstanceOf(JiraProjectService.class);
     }
 
     @Test
-    public void get_service_bad_mantis_enum() {
+    public void test_get_service_bad_mantis_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerTypeEnum.MANTIS)).isInstanceOf(MantisProjectService.class);
     }
 
     @Test
-    public void get_service_bad_redmine_enum() {
+    public void test_get_service_bad_redmine_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerTypeEnum.REDMINE)).isInstanceOf(RedmineProjectService.class);
     }

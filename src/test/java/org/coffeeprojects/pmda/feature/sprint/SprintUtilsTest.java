@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SprintUtilsTest {
 
     @Test
-    public void get_sprints_by_issue_jira_bean_with_sprints_null() {
+    public void test_get_sprints_by_issue_jira_bean_with_sprints_null() {
         IssueEntity issueEntity = new IssueEntity();
         SprintUtils.toEntity(null, issueEntity);
 
@@ -25,7 +25,7 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void get_sprints_by_issue_jira_bean_with_sprints_empty() {
+    public void test_get_sprints_by_issue_jira_bean_with_sprints_empty() {
         List<String> sprints = Arrays.asList("");
 
         IssueEntity issueEntity = new IssueEntity();
@@ -36,7 +36,7 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void get_sprints_by_issue_jira_bean_with_sprints() {
+    public void test_get_sprints_by_issue_jira_bean_with_sprints() {
         List<String> sprints = Arrays.asList(
                 "com.atlassian.greenhopper.service.sprint.Sprint@2932643f[id=2,rapidViewId=1,state=FUTURE,name=PMDA ,goal=2 (%+\"'-$*€/\\|),goal=FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
         );
