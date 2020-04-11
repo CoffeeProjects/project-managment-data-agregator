@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
-public class TrackerParametersBeanUtilsTest {
+public class TrackerUtilsTest {
 
     @Test
     public void test_fill_ids_from_issue_entity_field_by_field() {
