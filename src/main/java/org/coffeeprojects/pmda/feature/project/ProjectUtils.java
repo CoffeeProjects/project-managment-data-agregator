@@ -11,19 +11,21 @@ public class ProjectUtils {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectUtils.class);
 
+    private ProjectUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static List<String> getClientNameCustomFields(ProjectEntity projectEntity) {
         if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
             List<String> clientNameCustomFields = new ArrayList();
             projectEntity.getProjectCustomFields()
                     .stream()
                     .filter(projectCustomField -> StringUtils.isNotEmpty(projectCustomField.getClientName()))
-                    .forEach(projectCustomField -> {
-                        clientNameCustomFields.add(projectCustomField.getClientName());
-            });
-            return clientNameCustomFields.size() > 0 ? clientNameCustomFields : null;
+                    .forEach(projectCustomField -> clientNameCustomFields.add(projectCustomField.getClientName()));
+            return clientNameCustomFields.isEmpty() ? clientNameCustomFields : null;
         } else {
             if (projectEntity != null) {
-                log.info("No custom fields available for this projet : " + projectEntity.toString());
+                log.info("No custom fields available for this project : {0}", projectEntity.toString());
             } else {
                 log.error("No project provided to get custom fields");
             }

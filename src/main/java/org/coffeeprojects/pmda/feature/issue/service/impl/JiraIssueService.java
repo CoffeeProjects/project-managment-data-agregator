@@ -54,15 +54,13 @@ public class JiraIssueService implements IssueService {
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, projectFields);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
 
-        issueJiraBeans.forEach(issueJiraBean -> {
-            issueEntities.stream()
-                    .filter(issueEntity -> issueEntity.getId().getClientId().equalsIgnoreCase(issueJiraBean.getId()))
-                    .forEach(issueEntity -> {
-                        issueEntity.setProject(projectEntity);
-                        fillIssueCustomFields(issueEntity, projectEntity, issueJiraBean);
-                        fillSprints(issueEntity, projectEntity, issueJiraBean);
-                    });
-        });
+        issueJiraBeans.forEach(issueJiraBean -> issueEntities.stream()
+                .filter(issueEntity -> issueEntity.getId().getClientId().equalsIgnoreCase(issueJiraBean.getId()))
+                .forEach(issueEntity -> {
+                    issueEntity.setProject(projectEntity);
+                    fillIssueCustomFields(issueEntity, projectEntity, issueJiraBean);
+                    fillSprints(issueEntity, projectEntity, issueJiraBean);
+                }));
         TrackerUtils.fillIdsFromIssueEntities(projectEntity, issueEntities);
 
         try {

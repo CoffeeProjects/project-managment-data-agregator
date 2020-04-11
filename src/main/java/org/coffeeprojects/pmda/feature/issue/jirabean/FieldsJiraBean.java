@@ -7,7 +7,6 @@ import org.coffeeprojects.pmda.feature.issueType.IssueTypeJiraBean;
 import org.coffeeprojects.pmda.feature.priority.PriorityJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionJiraBean;
-import org.coffeeprojects.pmda.feature.sprint.SprintJiraBean;
 import org.coffeeprojects.pmda.feature.status.StatusJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.feature.version.VersionJiraBean;

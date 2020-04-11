@@ -48,7 +48,7 @@ public class TrackerRouter {
             case REDMINE:
                 return RedmineClient.class;
             default:
-                log.error("No interface available for this tracker : " + trackerDataBean.toString());
+                log.error("No interface available for this tracker : {0}", trackerDataBean.toString());
                 return null;
         }
     }
@@ -63,20 +63,22 @@ public class TrackerRouter {
     }
 
     public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (trackerRouter != null && trackerRouter.trackerParametersBeans != null &&
-                projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null) {
+        if (trackerRouter != null && trackerRouter.trackerParametersBeans != null
+                && projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null
+                && projectEntity.getId().getTrackerType() != null && projectEntity.getId().getTrackerLocalId() != null
+                && projectEntity.getId().getClientId() != null) {
 
             TrackerParametersBean trackerParametersBean = trackerRouter.trackerParametersBeans.stream()
-                    .filter(t -> t.getType() == projectEntity.getId().getTrackerType())
-                    .filter(t -> t.getLocalId() == projectEntity.getId().getTrackerLocalId())
-                    .filter(t -> t.getClientId() == projectEntity.getId().getClientId())
+                    .filter(t -> projectEntity.getId().getTrackerType() == t.getType())
+                    .filter(t -> projectEntity.getId().getTrackerLocalId().equals(t.getLocalId()))
+                    .filter(t -> projectEntity.getId().getClientId().equals(t.getClientId()))
                     .findFirst()
                     .orElse(new TrackerParametersBean());
 
             return trackerParametersBean.getClient();
         }
         if (projectEntity != null) {
-            log.error("Tracker not found for project : " + projectEntity.toString());
+            log.error("Tracker not found for project : {0}", projectEntity.toString());
         } else {
             log.error("Tracker not found");
         }

@@ -1,27 +1,20 @@
 package org.coffeeprojects.pmda.feature.issue;
 
-import org.apache.commons.lang3.StringUtils;
-import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.component.ComponentMapper;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issueType.IssueTypeMapper;
 import org.coffeeprojects.pmda.feature.priority.PriorityMapper;
 import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionMapper;
-import org.coffeeprojects.pmda.feature.sprint.SprintEntity;
 import org.coffeeprojects.pmda.feature.sprint.SprintMapper;
 import org.coffeeprojects.pmda.feature.status.StatusMapper;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.user.UserMapper;
 import org.coffeeprojects.pmda.feature.version.VersionMapper;
-import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class, ResolutionMapper.class,
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,

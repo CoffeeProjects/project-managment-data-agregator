@@ -15,9 +15,13 @@ public class SprintUtils {
 
     private static final Logger log = LoggerFactory.getLogger(SprintUtils.class);
 
+    private SprintUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void toEntity(List<String> input, IssueEntity output) {
         // Mapping des sprints
-        if (input != null && input.size() > 0) {
+        if (input != null && input.isEmpty()) {
             Set<SprintEntity> sprintEntities = new HashSet();
             input.stream()
                     .filter(p -> StringUtils.isNotEmpty(p))
@@ -43,13 +47,13 @@ public class SprintUtils {
 
                         sprintEntities.add(sprintEntity);
                     });
-            if (sprintEntities.size() > 0) {
+            if (sprintEntities.isEmpty()) {
                 output.setSprints(sprintEntities);
             } else {
-                log.info("Sprint value is empty for this issue : " + output.toString());
+                log.info("Sprint value is empty for this issue : {0}", output.toString());
             }
         } else {
-            log.info("No sprint to fill for this issue : " + output.toString());
+            log.info("No sprint to fill for this issue : {0}", output.toString());
         }
     }
 }
