@@ -8,7 +8,6 @@ import org.coffeeprojects.pmda.feature.issue.service.impl.MantisIssueService;
 import org.coffeeprojects.pmda.feature.issue.service.impl.RedmineIssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
-import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,9 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
 public class IssueServiceFactoryTest {
-
-    @Mock
-    private ProjectRepository projectRepository;
 
     @Mock
     private IssueRepository issueRepository;
@@ -72,7 +68,7 @@ public class IssueServiceFactoryTest {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
-        JiraIssueService jiraIssueService = new JiraIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
+        JiraIssueService jiraIssueService = new JiraIssueService(issueRepository, issueMapper, jiraRepository);
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(jiraIssueService, null, null);
         assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(JiraIssueService.class);
@@ -84,7 +80,7 @@ public class IssueServiceFactoryTest {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.MANTIS);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
-        MantisIssueService mantisIssueService = new MantisIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
+        MantisIssueService mantisIssueService = new MantisIssueService(issueRepository, issueMapper, jiraRepository);
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, mantisIssueService, null);
         assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(MantisIssueService.class);
@@ -96,7 +92,7 @@ public class IssueServiceFactoryTest {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.REDMINE);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
-        RedmineIssueService redmineIssueService = new RedmineIssueService(projectRepository, issueRepository, issueMapper, jiraRepository);
+        RedmineIssueService redmineIssueService = new RedmineIssueService(issueRepository, issueMapper, jiraRepository);
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, redmineIssueService);
         assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(RedmineIssueService.class);

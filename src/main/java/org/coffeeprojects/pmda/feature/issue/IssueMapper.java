@@ -35,6 +35,7 @@ public interface IssueMapper {
     @Mapping(target = "summary", source = "fields.summary")
     @Mapping(target = "status", source = "fields.status")
     @Mapping(target = "resolution", source = "fields.resolution")
+    @Mapping(target = "resolutionDate", source = "fields.resolutionDate")
     @Mapping(target = "priority", source = "fields.priority")
     @Mapping(target = "issueType", source = "fields.issueType")
     @Mapping(target = "project", source = "fields.project")
@@ -43,7 +44,6 @@ public interface IssueMapper {
     @Mapping(target = "components", source = "fields.components")
     @Mapping(target = "created", source = "fields.created")
     @Mapping(target = "updated", source = "fields.updated")
-    @Mapping(target = "sprints", source = "fields.sprints")
     IssueEntity toEntity(IssueJiraBean issueJiraBean);
 
     @AfterMapping

@@ -27,6 +27,7 @@ public class FieldsJiraBean {
 
     private ResolutionJiraBean resolution;
 
+    @JsonProperty("resolutiondate")
     private Date resolutionDate;
 
     private PriorityJiraBean priority;
@@ -45,10 +46,6 @@ public class FieldsJiraBean {
     private Date created;
 
     private Date updated;
-
-    private List<String> sprintsToString;
-
-    private Set<SprintJiraBean> sprints;
 
     private Map<String, Object> customFields;
 
@@ -187,24 +184,6 @@ public class FieldsJiraBean {
         return this;
     }
 
-    public List<String> getSprintsToString() {
-        return sprintsToString;
-    }
-
-    public FieldsJiraBean setSprintsToString(List<String> sprintsToString) {
-        this.sprintsToString = sprintsToString;
-        return this;
-    }
-
-    public Set<SprintJiraBean> getSprints() {
-        return sprints;
-    }
-
-    public FieldsJiraBean setSprints(Set<SprintJiraBean> sprints) {
-        this.sprints = sprints;
-        return this;
-    }
-
     @JsonAnySetter
     public FieldsJiraBean setCustomFields(String key, Object value) {
         if (this.customFields == null) {
@@ -237,14 +216,12 @@ public class FieldsJiraBean {
                 Objects.equals(labels, that.labels) &&
                 Objects.equals(components, that.components) &&
                 Objects.equals(created, that.created) &&
-                Objects.equals(updated, that.updated) &&
-                Objects.equals(sprintsToString, that.sprintsToString) &&
-                Objects.equals(sprints, that.sprints);
+                Objects.equals(updated, that.updated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, sprintsToString, sprints);
+        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated);
     }
 
     @Override
@@ -265,8 +242,6 @@ public class FieldsJiraBean {
                 ", components=" + components +
                 ", created=" + created +
                 ", updated=" + updated +
-                ", sprintsToString=" + sprintsToString +
-                ", sprints=" + sprints +
                 '}';
     }
 }
