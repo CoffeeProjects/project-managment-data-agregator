@@ -28,7 +28,7 @@ public class JiraIssueService implements IssueService {
     private static final Logger log = LoggerFactory.getLogger(JiraIssueService.class);
 
     private static final String SPRINTS_FIELD = "SPRINTS";
-    private static String JIRA_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
+    private static final String JIRA_DEFAULT_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
             "updated,created,duedate,labels,components,issuelinks,fixversions,resolution";
 
     private final IssueRepository issueRepository;
@@ -48,10 +48,10 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        String customFields = String.join(",", ProjectUtils.getClientNameCustomFields(projectEntity));
-        JIRA_FIELDS = StringUtils.isNotEmpty(customFields) ? JIRA_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_FIELDS;
+        String projectFields = String.join(",", ProjectUtils.getClientNameCustomFields(projectEntity));
+        projectFields = StringUtils.isNotEmpty(projectFields) ? JIRA_DEFAULT_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_DEFAULT_FIELDS;
 
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, JIRA_FIELDS);
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, projectFields);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
 
         issueJiraBeans.forEach(issueJiraBean -> {
