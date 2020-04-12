@@ -33,8 +33,7 @@ public class IssueServiceFactoryTest {
     @Test
     public void test_get_issue_service_with_project_entity_null() {
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, null);
-        issueServiceFactory.getService(null);
-
+        assertThat(issueServiceFactory.getService(null)).isNull();
     }
 
     @Test
