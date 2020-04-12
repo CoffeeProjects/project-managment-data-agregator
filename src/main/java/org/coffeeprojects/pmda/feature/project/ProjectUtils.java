@@ -16,16 +16,16 @@ public class ProjectUtils {
     }
 
     public static List<String> getClientNameCustomFields(ProjectEntity projectEntity) {
+        List<String> clientNameCustomFields = new ArrayList();
         if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
-            List<String> clientNameCustomFields = new ArrayList();
+
             projectEntity.getProjectCustomFields()
                     .stream()
                     .filter(projectCustomField -> StringUtils.isNotEmpty(projectCustomField.getClientName()))
                     .forEach(projectCustomField -> clientNameCustomFields.add(projectCustomField.getClientName()));
-            return clientNameCustomFields.isEmpty() ? null : clientNameCustomFields;
         } else {
             log.error("No custom fields available for this project : {}", projectEntity);
-            return null;
         }
+        return clientNameCustomFields;
     }
 }

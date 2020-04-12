@@ -33,7 +33,7 @@ public class SprintUtils {
         if (input != null && !input.isEmpty()) {
             Set<SprintEntity> sprintEntities = new HashSet();
             input.stream()
-                .filter(p -> StringUtils.isNotEmpty(p))
+                .filter(StringUtils::isNotEmpty)
                 .forEach(p -> {
                     SprintEntity sprintEntity = new SprintEntity();
                     String id = StringUtils.substringAfter(p, ID_FIELD_NAME);
