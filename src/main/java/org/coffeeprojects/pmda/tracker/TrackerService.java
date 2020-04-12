@@ -18,12 +18,12 @@ public class TrackerService {
     public void init() {
         this.getTrackers().forEach(p -> {
             String type = p.getType();
-            String number = p.getId();
+            String id = p.getId();
             String url = p.getUrl();
             String user = p.getUser();
             String password = p.getPassword();
 
-            if (StringUtils.isEmpty(type) || StringUtils.isEmpty(type) || StringUtils.isEmpty(number) ||
+            if (StringUtils.isEmpty(type) || StringUtils.isEmpty(id) ||
                     StringUtils.isEmpty(url) || StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
                 trackers.remove(p);
             }

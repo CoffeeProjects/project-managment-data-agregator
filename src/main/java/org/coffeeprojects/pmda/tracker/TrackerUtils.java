@@ -28,25 +28,35 @@ public class TrackerUtils {
         if (issueEntity != null) {
             if (issueEntity.getAssignee() != null) {
                 fillIds(projectEntity, issueEntity.getAssignee());
-            } if (issueEntity.getCreator() != null) {
+            }
+            if (issueEntity.getCreator() != null) {
                 fillIds(projectEntity, issueEntity.getCreator());
-            } if (issueEntity.getReporter() != null) {
+            }
+            if (issueEntity.getReporter() != null) {
                 fillIds(projectEntity, issueEntity.getReporter());
-            } if (issueEntity.getStatus() != null) {
+            }
+            if (issueEntity.getStatus() != null) {
                 fillIds(projectEntity, issueEntity.getStatus());
-            } if (issueEntity.getResolution() != null) {
+            }
+            if (issueEntity.getResolution() != null) {
                 fillIds(projectEntity, issueEntity.getResolution());
-            } if (issueEntity.getPriority() != null) {
+            }
+            if (issueEntity.getPriority() != null) {
                 fillIds(projectEntity, issueEntity.getPriority());
-            } if (issueEntity.getIssueType() != null) {
+            }
+            if (issueEntity.getIssueType() != null) {
                 fillIds(projectEntity, issueEntity.getIssueType());
-            } if (issueEntity.getProject() != null) {
+            }
+            if (issueEntity.getProject() != null) {
                 fillIds(projectEntity, issueEntity.getProject());
-            } if (issueEntity.getFixVersions() != null) {
+            }
+            if (issueEntity.getFixVersions() != null) {
                 fillIds(projectEntity, issueEntity.getFixVersions());
-            } if (issueEntity.getComponents() != null) {
+            }
+            if (issueEntity.getComponents() != null) {
                 fillIds(projectEntity, issueEntity.getComponents());
-            } if (issueEntity.getSprints() != null) {
+            }
+            if (issueEntity.getSprints() != null) {
                 fillIds(projectEntity, issueEntity.getSprints());
             }
         }
