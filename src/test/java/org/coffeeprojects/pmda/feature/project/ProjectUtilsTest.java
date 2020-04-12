@@ -16,13 +16,13 @@ public class ProjectUtilsTest {
 
     @Test
     public void test_get_client_name_custom_fields_null() {
-        assertThat(ProjectUtils.getClientNameCustomFields(null)).isNull();
+        assertThat(ProjectUtils.getClientNameCustomFields(null)).isEmpty();
     }
 
     @Test
     public void test_get_client_name_custom_fields_null_custom_fields() {
         ProjectEntity projectEntity = new ProjectEntity();
-        assertThat(ProjectUtils.getClientNameCustomFields(projectEntity)).isNull();
+        assertThat(ProjectUtils.getClientNameCustomFields(projectEntity)).isEmpty();
     }
 
     @Test
@@ -34,7 +34,7 @@ public class ProjectUtilsTest {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setProjectCustomFields(projectCustomFields);
 
-        assertThat(ProjectUtils.getClientNameCustomFields(projectEntity)).isNull();
+        assertThat(ProjectUtils.getClientNameCustomFields(projectEntity)).isEmpty();
     }
 
     @Test
