@@ -28,8 +28,8 @@ public class TrackerRouter {
     private List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
 
     @Autowired
-    public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackerService trackerService) {
-        trackerService.getTrackers().forEach(p -> {
+    public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackersProperties trackersProperties) {
+        trackersProperties.getTrackers().forEach(p -> {
             TrackerParametersBean trackerParametersBean = new TrackerParametersBean();
             trackerParametersBean.setType(TrackerTypeEnum.valueOf(p.getType().toUpperCase()));
             trackerParametersBean.setLocalId(p.getLocalId());
@@ -62,12 +62,11 @@ public class TrackerRouter {
                 .target(clientClass, url);
     }
 
-    public static final Object getTracker(TrackerRouter trackerRouter, ProjectEntity projectEntity) {
-        if (trackerRouter != null && trackerRouter.trackerParametersBeans != null
-                && projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null
+    public Object getTracker(ProjectEntity projectEntity) {
+        if (projectEntity != null && projectEntity.getId() != null && projectEntity.getId().getTrackerType() != null
                 && projectEntity.getId().getTrackerLocalId() != null && projectEntity.getId().getClientId() != null) {
 
-            TrackerParametersBean trackerParametersBean = trackerRouter.trackerParametersBeans.stream()
+            TrackerParametersBean trackerParametersBean = trackerParametersBeans.stream()
                     .filter(t -> projectEntity.getId().getTrackerType() == t.getType())
                     .filter(t -> projectEntity.getId().getTrackerLocalId().equals(t.getLocalId()))
                     .filter(t -> projectEntity.getId().getClientId().equals(t.getClientId()))

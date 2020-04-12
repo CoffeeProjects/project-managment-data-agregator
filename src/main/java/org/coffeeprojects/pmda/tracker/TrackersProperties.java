@@ -2,15 +2,15 @@ package org.coffeeprojects.pmda.tracker;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 @ConfigurationProperties
-public class TrackerService {
+public class TrackersProperties {
 
     private List<TrackerDataBean> trackers = new ArrayList();
 

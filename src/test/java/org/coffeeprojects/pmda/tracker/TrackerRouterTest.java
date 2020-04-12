@@ -5,6 +5,7 @@ import feign.codec.Decoder;
 import feign.codec.Encoder;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -30,11 +31,18 @@ public class TrackerRouterTest {
     private Client client;
 
     @Mock
-    private TrackerService trackerService;
+    private TrackersProperties trackersProperties;
+
+    private TrackerRouter trackerRouter;
+
+    @Before
+    public void setup() {
+        trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
+    }
 
     @Test
     public void test_get_client_with_null_parameters() {
-        assertThat(TrackerRouter.getTracker(null, null)).isNull();
+        assertThat(trackerRouter.getTracker(null)).isNull();
     }
 
     @Test
@@ -44,9 +52,9 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, null)).isNull();
+        assertThat(trackerRouter.getTracker(null)).isNull();
     }
 
     @Test
@@ -56,7 +64,7 @@ public class TrackerRouterTest {
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
-        assertThat(TrackerRouter.getTracker(null, projectEntity)).isNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNull();
     }
 
     @Test
@@ -66,14 +74,14 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
         // ProjectEntity
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, projectEntity)).isNotNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNotNull();
     }
 
     @Test
@@ -83,14 +91,14 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
         // ProjectEntity
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, projectEntity)).isNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNull();
     }
 
     @Test
@@ -100,19 +108,19 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
         // ProjectEntity
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setKey("PMDA");
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, projectEntity)).isNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNull();
     }
 
     @Test
     public void test_get_tracker_null() {
-        assertThat(TrackerRouter.getTracker(null, null)).isNull();
+        assertThat(trackerRouter.getTracker(null)).isNull();
     }
 
     @Test
@@ -123,10 +131,10 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
-        assertThat(TrackerRouter.getTracker(null, null)).isNull();
+        assertThat(trackerRouter.getTracker(null)).isNull();
     }
 
     @Test
@@ -141,10 +149,10 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, projectEntity)).isNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNull();
     }
 
     @Test
@@ -159,10 +167,10 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, projectEntity)).isNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNull();
     }
 
     @Test
@@ -177,10 +185,10 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, projectEntity)).isNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNull();
     }
 
     @Test
@@ -195,9 +203,9 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackerService);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
-        assertThat(TrackerRouter.getTracker(trackerRouter, projectEntity)).isNotNull();
+        assertThat(trackerRouter.getTracker(projectEntity)).isNotNull();
     }
 }

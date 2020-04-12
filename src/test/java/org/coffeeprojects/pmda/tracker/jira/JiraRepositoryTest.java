@@ -1,19 +1,15 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
-import feign.Target;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
+import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.time.Instant;
@@ -21,15 +17,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
 public class JiraRepositoryTest {
 
     @Mock
     private TrackerRouter trackerRouter;
+
+    @Mock
+    private JiraClient jiraClient;
 
     private JiraRepository jiraRepository;
 
@@ -39,17 +37,18 @@ public class JiraRepositoryTest {
     }
 
     @Test
-    @Ignore
     public void get_modified_issues_should_return_issues() {
         // Given
+        Instant lastCheckDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
+
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
+                .setLastCheck(lastCheckDate)
                 .setKey("pmda");
 
-        Instant lastModifiedDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
-        String expand = "schema,names";
+        String expand = "changelog";
         String fields = "summary,issuetype";
-        String maxResults = "50";
+        String maxResults = "100";
         String startAt = "0";
 
         List<IssueJiraBean> issues = Arrays.asList(
@@ -62,18 +61,16 @@ public class JiraRepositoryTest {
                 .setStartAt(0L)
                 .setIssues(issues);
 
-        String jql = "project in (pmda) AND updated >= \"2020-03-29 11:15\"";
-        // TODO: Test à faire fonctionner
-        mockStatic(TrackerRouter.class);
-        when(TrackerRouter.getTracker(Mockito.any(), Mockito.any())).thenReturn(new Target.HardCodedTarget(JiraClient.class, "http://pmda.orgr"));
-        when(((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).searchIssues(jql, expand, fields, maxResults, startAt))
-                .thenReturn(searchIssuesResultJiraBean);
+        String jql = "project =\"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
-        //when(jiraRepository.getSearchIssuesResultJiraBean(any(), any(), any(), any(), any(), any())).thenReturn()
+        when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
+        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
 
         // Then
-        //assertThat(issueJiraBeans).isEqualTo(issueJiraBeans);
+        assertThat(issueJiraBeans).isNotNull();
+        assertThat(issueJiraBeans).usingRecursiveFieldByFieldElementComparator().isEqualTo(searchIssuesResultJiraBean.getIssues());
     }
 }

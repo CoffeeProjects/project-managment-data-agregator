@@ -28,7 +28,7 @@ public class JiraRepository {
     }
 
     public ProjectJiraBean getProjectDetails(ProjectEntity projectEntity) {
-        return ((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).getProjectByKey(projectEntity.getKey());
+        return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectByKey(projectEntity.getKey());
     }
 
     public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, String fields) {
@@ -42,13 +42,13 @@ public class JiraRepository {
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());
         }
 
-        SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+        SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
         for (int i = 1; i <= pages; i++) {
             if (i > 1) {
                 startAt = (MAX_RESULT.intValue() * i) + 1;
-                searchIssuesResultJiraBean = ((JiraClient) TrackerRouter.getTracker(trackerRouter, projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+                searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
             }
             issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
         }
