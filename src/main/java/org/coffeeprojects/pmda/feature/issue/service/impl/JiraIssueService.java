@@ -7,6 +7,7 @@ import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
+import org.coffeeprojects.pmda.feature.sprint.SprintUtils;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,7 @@ public class JiraIssueService implements IssueService {
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, JIRA_FIELDS);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities);
         TrackerUtils.fillIdsFromIssueEntities(projectEntity, issueEntities);
         try {
             this.issueRepository.saveAll(issueEntities);
