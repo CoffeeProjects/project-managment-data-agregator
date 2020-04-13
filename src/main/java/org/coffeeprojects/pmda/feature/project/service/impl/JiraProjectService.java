@@ -87,7 +87,7 @@ public class JiraProjectService implements ProjectService {
                         .setActive(Boolean.TRUE);
             }
 
-            if (projectEntity.isActive()) {
+            if (Boolean.TRUE.equals(projectEntity.isActive())) {
                 // Update project
                 this.updateProject(projectEntity);
 

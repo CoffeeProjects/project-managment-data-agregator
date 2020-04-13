@@ -1,13 +1,12 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
 import org.coffeeprojects.pmda.batch.JobFailingException;
-import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.feature.project.service.ProjectServiceFactory;
+import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
@@ -48,7 +47,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
                 ProjectService projectService = projectServiceFactory.getService(tracker.getType());
                 ProjectEntity projectEntity = projectService.initializeProject(tracker);
 
-                if (projectEntity.isActive()) {
+                if (Boolean.TRUE.equals(projectEntity.isActive())) {
                     // Update issues
                     IssueService issueService = issueServiceFactory.getService(projectEntity);
                     issueService.updateLastModifiedIssues(projectEntity);
