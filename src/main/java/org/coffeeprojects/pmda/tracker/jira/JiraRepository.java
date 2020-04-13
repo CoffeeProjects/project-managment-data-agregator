@@ -28,7 +28,7 @@ public class JiraRepository {
     }
 
     public ProjectJiraBean getProjectDetails(ProjectEntity projectEntity) {
-        return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectByKey(projectEntity.getKey());
+        return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
     }
 
     public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, String fields) {

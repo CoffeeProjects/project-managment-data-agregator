@@ -24,7 +24,7 @@ public class ProjectUtils {
                     .filter(projectCustomField -> StringUtils.isNotEmpty(projectCustomField.getClientName()))
                     .forEach(projectCustomField -> clientNameCustomFields.add(projectCustomField.getClientName()));
         } else {
-            log.error("No custom fields available for this project : {}", projectEntity);
+            log.info("No custom fields available for this project : {}", projectEntity);
         }
         return clientNameCustomFields;
     }

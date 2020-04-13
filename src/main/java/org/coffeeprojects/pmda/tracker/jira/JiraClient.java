@@ -7,6 +7,9 @@ import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 
 public interface JiraClient {
 
+    @RequestLine("GET project/{projectId}")
+    ProjectJiraBean getProjectById(@Param("projectId") String id);
+
     @RequestLine("GET project/{projectKey}")
     ProjectJiraBean getProjectByKey(@Param("projectKey") String key);
 

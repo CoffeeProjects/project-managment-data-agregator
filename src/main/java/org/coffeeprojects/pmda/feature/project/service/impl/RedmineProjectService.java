@@ -3,6 +3,7 @@ package org.coffeeprojects.pmda.feature.project.service.impl;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
+import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,18 @@ public class RedmineProjectService implements ProjectService {
     }
 
     @Transactional
-    public void updateProjectByKey(ProjectEntity projectEntity) {
-        log.debug("Redmine - update project by key");
+    public void updateProject(ProjectEntity projectEntity) {
+        log.debug("Redmine - update project");
+    }
+
+    @Transactional
+    public void updateLastCheckProject(ProjectEntity projectEntity) {
+        log.debug("Redmine - update last check project");
+    }
+
+    @Transactional
+    public ProjectEntity initializeProject(TrackerParametersBean tracker) {
+        log.debug("Redmine - initialize project");
+        return new ProjectEntity();
     }
 }

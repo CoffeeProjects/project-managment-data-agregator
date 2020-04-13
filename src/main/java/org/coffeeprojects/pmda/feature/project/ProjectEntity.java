@@ -18,7 +18,6 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     private Instant lastCheck;
 
-    @Column(insertable = false, updatable = false)
     private Boolean active;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

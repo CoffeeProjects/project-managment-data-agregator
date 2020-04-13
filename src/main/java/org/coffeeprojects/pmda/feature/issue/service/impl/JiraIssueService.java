@@ -73,40 +73,44 @@ public class JiraIssueService implements IssueService {
     private void fillSprints(IssueEntity issueEntity, ProjectEntity projectEntity, IssueJiraBean issueJiraBean) {
         ProjectCustomField projectCustomField = getProjectCustomField(projectEntity, SPRINTS_FIELD);
         List<String> sprints = (ArrayList) getIssueCustomValue(issueJiraBean, projectCustomField);
-
         SprintUtils.toEntity(sprints, issueEntity);
     }
 
     private void fillIssueCustomFields(IssueEntity issueEntity, ProjectEntity projectEntity, IssueJiraBean issueJiraBean) {
         Set<IssueCustomField> customFields = new HashSet();
 
-        projectEntity.getProjectCustomFields().stream()
-                .filter(projectCustomField -> !SPRINTS_FIELD.equalsIgnoreCase(projectCustomField.getLocalName()))
-                .forEach(projectCustomField -> {
-                    Object issueCustomFieldValue = getIssueCustomValue(issueJiraBean, projectCustomField);
+        if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
+            projectEntity.getProjectCustomFields().stream()
+                    .filter(projectCustomField -> !SPRINTS_FIELD.equalsIgnoreCase(projectCustomField.getLocalName()))
+                    .forEach(projectCustomField -> {
+                        Object issueCustomFieldValue = getIssueCustomValue(issueJiraBean, projectCustomField);
 
-                    if (issueCustomFieldValue != null) {
-                        IssueCustomField issueCustomField = new IssueCustomField();
+                        if (issueCustomFieldValue != null) {
+                            IssueCustomField issueCustomField = new IssueCustomField();
 
-                        issueCustomField.setId(new CompositeIdBaseEntity()
-                                        .setClientId(issueEntity.getId().getClientId() + "_" + projectCustomField.getLocalName())
-                                        .setTrackerType(projectEntity.getId().getTrackerType())
-                                        .setTrackerLocalId(projectEntity.getId().getTrackerLocalId()));
+                            issueCustomField.setId(new CompositeIdBaseEntity()
+                                    .setClientId(issueEntity.getId().getClientId() + "_" + projectCustomField.getLocalName())
+                                    .setTrackerType(projectEntity.getId().getTrackerType())
+                                    .setTrackerLocalId(projectEntity.getId().getTrackerLocalId()));
 
-                        issueCustomField.setProjectCustomFields(projectCustomField).setValue(issueCustomFieldValue.toString());
+                            issueCustomField.setProjectCustomFields(projectCustomField).setValue(issueCustomFieldValue.toString());
 
-                        customFields.add(issueCustomField);
-                    }
-                });
+                            customFields.add(issueCustomField);
+                        }
+                    });
 
-        issueEntity.setIssueCustomFields(customFields);
+            issueEntity.setIssueCustomFields(customFields);
+        }
     }
 
     private ProjectCustomField getProjectCustomField(ProjectEntity projectEntity, String field) {
-        return projectEntity.getProjectCustomFields().stream()
-                .filter(p -> field.equalsIgnoreCase(p.getLocalName()))
-                .findFirst()
-                .orElse(null);
+        if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
+            return projectEntity.getProjectCustomFields().stream()
+                    .filter(p -> field.equalsIgnoreCase(p.getLocalName()))
+                    .findFirst()
+                    .orElse(null);
+        }
+        return null;
     }
 
     private Object getIssueCustomValue(IssueJiraBean issueJiraBean, ProjectCustomField projectCustomField) {

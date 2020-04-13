@@ -46,18 +46,15 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
         try {
             trackerRouter.getTrackerParametersBeans().forEach(tracker -> {
                 ProjectService projectService = projectServiceFactory.getService(tracker.getType());
-                ProjectEntity projectEntity = projectService.getProjectById(new CompositeIdBaseEntity()
-                        .setTrackerType(tracker.getType())
-                        .setTrackerLocalId(tracker.getLocalId())
-                        .setClientId(tracker.getClientId()));
+                ProjectEntity projectEntity = projectService.initializeProject(tracker);
 
-                if (projectEntity != null && projectEntity.isActive()) {
+                if (projectEntity.isActive()) {
                     // Update issues
                     IssueService issueService = issueServiceFactory.getService(projectEntity);
                     issueService.updateLastModifiedIssues(projectEntity);
 
-                    // Update project
-                    projectService.updateProjectByKey(projectEntity);
+                    // Update last check project
+                    projectService.updateLastCheckProject(projectEntity);
                 }
             });
         } catch (Exception e) {
