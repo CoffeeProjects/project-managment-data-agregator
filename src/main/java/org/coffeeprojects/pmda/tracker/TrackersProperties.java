@@ -16,20 +16,24 @@ public class TrackersProperties {
 
     @PostConstruct
     public void init() {
-        this.getTrackers().forEach(p -> {
-            String type = p.getType();
-            String localId = p.getLocalId();
-            String clientId = p.getClientId();
-            String url = p.getUrl();
-            String user = p.getUser();
-            String password = p.getPassword();
+        if (trackers != null && !trackers.isEmpty()) {
+            trackers.forEach(p -> {
+                String type = p.getType();
+                String localId = p.getLocalId();
+                String clientId = p.getClientId();
+                String url = p.getUrl();
+                String user = p.getUser();
+                String password = p.getPassword();
 
-            if (StringUtils.isEmpty(type) || StringUtils.isEmpty(localId) || StringUtils.isEmpty(clientId) ||
-                    StringUtils.isEmpty(url) || StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
-                // TODO: j aurai levé une exception avec un message : ta conf des trackers est pourries, verifie
-                trackers.remove(p);
-            }
-        });
+                if (StringUtils.isEmpty(type) || StringUtils.isEmpty(localId) || StringUtils.isEmpty(clientId) ||
+                        StringUtils.isEmpty(url) || StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
+                    // TODO: j aurai levé une exception avec un message : ta conf des trackers est pourries, verifie (CF : ajouté ci-dessous ?)
+                    throw new ExceptionInInitializerError("Unable to initialize the list of trackers. Please check your configuration file");
+                }
+            });
+        } else {
+            throw new ExceptionInInitializerError("No trackers found. Please fill it in the configuration file");
+        }
     }
 
     public List<TrackerDataBean> getTrackers() {
