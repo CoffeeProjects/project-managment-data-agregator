@@ -46,7 +46,7 @@ public class JiraRepository {
     }
 
     public List<IssueJiraBean> getExistingIssues(ProjectEntity projectEntity, List<String> issuesId, String fields) {
-        String jql = String.format(SEARCH_WITH_ISSUES_QUERIES, StringUtils.join(issuesId, ","));
+        String jql = String.format(SEARCH_WITH_ISSUES_QUERIES, StringUtils.join(issuesId, "\",\""));
         return getIssuesFromJira(projectEntity, jql, fields);
     }
 
