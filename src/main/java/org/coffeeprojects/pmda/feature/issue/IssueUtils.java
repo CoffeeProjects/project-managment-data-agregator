@@ -20,12 +20,10 @@ public class IssueUtils {
     public static List<IssueEntity> getIssueEntitiesDelta(List<IssueEntity> localIssueEntities, List<IssueEntity> clientIssueEntities) {
         List<IssueEntity> notFoundIssues = new ArrayList();
 
-        localIssueEntities.forEach(localIssue -> {
-            clientIssueEntities.stream()
-                    .filter(clientIssue -> clientIssue.getId().getClientId().equals(localIssue.getId().getClientId()))
-                    .findFirst()
-                    .ifPresent(clientIssue -> notFoundIssues.add(localIssue));
-        });
+        localIssueEntities.forEach(localIssue -> clientIssueEntities.stream()
+                .filter(clientIssue -> clientIssue.getId().getClientId().equals(localIssue.getId().getClientId()))
+                .findFirst()
+                .ifPresent(clientIssue -> notFoundIssues.add(localIssue)));
 
         return notFoundIssues;
     }

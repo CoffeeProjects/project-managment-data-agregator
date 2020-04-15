@@ -2,7 +2,6 @@ package org.coffeeprojects.pmda.feature.issue.service.impl;
 
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.service.impl.MantisProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import javax.transaction.Transactional;
 @Service
 public class MantisIssueService implements IssueService {
 
-    private static final Logger log = LoggerFactory.getLogger(MantisProjectService.class);
+    private static final Logger log = LoggerFactory.getLogger(MantisIssueService.class);
 
     @Transactional
     @Override
