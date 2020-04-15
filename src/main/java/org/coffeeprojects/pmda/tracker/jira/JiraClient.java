@@ -10,9 +10,6 @@ public interface JiraClient {
     @RequestLine("GET project/{projectId}")
     ProjectJiraBean getProjectById(@Param("projectId") String id);
 
-    @RequestLine("GET project/{projectKey}")
-    ProjectJiraBean getProjectByKey(@Param("projectKey") String key);
-
     @RequestLine("GET search?jql={jql}&expand={expand}&fields={fields}&maxResults={maxResults}&startAt={startAt}")
     SearchIssuesResultJiraBean searchIssues(@Param("jql") String query,
                                             @Param("expand") String expand,

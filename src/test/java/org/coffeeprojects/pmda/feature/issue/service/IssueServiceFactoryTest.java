@@ -79,7 +79,7 @@ public class IssueServiceFactoryTest {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.MANTIS);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
-        MantisIssueService mantisIssueService = new MantisIssueService(issueRepository, issueMapper, jiraRepository);
+        MantisIssueService mantisIssueService = new MantisIssueService();
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, mantisIssueService, null);
         assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(MantisIssueService.class);
@@ -91,7 +91,7 @@ public class IssueServiceFactoryTest {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.REDMINE);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
-        RedmineIssueService redmineIssueService = new RedmineIssueService(issueRepository, issueMapper, jiraRepository);
+        RedmineIssueService redmineIssueService = new RedmineIssueService();
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, redmineIssueService);
         assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(RedmineIssueService.class);

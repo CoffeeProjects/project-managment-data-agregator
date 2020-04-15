@@ -52,6 +52,9 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
                     IssueService issueService = issueServiceFactory.getService(projectEntity);
                     issueService.updateLastModifiedIssues(projectEntity);
 
+                    // Delete missing issues
+                    issueService.deleteMissingIssues(projectEntity);
+
                     // Update last check project
                     projectService.updateLastCheckProject(projectEntity);
                 }

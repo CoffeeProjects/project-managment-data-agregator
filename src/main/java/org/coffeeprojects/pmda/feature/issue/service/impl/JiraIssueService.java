@@ -2,10 +2,7 @@ package org.coffeeprojects.pmda.feature.issue.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
-import org.coffeeprojects.pmda.feature.issue.IssueCustomField;
-import org.coffeeprojects.pmda.feature.issue.IssueEntity;
-import org.coffeeprojects.pmda.feature.issue.IssueMapper;
-import org.coffeeprojects.pmda.feature.issue.IssueRepository;
+import org.coffeeprojects.pmda.feature.issue.*;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectCustomField;
@@ -48,8 +45,7 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        String projectFields = StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",");
-        projectFields = StringUtils.isNotEmpty(projectFields) ? JIRA_DEFAULT_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_DEFAULT_FIELDS;
+        String projectFields = getFields(projectEntity);
 
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, projectFields);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
@@ -68,6 +64,25 @@ public class JiraIssueService implements IssueService {
             this.issueRepository.saveAll(issueEntities);
         } catch (Exception e) {
             log.error("Error during update last modified issues");
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteMissingIssues(ProjectEntity projectEntity) {
+        String projectFields = getFields(projectEntity);
+
+        List<IssueEntity> unresolvedIssueEntities = IssueUtils.getUnresolvedIssueEntities(this.issueRepository.findAll());
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, IssueUtils.getClientIdFromIssueEntities(unresolvedIssueEntities), projectFields);
+        List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
+        List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
+
+        try {
+            if (!issueEntitiesDelta.isEmpty()) {
+                this.issueRepository.deleteAll(issueEntitiesDelta);
+            }
+        } catch (Exception e) {
+            log.error("Error during delete missing issues {}", issueEntitiesDelta);
         }
     }
 
@@ -102,6 +117,12 @@ public class JiraIssueService implements IssueService {
 
             issueEntity.setIssueCustomFields(customFields);
         }
+    }
+
+    private String getFields(ProjectEntity projectEntity) {
+        String projectFields = StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",");
+        projectFields = StringUtils.isNotEmpty(projectFields) ? JIRA_DEFAULT_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_DEFAULT_FIELDS;
+        return projectFields;
     }
 
     private ProjectCustomField getProjectCustomField(ProjectEntity projectEntity, String field) {
