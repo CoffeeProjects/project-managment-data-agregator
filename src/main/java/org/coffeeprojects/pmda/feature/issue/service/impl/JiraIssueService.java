@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.feature.issue.service.impl;
 
+import feign.FeignException;
 import org.apache.commons.lang3.StringUtils;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.*;
@@ -73,16 +74,23 @@ public class JiraIssueService implements IssueService {
         String projectFields = getFields(projectEntity);
 
         List<IssueEntity> unresolvedIssueEntities = IssueUtils.getUnresolvedIssueEntities(this.issueRepository.findAll());
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, IssueUtils.getClientIdFromIssueEntities(unresolvedIssueEntities), projectFields);
-        List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
-        List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
 
-        try {
-            if (!issueEntitiesDelta.isEmpty()) {
-                this.issueRepository.deleteAll(issueEntitiesDelta);
+        if (!unresolvedIssueEntities.isEmpty()) {
+            try {
+                List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, IssueUtils.getKeysFromIssueEntities(unresolvedIssueEntities), projectFields);
+                List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
+                List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
+
+                try {
+                    if (!issueEntitiesDelta.isEmpty()) {
+                        this.issueRepository.deleteAll(issueEntitiesDelta);
+                    }
+                } catch (Exception e) {
+                    log.error("Error during delete missing issues {}", issueEntitiesDelta);
+                }
+            } catch (FeignException e){
+                log.error("Problem when calling the remote API with these unresolved issues {}", unresolvedIssueEntities);
             }
-        } catch (Exception e) {
-            log.error("Error during delete missing issues {}", issueEntitiesDelta);
         }
     }
 

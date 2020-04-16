@@ -10,7 +10,7 @@ public class IssueUtils {
         throw new IllegalStateException("Utility class");
     }
 
-    public static List<String> getClientIdFromIssueEntities(List<IssueEntity> issueEntities) {
+    public static List<String> getKeysFromIssueEntities(List<IssueEntity> issueEntities) {
         List<String> issueEntitiesId = new ArrayList();
 
         if (issueEntities != null) {
@@ -18,7 +18,8 @@ public class IssueUtils {
                     .stream()
                     .filter(i -> i.getId() != null)
                     .filter(i -> i.getId().getClientId() != null)
-                    .forEach(i -> issueEntitiesId.add(i.getId().getClientId()));
+                    .filter(i -> i.getKey() != null)
+                    .forEach(i -> issueEntitiesId.add(i.getKey()));
         }
 
         return issueEntitiesId;
@@ -30,14 +31,12 @@ public class IssueUtils {
 
         if (localIssueEntities != null && clientIssueEntities != null) {
             localIssueEntities.stream()
-                    .filter(localIssue -> localIssue.getId() != null)
-                    .filter(localIssue -> localIssue.getId().getClientId() != null)
+                    .filter(localIssue -> localIssue.getKey() != null)
                     .forEach(localIssue -> {
 
                         IssueEntity matchIssueEntity = clientIssueEntities.stream()
-                                .filter(clientIssue -> clientIssue.getId() != null)
-                                .filter(clientIssue -> clientIssue.getId().getClientId() != null)
-                                .filter(clientIssue -> clientIssue.getId().getClientId().equals(localIssue.getId().getClientId()))
+                                .filter(clientIssue -> clientIssue.getKey() != null)
+                                .filter(clientIssue -> clientIssue.getKey().equals(localIssue.getKey()))
                                 .findFirst()
                                 .orElse(null);
 
@@ -56,7 +55,7 @@ public class IssueUtils {
 
         if (issueEntities != null) {
             resolvedIssueEntities = issueEntities.stream()
-                    .filter(i -> i.getResolutionDate() != null)
+                    .filter(i -> i.getResolutionDate() == null)
                     .collect(Collectors.toList());
         }
 

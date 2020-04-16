@@ -17,7 +17,7 @@ import java.util.List;
 public class JiraRepository {
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project =\"%s\"";
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE = "project =\"%s\" AND updated >= \"%s\"";
-    private static final String SEARCH_WITH_ISSUES_QUERIES = "id in (\"%s\")";
+    private static final String SEARCH_WITH_ISSUES_QUERIES = "key in (\"%s\")";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.systemDefault());
     private static final String EXPAND = "changelog";
@@ -45,8 +45,8 @@ public class JiraRepository {
         return getIssuesFromJira(projectEntity, jql, fields);
     }
 
-    public List<IssueJiraBean> getExistingIssues(ProjectEntity projectEntity, List<String> issuesId, String fields) {
-        String jql = String.format(SEARCH_WITH_ISSUES_QUERIES, StringUtils.join(issuesId, "\",\""));
+    public List<IssueJiraBean> getExistingIssues(ProjectEntity projectEntity, List<String> issuesKey, String fields) {
+        String jql = String.format(SEARCH_WITH_ISSUES_QUERIES, StringUtils.join(issuesKey, "\",\""));
         return getIssuesFromJira(projectEntity, jql, fields);
     }
 

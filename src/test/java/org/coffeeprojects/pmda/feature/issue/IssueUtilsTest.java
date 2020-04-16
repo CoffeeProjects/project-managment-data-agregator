@@ -17,13 +17,13 @@ public class IssueUtilsTest {
 
     @Test
     public void test_get_client_id_from_issue_entities_null() {
-        assertThat(IssueUtils.getClientIdFromIssueEntities(null)).isEmpty();
+        assertThat(IssueUtils.getKeysFromIssueEntities(null)).isEmpty();
     }
 
     @Test
     public void test_get_client_id_from_issue_entities_with_empty_list() {
         List<IssueEntity> issueEntities = new ArrayList();
-        assertThat(IssueUtils.getClientIdFromIssueEntities(issueEntities)).isEmpty();
+        assertThat(IssueUtils.getKeysFromIssueEntities(issueEntities)).isEmpty();
     }
 
     @Test
@@ -31,7 +31,7 @@ public class IssueUtilsTest {
         IssueEntity issueEntity = new IssueEntity();
         List<IssueEntity> issueEntities = new ArrayList();
         issueEntities.add(issueEntity);
-        assertThat(IssueUtils.getClientIdFromIssueEntities(issueEntities)).isEmpty();
+        assertThat(IssueUtils.getKeysFromIssueEntities(issueEntities)).isEmpty();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class IssueUtilsTest {
         IssueEntity issueEntity = (IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA));
         List<IssueEntity> issueEntities = new ArrayList();
         issueEntities.add(issueEntity);
-        assertThat(IssueUtils.getClientIdFromIssueEntities(issueEntities)).isEmpty();
+        assertThat(IssueUtils.getKeysFromIssueEntities(issueEntities)).isEmpty();
     }
 
     @Test
