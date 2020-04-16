@@ -150,33 +150,4 @@ public class IssueUtilsTest {
 
         assertThat(IssueUtils.getIssueEntitiesDelta(localIssueEntities, clientIssueEntities)).isEmpty();
     }
-
-    @Test
-    public void test_get_unresolved_issue_entities_null() {
-        assertThat(IssueUtils.getUnresolvedIssueEntities(null)).isEmpty();
-    }
-
-    @Test
-    public void test_get_unresolved_issue_entities_with_empty_issue_entities() {
-        assertThat(IssueUtils.getUnresolvedIssueEntities(new ArrayList())).isEmpty();
-    }
-
-    @Test
-    public void test_get_unresolved_issue_entities_with_resolution_date_for_entity() {
-        IssueEntity issueEntity = new IssueEntity();
-        List<IssueEntity> issueEntities = new ArrayList();
-        issueEntities.add(issueEntity);
-
-        assertThat(IssueUtils.getUnresolvedIssueEntities(issueEntities)).isEmpty();
-    }
-
-    @Test
-    public void test_get_unresolved_issue_entities() {
-        IssueEntity issueEntity = new IssueEntity();
-        issueEntity.setResolutionDate(Instant.now());
-        List<IssueEntity> issueEntities = new ArrayList();
-        issueEntities.add(issueEntity);
-
-        assertThat(IssueUtils.getUnresolvedIssueEntities(issueEntities)).isEqualTo(issueEntities);
-    }
 }

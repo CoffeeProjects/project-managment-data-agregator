@@ -15,7 +15,7 @@ public class StatusEntity extends BaseEntity implements Serializable {
 
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private ProjectEntity project;
 
     public String getName() {

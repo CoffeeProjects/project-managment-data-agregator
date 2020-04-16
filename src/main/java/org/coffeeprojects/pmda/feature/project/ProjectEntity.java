@@ -20,7 +20,7 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     private Boolean active;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "project_client_id", referencedColumnName="clientId")
     @JoinColumn(name = "project_tracker_local_id", referencedColumnName="trackerLocalId")
     @JoinColumn(name = "project_tracker_type", referencedColumnName="trackerType")

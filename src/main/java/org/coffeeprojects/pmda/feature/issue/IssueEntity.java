@@ -25,35 +25,35 @@ public class IssueEntity extends BaseEntity implements Serializable {
 
     private String key;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private UserEntity assignee;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private UserEntity reporter;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private UserEntity creator;
 
     private String summary;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private StatusEntity status;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private ResolutionEntity resolution;
 
     private Instant resolutionDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private PriorityEntity priority;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private IssueTypeEntity issueType;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private ProjectEntity project;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(
             name = "issue_version",
             joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
@@ -67,7 +67,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ElementCollection
     private List<String> labels;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(
             name = "issue_component",
             joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
@@ -84,7 +84,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(
             name = "issue_sprint",
             joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
@@ -95,7 +95,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
                     @JoinColumn(name = "sprint_tracker_type", referencedColumnName="trackerType")})
     private Set<SprintEntity> sprints;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "issue_client_id", referencedColumnName="clientId")
     @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId")
     @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")

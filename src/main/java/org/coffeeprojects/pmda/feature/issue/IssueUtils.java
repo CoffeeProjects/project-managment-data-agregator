@@ -49,16 +49,4 @@ public class IssueUtils {
 
         return notFoundIssues;
     }
-
-    public static List<IssueEntity> getUnresolvedIssueEntities(List<IssueEntity> issueEntities) {
-        List<IssueEntity> resolvedIssueEntities = new ArrayList();
-
-        if (issueEntities != null) {
-            resolvedIssueEntities = issueEntities.stream()
-                    .filter(i -> i.getResolutionDate() == null)
-                    .collect(Collectors.toList());
-        }
-
-        return resolvedIssueEntities;
-    }
 }

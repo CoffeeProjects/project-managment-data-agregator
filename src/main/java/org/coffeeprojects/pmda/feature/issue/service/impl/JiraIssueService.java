@@ -73,7 +73,7 @@ public class JiraIssueService implements IssueService {
     public void deleteMissingIssues(ProjectEntity projectEntity) {
         String projectFields = getFields(projectEntity);
 
-        List<IssueEntity> unresolvedIssueEntities = IssueUtils.getUnresolvedIssueEntities(this.issueRepository.findAll());
+        List<IssueEntity> unresolvedIssueEntities = this.issueRepository.findByProjectAndResolutionDateIsNull(projectEntity);
 
         if (!unresolvedIssueEntities.isEmpty()) {
             try {
