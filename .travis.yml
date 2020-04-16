@@ -24,3 +24,8 @@ script:
   - chmod +x mvnw
   - ./mvnw clean test
   - mvn clean verify sonar:sonar -Pcoverage
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
