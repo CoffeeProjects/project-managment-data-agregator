@@ -18,7 +18,6 @@ before_install:
   - java -version
 
 before_script:
-  - mvn -version
   - git fetch origin develop
   - psql -c 'create database pmda;' -U postgres
 
