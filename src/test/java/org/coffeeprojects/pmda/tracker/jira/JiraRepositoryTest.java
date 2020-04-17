@@ -29,7 +29,6 @@ public class JiraRepositoryTest {
     @Mock
     private JiraClient jiraClient;
 
-    @Mock
     private JiraRepository jiraRepository;
 
     @BeforeEach

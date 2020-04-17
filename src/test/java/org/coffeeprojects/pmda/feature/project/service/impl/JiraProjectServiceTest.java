@@ -24,9 +24,6 @@ import static org.mockito.Mockito.when;
 public class JiraProjectServiceTest {
 
     @Mock
-    private JiraProjectService jiraProjectService;
-
-    @Mock
     private ProjectRepository projectRepository;
 
     @Mock
@@ -34,6 +31,8 @@ public class JiraProjectServiceTest {
 
     @Mock
     private JiraRepository jiraRepository;
+
+    private JiraProjectService jiraProjectService;
 
     @BeforeEach
     public void setup() {
