@@ -47,8 +47,6 @@ public class JiraRepository {
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());
         }
 
-        log.error("ERROR HERE 1 - JQL : {} - FIELDS : {} - PROJECT ENTITY : {}", jql, fields, projectEntity.toString());
-
         return getIssuesFromJira(projectEntity, jql, fields);
     }
 
@@ -61,23 +59,18 @@ public class JiraRepository {
         Integer startAt = 0;
         List<IssueJiraBean> issueJiraBeans = new ArrayList();
 
-        log.error("ERROR HERE 2 - trackerRouter : {}", trackerRouter);
-
-        log.error("ERROR HERE 2.5 - getTracker : {}", trackerRouter.getTracker(projectEntity));
-
+        log.error("ERROR HERE 0 - JQL : {} - EXPAND : {} - FIELDS : {} - MAX_RESULTS : {} - START_AT : {}", jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
         SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
-        log.error("ERROR HERE 3 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean);
-        log.error("ERROR HERE 4 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean.toString());
+        log.error("ERROR HERE 2 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean);
+        log.error("ERROR HERE 3 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean.toString());
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
-        log.error("ERROR HERE 5 - pages : {}", pages);
+        log.error("ERROR HERE 4 - pages : {}", pages);
 
         for (int i = 1; i <= pages; i++) {
             if (i > 1) {
-                log.error("ERROR HERE 6");
                 startAt = (MAX_RESULT.intValue() * i) + 1;
                 searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
-                log.error("ERROR HERE 7 - searchIssuesResultJiraBean {}", searchIssuesResultJiraBean);
             }
             issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
         }
