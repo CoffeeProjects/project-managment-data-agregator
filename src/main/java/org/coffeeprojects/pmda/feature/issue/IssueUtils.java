@@ -1,5 +1,9 @@
 package org.coffeeprojects.pmda.feature.issue;
 
+import org.apache.commons.lang3.StringUtils;
+import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.project.ProjectUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,13 +44,19 @@ public class IssueUtils {
                                 .findFirst()
                                 .orElse(null);
 
-                        if (matchIssueEntity == null) {
-                            notFoundIssues.add(localIssue);
-                        }
+                                if (matchIssueEntity == null) {
+                                    notFoundIssues.add(localIssue);
+                                }
                             }
                     );
         }
 
         return notFoundIssues;
+    }
+
+    public static String getFields(ProjectEntity projectEntity, String defaultFields) {
+        String projectFields = StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",");
+        projectFields = StringUtils.isNotEmpty(projectFields) ? defaultFields + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : defaultFields;
+        return projectFields;
     }
 }

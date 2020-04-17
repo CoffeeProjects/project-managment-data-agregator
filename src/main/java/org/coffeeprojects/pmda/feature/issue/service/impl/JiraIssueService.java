@@ -46,7 +46,7 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        String projectFields = getFields(projectEntity);
+        String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
 
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, projectFields);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
@@ -71,7 +71,7 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void deleteMissingIssues(ProjectEntity projectEntity) {
-        String projectFields = getFields(projectEntity);
+        String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
 
         List<IssueEntity> unresolvedIssueEntities = this.issueRepository.findByProjectAndResolutionDateIsNull(projectEntity);
 
@@ -81,12 +81,12 @@ public class JiraIssueService implements IssueService {
                 List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
                 List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
 
-                try {
-                    if (!issueEntitiesDelta.isEmpty()) {
+                if (!issueEntitiesDelta.isEmpty()) {
+                    try {
                         this.issueRepository.deleteAll(issueEntitiesDelta);
+                    } catch (Exception e) {
+                        log.error("Error during delete missing issues {}", issueEntitiesDelta);
                     }
-                } catch (Exception e) {
-                    log.error("Error during delete missing issues {}", issueEntitiesDelta);
                 }
             } catch (FeignException e){
                 log.error("Problem when calling the remote API with these unresolved issues {}", unresolvedIssueEntities);
@@ -125,12 +125,6 @@ public class JiraIssueService implements IssueService {
 
             issueEntity.setIssueCustomFields(customFields);
         }
-    }
-
-    private String getFields(ProjectEntity projectEntity) {
-        String projectFields = StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",");
-        projectFields = StringUtils.isNotEmpty(projectFields) ? JIRA_DEFAULT_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_DEFAULT_FIELDS;
-        return projectFields;
     }
 
     private ProjectCustomField getProjectCustomField(ProjectEntity projectEntity, String field) {
