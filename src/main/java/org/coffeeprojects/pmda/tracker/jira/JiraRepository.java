@@ -6,6 +6,8 @@ import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZoneId;
@@ -15,6 +17,9 @@ import java.util.List;
 
 @Repository
 public class JiraRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(JiraRepository.class);
+
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project =\"%s\"";
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE = "project =\"%s\" AND updated >= \"%s\"";
     private static final String SEARCH_WITH_ISSUES_QUERIES = "key in (\"%s\")";
@@ -41,6 +46,8 @@ public class JiraRepository {
         } else {
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());
         }
+
+        log.error("ERROR HERE JQL : {0} - FIELDS : {1} - PROJECT ENTITY : {3}", jql, fields, projectEntity);
 
         return getIssuesFromJira(projectEntity, jql, fields);
     }
