@@ -59,13 +59,14 @@ public class JiraRepository {
         Integer startAt = 0;
         List<IssueJiraBean> issueJiraBeans = new ArrayList();
 
-        log.error("ERROR HERE 0 - JQL : {} - EXPAND : {} - FIELDS : {} - MAX_RESULTS : {} - START_AT : {}", jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+        log.error("ERROR HERE 1 - JQL : {} - EXPAND : {} - FIELDS : {} - MAX_RESULTS : {} - START_AT : {}", jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+        log.error("ERROR HERE 2 - getTracker : {}", trackerRouter.getTracker(projectEntity));
         SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
-        log.error("ERROR HERE 2 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean);
-        log.error("ERROR HERE 3 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean.toString());
+        log.error("ERROR HERE 3 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean);
+        log.error("ERROR HERE 4 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean.toString());
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
-        log.error("ERROR HERE 4 - pages : {}", pages);
+        log.error("ERROR HERE 5 - pages : {}", pages);
 
         for (int i = 1; i <= pages; i++) {
             if (i > 1) {

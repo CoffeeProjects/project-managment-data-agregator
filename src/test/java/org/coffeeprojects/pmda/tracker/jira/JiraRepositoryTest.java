@@ -25,8 +25,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class JiraRepositoryTest {
 
-    private static final Logger log = LoggerFactory.getLogger(JiraRepositoryTest.class);
-
     @Mock
     private TrackerRouter trackerRouter;
 
@@ -66,8 +64,6 @@ public class JiraRepositoryTest {
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
-
-        log.error("ERROR HERE 0 - JQL : {} - EXPAND : {} - FIELDS : {} - MAX_RESULTS : {} - START_AT : {}", jql, expand, fields, maxResults, startAt);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
