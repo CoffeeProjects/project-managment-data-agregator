@@ -23,8 +23,7 @@ before_script:
 
 script:
   - chmod +x mvnw
-  - ./mvnw clean test
-  - mvn clean verify sonar:sonar -Pcoverage
+  - ./mvnw clean verify sonar:sonar -Pcoverage
 
 cache:
   directories:
