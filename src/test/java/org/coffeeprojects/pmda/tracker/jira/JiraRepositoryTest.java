@@ -58,7 +58,7 @@ public class JiraRepositoryTest {
                 .setStartAt(0L)
                 .setIssues(issues);
 
-        String jql = "project =\"pmda\" AND updated >= \"2020-03-29 11:15\"";
+        String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
@@ -96,7 +96,7 @@ public class JiraRepositoryTest {
                 .setStartAt(0L)
                 .setIssues(issues);
 
-        String jql = "project =\"pmda\" AND updated >= \"2020-03-29 11:15\"";
+        String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
