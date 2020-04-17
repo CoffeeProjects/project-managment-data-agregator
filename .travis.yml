@@ -16,6 +16,7 @@ services:
 
 before_install:
   - java -version
+  - mvn -version
 
 before_script:
   - git fetch origin develop
@@ -23,7 +24,7 @@ before_script:
 
 script:
   - chmod +x mvnw
-  - ./mvnw -X clean verify sonar:sonar -Pcoverage
+  - ./mvnw clean verify sonar:sonar -Pcoverage
 
 cache:
   directories:
