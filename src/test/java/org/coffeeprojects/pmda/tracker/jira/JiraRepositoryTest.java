@@ -64,8 +64,9 @@ public class JiraRepositoryTest {
         String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
-        //when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
-        when(jiraClient.searchIssues(any(), any(), any(), any(), any())).thenReturn(searchIssuesResultJiraBean);
+        //when(trackerRouter.getTracker(any())).thenReturn(jiraClient);
+        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        //when(jiraClient.searchIssues(any(), any(), any(), any(), any())).thenReturn(searchIssuesResultJiraBean);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
@@ -102,7 +103,8 @@ public class JiraRepositoryTest {
 
         String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
-        when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
+        //when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
+        when(trackerRouter.getTracker(any())).thenReturn(jiraClient);
         //when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
         when(jiraClient.searchIssues(any(), any(), any(), any(), any())).thenReturn(searchIssuesResultJiraBean);
 

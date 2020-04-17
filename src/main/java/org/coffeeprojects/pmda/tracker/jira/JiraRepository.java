@@ -66,8 +66,6 @@ public class JiraRepository {
         log.error("ERROR HERE 4 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean.toString());
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
-        log.error("ERROR HERE 5 - pages : {}", pages);
-
         for (int i = 1; i <= pages; i++) {
             if (i > 1) {
                 startAt = (MAX_RESULT.intValue() * i) + 1;
