@@ -64,6 +64,7 @@ public class JiraRepositoryTest {
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
 
         // When
+        System.out.println(jiraRepository);
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
 
         // Then
@@ -102,6 +103,7 @@ public class JiraRepositoryTest {
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
 
         // When
+        System.out.println(jiraRepository);
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
 
         // Then
