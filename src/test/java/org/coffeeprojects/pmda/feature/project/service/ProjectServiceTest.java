@@ -4,16 +4,14 @@ import org.coffeeprojects.pmda.feature.project.service.impl.JiraProjectService;
 import org.coffeeprojects.pmda.feature.project.service.impl.MantisProjectService;
 import org.coffeeprojects.pmda.feature.project.service.impl.RedmineProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
+@ExtendWith(SpringExtension.class)
 public class ProjectServiceTest {
 
     @Mock
@@ -32,19 +30,19 @@ public class ProjectServiceTest {
     }
 
     @Test
-    public void test_get_service_bad_jira_enum() {
+    public void test_get_service_with_jira_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerTypeEnum.JIRA)).isInstanceOf(JiraProjectService.class);
     }
 
     @Test
-    public void test_get_service_bad_mantis_enum() {
+    public void test_get_service_with_mantis_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerTypeEnum.MANTIS)).isInstanceOf(MantisProjectService.class);
     }
 
     @Test
-    public void test_get_service_bad_redmine_enum() {
+    public void test_get_service_with_redmine_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerTypeEnum.REDMINE)).isInstanceOf(RedmineProjectService.class);
     }

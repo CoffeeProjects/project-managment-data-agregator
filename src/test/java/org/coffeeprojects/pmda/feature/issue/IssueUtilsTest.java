@@ -2,17 +2,13 @@ package org.coffeeprojects.pmda.feature.issue;
 
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(PowerMockRunner.class)
 public class IssueUtilsTest {
 
     @Test
@@ -92,7 +88,7 @@ public class IssueUtilsTest {
         List<IssueEntity> clientIssueEntities = new ArrayList();
         clientIssueEntities.add(clientIssueEntity);
 
-        assertThat(IssueUtils.getIssueEntitiesDelta(localIssueEntities, clientIssueEntities)).isEqualTo(localIssueEntities);
+        assertThat(IssueUtils.getIssueEntitiesDelta(localIssueEntities, clientIssueEntities)).isEmpty();
     }
 
     @Test
@@ -120,7 +116,7 @@ public class IssueUtilsTest {
         List<IssueEntity> clientIssueEntities = new ArrayList();
         clientIssueEntities.add(clientIssueEntity);
 
-        assertThat(IssueUtils.getIssueEntitiesDelta(localIssueEntities, clientIssueEntities)).isEqualTo(localIssueEntities);
+        assertThat(IssueUtils.getIssueEntitiesDelta(localIssueEntities, clientIssueEntities)).isEmpty();
     }
 
     @Test
@@ -134,7 +130,7 @@ public class IssueUtilsTest {
         List<IssueEntity> clientIssueEntities = new ArrayList();
         clientIssueEntities.add(clientIssueEntity);
 
-        assertThat(IssueUtils.getIssueEntitiesDelta(localIssueEntities, clientIssueEntities)).isEqualTo(localIssueEntities);
+        assertThat(IssueUtils.getIssueEntitiesDelta(localIssueEntities, clientIssueEntities)).isEmpty();
     }
 
     @Test

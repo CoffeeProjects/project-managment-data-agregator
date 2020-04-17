@@ -6,11 +6,11 @@ import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
+@ExtendWith(SpringExtension.class)
 public class JiraRepositoryTest {
 
     @Mock
@@ -31,7 +31,7 @@ public class JiraRepositoryTest {
 
     private JiraRepository jiraRepository;
 
-    @Before
+    @BeforeEach
     public void setup() {
         jiraRepository = new JiraRepository(trackerRouter);
     }
@@ -135,13 +135,13 @@ public class JiraRepositoryTest {
                 .setStartAt(0L)
                 .setIssues(issues);
 
-        String jql = "id in (\"id1\",\"id2\")";
+        String jql = "key in (\"KEY-1\",\"KEY-2\")";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
 
         // When
-        List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, Arrays.asList("id1","id2"), fields);
+        List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, Arrays.asList("KEY-1","KEY-2"), fields);
 
         // Then
         assertThat(issueJiraBeans).isNotNull();
