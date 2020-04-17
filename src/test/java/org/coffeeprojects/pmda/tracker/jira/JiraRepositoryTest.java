@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
@@ -22,6 +24,8 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class JiraRepositoryTest {
+
+    private static final Logger log = LoggerFactory.getLogger(JiraRepositoryTest.class);
 
     @Mock
     private TrackerRouter trackerRouter;
@@ -64,7 +68,7 @@ public class JiraRepositoryTest {
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
 
         // When
-        System.out.println(jiraRepository);
+        log.error("ERROR HERE > {}", jiraRepository);
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
 
         // Then
@@ -103,7 +107,7 @@ public class JiraRepositoryTest {
         when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
 
         // When
-        System.out.println(jiraRepository);
+        log.error("ERROR HERE > {}", jiraRepository);
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
 
         // Then
