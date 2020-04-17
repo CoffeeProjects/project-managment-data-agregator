@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -63,7 +64,8 @@ public class JiraRepositoryTest {
         String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        //when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        when(jiraClient.searchIssues(any(), any(), any(), any(), any())).thenReturn(searchIssuesResultJiraBean);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
@@ -101,7 +103,8 @@ public class JiraRepositoryTest {
         String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        //when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        when(jiraClient.searchIssues(any(), any(), any(), any(), any())).thenReturn(searchIssuesResultJiraBean);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
