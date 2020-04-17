@@ -47,7 +47,7 @@ public class JiraRepository {
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());
         }
 
-        log.error("ERROR HERE JQL : {0} - FIELDS : {1} - PROJECT ENTITY : {3}", jql, fields, projectEntity);
+        log.error("ERROR HERE JQL : {} - FIELDS : {} - PROJECT ENTITY : {}", jql, fields, projectEntity.toString());
 
         return getIssuesFromJira(projectEntity, jql, fields);
     }
