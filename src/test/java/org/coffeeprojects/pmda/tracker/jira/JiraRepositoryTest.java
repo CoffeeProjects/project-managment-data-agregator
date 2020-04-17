@@ -65,8 +65,8 @@ public class JiraRepositoryTest {
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
         //when(trackerRouter.getTracker(any())).thenReturn(jiraClient);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
-        //when(jiraClient.searchIssues(any(), any(), any(), any(), any())).thenReturn(searchIssuesResultJiraBean);
+        //when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        when(jiraClient.searchIssues(any(), any(), any(), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
