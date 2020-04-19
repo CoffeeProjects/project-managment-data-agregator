@@ -41,8 +41,9 @@ public class UserEntity extends BaseEntity implements Serializable {
         return timeZone;
     }
 
-    public void setTimeZone(String timeZone) {
+    public UserEntity setTimeZone(String timeZone) {
         this.timeZone = timeZone;
+        return this;
     }
 
     public Boolean isActive() {

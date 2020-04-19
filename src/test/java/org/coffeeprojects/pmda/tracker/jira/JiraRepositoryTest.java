@@ -4,14 +4,13 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
@@ -19,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -39,15 +37,20 @@ public class JiraRepositoryTest {
         jiraRepository = new JiraRepository(trackerRouter);
     }
 
-    /*@Test
+    @Test
     public void test_get_modified_issues_with_empty_list_return() {
         // Given
         Instant lastCheckDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
 
+        CompositeIdBaseEntity userId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
+        UserEntity userEntity = ((UserEntity) new UserEntity().setId(userId))
+                .setTimeZone("Europe/Paris");
+
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setLastCheck(lastCheckDate)
-                .setKey("pmda");
+                .setKey("pmda")
+                .setAdministrator(userEntity);
 
         String expand = "changelog";
         String fields = "summary,issuetype";
@@ -79,10 +82,15 @@ public class JiraRepositoryTest {
         // Given
         Instant lastCheckDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
 
+        CompositeIdBaseEntity userId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
+        UserEntity userEntity = ((UserEntity) new UserEntity().setId(userId))
+                .setTimeZone("Europe/Paris");
+
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
                 .setLastCheck(lastCheckDate)
-                .setKey("pmda");
+                .setKey("pmda")
+                .setAdministrator(userEntity);
 
         String expand = "changelog";
         String fields = "summary,issuetype";
@@ -110,7 +118,7 @@ public class JiraRepositoryTest {
         // Then
         assertThat(issueJiraBeans).isNotNull();
         assertThat(issueJiraBeans).usingRecursiveFieldByFieldElementComparator().isEqualTo(searchIssuesResultJiraBean.getIssues());
-    }*/
+    }
 
 
     @Test

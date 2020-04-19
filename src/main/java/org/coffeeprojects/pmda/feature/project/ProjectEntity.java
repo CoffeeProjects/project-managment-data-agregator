@@ -52,8 +52,9 @@ public class ProjectEntity extends BaseEntity implements Serializable {
         return administrator;
     }
 
-    public void setAdministrator(UserEntity administrator) {
+    public ProjectEntity setAdministrator(UserEntity administrator) {
         this.administrator = administrator;
+        return this;
     }
 
     public Instant getLastCheck() {
