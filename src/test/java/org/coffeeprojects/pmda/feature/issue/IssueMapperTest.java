@@ -3,7 +3,7 @@ package org.coffeeprojects.pmda.feature.issue;
 import org.coffeeprojects.pmda.feature.component.ComponentMapperImpl;
 import org.coffeeprojects.pmda.feature.issue.jirabean.FieldsJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
-import org.coffeeprojects.pmda.feature.issueType.IssueTypeMapperImpl;
+import org.coffeeprojects.pmda.feature.issuetype.IssueTypeMapperImpl;
 import org.coffeeprojects.pmda.feature.priority.PriorityMapperImpl;
 import org.coffeeprojects.pmda.feature.project.ProjectMapperImpl;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionMapperImpl;
@@ -18,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

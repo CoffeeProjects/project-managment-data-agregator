@@ -2,7 +2,7 @@ package org.coffeeprojects.pmda.feature.issue;
 
 import org.coffeeprojects.pmda.feature.component.ComponentMapper;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
-import org.coffeeprojects.pmda.feature.issueType.IssueTypeMapper;
+import org.coffeeprojects.pmda.feature.issuetype.IssueTypeMapper;
 import org.coffeeprojects.pmda.feature.priority.PriorityMapper;
 import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionMapper;
