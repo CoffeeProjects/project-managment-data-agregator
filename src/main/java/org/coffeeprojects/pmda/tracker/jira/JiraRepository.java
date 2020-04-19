@@ -5,15 +5,16 @@ import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
+import org.coffeeprojects.pmda.feature.project.ProjectUtils;
+import org.coffeeprojects.pmda.feature.user.LocaleJiraBean;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Repository
 public class JiraRepository {
@@ -23,11 +24,9 @@ public class JiraRepository {
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project = \"%s\"";
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE = "project = \"%s\" AND updated >= \"%s\"";
     private static final String SEARCH_WITH_ISSUES_QUERIES = "key in (\"%s\")";
-    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.systemDefault());
+
     private static final String EXPAND = "changelog";
     private static final Integer MAX_RESULT = 100;
-
     private TrackerRouter trackerRouter;
 
     public JiraRepository(TrackerRouter trackerRouter) {
@@ -38,11 +37,17 @@ public class JiraRepository {
         return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
     }
 
+    private Locale getLocale(ProjectEntity projectEntity) {
+        LocaleJiraBean localeJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserLocale();
+        return new Locale(localeJiraBean.getLocale());
+    }
+
     public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, String fields) {
         String jql;
 
         if (projectEntity.getLastCheck() != null) {
-            jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE, projectEntity.getKey(), DATE_TIME_FORMATTER.format(projectEntity.getLastCheck()));
+            String lastCheckWithLocale = ProjectUtils.getLastCheckWithLocale(this.getLocale(projectEntity), projectEntity.getLastCheck());
+            jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE, projectEntity.getKey(), lastCheckWithLocale);
         } else {
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());
         }
@@ -59,11 +64,7 @@ public class JiraRepository {
         Integer startAt = 0;
         List<IssueJiraBean> issueJiraBeans = new ArrayList();
 
-        log.error("ERROR HERE 1 - JQL : {} - EXPAND : {} - FIELDS : {} - MAX_RESULTS : {} - START_AT : {}", jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
-        log.error("ERROR HERE 2 - getTracker : {}", trackerRouter.getTracker(projectEntity));
         SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
-        log.error("ERROR HERE 3 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean);
-        log.error("ERROR HERE 4 - searchIssuesResultJiraBean : {}", searchIssuesResultJiraBean.toString());
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
         for (int i = 1; i <= pages; i++) {
