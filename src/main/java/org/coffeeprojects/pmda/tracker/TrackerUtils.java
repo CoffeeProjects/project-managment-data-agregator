@@ -3,6 +3,7 @@ package org.coffeeprojects.pmda.tracker;
 import org.coffeeprojects.pmda.entity.BaseEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,10 @@ public class TrackerUtils {
 
     private TrackerUtils() {
         throw new IllegalStateException("Utility class");
+    }
+
+    public static void fillIdsFromUserEntity(ProjectEntity projectEntity, UserEntity userEntity) {
+        fillIds(projectEntity, userEntity);
     }
 
     public static void fillIdsFromIssueEntities(ProjectEntity projectEntity, List<IssueEntity> issueEntities) {

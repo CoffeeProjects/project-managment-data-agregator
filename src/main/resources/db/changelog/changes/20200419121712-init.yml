@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1587071983573-1
+    id: 1587291451288-1
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -45,9 +45,12 @@ databaseChangeLog:
         - column:
             name: email_address
             type: VARCHAR(255)
+        - column:
+            name: time_zone
+            type: VARCHAR(255)
         tableName: account
 - changeSet:
-    id: 1587071983573-2
+    id: 1587291451288-2
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -88,7 +91,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: component
 - changeSet:
-    id: 1587071983573-3
+    id: 1587291451288-3
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -213,7 +216,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue
 - changeSet:
-    id: 1587071983573-4
+    id: 1587291451288-4
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -256,7 +259,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_component
 - changeSet:
-    id: 1587071983573-5
+    id: 1587291451288-5
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -315,7 +318,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_custom_field
 - changeSet:
-    id: 1587071983573-6
+    id: 1587291451288-6
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -340,7 +343,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_entity_labels
 - changeSet:
-    id: 1587071983573-7
+    id: 1587291451288-7
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -383,7 +386,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_sprint
 - changeSet:
-    id: 1587071983573-8
+    id: 1587291451288-8
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -436,7 +439,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_type
 - changeSet:
-    id: 1587071983573-9
+    id: 1587291451288-9
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -479,7 +482,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_version
 - changeSet:
-    id: 1587071983573-10
+    id: 1587291451288-10
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -520,7 +523,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: priority
 - changeSet:
-    id: 1587071983573-11
+    id: 1587291451288-11
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -568,9 +571,18 @@ databaseChangeLog:
         - column:
             name: name
             type: VARCHAR(255)
+        - column:
+            name: administrator_client_id
+            type: VARCHAR(255)
+        - column:
+            name: administrator_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: administrator_tracker_type
+            type: INTEGER
         tableName: project
 - changeSet:
-    id: 1587071983573-12
+    id: 1587291451288-12
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -623,7 +635,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: project_custom_field
 - changeSet:
-    id: 1587071983573-13
+    id: 1587291451288-13
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -667,7 +679,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: resolution
 - changeSet:
-    id: 1587071983573-14
+    id: 1587291451288-14
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -726,7 +738,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: sprint
 - changeSet:
-    id: 1587071983573-15
+    id: 1587291451288-15
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -779,7 +791,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: status
 - changeSet:
-    id: 1587071983573-16
+    id: 1587291451288-16
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -820,7 +832,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: version
 - changeSet:
-    id: 1587071983573-17
+    id: 1587291451288-17
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -833,7 +845,20 @@ databaseChangeLog:
         referencedTableName: project_custom_field
         validate: true
 - changeSet:
-    id: 1587071983573-18
+    id: 1587291451288-18
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: administrator_client_id,administrator_tracker_local_id,administrator_tracker_type
+        baseTableName: project
+        constraintName: FK3va5tqtaqus3kh53yrsf2p9ur
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1587291451288-19
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -846,7 +871,7 @@ databaseChangeLog:
         referencedTableName: project
         validate: true
 - changeSet:
-    id: 1587071983573-19
+    id: 1587291451288-20
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -859,7 +884,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1587071983573-20
+    id: 1587291451288-21
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -872,7 +897,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1587071983573-21
+    id: 1587291451288-22
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -885,7 +910,7 @@ databaseChangeLog:
         referencedTableName: issue_type
         validate: true
 - changeSet:
-    id: 1587071983573-22
+    id: 1587291451288-23
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -898,7 +923,7 @@ databaseChangeLog:
         referencedTableName: resolution
         validate: true
 - changeSet:
-    id: 1587071983573-23
+    id: 1587291451288-24
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -911,7 +936,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1587071983573-24
+    id: 1587291451288-25
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -924,7 +949,7 @@ databaseChangeLog:
         referencedTableName: project
         validate: true
 - changeSet:
-    id: 1587071983573-25
+    id: 1587291451288-26
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -937,7 +962,7 @@ databaseChangeLog:
         referencedTableName: sprint
         validate: true
 - changeSet:
-    id: 1587071983573-26
+    id: 1587291451288-27
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -950,7 +975,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1587071983573-27
+    id: 1587291451288-28
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -963,7 +988,7 @@ databaseChangeLog:
         referencedTableName: project_custom_field
         validate: true
 - changeSet:
-    id: 1587071983573-28
+    id: 1587291451288-29
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -976,7 +1001,7 @@ databaseChangeLog:
         referencedTableName: project
         validate: true
 - changeSet:
-    id: 1587071983573-29
+    id: 1587291451288-30
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -989,7 +1014,7 @@ databaseChangeLog:
         referencedTableName: version
         validate: true
 - changeSet:
-    id: 1587071983573-30
+    id: 1587291451288-31
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1002,7 +1027,7 @@ databaseChangeLog:
         referencedTableName: status
         validate: true
 - changeSet:
-    id: 1587071983573-31
+    id: 1587291451288-32
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1015,7 +1040,7 @@ databaseChangeLog:
         referencedTableName: priority
         validate: true
 - changeSet:
-    id: 1587071983573-32
+    id: 1587291451288-33
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1028,7 +1053,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1587071983573-33
+    id: 1587291451288-34
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1041,7 +1066,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1587071983573-34
+    id: 1587291451288-35
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1054,7 +1079,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1587071983573-35
+    id: 1587291451288-36
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1067,7 +1092,7 @@ databaseChangeLog:
         referencedTableName: component
         validate: true
 - changeSet:
-    id: 1587071983573-36
+    id: 1587291451288-37
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:

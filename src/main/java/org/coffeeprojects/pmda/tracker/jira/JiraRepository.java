@@ -6,7 +6,7 @@ import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectUtils;
-import org.coffeeprojects.pmda.feature.user.LocaleJiraBean;
+import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Repository
 public class JiraRepository {
@@ -33,20 +32,25 @@ public class JiraRepository {
         this.trackerRouter = trackerRouter;
     }
 
-    public ProjectJiraBean getProjectDetails(ProjectEntity projectEntity) {
-        return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
+    public UserJiraBean getUserDetails(ProjectEntity projectEntity) throws JiraCallApiException {
+        if (projectEntity.getAdministrator() != null && projectEntity.getAdministrator().getId() != null &&
+                projectEntity.getAdministrator().getId().getClientId() != null) {
+            return ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserById(projectEntity.getAdministrator().getId().getClientId());
+        } else {
+            log.error("Problem when calling the remote API with this project {}. Please set an administrator", projectEntity);
+            throw new JiraCallApiException();
+        }
     }
 
-    private Locale getLocale(ProjectEntity projectEntity) {
-        LocaleJiraBean localeJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserLocale();
-        return new Locale(localeJiraBean.getLocale());
+    public ProjectJiraBean getProjectDetails(ProjectEntity projectEntity) {
+        return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
     }
 
     public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, String fields) {
         String jql;
 
         if (projectEntity.getLastCheck() != null) {
-            String lastCheckWithLocale = ProjectUtils.getLastCheckWithLocale(this.getLocale(projectEntity), projectEntity.getLastCheck());
+            String lastCheckWithLocale = ProjectUtils.getLastCheckWithLocale(projectEntity.getLastCheck(), projectEntity.getAdministrator().getTimeZone());
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE, projectEntity.getKey(), lastCheckWithLocale);
         } else {
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());

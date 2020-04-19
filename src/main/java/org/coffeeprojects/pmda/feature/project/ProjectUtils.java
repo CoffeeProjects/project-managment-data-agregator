@@ -1,16 +1,14 @@
 package org.coffeeprojects.pmda.feature.project;
 
 import org.apache.commons.lang3.StringUtils;
-import org.coffeeprojects.pmda.feature.user.LocaleJiraBean;
-import org.coffeeprojects.pmda.tracker.jira.JiraClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ProjectUtils {
 
@@ -36,8 +34,8 @@ public class ProjectUtils {
         return clientNameCustomFields;
     }
 
-    public static String getLastCheckWithLocale(Locale locale, Instant lastCheck) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT).withLocale(locale);
+    public static String getLastCheckWithLocale(Instant lastCheck, String timeZone) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.of(timeZone));
         return dateTimeFormatter.format(lastCheck);
     }
 }
