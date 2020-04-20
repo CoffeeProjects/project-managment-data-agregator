@@ -1,16 +1,12 @@
 package org.coffeeprojects.pmda.feature.issue.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import feign.FeignException;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
-import org.coffeeprojects.pmda.feature.issue.IssueCustomField;
-import org.coffeeprojects.pmda.feature.issue.IssueEntity;
-import org.coffeeprojects.pmda.feature.issue.IssueMapper;
-import org.coffeeprojects.pmda.feature.issue.IssueRepository;
+import org.coffeeprojects.pmda.feature.issue.*;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectCustomField;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectUtils;
 import org.coffeeprojects.pmda.feature.sprint.SprintUtils;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
@@ -48,8 +44,7 @@ public class JiraIssueService implements IssueService {
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        String projectFields = StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",");
-        projectFields = StringUtils.isNotEmpty(projectFields) ? JIRA_DEFAULT_FIELDS + "," + StringUtils.join(ProjectUtils.getClientNameCustomFields(projectEntity), ",") : JIRA_DEFAULT_FIELDS;
+        String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
 
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, projectFields);
         List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
@@ -68,6 +63,32 @@ public class JiraIssueService implements IssueService {
             this.issueRepository.saveAll(issueEntities);
         } catch (Exception e) {
             log.error("Error during update last modified issues");
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteMissingIssues(ProjectEntity projectEntity) {
+        String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
+
+        List<IssueEntity> unresolvedIssueEntities = this.issueRepository.findByProjectAndResolutionDateIsNull(projectEntity);
+
+        if (!unresolvedIssueEntities.isEmpty()) {
+            try {
+                List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, IssueUtils.getKeysFromIssueEntities(unresolvedIssueEntities), projectFields);
+                List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
+                List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
+
+                if (!issueEntitiesDelta.isEmpty()) {
+                    try {
+                        this.issueRepository.deleteAll(issueEntitiesDelta);
+                    } catch (Exception e) {
+                        log.error("Error during delete missing issues {}", issueEntitiesDelta);
+                    }
+                }
+            } catch (FeignException e){
+                log.error("Problem when calling the remote API with these unresolved issues {}", unresolvedIssueEntities);
+            }
         }
     }
 

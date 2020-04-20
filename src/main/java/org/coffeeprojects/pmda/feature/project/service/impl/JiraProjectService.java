@@ -9,6 +9,7 @@ import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +49,11 @@ public class JiraProjectService implements ProjectService {
             try {
                 ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
                 ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
+                TrackerUtils.fillIdsFromUserEntity(projectEntity, projectEntityFromTracker.getAdministrator());
 
                 projectEntity.setKey(projectEntityFromTracker.getKey());
                 projectEntity.setName(projectEntityFromTracker.getName());
-                projectEntity.setName(projectEntityFromTracker.getName());
+                projectEntity.setAdministrator(projectEntityFromTracker.getAdministrator());
 
                 this.projectRepository.save(projectEntity);
 

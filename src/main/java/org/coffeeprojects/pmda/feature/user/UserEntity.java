@@ -15,6 +15,8 @@ public class UserEntity extends BaseEntity implements Serializable {
 
     private String displayName;
 
+    private String timeZone;
+
     private Boolean active;
 
     public String getEmailAddress() {
@@ -35,6 +37,15 @@ public class UserEntity extends BaseEntity implements Serializable {
         return this;
     }
 
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public UserEntity setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+        return this;
+    }
+
     public Boolean isActive() {
         return active;
     }
@@ -51,12 +62,13 @@ public class UserEntity extends BaseEntity implements Serializable {
         UserEntity that = (UserEntity) o;
         return Objects.equals(emailAddress, that.emailAddress) &&
                 Objects.equals(displayName, that.displayName) &&
+                Objects.equals(timeZone, that.timeZone) &&
                 Objects.equals(active, that.active);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(emailAddress, displayName, active);
+        return Objects.hash(emailAddress, displayName, timeZone, active);
     }
 
     @Override
@@ -64,6 +76,7 @@ public class UserEntity extends BaseEntity implements Serializable {
         return "UserEntity{" +
                 "emailAddress='" + emailAddress + '\'' +
                 ", displayName='" + displayName + '\'' +
+                ", timeZone='" + timeZone + '\'' +
                 ", active=" + active +
                 '}';
     }

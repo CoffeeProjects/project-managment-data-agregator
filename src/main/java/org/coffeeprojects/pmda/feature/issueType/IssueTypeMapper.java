@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.feature.issueType;
+package org.coffeeprojects.pmda.feature.issuetype;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

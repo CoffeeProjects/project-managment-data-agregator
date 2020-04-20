@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Table(name = "issue_custom_field")
 public class IssueCustomField extends BaseEntity implements Serializable {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private ProjectCustomField projectCustomFields;
 
     private String value;

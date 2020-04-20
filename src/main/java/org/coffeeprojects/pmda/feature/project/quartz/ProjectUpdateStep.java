@@ -6,6 +6,8 @@ import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.feature.project.service.ProjectServiceFactory;
+import org.coffeeprojects.pmda.feature.user.service.UserService;
+import org.coffeeprojects.pmda.feature.user.service.UserServiceFactory;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +29,15 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
 
     ProjectServiceFactory projectServiceFactory;
 
+    UserServiceFactory userServiceFactory;
+
     IssueServiceFactory issueServiceFactory;
 
-    public ProjectUpdateStep(TrackerRouter trackerRouter, ProjectServiceFactory projectServiceFactory, IssueServiceFactory issueServiceFactory) {
+    public ProjectUpdateStep(TrackerRouter trackerRouter, ProjectServiceFactory projectServiceFactory, UserServiceFactory userServiceFactory,
+                             IssueServiceFactory issueServiceFactory) {
         this.trackerRouter = trackerRouter;
         this.projectServiceFactory = projectServiceFactory;
+        this.userServiceFactory = userServiceFactory;
         this.issueServiceFactory = issueServiceFactory;
     }
 
@@ -48,9 +54,16 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
                 ProjectEntity projectEntity = projectService.initializeProject(tracker);
 
                 if (Boolean.TRUE.equals(projectEntity.isActive())) {
+                    // Update administrator account
+                    UserService userService = userServiceFactory.getService(tracker.getType());
+                    userService.update(projectEntity);
+
                     // Update issues
                     IssueService issueService = issueServiceFactory.getService(projectEntity);
                     issueService.updateLastModifiedIssues(projectEntity);
+
+                    // Delete missing issues
+                    issueService.deleteMissingIssues(projectEntity);
 
                     // Update last check project
                     projectService.updateLastCheckProject(projectEntity);

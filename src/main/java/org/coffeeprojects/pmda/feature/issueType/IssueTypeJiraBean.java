@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.feature.issueType;
+package org.coffeeprojects.pmda.feature.issuetype;
 
 public class IssueTypeJiraBean {
 

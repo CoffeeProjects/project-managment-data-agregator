@@ -3,7 +3,7 @@ package org.coffeeprojects.pmda.tracker;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.component.ComponentEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
-import org.coffeeprojects.pmda.feature.issueType.IssueTypeEntity;
+import org.coffeeprojects.pmda.feature.issuetype.IssueTypeEntity;
 import org.coffeeprojects.pmda.feature.priority.PriorityEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionEntity;
@@ -11,10 +11,7 @@ import org.coffeeprojects.pmda.feature.sprint.SprintEntity;
 import org.coffeeprojects.pmda.feature.status.StatusEntity;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.version.VersionEntity;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,8 +20,6 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
 public class TrackerUtilsTest {
 
     @Test

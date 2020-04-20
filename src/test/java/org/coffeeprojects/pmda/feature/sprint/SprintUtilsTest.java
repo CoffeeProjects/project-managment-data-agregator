@@ -3,18 +3,13 @@ package org.coffeeprojects.pmda.feature.sprint;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
 public class SprintUtilsTest {
 
     @Test

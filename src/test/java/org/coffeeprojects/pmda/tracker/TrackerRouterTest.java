@@ -5,20 +5,18 @@ import feign.codec.Decoder;
 import feign.codec.Encoder;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
+@ExtendWith(SpringExtension.class)
 public class TrackerRouterTest {
 
     @Mock
@@ -35,7 +33,7 @@ public class TrackerRouterTest {
 
     private TrackerRouter trackerRouter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
     }

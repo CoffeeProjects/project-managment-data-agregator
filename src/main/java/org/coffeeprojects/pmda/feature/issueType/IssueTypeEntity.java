@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.feature.issueType;
+package org.coffeeprojects.pmda.feature.issuetype;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectCustomField;

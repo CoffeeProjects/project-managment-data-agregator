@@ -9,16 +9,14 @@ import org.coffeeprojects.pmda.feature.issue.service.impl.RedmineIssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(fullyQualifiedNames = "org.coffeeprojects.pmda.*")
+@ExtendWith(SpringExtension.class)
 public class IssueServiceFactoryTest {
 
     @Mock
@@ -79,7 +77,7 @@ public class IssueServiceFactoryTest {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.MANTIS);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
-        MantisIssueService mantisIssueService = new MantisIssueService(issueRepository, issueMapper, jiraRepository);
+        MantisIssueService mantisIssueService = new MantisIssueService();
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, mantisIssueService, null);
         assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(MantisIssueService.class);
@@ -91,7 +89,7 @@ public class IssueServiceFactoryTest {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.REDMINE);
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
         // Issue service
-        RedmineIssueService redmineIssueService = new RedmineIssueService(issueRepository, issueMapper, jiraRepository);
+        RedmineIssueService redmineIssueService = new RedmineIssueService();
 
         IssueServiceFactory issueServiceFactory = new IssueServiceFactory(null, null, redmineIssueService);
         assertThat(issueServiceFactory.getService(projectEntity)).isInstanceOf(RedmineIssueService.class);

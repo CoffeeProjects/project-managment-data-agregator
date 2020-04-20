@@ -1,10 +1,9 @@
 package org.coffeeprojects.pmda.feature.issue.service.impl;
 
-import org.coffeeprojects.pmda.feature.issue.IssueMapper;
-import org.coffeeprojects.pmda.feature.issue.IssueRepository;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,26 +11,17 @@ import javax.transaction.Transactional;
 @Service
 public class MantisIssueService implements IssueService {
 
-    private static final String JIRA_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
-            "updated,created,duedate,labels,components,issuelinks,fixversions,resolution,customfield_10020";
-
-    private final IssueRepository issueRepository;
-
-    private final IssueMapper issueMapper;
-
-    private final JiraRepository jiraRepository;
-
-    public MantisIssueService(IssueRepository issueRepository,
-                              IssueMapper issueMapper,
-                              JiraRepository jiraRepository) {
-        this.issueRepository = issueRepository;
-        this.issueMapper = issueMapper;
-        this.jiraRepository = jiraRepository;
-    }
+    private static final Logger log = LoggerFactory.getLogger(MantisIssueService.class);
 
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        System.out.println("Update from mantis");
+        log.info("Update from Mantis");
+    }
+
+    @Transactional
+    @Override
+    public void deleteMissingIssues(ProjectEntity projectEntity) {
+        log.info("Delete missing issues from Mantis");
     }
 }

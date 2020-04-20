@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.feature.project;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
+import org.coffeeprojects.pmda.feature.user.UserEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,11 +17,14 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     private String name;
 
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    private UserEntity administrator;
+
     private Instant lastCheck;
 
     private Boolean active;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "project_client_id", referencedColumnName="clientId")
     @JoinColumn(name = "project_tracker_local_id", referencedColumnName="trackerLocalId")
     @JoinColumn(name = "project_tracker_type", referencedColumnName="trackerType")
@@ -41,6 +45,15 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     public ProjectEntity setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public UserEntity getAdministrator() {
+        return administrator;
+    }
+
+    public ProjectEntity setAdministrator(UserEntity administrator) {
+        this.administrator = administrator;
         return this;
     }
 
@@ -78,6 +91,7 @@ public class ProjectEntity extends BaseEntity implements Serializable {
         ProjectEntity that = (ProjectEntity) o;
         return Objects.equals(key, that.key) &&
                 Objects.equals(name, that.name) &&
+                Objects.equals(administrator, that.administrator) &&
                 Objects.equals(lastCheck, that.lastCheck) &&
                 Objects.equals(active, that.active) &&
                 Objects.equals(projectCustomFields, that.projectCustomFields);
@@ -85,7 +99,7 @@ public class ProjectEntity extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, name, lastCheck, active, projectCustomFields);
+        return Objects.hash(key, name, administrator, lastCheck, active, projectCustomFields);
     }
 
     @Override
@@ -93,6 +107,7 @@ public class ProjectEntity extends BaseEntity implements Serializable {
         return "ProjectEntity{" +
                 "key='" + key + '\'' +
                 ", name='" + name + '\'' +
+                ", administrator=" + administrator +
                 ", lastCheck=" + lastCheck +
                 ", active=" + active +
                 ", projectCustomFields=" + projectCustomFields +
