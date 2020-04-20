@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.feature.issueType;
+package org.coffeeprojects.pmda.feature.issuetype;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
