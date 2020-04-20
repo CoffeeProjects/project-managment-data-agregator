@@ -3,7 +3,7 @@ package org.coffeeprojects.pmda.feature.issue.jirabean;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.coffeeprojects.pmda.feature.component.ComponentJiraBean;
-import org.coffeeprojects.pmda.feature.issuetypee.IssueTypeJiraBean;
+import org.coffeeprojects.pmda.feature.issueType.IssueTypeJiraBean;
 import org.coffeeprojects.pmda.feature.priority.PriorityJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionJiraBean;

@@ -2,7 +2,7 @@ package org.coffeeprojects.pmda.feature.issue;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
 import org.coffeeprojects.pmda.feature.component.ComponentEntity;
-import org.coffeeprojects.pmda.feature.issuetypee.IssueTypeEntity;
+import org.coffeeprojects.pmda.feature.issueType.IssueTypeEntity;
 import org.coffeeprojects.pmda.feature.priority.PriorityEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionEntity;
