@@ -34,7 +34,7 @@ public class ProjectUtils {
         return clientNameCustomFields;
     }
 
-    public static String getLastCheckWithLocale(Instant lastCheck, String timeZone) {
+    public static String getLastCheckWithTimeZone(Instant lastCheck, String timeZone) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT).withZone(ZoneId.of(timeZone));
         return dateTimeFormatter.format(lastCheck);
     }

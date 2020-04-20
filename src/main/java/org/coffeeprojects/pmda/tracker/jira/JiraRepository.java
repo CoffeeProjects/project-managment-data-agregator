@@ -50,7 +50,7 @@ public class JiraRepository {
         String jql;
 
         if (projectEntity.getLastCheck() != null) {
-            String lastCheckWithLocale = ProjectUtils.getLastCheckWithLocale(projectEntity.getLastCheck(), projectEntity.getAdministrator().getTimeZone());
+            String lastCheckWithLocale = ProjectUtils.getLastCheckWithTimeZone(projectEntity.getLastCheck(), projectEntity.getAdministrator().getTimeZone());
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE, projectEntity.getKey(), lastCheckWithLocale);
         } else {
             jql = String.format(SEARCH_MODIFIED_ISSUES_QUERIES, projectEntity.getKey());

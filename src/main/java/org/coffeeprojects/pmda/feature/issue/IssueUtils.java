@@ -5,8 +5,9 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class IssueUtils {
 
@@ -17,14 +18,13 @@ public class IssueUtils {
     public static List<String> getKeysFromIssueEntities(List<IssueEntity> issueEntities) {
         List<String> issueEntitiesId = new ArrayList();
 
-        if (issueEntities != null) {
-            issueEntities
+            Optional.ofNullable(issueEntities)
+                    .orElse(Collections.emptyList())
                     .stream()
                     .filter(i -> i.getId() != null)
                     .filter(i -> i.getId().getClientId() != null)
                     .filter(i -> i.getKey() != null)
                     .forEach(i -> issueEntitiesId.add(i.getKey()));
-        }
 
         return issueEntitiesId;
     }
@@ -33,23 +33,25 @@ public class IssueUtils {
     public static List<IssueEntity> getIssueEntitiesDelta(List<IssueEntity> localIssueEntities, List<IssueEntity> clientIssueEntities) {
         List<IssueEntity> notFoundIssues = new ArrayList();
 
-        if (localIssueEntities != null && clientIssueEntities != null) {
-            localIssueEntities.stream()
-                    .filter(localIssue -> localIssue.getKey() != null)
-                    .forEach(localIssue -> {
+        Optional.ofNullable(localIssueEntities)
+                .orElse(Collections.emptyList())
+                .stream()
+                .filter(localIssue -> localIssue.getKey() != null)
+                .forEach(localIssue -> {
 
-                        IssueEntity matchIssueEntity = clientIssueEntities.stream()
-                                .filter(clientIssue -> clientIssue.getKey() != null)
-                                .filter(clientIssue -> clientIssue.getKey().equals(localIssue.getKey()))
-                                .findFirst()
-                                .orElse(null);
+                    IssueEntity matchIssueEntity = Optional.ofNullable(clientIssueEntities)
+                            .orElse(Collections.emptyList())
+                            .stream()
+                            .filter(clientIssue -> clientIssue.getKey() != null)
+                            .filter(clientIssue -> clientIssue.getKey().equals(localIssue.getKey()))
+                            .findFirst()
+                            .orElse(null);
 
-                                if (matchIssueEntity == null) {
-                                    notFoundIssues.add(localIssue);
-                                }
+                            if (matchIssueEntity == null) {
+                                notFoundIssues.add(localIssue);
                             }
-                    );
-        }
+                        }
+                );
 
         return notFoundIssues;
     }
