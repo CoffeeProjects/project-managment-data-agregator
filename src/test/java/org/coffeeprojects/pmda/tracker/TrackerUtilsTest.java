@@ -3,7 +3,7 @@ package org.coffeeprojects.pmda.tracker;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.component.ComponentEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
-import org.coffeeprojects.pmda.feature.issuetype.IssueTypeEntity;
+import org.coffeeprojects.pmda.feature.issuetypee.IssueTypeEntity;
 import org.coffeeprojects.pmda.feature.priority.PriorityEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionEntity;
