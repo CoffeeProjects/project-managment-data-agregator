@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
-import org.coffeeprojects.pmda.batch.BatchConstant;
+import org.coffeeprojects.pmda.batch.BatchEnum;
 import org.quartz.spi.JobFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ public class ProjectUpdateQuartzConfig {
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
         jobDetailFactoryBean.setJobClass(ProjectUpdateQuartzJobLauncher.class);
         Map<String, Object> map = new HashMap<>();
-        map.put("jobName", BatchConstant.JOB_PROJECT_UPDATE);
+        map.put("jobName", BatchEnum.JOB_PROJECT_UPDATE.toString());
         jobDetailFactoryBean.setJobDataAsMap(map);
         return jobDetailFactoryBean;
     }

@@ -25,7 +25,7 @@ public class TrackerRouter {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerRouter.class);
 
-    private List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
+    private List<TrackerParametersBean> trackerParametersBeans = new ArrayList<>();
 
     @Autowired
     public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackersProperties trackersProperties) {

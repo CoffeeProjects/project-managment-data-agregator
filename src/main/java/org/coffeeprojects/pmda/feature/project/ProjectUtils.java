@@ -21,7 +21,7 @@ public class ProjectUtils {
     }
 
     public static List<String> getClientNameCustomFields(ProjectEntity projectEntity) {
-        List<String> clientNameCustomFields = new ArrayList();
+        List<String> clientNameCustomFields = new ArrayList<>();
         if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
 
             projectEntity.getProjectCustomFields()

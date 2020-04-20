@@ -1,11 +1,10 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
-import org.coffeeprojects.pmda.batch.BatchConstant;
+import org.coffeeprojects.pmda.batch.BatchEnum;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,7 +29,7 @@ public class ProjectUpdateJobConfig {
     @Bean
     public Job projectUpdateJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
         return jobBuilders
-                .get(BatchConstant.JOB_PROJECT_UPDATE)
+                .get(BatchEnum.JOB_PROJECT_UPDATE.toString())
                 .start(projectUpdateConfigStep(stepBuilders))
                 .build();
     }
