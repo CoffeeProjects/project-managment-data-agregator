@@ -99,7 +99,7 @@ public class JiraIssueService implements IssueService {
     }
 
     private void fillIssueCustomFields(IssueEntity issueEntity, ProjectEntity projectEntity, IssueJiraBean issueJiraBean) {
-        Set<IssueCustomField> customFields = new HashSet();
+        Set<IssueCustomField> customFields = new HashSet<>();
 
         if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
             projectEntity.getProjectCustomFields().stream()

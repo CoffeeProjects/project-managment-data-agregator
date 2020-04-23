@@ -16,7 +16,7 @@ public class IssueUtils {
     }
 
     public static List<String> getKeysFromIssueEntities(List<IssueEntity> issueEntities) {
-        List<String> issueEntitiesId = new ArrayList();
+        List<String> issueEntitiesId = new ArrayList<>();
 
             Optional.ofNullable(issueEntities)
                     .orElse(Collections.emptyList())
@@ -31,7 +31,7 @@ public class IssueUtils {
 
     // TODO : Réfléchir à une solution plus simple
     public static List<IssueEntity> getIssueEntitiesDelta(List<IssueEntity> localIssueEntities, List<IssueEntity> clientIssueEntities) {
-        List<IssueEntity> notFoundIssues = new ArrayList();
+        List<IssueEntity> notFoundIssues = new ArrayList<>();
 
         Optional.ofNullable(localIssueEntities)
                 .orElse(Collections.emptyList())

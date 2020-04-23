@@ -12,7 +12,7 @@ import java.util.List;
 @ConfigurationProperties
 public class TrackersProperties {
 
-    private List<TrackerDataBean> trackers = new ArrayList();
+    private List<TrackerDataBean> trackers = new ArrayList<>();
 
     @PostConstruct
     public void init() {

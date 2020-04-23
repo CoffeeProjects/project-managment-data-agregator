@@ -81,7 +81,7 @@ public class SprintUtils {
     public static void toEntity(List<String> input, IssueEntity output) {
         // Mapping des sprints
         if (input != null && !input.isEmpty()) {
-            Set<SprintEntity> sprintEntities = new HashSet();
+            Set<SprintEntity> sprintEntities = new HashSet<>();
             input.stream()
                 .filter(StringUtils::isNotEmpty)
                 .forEach(p -> {

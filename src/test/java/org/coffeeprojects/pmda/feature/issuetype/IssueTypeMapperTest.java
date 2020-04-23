@@ -1,8 +1,5 @@
 package org.coffeeprojects.pmda.feature.issuetype;
 
-import org.coffeeprojects.pmda.feature.issuetype.IssueTypeEntity;
-import org.coffeeprojects.pmda.feature.issuetype.IssueTypeJiraBean;
-import org.coffeeprojects.pmda.feature.issuetype.IssueTypeMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

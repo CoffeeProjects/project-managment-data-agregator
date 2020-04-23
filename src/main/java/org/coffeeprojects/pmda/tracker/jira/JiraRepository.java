@@ -66,7 +66,7 @@ public class JiraRepository {
 
     private List<IssueJiraBean> getIssuesFromJira(ProjectEntity projectEntity, String jql, String fields) {
         Integer startAt = 0;
-        List<IssueJiraBean> issueJiraBeans = new ArrayList();
+        List<IssueJiraBean> issueJiraBeans = new ArrayList<>();
 
         SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());

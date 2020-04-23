@@ -186,7 +186,7 @@ public class FieldsJiraBean {
     @JsonAnySetter
     public FieldsJiraBean setCustomFields(String key, Object value) {
         if (this.customFields == null) {
-            this.customFields = new HashMap();
+            this.customFields = new HashMap<>();
         }
         this.customFields.put(key, value);
         return this;
