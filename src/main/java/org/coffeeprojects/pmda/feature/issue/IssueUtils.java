@@ -17,7 +17,10 @@ public class IssueUtils {
     }
     
     public static void removeDuplicateUsers(List<IssueEntity> issueEntities) {
-        issueEntities.forEach(i -> {
+        Optional.ofNullable(issueEntities)
+                .orElse(Collections.emptyList())
+                .stream()
+                .forEach(i -> {
             UserEntity administrator = i.getProject().getAdministrator();
             UserEntity creator = i.getCreator();
             UserEntity assignee = i.getAssignee();
