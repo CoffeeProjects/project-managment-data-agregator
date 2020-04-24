@@ -38,23 +38,4 @@ public interface IssueMapper {
     @Mapping(target = "created", source = "fields.created")
     @Mapping(target = "updated", source = "fields.updated")
     IssueEntity toEntity(IssueJiraBean issueJiraBean);
-
-    @AfterMapping
-    default void fromIssueJiraBeanToIssueEntity(@MappingTarget IssueEntity output) {
-
-        if (output != null) {
-            // Suppression des types en doublon
-            UserEntity assignee = output.getAssignee();
-            UserEntity creator = output.getCreator();
-            UserEntity reporter = output.getReporter();
-
-            assignee = assignee != null && creator != null && assignee.getId().getClientId().equals(creator.getId().getClientId()) ? creator : assignee;
-            assignee = assignee != null && reporter != null && assignee.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : assignee;
-            creator = creator != null && reporter != null && creator.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : creator;
-
-            output.setAssignee(assignee);
-            output.setCreator(creator);
-            output.setReporter(reporter);
-        }
-    }
 }

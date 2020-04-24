@@ -3,6 +3,7 @@ package org.coffeeprojects.pmda.feature.issue;
 import org.apache.commons.lang3.StringUtils;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectUtils;
+import org.coffeeprojects.pmda.feature.user.UserEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,29 @@ public class IssueUtils {
 
     private IssueUtils() {
         throw new IllegalStateException("Utility class");
+    }
+    
+    public static void removeDuplicateUsers(List<IssueEntity> issueEntities) {
+        issueEntities.forEach(i -> {
+            // Suppression des types en doublon
+            UserEntity administrator = i.getProject().getAdministrator();
+            UserEntity creator = i.getCreator();
+            UserEntity assignee = i.getAssignee();
+            UserEntity reporter = i.getReporter();
+
+            assignee = assignee != null && creator != null && assignee.getId().getClientId().equals(creator.getId().getClientId()) ? creator : assignee;
+            assignee = assignee != null && reporter != null && assignee.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : assignee;
+            assignee = assignee != null && administrator != null && assignee.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : assignee;
+
+            creator = creator != null && reporter != null && creator.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : creator;
+            creator = creator != null && administrator != null && creator.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : creator;
+
+            reporter = reporter != null && administrator != null && creator.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : reporter;
+
+            i.setCreator(creator);
+            i.setAssignee(assignee);
+            i.setReporter(reporter);
+        });
     }
 
     public static List<String> getKeysFromIssueEntities(List<IssueEntity> issueEntities) {

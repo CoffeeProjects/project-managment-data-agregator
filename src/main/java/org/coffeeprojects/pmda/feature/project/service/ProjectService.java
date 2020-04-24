@@ -9,5 +9,6 @@ public interface ProjectService {
     ProjectEntity getProjectById(CompositeIdBaseEntity id);
     void updateProject(ProjectEntity projectEntity);
     void updateLastCheckProject(ProjectEntity projectEntity);
-    ProjectEntity initializeProject(TrackerParametersBean tracker);
+    void deactivateProject(TrackerParametersBean tracker) throws Exception;
+    ProjectEntity initializeProject(TrackerParametersBean tracker, boolean hasDeactivated);
 }

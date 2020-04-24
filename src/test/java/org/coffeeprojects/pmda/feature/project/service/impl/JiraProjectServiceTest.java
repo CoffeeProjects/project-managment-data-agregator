@@ -41,7 +41,7 @@ public class JiraProjectServiceTest {
 
     @Test
     public void test_initialize_project_with_tracker_null() {
-        assertThat(jiraProjectService.initializeProject(null)).isNull();
+        assertThat(jiraProjectService.initializeProject(null, false)).isNull();
     }
 
     @Test
@@ -54,6 +54,6 @@ public class JiraProjectServiceTest {
 
         when(projectRepository.findById(any())).thenReturn(Optional.of(projectEntity));
 
-        assertThat(jiraProjectService.initializeProject(new TrackerParametersBean())).isEqualToComparingFieldByField(projectEntity);
+        assertThat(jiraProjectService.initializeProject(new TrackerParametersBean(),  false)).isEqualToComparingFieldByField(projectEntity);
     }
 }

@@ -8,6 +8,7 @@ import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.feature.project.service.ProjectServiceFactory;
 import org.coffeeprojects.pmda.feature.user.service.UserService;
 import org.coffeeprojects.pmda.feature.user.service.UserServiceFactory;
+import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,9 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Component
 public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
@@ -48,32 +52,41 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
 
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws JobFailingException {
+
         try {
-            trackerRouter.getTrackerParametersBeans().forEach(tracker -> {
+            for (TrackerParametersBean tracker : trackerRouter.getTrackerParametersBeans()) {
                 ProjectService projectService = projectServiceFactory.getService(tracker.getType());
-                ProjectEntity projectEntity = projectService.initializeProject(tracker);
-
-                if (Boolean.TRUE.equals(projectEntity.isActive())) {
-                    // Update administrator account
-                    UserService userService = userServiceFactory.getService(tracker.getType());
-                    userService.update(projectEntity);
-
-                    // Update issues
-                    IssueService issueService = issueServiceFactory.getService(projectEntity);
-                    issueService.updateLastModifiedIssues(projectEntity);
-
-                    // Delete missing issues
-                    issueService.deleteMissingIssues(projectEntity);
-
-                    // Update last check project
-                    projectService.updateLastCheckProject(projectEntity);
+                try {
+                    this.updateProjectElements(projectService, tracker);
+                } catch (RuntimeException e) {
+                    projectService.deactivateProject(tracker);
+                    log.error("Error during script execution with this tracker: {}. Please check the errors before reactivating it in the database. Error details => {}", tracker, e.getMessage());
                 }
-            });
+            }
         } catch (Exception e) {
-            log.error("Error during the execution of the Project Update Step");
-            throw new JobFailingException("Interruption of Project Update Step");
+            throw new JobFailingException("Interruption of project update => " + e.getMessage());
         }
         return RepeatStatus.FINISHED;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void updateProjectElements(ProjectService projectService, TrackerParametersBean tracker) {
+        ProjectEntity projectEntity = projectService.initializeProject(tracker, false);
+        if (Boolean.TRUE.equals(projectEntity.isActive())) {
+            // Update administrator account
+            UserService userService = userServiceFactory.getService(tracker.getType());
+            userService.update(projectEntity);
+
+            // Update issues
+            IssueService issueService = issueServiceFactory.getService(projectEntity);
+            issueService.updateLastModifiedIssues(projectEntity);
+
+            // Delete missing issues
+            issueService.deleteMissingIssues(projectEntity);
+
+            // Update last check project
+            projectService.updateLastCheckProject(projectEntity);
+        }
     }
 
     @Override
