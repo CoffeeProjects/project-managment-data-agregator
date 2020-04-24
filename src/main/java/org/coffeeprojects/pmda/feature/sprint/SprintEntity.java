@@ -127,7 +127,8 @@ public class SprintEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "SprintEntity{" +
-                "rapidViewId='" + rapidViewId + '\'' +
+                "id='" + getId().toString() + '\'' +
+                ", rapidViewId='" + rapidViewId + '\'' +
                 ", state='" + state + '\'' +
                 ", name='" + name + '\'' +
                 ", goal='" + goal + '\'' +

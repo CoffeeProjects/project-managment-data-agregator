@@ -38,7 +38,8 @@ public class PriorityEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "PriorityEntity{" +
-                "name='" + name + '\'' +
+                "id='" + getId().toString() + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

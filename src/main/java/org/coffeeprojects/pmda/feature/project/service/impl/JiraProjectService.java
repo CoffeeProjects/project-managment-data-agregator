@@ -1,10 +1,7 @@
 package org.coffeeprojects.pmda.feature.project.service.impl;
 
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
-import org.coffeeprojects.pmda.feature.project.ProjectMapper;
-import org.coffeeprojects.pmda.feature.project.ProjectRepository;
+import org.coffeeprojects.pmda.feature.project.*;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
@@ -59,13 +56,13 @@ public class JiraProjectService implements ProjectService {
     }
 
     @Transactional(noRollbackFor = Exception.class)
-    public void deactivateProject(TrackerParametersBean tracker) throws Exception {
+    public void deactivateProject(TrackerParametersBean tracker) throws ProjectServiceException {
         ProjectEntity projectEntity = this.initializeProject(tracker, true);
         projectEntity.setActive(Boolean.FALSE);
         try {
             this.projectRepository.save(projectEntity);
         } catch (Exception e) {
-            throw new Exception("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage());
+            throw new ProjectServiceException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage());
         }
     }
 

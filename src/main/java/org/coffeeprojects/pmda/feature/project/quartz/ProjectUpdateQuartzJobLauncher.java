@@ -34,7 +34,7 @@ public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
     @Override
     @Transactional
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+    public void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
             JobLocator jobLocator = applicationContext.getBean(JobLocator.class);
             JobLauncher jobLauncher = applicationContext.getBean(JobLauncher.class);

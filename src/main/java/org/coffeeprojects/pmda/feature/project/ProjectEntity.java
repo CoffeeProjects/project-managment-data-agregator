@@ -105,7 +105,8 @@ public class ProjectEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "ProjectEntity{" +
-                "key='" + key + '\'' +
+                "id='" + getId().toString() + '\'' +
+                ", key='" + key + '\'' +
                 ", name='" + name + '\'' +
                 ", administrator=" + administrator +
                 ", lastCheck=" + lastCheck +

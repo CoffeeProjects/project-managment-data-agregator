@@ -18,7 +18,6 @@ public class IssueUtils {
     
     public static void removeDuplicateUsers(List<IssueEntity> issueEntities) {
         issueEntities.forEach(i -> {
-            // Suppression des types en doublon
             UserEntity administrator = i.getProject().getAdministrator();
             UserEntity creator = i.getCreator();
             UserEntity assignee = i.getAssignee();
@@ -31,7 +30,7 @@ public class IssueUtils {
             creator = creator != null && reporter != null && creator.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : creator;
             creator = creator != null && administrator != null && creator.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : creator;
 
-            reporter = reporter != null && administrator != null && creator.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : reporter;
+            reporter = reporter != null && administrator != null && reporter.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : reporter;
 
             i.setCreator(creator);
             i.setAssignee(assignee);

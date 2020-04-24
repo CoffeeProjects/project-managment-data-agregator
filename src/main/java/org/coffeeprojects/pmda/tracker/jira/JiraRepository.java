@@ -21,6 +21,9 @@ public class JiraRepository {
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project = \"%s\"";
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE = "project = \"%s\" AND updated >= \"%s\"";
     private static final String SEARCH_WITH_ISSUES_QUERIES = "key in (\"%s\")";
+    private static final String ERROR_WHEN_CALLING_API = "Problem when calling the remote API with this project : ";
+    private static final String ERROR_MORE_DETAILS = "More details : ";
+    private static final String ERROR_SET_ADMINISTRATOR = "More details : ";
 
     private static final String EXPAND = "changelog";
     private static final Integer MAX_RESULT = 100;
@@ -36,10 +39,10 @@ public class JiraRepository {
             try {
                 return ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserById(projectEntity.getAdministrator().getId().getClientId());
             } catch (FeignException e) {
-                throw new ExternalApiCallException("Problem when calling the remote API with this project : " + projectEntity + " Please set an administrator");
+                throw new ExternalApiCallException(ERROR_WHEN_CALLING_API + projectEntity + ERROR_MORE_DETAILS + e.getMessage());
             }
         } else {
-            throw new ExternalApiCallException("Please set an administrator for this project : " + projectEntity);
+            throw new ExternalApiCallException(ERROR_SET_ADMINISTRATOR + projectEntity);
         }
     }
 
@@ -47,7 +50,7 @@ public class JiraRepository {
         try {
             return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
         } catch (FeignException e) {
-            throw new ExternalApiCallException("Problem when calling the remote API with this project : " + projectEntity);
+            throw new ExternalApiCallException(ERROR_WHEN_CALLING_API + projectEntity);
         }
     }
 
@@ -77,7 +80,7 @@ public class JiraRepository {
         try {
             searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
         } catch (FeignException e) {
-            throw new ExternalApiCallException("Problem when calling the remote API with this project : " + projectEntity);
+            throw new ExternalApiCallException(ERROR_WHEN_CALLING_API + projectEntity);
         }
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
@@ -87,7 +90,7 @@ public class JiraRepository {
                 try {
                     searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
                 } catch (FeignException e) {
-                    throw new ExternalApiCallException("Problem when calling the remote API with this project : " + projectEntity);
+                    throw new ExternalApiCallException(ERROR_WHEN_CALLING_API + projectEntity);
                 }
             }
             issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());

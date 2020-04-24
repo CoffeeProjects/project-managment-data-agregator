@@ -10,5 +10,5 @@ public interface ProjectService {
     void updateProject(ProjectEntity projectEntity);
     void updateLastCheckProject(ProjectEntity projectEntity);
     void deactivateProject(TrackerParametersBean tracker) throws Exception;
-    ProjectEntity initializeProject(TrackerParametersBean tracker, boolean hasDeactivated);
+    ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceDeactivate);
 }
