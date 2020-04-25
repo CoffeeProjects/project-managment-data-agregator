@@ -51,7 +51,7 @@ public class JiraProjectService implements ProjectService {
             try {
                 this.projectRepository.save(projectEntity);
             } catch (IllegalArgumentException e) {
-                 throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage());
+                 throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage(), e);
             }
         }
     }
@@ -63,7 +63,7 @@ public class JiraProjectService implements ProjectService {
         try {
             this.projectRepository.save(projectEntity);
         } catch (IllegalArgumentException e) {
-            throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage());
+            throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage(), e);
         }
     }
 
@@ -74,7 +74,7 @@ public class JiraProjectService implements ProjectService {
         try {
             this.projectRepository.save(projectEntity);
         } catch (Exception e) {
-            throw new CriticalDataException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage());
+            throw new CriticalDataException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage(), e);
         }
     }
 

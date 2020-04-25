@@ -60,7 +60,7 @@ public class JiraIssueService implements IssueService {
         try {
             this.issueRepository.saveAll(issueEntities);
         } catch (IllegalArgumentException e) {
-            throw new InvalidDataException("Error during update last modified issues with project : " + projectEntity + ". More details => " + e.getMessage());
+            throw new InvalidDataException("Error during update last modified issues with project : " + projectEntity + ". More details => " + e.getMessage(), e);
         }
     }
 
@@ -80,8 +80,7 @@ public class JiraIssueService implements IssueService {
                 try {
                     this.issueRepository.deleteAll(issueEntitiesDelta);
                 } catch (IllegalArgumentException e) {
-                    throw new InvalidDataException(ExceptionConstant.ERROR_DELETE_ISSUES + issueEntitiesDelta +
-                            ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage());
+                    throw new InvalidDataException(ExceptionConstant.ERROR_DELETE_ISSUES + issueEntitiesDelta + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
                 }
             }
         }

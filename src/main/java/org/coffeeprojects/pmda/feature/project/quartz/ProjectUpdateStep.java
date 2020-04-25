@@ -41,7 +41,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
                 projectUpdateService.updateProject(tracker);
             }
         } catch (Exception e) {
-            throw new JobFailingException("Interruption of project update => " + e.getMessage());
+            throw new JobFailingException("Interruption of project update => " + e.getMessage(), e);
         }
         return RepeatStatus.FINISHED;
     }

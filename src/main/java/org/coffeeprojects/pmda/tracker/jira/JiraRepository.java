@@ -37,7 +37,7 @@ public class JiraRepository {
             try {
                 return ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserById(projectEntity.getAdministrator().getId().getClientId());
             } catch (FeignException e) {
-                throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage());
+                throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
             }
         } else {
             throw new ExternalApiCallException(ExceptionConstant.ERROR_SET_ADMINISTRATOR + projectEntity);
@@ -48,7 +48,7 @@ public class JiraRepository {
         try {
             return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
         } catch (FeignException e) {
-            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity);
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
         }
     }
 
@@ -78,7 +78,7 @@ public class JiraRepository {
         try {
             searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
         } catch (FeignException e) {
-            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity);
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
         }
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
@@ -88,7 +88,7 @@ public class JiraRepository {
                 try {
                     searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
                 } catch (FeignException e) {
-                    throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity);
+                    throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
                 }
             }
             issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
