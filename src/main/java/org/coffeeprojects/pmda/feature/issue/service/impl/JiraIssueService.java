@@ -1,6 +1,8 @@
 package org.coffeeprojects.pmda.feature.issue.service.impl;
 
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
+import org.coffeeprojects.pmda.exception.ExceptionConstant;
+import org.coffeeprojects.pmda.exception.InvalidDataException;
 import org.coffeeprojects.pmda.feature.issue.*;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
@@ -40,7 +42,7 @@ public class JiraIssueService implements IssueService {
         this.jiraRepository = jiraRepository;
     }
 
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional(noRollbackFor = InvalidDataException.class)
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
         String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
@@ -61,12 +63,12 @@ public class JiraIssueService implements IssueService {
 
         try {
             this.issueRepository.saveAll(issueEntities);
-        } catch (Exception e) {
-            log.error("Error during update last modified issues with project {}. More details => {}", projectEntity, e.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidDataException("Error during update last modified issues with project : " + projectEntity + ". More details => " + e.getMessage());
         }
     }
 
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional(noRollbackFor = InvalidDataException.class)
     @Override
     public void deleteMissingIssues(ProjectEntity projectEntity) {
         String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
@@ -81,11 +83,11 @@ public class JiraIssueService implements IssueService {
             if (!issueEntitiesDelta.isEmpty()) {
                 try {
                     this.issueRepository.deleteAll(issueEntitiesDelta);
-                } catch (RuntimeException e) {
-                    log.error("Error during delete missing issues {}. More details => {}", issueEntitiesDelta, e.getMessage());
+                } catch (IllegalArgumentException e) {
+                    throw new InvalidDataException(ExceptionConstant.ERROR_DELETE_ISSUES + issueEntitiesDelta +
+                            ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage());
                 }
             }
-
         }
     }
 

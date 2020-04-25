@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.feature.user.service.impl;
 
+import org.coffeeprojects.pmda.exception.InvalidDataException;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
@@ -28,12 +29,16 @@ public class JiraUserService implements UserService {
         this.jiraRepository = jiraRepository;
     }
 
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional(noRollbackFor = InvalidDataException.class)
     public void update(ProjectEntity projectEntity) {
         UserJiraBean userJiraBean = jiraRepository.getUserDetails(projectEntity);
         UserEntity userEntity = userMapper.toEntity(userJiraBean);
         TrackerUtils.fillIdsFromUserEntity(projectEntity, userEntity);
 
-        this.userRepository.save(userEntity);
+        try {
+            this.userRepository.save(userEntity);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidDataException("Problem during persistence" + e.getMessage());
+        }
     }
 }

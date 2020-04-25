@@ -1,6 +1,9 @@
 package org.coffeeprojects.pmda.feature.project.service.impl;
 
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
+import org.coffeeprojects.pmda.exception.CriticalDataException;
+import org.coffeeprojects.pmda.exception.ExceptionConstant;
+import org.coffeeprojects.pmda.exception.InvalidDataException;
 import org.coffeeprojects.pmda.feature.project.*;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
@@ -34,7 +37,7 @@ public class JiraProjectService implements ProjectService {
                 .orElse(null);
     }
 
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional(noRollbackFor = InvalidDataException.class)
     public void updateProject(ProjectEntity projectEntity) {
         if (TrackerTypeEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
             ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
@@ -45,28 +48,37 @@ public class JiraProjectService implements ProjectService {
             projectEntity.setName(projectEntityFromTracker.getName());
             projectEntity.setAdministrator(projectEntityFromTracker.getAdministrator());
 
-            this.projectRepository.save(projectEntity);
+            try {
+                this.projectRepository.save(projectEntity);
+            } catch (IllegalArgumentException e) {
+                 throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage());
+            }
         }
     }
 
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional(noRollbackFor = InvalidDataException.class)
     public void updateLastCheckProject(ProjectEntity projectEntity) {
         projectEntity.setLastCheck((new Date()).toInstant());
-        this.projectRepository.save(projectEntity);
+
+        try {
+            this.projectRepository.save(projectEntity);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage());
+        }
     }
 
-    @Transactional(noRollbackFor = Exception.class)
-    public void deactivateProject(TrackerParametersBean tracker) throws ProjectServiceException {
+    @Transactional(noRollbackFor = InvalidDataException.class)
+    public void deactivateProject(TrackerParametersBean tracker) throws CriticalDataException {
         ProjectEntity projectEntity = this.initializeProject(tracker, true);
         projectEntity.setActive(Boolean.FALSE);
         try {
             this.projectRepository.save(projectEntity);
         } catch (Exception e) {
-            throw new ProjectServiceException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage());
+            throw new CriticalDataException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage());
         }
     }
 
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional(noRollbackFor = InvalidDataException.class)
     public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceDeactivate) {
         ProjectEntity projectEntity = null;
 
