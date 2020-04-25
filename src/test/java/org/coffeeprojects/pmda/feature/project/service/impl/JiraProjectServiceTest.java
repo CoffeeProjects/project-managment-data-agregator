@@ -7,13 +7,13 @@ import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.Clock;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,11 +32,13 @@ public class JiraProjectServiceTest {
     @Mock
     private JiraRepository jiraRepository;
 
+    private Clock clock;
+
     private JiraProjectService jiraProjectService;
 
     @BeforeEach
     public void setup() {
-        jiraProjectService = new JiraProjectService(projectRepository, projectMapper, jiraRepository);
+        jiraProjectService = new JiraProjectService(projectRepository, projectMapper, jiraRepository, clock);
     }
 
     @Test

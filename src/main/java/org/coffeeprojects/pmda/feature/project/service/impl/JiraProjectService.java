@@ -4,16 +4,19 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.exception.CriticalDataException;
 import org.coffeeprojects.pmda.exception.ExceptionConstant;
 import org.coffeeprojects.pmda.exception.InvalidDataException;
-import org.coffeeprojects.pmda.feature.project.*;
+import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
+import org.coffeeprojects.pmda.feature.project.ProjectMapper;
+import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.Clock;
+import java.time.Instant;
 
 @Service
 public class JiraProjectService implements ProjectService {
@@ -24,12 +27,16 @@ public class JiraProjectService implements ProjectService {
 
     private final JiraRepository jiraRepository;
 
+    private final Clock clock;
+
     public JiraProjectService(ProjectRepository projectRepository,
                               ProjectMapper projectMapper,
-                              JiraRepository jiraRepository) {
+                              JiraRepository jiraRepository,
+                              Clock clock) {
         this.projectRepository = projectRepository;
         this.projectMapper = projectMapper;
         this.jiraRepository = jiraRepository;
+        this.clock = clock;
     }
 
     public ProjectEntity getProjectById(CompositeIdBaseEntity id) {
@@ -39,26 +46,24 @@ public class JiraProjectService implements ProjectService {
 
     @Transactional(noRollbackFor = InvalidDataException.class)
     public void updateProject(ProjectEntity projectEntity) {
-        if (TrackerTypeEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
-            ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
-            ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
-            TrackerUtils.fillIdsFromUserEntity(projectEntity, projectEntityFromTracker.getAdministrator());
+        ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
+        ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
+        TrackerUtils.fillIdsFromUserEntity(projectEntity, projectEntityFromTracker.getAdministrator());
 
-            projectEntity.setKey(projectEntityFromTracker.getKey());
-            projectEntity.setName(projectEntityFromTracker.getName());
-            projectEntity.setAdministrator(projectEntityFromTracker.getAdministrator());
+        projectEntity.setKey(projectEntityFromTracker.getKey());
+        projectEntity.setName(projectEntityFromTracker.getName());
+        projectEntity.setAdministrator(projectEntityFromTracker.getAdministrator());
 
-            try {
-                this.projectRepository.save(projectEntity);
-            } catch (IllegalArgumentException e) {
-                 throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage(), e);
-            }
+        try {
+            this.projectRepository.save(projectEntity);
+        } catch (IllegalArgumentException e) {
+             throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage(), e);
         }
     }
 
     @Transactional(noRollbackFor = InvalidDataException.class)
     public void updateLastCheckProject(ProjectEntity projectEntity) {
-        projectEntity.setLastCheck((new Date()).toInstant());
+        projectEntity.setLastCheck(Instant.now(clock));
 
         try {
             this.projectRepository.save(projectEntity);
