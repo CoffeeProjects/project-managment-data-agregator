@@ -16,8 +16,8 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Map;
 
 @PersistJobDataAfterExecution
@@ -34,7 +34,7 @@ public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
     @Override
     @Transactional
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+    public void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
             JobLocator jobLocator = applicationContext.getBean(JobLocator.class);
             JobLauncher jobLauncher = applicationContext.getBean(JobLauncher.class);

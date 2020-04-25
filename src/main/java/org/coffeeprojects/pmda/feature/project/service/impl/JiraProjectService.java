@@ -1,27 +1,25 @@
 package org.coffeeprojects.pmda.feature.project.service.impl;
 
-import feign.FeignException;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
+import org.coffeeprojects.pmda.exception.CriticalDataException;
+import org.coffeeprojects.pmda.exception.ExceptionConstant;
+import org.coffeeprojects.pmda.exception.InvalidDataException;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.Date;
+import java.time.Clock;
+import java.time.Instant;
 
 @Service
 public class JiraProjectService implements ProjectService {
-
-    private static final Logger log = LoggerFactory.getLogger(JiraProjectService.class);
 
     private final ProjectRepository projectRepository;
 
@@ -29,12 +27,16 @@ public class JiraProjectService implements ProjectService {
 
     private final JiraRepository jiraRepository;
 
+    private final Clock clock;
+
     public JiraProjectService(ProjectRepository projectRepository,
                               ProjectMapper projectMapper,
-                              JiraRepository jiraRepository) {
+                              JiraRepository jiraRepository,
+                              Clock clock) {
         this.projectRepository = projectRepository;
         this.projectMapper = projectMapper;
         this.jiraRepository = jiraRepository;
+        this.clock = clock;
     }
 
     public ProjectEntity getProjectById(CompositeIdBaseEntity id) {
@@ -42,37 +44,47 @@ public class JiraProjectService implements ProjectService {
                 .orElse(null);
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = InvalidDataException.class)
     public void updateProject(ProjectEntity projectEntity) {
-        if (TrackerTypeEnum.JIRA.equals(projectEntity.getId().getTrackerType())) {
+        ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
+        ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
+        TrackerUtils.fillIdsFromUserEntity(projectEntity, projectEntityFromTracker.getAdministrator());
 
-            try {
-                ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
-                ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
-                TrackerUtils.fillIdsFromUserEntity(projectEntity, projectEntityFromTracker.getAdministrator());
+        projectEntity.setKey(projectEntityFromTracker.getKey());
+        projectEntity.setName(projectEntityFromTracker.getName());
+        projectEntity.setAdministrator(projectEntityFromTracker.getAdministrator());
 
-                projectEntity.setKey(projectEntityFromTracker.getKey());
-                projectEntity.setName(projectEntityFromTracker.getName());
-                projectEntity.setAdministrator(projectEntityFromTracker.getAdministrator());
-
-                this.projectRepository.save(projectEntity);
-
-            } catch (FeignException e) {
-                log.error("Problem when calling the remote API with this project {}. Please check the configuration file and reactivate it in the database", projectEntity);
-                projectEntity.setActive(Boolean.FALSE);
-                this.projectRepository.save(projectEntity);
-            }
+        try {
+            this.projectRepository.save(projectEntity);
+        } catch (IllegalArgumentException e) {
+             throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage(), e);
         }
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = InvalidDataException.class)
     public void updateLastCheckProject(ProjectEntity projectEntity) {
-        projectEntity.setLastCheck((new Date()).toInstant());
-        this.projectRepository.save(projectEntity);
+        projectEntity.setLastCheck(Instant.now(clock));
+
+        try {
+            this.projectRepository.save(projectEntity);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidDataException(ExceptionConstant.ERROR_PERSISTENCE + e.getMessage(), e);
+        }
     }
 
-    @Transactional
-    public ProjectEntity initializeProject(TrackerParametersBean tracker) {
+    @Transactional(noRollbackFor = InvalidDataException.class)
+    public void deactivateProject(TrackerParametersBean tracker) throws CriticalDataException {
+        ProjectEntity projectEntity = this.initializeProject(tracker, true);
+        projectEntity.setActive(Boolean.FALSE);
+        try {
+            this.projectRepository.save(projectEntity);
+        } catch (Exception e) {
+            throw new CriticalDataException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage(), e);
+        }
+    }
+
+    @Transactional(noRollbackFor = InvalidDataException.class)
+    public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceDeactivate) {
         ProjectEntity projectEntity = null;
 
         if (tracker != null) {
@@ -89,7 +101,7 @@ public class JiraProjectService implements ProjectService {
                         .setActive(Boolean.TRUE);
             }
 
-            if (Boolean.TRUE.equals(projectEntity.isActive())) {
+            if (Boolean.TRUE.equals(projectEntity.isActive()) && !forceDeactivate) {
                 // Update project
                 this.updateProject(projectEntity);
 

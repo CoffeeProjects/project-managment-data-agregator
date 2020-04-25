@@ -1,13 +1,9 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
 import org.coffeeprojects.pmda.batch.JobFailingException;
-import org.coffeeprojects.pmda.feature.issue.service.IssueService;
-import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
-import org.coffeeprojects.pmda.feature.project.ProjectEntity;
-import org.coffeeprojects.pmda.feature.project.service.ProjectService;
-import org.coffeeprojects.pmda.feature.project.service.ProjectServiceFactory;
-import org.coffeeprojects.pmda.feature.user.service.UserService;
-import org.coffeeprojects.pmda.feature.user.service.UserServiceFactory;
+import org.coffeeprojects.pmda.exception.ExceptionConstant;
+import org.coffeeprojects.pmda.feature.project.service.ProjectUpdateService;
+import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,18 +23,11 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
 
     TrackerRouter trackerRouter;
 
-    ProjectServiceFactory projectServiceFactory;
+    ProjectUpdateService projectUpdateService;
 
-    UserServiceFactory userServiceFactory;
-
-    IssueServiceFactory issueServiceFactory;
-
-    public ProjectUpdateStep(TrackerRouter trackerRouter, ProjectServiceFactory projectServiceFactory, UserServiceFactory userServiceFactory,
-                             IssueServiceFactory issueServiceFactory) {
+    public ProjectUpdateStep(TrackerRouter trackerRouter, ProjectUpdateService projectUpdateService) {
         this.trackerRouter = trackerRouter;
-        this.projectServiceFactory = projectServiceFactory;
-        this.userServiceFactory = userServiceFactory;
-        this.issueServiceFactory = issueServiceFactory;
+        this.projectUpdateService = projectUpdateService;
     }
 
     @Override
@@ -49,29 +38,11 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws JobFailingException {
         try {
-            trackerRouter.getTrackerParametersBeans().forEach(tracker -> {
-                ProjectService projectService = projectServiceFactory.getService(tracker.getType());
-                ProjectEntity projectEntity = projectService.initializeProject(tracker);
-
-                if (Boolean.TRUE.equals(projectEntity.isActive())) {
-                    // Update administrator account
-                    UserService userService = userServiceFactory.getService(tracker.getType());
-                    userService.update(projectEntity);
-
-                    // Update issues
-                    IssueService issueService = issueServiceFactory.getService(projectEntity);
-                    issueService.updateLastModifiedIssues(projectEntity);
-
-                    // Delete missing issues
-                    issueService.deleteMissingIssues(projectEntity);
-
-                    // Update last check project
-                    projectService.updateLastCheckProject(projectEntity);
-                }
-            });
+            for (TrackerParametersBean tracker : trackerRouter.getTrackerParametersBeans()) {
+                projectUpdateService.updateProject(tracker);
+            }
         } catch (Exception e) {
-            log.error("Error during the execution of the Project Update Step");
-            throw new JobFailingException("Interruption of Project Update Step");
+            throw new JobFailingException(ExceptionConstant.ERROR_STOP_PROJECT_UPDATE + e.getMessage(), e);
         }
         return RepeatStatus.FINISHED;
     }

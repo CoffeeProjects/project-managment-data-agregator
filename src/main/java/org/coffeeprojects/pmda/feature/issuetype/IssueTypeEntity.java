@@ -56,7 +56,8 @@ public class IssueTypeEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "IssueTypeEntity{" +
-                "name='" + name + '\'' +
+                "id='" + getId() + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", projectCustomField=" + projectCustomField +
                 '}';

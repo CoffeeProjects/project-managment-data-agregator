@@ -1,0 +1,59 @@
+package org.coffeeprojects.pmda.feature.project.service;
+
+import org.coffeeprojects.pmda.exception.CriticalDataException;
+import org.coffeeprojects.pmda.feature.issue.service.IssueService;
+import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
+import org.coffeeprojects.pmda.feature.project.ProjectEntity;
+import org.coffeeprojects.pmda.feature.user.service.UserService;
+import org.coffeeprojects.pmda.feature.user.service.UserServiceFactory;
+import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class ProjectUpdateService {
+
+    private static final Logger log = LoggerFactory.getLogger(ProjectUpdateService.class);
+
+    private ProjectServiceFactory projectServiceFactory;
+
+    private UserServiceFactory userServiceFactory;
+
+    private IssueServiceFactory issueServiceFactory;
+
+    public ProjectUpdateService(ProjectServiceFactory projectServiceFactory, UserServiceFactory userServiceFactory,
+                             IssueServiceFactory issueServiceFactory) {
+        this.projectServiceFactory = projectServiceFactory;
+        this.userServiceFactory = userServiceFactory;
+        this.issueServiceFactory = issueServiceFactory;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void updateProject(TrackerParametersBean tracker) throws CriticalDataException {
+        ProjectService projectService = projectServiceFactory.getService(tracker.getType());
+        try {
+            ProjectEntity projectEntity = projectService.initializeProject(tracker, false);
+            if (Boolean.TRUE.equals(projectEntity.isActive())) {
+                // Update administrator account
+                UserService userService = userServiceFactory.getService(tracker.getType());
+                userService.update(projectEntity);
+
+                // Update issues
+                IssueService issueService = issueServiceFactory.getService(projectEntity);
+                issueService.updateLastModifiedIssues(projectEntity);
+
+                // Delete missing issues
+                issueService.deleteMissingIssues(projectEntity);
+
+                // Update last check project
+                projectService.updateLastCheckProject(projectEntity);
+            }
+        } catch (RuntimeException e) {
+            projectService.deactivateProject(tracker);
+            log.error("Error during script execution with this tracker: {}. Please check the errors before reactivating it in the database. Error details => {}", tracker, e.getMessage());
+        }
+    }
+}

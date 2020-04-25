@@ -1,7 +1,8 @@
 package org.coffeeprojects.pmda.feature.issue.service.impl;
 
-import feign.FeignException;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
+import org.coffeeprojects.pmda.exception.ExceptionConstant;
+import org.coffeeprojects.pmda.exception.InvalidDataException;
 import org.coffeeprojects.pmda.feature.issue.*;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
@@ -10,18 +11,14 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.sprint.SprintUtils;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class JiraIssueService implements IssueService {
-
-    private static final Logger log = LoggerFactory.getLogger(JiraIssueService.class);
 
     private static final String SPRINTS_FIELD = "SPRINTS";
     private static final String JIRA_DEFAULT_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
@@ -41,7 +38,7 @@ public class JiraIssueService implements IssueService {
         this.jiraRepository = jiraRepository;
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = InvalidDataException.class)
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
         String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
@@ -58,15 +55,16 @@ public class JiraIssueService implements IssueService {
                 }));
         SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities);
         TrackerUtils.fillIdsFromIssueEntities(projectEntity, issueEntities);
+        IssueUtils.removeDuplicateUsers(issueEntities);
 
         try {
             this.issueRepository.saveAll(issueEntities);
-        } catch (Exception e) {
-            log.error("Error during update last modified issues");
+        } catch (IllegalArgumentException e) {
+            throw new InvalidDataException(ExceptionConstant.ERROR_UPDATE_ISSUES + projectEntity + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
         }
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = InvalidDataException.class)
     @Override
     public void deleteMissingIssues(ProjectEntity projectEntity) {
         String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
@@ -74,20 +72,16 @@ public class JiraIssueService implements IssueService {
         List<IssueEntity> unresolvedIssueEntities = this.issueRepository.findByProjectAndResolutionDateIsNull(projectEntity);
 
         if (!unresolvedIssueEntities.isEmpty()) {
-            try {
-                List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, IssueUtils.getKeysFromIssueEntities(unresolvedIssueEntities), projectFields);
-                List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
-                List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
+            List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, IssueUtils.getKeysFromIssueEntities(unresolvedIssueEntities), projectFields);
+            List<IssueEntity> issueEntities = issueJiraBeans.stream().map(issueMapper::toEntity).collect(Collectors.toList());
+            List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
 
-                if (!issueEntitiesDelta.isEmpty()) {
-                    try {
-                        this.issueRepository.deleteAll(issueEntitiesDelta);
-                    } catch (Exception e) {
-                        log.error("Error during delete missing issues {}", issueEntitiesDelta);
-                    }
+            if (!issueEntitiesDelta.isEmpty()) {
+                try {
+                    this.issueRepository.deleteAll(issueEntitiesDelta);
+                } catch (IllegalArgumentException e) {
+                    throw new InvalidDataException(ExceptionConstant.ERROR_DELETE_ISSUES + issueEntitiesDelta + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
                 }
-            } catch (FeignException e){
-                log.error("Problem when calling the remote API with these unresolved issues {}", unresolvedIssueEntities);
             }
         }
     }

@@ -1,15 +1,16 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
+import feign.FeignException;
 import org.apache.commons.lang3.StringUtils;
+import org.coffeeprojects.pmda.exception.ExceptionConstant;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectUtils;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
+import org.coffeeprojects.pmda.tracker.ExternalApiCallException;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -17,8 +18,6 @@ import java.util.List;
 
 @Repository
 public class JiraRepository {
-
-    private static final Logger log = LoggerFactory.getLogger(JiraRepository.class);
 
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES = "project = \"%s\"";
     private static final String SEARCH_MODIFIED_ISSUES_QUERIES_WITH_UPDATE = "project = \"%s\" AND updated >= \"%s\"";
@@ -32,18 +31,25 @@ public class JiraRepository {
         this.trackerRouter = trackerRouter;
     }
 
-    public UserJiraBean getUserDetails(ProjectEntity projectEntity) throws JiraCallApiException {
+    public UserJiraBean getUserDetails(ProjectEntity projectEntity) {
         if (projectEntity.getAdministrator() != null && projectEntity.getAdministrator().getId() != null &&
                 projectEntity.getAdministrator().getId().getClientId() != null) {
-            return ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserById(projectEntity.getAdministrator().getId().getClientId());
+            try {
+                return ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserById(projectEntity.getAdministrator().getId().getClientId());
+            } catch (FeignException e) {
+                throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
+            }
         } else {
-            log.error("Problem when calling the remote API with this project {}. Please set an administrator", projectEntity);
-            throw new JiraCallApiException();
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_SET_ADMINISTRATOR + projectEntity);
         }
     }
 
     public ProjectJiraBean getProjectDetails(ProjectEntity projectEntity) {
-        return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
+        try {
+            return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
+        } catch (FeignException e) {
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
+        }
     }
 
     public List<IssueJiraBean> getModifiedIssues(ProjectEntity projectEntity, String fields) {
@@ -67,14 +73,23 @@ public class JiraRepository {
     private List<IssueJiraBean> getIssuesFromJira(ProjectEntity projectEntity, String jql, String fields) {
         Integer startAt = 0;
         List<IssueJiraBean> issueJiraBeans = new ArrayList<>();
+        SearchIssuesResultJiraBean searchIssuesResultJiraBean = null;
 
-        SearchIssuesResultJiraBean searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+        try {
+            searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+        } catch (FeignException e) {
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
+        }
         double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
         for (int i = 1; i <= pages; i++) {
             if (i > 1) {
                 startAt = (MAX_RESULT.intValue() * i) + 1;
-                searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+                try {
+                    searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+                } catch (FeignException e) {
+                    throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
+                }
             }
             issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
         }

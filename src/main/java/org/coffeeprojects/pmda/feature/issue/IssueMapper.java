@@ -8,13 +8,10 @@ import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionMapper;
 import org.coffeeprojects.pmda.feature.sprint.SprintMapper;
 import org.coffeeprojects.pmda.feature.status.StatusMapper;
-import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.user.UserMapper;
 import org.coffeeprojects.pmda.feature.version.VersionMapper;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class, ResolutionMapper.class,
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,
@@ -38,23 +35,4 @@ public interface IssueMapper {
     @Mapping(target = "created", source = "fields.created")
     @Mapping(target = "updated", source = "fields.updated")
     IssueEntity toEntity(IssueJiraBean issueJiraBean);
-
-    @AfterMapping
-    default void fromIssueJiraBeanToIssueEntity(@MappingTarget IssueEntity output) {
-
-        if (output != null) {
-            // Suppression des types en doublon
-            UserEntity assignee = output.getAssignee();
-            UserEntity creator = output.getCreator();
-            UserEntity reporter = output.getReporter();
-
-            assignee = assignee != null && creator != null && assignee.getId().getClientId().equals(creator.getId().getClientId()) ? creator : assignee;
-            assignee = assignee != null && reporter != null && assignee.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : assignee;
-            creator = creator != null && reporter != null && creator.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : creator;
-
-            output.setAssignee(assignee);
-            output.setCreator(creator);
-            output.setReporter(reporter);
-        }
-    }
 }
