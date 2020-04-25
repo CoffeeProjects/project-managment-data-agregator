@@ -52,7 +52,7 @@ public class VersionEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "VersionEntity{" +
-                "id='" + getId().toString() + '\'' +
+                "id='" + getId() + '\'' +
                 ", name='" + name + '\'' +
                 ", issues=" + issues +
                 '}';

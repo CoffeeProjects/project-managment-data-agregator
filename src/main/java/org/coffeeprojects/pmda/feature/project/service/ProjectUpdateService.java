@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.feature.project.service;
 
+import org.coffeeprojects.pmda.exception.CriticalDataException;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.issue.service.IssueServiceFactory;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
@@ -17,11 +18,11 @@ public class ProjectUpdateService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectUpdateService.class);
 
-    ProjectServiceFactory projectServiceFactory;
+    private ProjectServiceFactory projectServiceFactory;
 
-    UserServiceFactory userServiceFactory;
+    private UserServiceFactory userServiceFactory;
 
-    IssueServiceFactory issueServiceFactory;
+    private IssueServiceFactory issueServiceFactory;
 
     public ProjectUpdateService(ProjectServiceFactory projectServiceFactory, UserServiceFactory userServiceFactory,
                              IssueServiceFactory issueServiceFactory) {
@@ -31,7 +32,7 @@ public class ProjectUpdateService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void updateProject(TrackerParametersBean tracker) throws Exception {
+    public void updateProject(TrackerParametersBean tracker) throws CriticalDataException {
         ProjectService projectService = projectServiceFactory.getService(tracker.getType());
         try {
             ProjectEntity projectEntity = projectService.initializeProject(tracker, false);

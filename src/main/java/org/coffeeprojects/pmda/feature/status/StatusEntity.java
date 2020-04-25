@@ -63,7 +63,7 @@ public class StatusEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "StatusEntity{" +
-                "id='" + getId().toString() + '\'' +
+                "id='" + getId() + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", project=" + project +

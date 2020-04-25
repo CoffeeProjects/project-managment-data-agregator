@@ -296,7 +296,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "IssueEntity{" +
-                "id='" + getId().toString() + '\'' +
+                "id='" + getId() + '\'' +
                 ", key='" + key + '\'' +
                 ", assignee=" + assignee +
                 ", reporter=" + reporter +

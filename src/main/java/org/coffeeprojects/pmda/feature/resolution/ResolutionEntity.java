@@ -50,7 +50,7 @@ public class ResolutionEntity extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "ResolutionEntity{" +
-                "id='" + getId().toString() + '\'' +
+                "id='" + getId() + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
