@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.feature.project.quartz;
 
 import org.coffeeprojects.pmda.batch.JobFailingException;
+import org.coffeeprojects.pmda.exception.ExceptionConstant;
 import org.coffeeprojects.pmda.feature.project.service.ProjectUpdateService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
@@ -41,7 +42,7 @@ public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
                 projectUpdateService.updateProject(tracker);
             }
         } catch (Exception e) {
-            throw new JobFailingException("Interruption of project update => " + e.getMessage(), e);
+            throw new JobFailingException(ExceptionConstant.ERROR_STOP_PROJECT_UPDATE + e.getMessage(), e);
         }
         return RepeatStatus.FINISHED;
     }
