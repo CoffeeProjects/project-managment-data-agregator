@@ -9,6 +9,7 @@ import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
+import org.coffeeprojects.pmda.tracker.ExternalApiCallException;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
@@ -83,7 +84,7 @@ public class JiraProjectService implements ProjectService {
         }
     }
 
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceDeactivate) {
         ProjectEntity projectEntity = null;
 
