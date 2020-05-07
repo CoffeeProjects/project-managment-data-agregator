@@ -1,14 +1,11 @@
 package org.coffeeprojects.pmda.feature.component;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
-import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "Component")
