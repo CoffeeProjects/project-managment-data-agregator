@@ -1,15 +1,12 @@
 package org.coffeeprojects.pmda.feature.sprint;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
-import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "sprint")
@@ -28,9 +25,6 @@ public class SprintEntity extends BaseEntity implements Serializable {
     private Instant endDate;
 
     private Instant completeDate;
-
-    @ManyToMany(mappedBy="sprints")
-    private Set<IssueEntity> issues;
 
     public String getRapidViewId() {
         return rapidViewId;
@@ -95,15 +89,6 @@ public class SprintEntity extends BaseEntity implements Serializable {
         return this;
     }
 
-    public Set<IssueEntity> getIssues() {
-        return issues;
-    }
-
-    public SprintEntity setIssues(Set<IssueEntity> issues) {
-        this.issues = issues;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,13 +100,12 @@ public class SprintEntity extends BaseEntity implements Serializable {
                 Objects.equals(goal, that.goal) &&
                 Objects.equals(startDate, that.startDate) &&
                 Objects.equals(endDate, that.endDate) &&
-                Objects.equals(completeDate, that.completeDate) &&
-                Objects.equals(issues, that.issues);
+                Objects.equals(completeDate, that.completeDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rapidViewId, state, name, goal, startDate, endDate, completeDate, issues);
+        return Objects.hash(rapidViewId, state, name, goal, startDate, endDate, completeDate);
     }
 
     @Override
@@ -135,7 +119,6 @@ public class SprintEntity extends BaseEntity implements Serializable {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", completeDate=" + completeDate +
-                ", issues=" + issues +
                 '}';
     }
 }
