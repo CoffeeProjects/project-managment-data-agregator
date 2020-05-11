@@ -1,12 +1,12 @@
 package org.coffeeprojects.pmda.feature.version;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
-import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "version")
@@ -14,8 +14,13 @@ public class VersionEntity extends BaseEntity implements Serializable {
 
     private String name;
 
-    @ManyToMany(mappedBy="fixVersions")
-    private Set<IssueEntity> issues;
+    private String description;
+
+    private Boolean archived;
+
+    private Boolean released;
+
+    private Instant releaseDate;
 
     public String getName() {
         return name;
@@ -26,35 +31,64 @@ public class VersionEntity extends BaseEntity implements Serializable {
         return this;
     }
 
-    public Set<IssueEntity> getIssues() {
-        return issues;
+    public String getDescription() {
+        return description;
     }
 
-    public VersionEntity setIssues(Set<IssueEntity> issues) {
-        this.issues = issues;
-        return this;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
+    }
+
+    public Boolean getReleased() {
+        return released;
+    }
+
+    public void setReleased(Boolean released) {
+        this.released = released;
+    }
+
+    public Instant getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Instant releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         VersionEntity that = (VersionEntity) o;
         return Objects.equals(name, that.name) &&
-                Objects.equals(issues, that.issues);
+                Objects.equals(description, that.description) &&
+                Objects.equals(archived, that.archived) &&
+                Objects.equals(released, that.released) &&
+                Objects.equals(releaseDate, that.releaseDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, issues);
+        return Objects.hash(super.hashCode(), name, description, archived, released, releaseDate);
     }
 
     @Override
     public String toString() {
         return "VersionEntity{" +
-                "id='" + getId() + '\'' +
-                ", name='" + name + '\'' +
-                ", issues=" + issues +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", archived=" + archived +
+                ", released=" + released +
+                ", releaseDate=" + releaseDate +
                 '}';
     }
 }
