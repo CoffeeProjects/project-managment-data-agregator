@@ -266,4 +266,25 @@ public class SprintUtilsTest {
                 });
 
     }
+
+    @Test
+    public void test_get_sprints_by_issue_jira_bean_with_sprints_other_order() {
+        List<String> sprints = Arrays.asList(
+                "com.atlassian.greenhopper.service.sprint.Sprint@95c4b08[completeDate=2020-04-08T09:11:57.167Z,endDate=2020-02-21T09:27:00.000Z,goal=toto,id=259,name=Sprint 87,rapidViewId=85,sequence=240,startDate=2020-02-14T09:27:34.821Z,state=CLOSED]"
+        );
+
+        IssueEntity issueEntity = new IssueEntity();
+        SprintUtils.toEntity(sprints, issueEntity);
+
+        // Then
+        issueEntity.getSprints().stream()
+                .forEach(p -> {
+                    assertThat(p.getId().getClientId().equals("259"));
+                    assertThat(p.getRapidViewId()).isEqualTo("85");
+                    assertThat(p.getState()).isEqualTo("CLOSED");
+                    assertThat(p.getName()).isEqualTo("Sprint 87");
+                    assertThat(p.getGoal()).isEqualTo("toto");
+                });
+
+    }
 }

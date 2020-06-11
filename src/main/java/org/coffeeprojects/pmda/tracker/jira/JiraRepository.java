@@ -24,7 +24,7 @@ public class JiraRepository {
     private static final String SEARCH_WITH_ISSUES_QUERIES = "key in (\"%s\")";
 
     private static final String EXPAND = "changelog";
-    private static final Integer MAX_RESULT = 100;
+    private static final Integer MAX_RESULT = 50;
     private TrackerRouter trackerRouter;
 
     public JiraRepository(TrackerRouter trackerRouter) {

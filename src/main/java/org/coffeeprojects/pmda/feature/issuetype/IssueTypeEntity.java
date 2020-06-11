@@ -3,6 +3,7 @@ package org.coffeeprojects.pmda.feature.issuetype;
 import org.coffeeprojects.pmda.entity.BaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectCustomField;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,6 +16,7 @@ public class IssueTypeEntity extends BaseEntity implements Serializable {
 
     private String name;
 
+    @Column(length = 500)
     private String description;
 
     @OneToOne
