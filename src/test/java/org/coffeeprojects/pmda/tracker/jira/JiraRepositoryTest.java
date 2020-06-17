@@ -94,7 +94,7 @@ public class JiraRepositoryTest {
 
         String expand = "changelog";
         String fields = "summary,issuetype";
-        String maxResults = "100";
+        String maxResults = "50";
         String startAt = "0";
 
         List<IssueJiraBean> issues = Arrays.asList(
@@ -133,7 +133,7 @@ public class JiraRepositoryTest {
 
         String expand = "changelog";
         String fields = "summary,issuetype";
-        String maxResults = "100";
+        String maxResults = "50";
         String startAt = "0";
 
         List<IssueJiraBean> issues = Arrays.asList(

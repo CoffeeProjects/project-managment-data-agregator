@@ -80,18 +80,21 @@ public class JiraRepository {
         } catch (FeignException e) {
             throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
         }
-        double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
 
-        for (int i = 1; i <= pages; i++) {
-            if (i > 1) {
-                startAt = (MAX_RESULT.intValue() * i) + 1;
-                try {
-                    searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
-                } catch (FeignException e) {
-                    throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
+        if (searchIssuesResultJiraBean != null) {
+            double pages = Math.ceil((searchIssuesResultJiraBean.getTotal()).doubleValue() / (searchIssuesResultJiraBean.getMaxResults()).doubleValue());
+
+            for (int i = 1; i <= pages; i++) {
+                if (i > 1) {
+                    startAt = (MAX_RESULT.intValue() * i) + 1;
+                    try {
+                        searchIssuesResultJiraBean = ((JiraClient) trackerRouter.getTracker(projectEntity)).searchIssues(jql, EXPAND, fields, MAX_RESULT.toString(), startAt.toString());
+                    } catch (FeignException e) {
+                        throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
+                    }
                 }
+                issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
             }
-            issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());
         }
 
         return issueJiraBeans;

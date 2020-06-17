@@ -1,0 +1,1119 @@
+databaseChangeLog:
+- changeSet:
+    id: 1592407081894-1
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: accountPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: accountPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: accountPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: active
+            type: BOOLEAN
+        - column:
+            name: display_name
+            type: VARCHAR(255)
+        - column:
+            name: email_address
+            type: VARCHAR(255)
+        - column:
+            name: time_zone
+            type: VARCHAR(255)
+        tableName: account
+- changeSet:
+    id: 1592407081894-2
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: componentPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: componentPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: componentPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: component
+- changeSet:
+    id: 1592407081894-3
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issuePK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issuePK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issuePK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: created
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: key
+            type: VARCHAR(255)
+        - column:
+            name: resolution_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: summary
+            type: VARCHAR(255)
+        - column:
+            name: updated
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: assignee_client_id
+            type: VARCHAR(255)
+        - column:
+            name: assignee_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: assignee_tracker_type
+            type: INTEGER
+        - column:
+            name: creator_client_id
+            type: VARCHAR(255)
+        - column:
+            name: creator_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: creator_tracker_type
+            type: INTEGER
+        - column:
+            name: issue_type_client_id
+            type: VARCHAR(255)
+        - column:
+            name: issue_type_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: issue_type_tracker_type
+            type: INTEGER
+        - column:
+            name: priority_client_id
+            type: VARCHAR(255)
+        - column:
+            name: priority_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: priority_tracker_type
+            type: INTEGER
+        - column:
+            name: project_client_id
+            type: VARCHAR(255)
+        - column:
+            name: project_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: project_tracker_type
+            type: INTEGER
+        - column:
+            name: reporter_client_id
+            type: VARCHAR(255)
+        - column:
+            name: reporter_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: reporter_tracker_type
+            type: INTEGER
+        - column:
+            name: resolution_client_id
+            type: VARCHAR(255)
+        - column:
+            name: resolution_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: resolution_tracker_type
+            type: INTEGER
+        - column:
+            name: status_client_id
+            type: VARCHAR(255)
+        - column:
+            name: status_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: status_tracker_type
+            type: INTEGER
+        tableName: issue
+- changeSet:
+    id: 1592407081894-4
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: component_client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: component_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: component_tracker_type
+            type: INTEGER
+        tableName: issue_component
+- changeSet:
+    id: 1592407081894-5
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issue_custom_fieldPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issue_custom_fieldPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issue_custom_fieldPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: value
+            type: VARCHAR(255)
+        - column:
+            name: project_custom_fields_client_id
+            type: VARCHAR(255)
+        - column:
+            name: project_custom_fields_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: project_custom_fields_tracker_type
+            type: INTEGER
+        - column:
+            name: issue_client_id
+            type: VARCHAR(255)
+        - column:
+            name: issue_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: issue_tracker_type
+            type: INTEGER
+        tableName: issue_custom_field
+- changeSet:
+    id: 1592407081894-6
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: issue_entity_client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: issue_entity_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: issue_entity_tracker_type
+            type: INTEGER
+        - column:
+            name: labels
+            type: VARCHAR(255)
+        tableName: issue_entity_labels
+- changeSet:
+    id: 1592407081894-7
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: sprint_client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: sprint_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: sprint_tracker_type
+            type: INTEGER
+        tableName: issue_sprint
+- changeSet:
+    id: 1592407081894-8
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issue_typePK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issue_typePK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: issue_typePK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: VARCHAR(500)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: project_custom_field_client_id
+            type: VARCHAR(255)
+        - column:
+            name: project_custom_field_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: project_custom_field_tracker_type
+            type: INTEGER
+        tableName: issue_type
+- changeSet:
+    id: 1592407081894-9
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: issue_tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version_client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version_tracker_type
+            type: INTEGER
+        tableName: issue_version
+- changeSet:
+    id: 1592407081894-10
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: priorityPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: priorityPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: priorityPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: priority
+- changeSet:
+    id: 1592407081894-11
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: projectPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: projectPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: projectPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: active
+            type: BOOLEAN
+        - column:
+            name: key
+            type: VARCHAR(255)
+        - column:
+            name: last_check
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: administrator_client_id
+            type: VARCHAR(255)
+        - column:
+            name: administrator_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: administrator_tracker_type
+            type: INTEGER
+        tableName: project
+- changeSet:
+    id: 1592407081894-12
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: project_custom_fieldPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: project_custom_fieldPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: project_custom_fieldPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: client_name
+            type: VARCHAR(255)
+        - column:
+            name: local_name
+            type: VARCHAR(255)
+        - column:
+            name: project_client_id
+            type: VARCHAR(255)
+        - column:
+            name: project_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: project_tracker_type
+            type: INTEGER
+        tableName: project_custom_field
+- changeSet:
+    id: 1592407081894-13
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: resolutionPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: resolutionPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: resolutionPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: resolution
+- changeSet:
+    id: 1592407081894-14
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sprintPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sprintPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sprintPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: complete_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: end_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: goal
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: rapid_view_id
+            type: VARCHAR(255)
+        - column:
+            name: start_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: state
+            type: VARCHAR(255)
+        tableName: sprint
+- changeSet:
+    id: 1592407081894-15
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: statusPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: statusPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: statusPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: project_client_id
+            type: VARCHAR(255)
+        - column:
+            name: project_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: project_tracker_type
+            type: INTEGER
+        tableName: status
+- changeSet:
+    id: 1592407081894-16
+    author: julienherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: versionPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: versionPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: versionPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: archived
+            type: BOOLEAN
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: release_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: released
+            type: BOOLEAN
+        tableName: version
+- changeSet:
+    id: 1592407081894-17
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_custom_fields_client_id,project_custom_fields_tracker_local_id,project_custom_fields_tracker_type
+        baseTableName: issue_custom_field
+        constraintName: FK1no83s6u7d8ypnmdw5so71jj9
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: project_custom_field
+        validate: true
+- changeSet:
+    id: 1592407081894-18
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: administrator_client_id,administrator_tracker_local_id,administrator_tracker_type
+        baseTableName: project
+        constraintName: FK3va5tqtaqus3kh53yrsf2p9ur
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1592407081894-19
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_client_id,project_tracker_local_id,project_tracker_type
+        baseTableName: status
+        constraintName: FK3xa54o1mt9axwsg7mybnxdlvc
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: project
+        validate: true
+- changeSet:
+    id: 1592407081894-20
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_client_id,issue_tracker_local_id,issue_tracker_type
+        baseTableName: issue_version
+        constraintName: FK4cq7uyl8vhwiuryne034auek3
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1592407081894-21
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_client_id,issue_tracker_local_id,issue_tracker_type
+        baseTableName: issue_custom_field
+        constraintName: FK6de8uor2kl4mdpcuw53mls0ki
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1592407081894-22
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_type_client_id,issue_type_tracker_local_id,issue_type_tracker_type
+        baseTableName: issue
+        constraintName: FK8hfwjo8k59q759tpmvcjnxjhf
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: issue_type
+        validate: true
+- changeSet:
+    id: 1592407081894-23
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: resolution_client_id,resolution_tracker_local_id,resolution_tracker_type
+        baseTableName: issue
+        constraintName: FK8plr7ih4k81xdchd06hcm196g
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: resolution
+        validate: true
+- changeSet:
+    id: 1592407081894-24
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_client_id,issue_tracker_local_id,issue_tracker_type
+        baseTableName: issue_component
+        constraintName: FKaek46qg614168p3fn6ricmjdy
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1592407081894-25
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_client_id,project_tracker_local_id,project_tracker_type
+        baseTableName: issue
+        constraintName: FKb0qrqldsk7n4dsyl98o5vagkm
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: project
+        validate: true
+- changeSet:
+    id: 1592407081894-26
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: sprint_client_id,sprint_tracker_local_id,sprint_tracker_type
+        baseTableName: issue_sprint
+        constraintName: FKbkysxrpvvbk6jxswounex94sr
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: sprint
+        validate: true
+- changeSet:
+    id: 1592407081894-27
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: assignee_client_id,assignee_tracker_local_id,assignee_tracker_type
+        baseTableName: issue
+        constraintName: FKf440uvny6mveq5c23v401iia0
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1592407081894-28
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_custom_field_client_id,project_custom_field_tracker_local_id,project_custom_field_tracker_type
+        baseTableName: issue_type
+        constraintName: FKflywvcmr8fd233r76cvoo6286
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: project_custom_field
+        validate: true
+- changeSet:
+    id: 1592407081894-29
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_client_id,project_tracker_local_id,project_tracker_type
+        baseTableName: project_custom_field
+        constraintName: FKiou6vf8dc1lo4yshuajbffy28
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: project
+        validate: true
+- changeSet:
+    id: 1592407081894-30
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: version_client_id,version_tracker_local_id,version_tracker_type
+        baseTableName: issue_version
+        constraintName: FKj22btnt5cip691rv3cbjqmml5
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: version
+        validate: true
+- changeSet:
+    id: 1592407081894-31
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: status_client_id,status_tracker_local_id,status_tracker_type
+        baseTableName: issue
+        constraintName: FKk2dwuppdoe36i2oilgmrka51v
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: status
+        validate: true
+- changeSet:
+    id: 1592407081894-32
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: priority_client_id,priority_tracker_local_id,priority_tracker_type
+        baseTableName: issue
+        constraintName: FKm92mr8rx9shs7otm4c0nav876
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: priority
+        validate: true
+- changeSet:
+    id: 1592407081894-33
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_client_id,issue_tracker_local_id,issue_tracker_type
+        baseTableName: issue_sprint
+        constraintName: FKmwmpgvvfwlvwejcdwya4dlvrv
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: issue
+        validate: true
+- changeSet:
+    id: 1592407081894-34
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: creator_client_id,creator_tracker_local_id,creator_tracker_type
+        baseTableName: issue
+        constraintName: FKotqje9kt8gwky3rwhbfpo3cps
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1592407081894-35
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: reporter_client_id,reporter_tracker_local_id,reporter_tracker_type
+        baseTableName: issue
+        constraintName: FKq2lgyj7rtp9rqtxs42vsfdsdt
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1592407081894-36
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: component_client_id,component_tracker_local_id,component_tracker_type
+        baseTableName: issue_component
+        constraintName: FKssxl7o5owwj8p2m6baew2ljo3
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: component
+        validate: true
+- changeSet:
+    id: 1592407081894-37
+    author: julienherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_entity_client_id,issue_entity_tracker_local_id,issue_entity_tracker_type
+        baseTableName: issue_entity_labels
+        constraintName: FKswho60fni0811lbfkxgh1l1v9
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: issue
+        validate: true
+
