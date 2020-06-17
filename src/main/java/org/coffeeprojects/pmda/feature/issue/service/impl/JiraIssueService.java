@@ -109,7 +109,7 @@ public class JiraIssueService implements IssueService {
                                     .setTrackerType(projectEntity.getId().getTrackerType())
                                     .setTrackerLocalId(projectEntity.getId().getTrackerLocalId()));
 
-                            issueCustomField.setProjectCustomFields(projectCustomField).setValue(issueCustomFieldValue.toString());
+                            issueCustomField.setValue(issueCustomFieldValue.toString());
 
                             customFields.add(issueCustomField);
                         }

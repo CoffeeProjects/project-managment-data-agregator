@@ -15,9 +15,6 @@ public class StatusEntity extends BaseEntity implements Serializable {
 
     private String description;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    private ProjectEntity project;
-
     public String getName() {
         return name;
     }
@@ -36,28 +33,18 @@ public class StatusEntity extends BaseEntity implements Serializable {
         return this;
     }
 
-    public ProjectEntity getProject() {
-        return project;
-    }
-
-    public StatusEntity setProject(ProjectEntity project) {
-        this.project = project;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StatusEntity that = (StatusEntity) o;
         return Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(project, that.project);
+                Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, project);
+        return Objects.hash(name, description);
     }
 
     @Override
@@ -66,7 +53,6 @@ public class StatusEntity extends BaseEntity implements Serializable {
                 "id='" + getId() + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", project=" + project +
                 '}';
     }
 }

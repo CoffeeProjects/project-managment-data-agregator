@@ -14,19 +14,7 @@ import java.util.Objects;
 @Table(name = "issue_custom_field")
 public class IssueCustomField extends BaseEntity implements Serializable {
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    private ProjectCustomField projectCustomFields;
-
     private String value;
-
-    public ProjectCustomField getProjectCustomFields() {
-        return projectCustomFields;
-    }
-
-    public IssueCustomField setProjectCustomFields(ProjectCustomField projectCustomFields) {
-        this.projectCustomFields = projectCustomFields;
-        return this;
-    }
 
     public String getValue() {
         return value;
@@ -43,19 +31,17 @@ public class IssueCustomField extends BaseEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         IssueCustomField that = (IssueCustomField) o;
-        return Objects.equals(projectCustomFields, that.projectCustomFields) &&
-                Objects.equals(value, that.value);
+        return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), projectCustomFields, value);
+        return Objects.hash(super.hashCode(), value);
     }
 
     @Override
     public String toString() {
         return "IssueCustomField{" +
-                "projectCustomFields=" + projectCustomFields +
                 ", value='" + value + '\'' +
                 '}';
     }

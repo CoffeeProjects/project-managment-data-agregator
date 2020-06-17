@@ -19,9 +19,6 @@ public class IssueTypeEntity extends BaseEntity implements Serializable {
     @Column(length = 500)
     private String description;
 
-    @OneToOne
-    ProjectCustomField projectCustomField;
-
     public String getName() {
         return name;
     }
@@ -46,13 +43,12 @@ public class IssueTypeEntity extends BaseEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         IssueTypeEntity that = (IssueTypeEntity) o;
         return Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(projectCustomField, that.projectCustomField);
+                Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, projectCustomField);
+        return Objects.hash(name, description);
     }
 
     @Override
@@ -60,8 +56,7 @@ public class IssueTypeEntity extends BaseEntity implements Serializable {
         return "IssueTypeEntity{" +
                 "id='" + getId() + '\'' +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", projectCustomField=" + projectCustomField +
+                ", description='" + description +
                 '}';
     }
 }
