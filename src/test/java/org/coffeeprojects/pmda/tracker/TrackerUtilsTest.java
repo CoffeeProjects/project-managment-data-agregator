@@ -106,12 +106,6 @@ public class TrackerUtilsTest {
         assertThat(issueEntity.getIssueType().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
         assertThat(issueEntity.getIssueType().getId().getTrackerLocalId()).isEqualTo("1");
 
-        // Priority
-        issueEntity.setProject(projectEntity);
-        TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
-        assertThat(issueEntity.getProject().getId().getTrackerType()).isEqualTo(TrackerTypeEnum.JIRA);
-        assertThat(issueEntity.getProject().getId().getTrackerLocalId()).isEqualTo("1");
-
         // Fix versions
         Set<VersionEntity> fixVersions = new HashSet();
         VersionEntity fixVersion1 = new VersionEntity();

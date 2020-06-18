@@ -28,7 +28,6 @@ public interface IssueMapper {
     @Mapping(target = "resolutionDate", source = "fields.resolutionDate")
     @Mapping(target = "priority", source = "fields.priority")
     @Mapping(target = "issueType", source = "fields.issueType")
-    @Mapping(target = "project", source = "fields.project")
     @Mapping(target = "fixVersions", source = "fields.fixVersions")
     @Mapping(target = "labels", source = "fields.labels")
     @Mapping(target = "components", source = "fields.components")

@@ -55,9 +55,6 @@ public class TrackerUtils {
             if (issueEntity.getIssueType() != null) {
                 fillIds(projectEntity, issueEntity.getIssueType());
             }
-            if (issueEntity.getProject() != null) {
-                fillIds(projectEntity, issueEntity.getProject());
-            }
             if (issueEntity.getFixVersions() != null) {
                 fillIds(projectEntity, issueEntity.getFixVersions());
             }
