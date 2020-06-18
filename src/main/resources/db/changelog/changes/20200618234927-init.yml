@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1592411473724-1
+    id: 1592516982734-1
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -50,7 +50,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: account
 - changeSet:
-    id: 1592411473724-2
+    id: 1592516982734-2
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -91,7 +91,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: component
 - changeSet:
-    id: 1592411473724-3
+    id: 1592516982734-3
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -216,7 +216,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue
 - changeSet:
-    id: 1592411473724-4
+    id: 1592516982734-4
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -259,7 +259,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_component
 - changeSet:
-    id: 1592411473724-5
+    id: 1592516982734-5
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -309,7 +309,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_custom_field
 - changeSet:
-    id: 1592411473724-6
+    id: 1592516982734-6
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -334,7 +334,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_entity_labels
 - changeSet:
-    id: 1592411473724-7
+    id: 1592516982734-7
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -377,7 +377,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_sprint
 - changeSet:
-    id: 1592411473724-8
+    id: 1592516982734-8
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -421,7 +421,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: issue_type
 - changeSet:
-    id: 1592411473724-9
+    id: 1592516982734-9
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -464,7 +464,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: issue_version
 - changeSet:
-    id: 1592411473724-10
+    id: 1592516982734-10
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -505,7 +505,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: priority
 - changeSet:
-    id: 1592411473724-11
+    id: 1592516982734-11
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -564,7 +564,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: project
 - changeSet:
-    id: 1592411473724-12
+    id: 1592516982734-12
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -617,7 +617,7 @@ databaseChangeLog:
             type: INTEGER
         tableName: project_custom_field
 - changeSet:
-    id: 1592411473724-13
+    id: 1592516982734-13
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -661,7 +661,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: resolution
 - changeSet:
-    id: 1592411473724-14
+    id: 1592516982734-14
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -720,7 +720,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: sprint
 - changeSet:
-    id: 1592411473724-15
+    id: 1592516982734-15
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -764,7 +764,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: status
 - changeSet:
-    id: 1592411473724-16
+    id: 1592516982734-16
     author: julienherubel (generated)
     changes:
     - createTable:
@@ -817,7 +817,7 @@ databaseChangeLog:
             type: BOOLEAN
         tableName: version
 - changeSet:
-    id: 1592411473724-17
+    id: 1592516982734-17
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -830,7 +830,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1592411473724-18
+    id: 1592516982734-18
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -843,7 +843,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1592411473724-19
+    id: 1592516982734-19
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -856,7 +856,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1592411473724-20
+    id: 1592516982734-20
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -869,7 +869,7 @@ databaseChangeLog:
         referencedTableName: issue_type
         validate: true
 - changeSet:
-    id: 1592411473724-21
+    id: 1592516982734-21
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -882,7 +882,7 @@ databaseChangeLog:
         referencedTableName: resolution
         validate: true
 - changeSet:
-    id: 1592411473724-22
+    id: 1592516982734-22
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -895,7 +895,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1592411473724-23
+    id: 1592516982734-23
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -908,7 +908,7 @@ databaseChangeLog:
         referencedTableName: project
         validate: true
 - changeSet:
-    id: 1592411473724-24
+    id: 1592516982734-24
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -921,7 +921,7 @@ databaseChangeLog:
         referencedTableName: sprint
         validate: true
 - changeSet:
-    id: 1592411473724-25
+    id: 1592516982734-25
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -934,7 +934,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1592411473724-26
+    id: 1592516982734-26
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -947,7 +947,7 @@ databaseChangeLog:
         referencedTableName: project
         validate: true
 - changeSet:
-    id: 1592411473724-27
+    id: 1592516982734-27
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -960,7 +960,7 @@ databaseChangeLog:
         referencedTableName: version
         validate: true
 - changeSet:
-    id: 1592411473724-28
+    id: 1592516982734-28
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -973,7 +973,7 @@ databaseChangeLog:
         referencedTableName: status
         validate: true
 - changeSet:
-    id: 1592411473724-29
+    id: 1592516982734-29
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -986,7 +986,7 @@ databaseChangeLog:
         referencedTableName: priority
         validate: true
 - changeSet:
-    id: 1592411473724-30
+    id: 1592516982734-30
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -999,7 +999,7 @@ databaseChangeLog:
         referencedTableName: issue
         validate: true
 - changeSet:
-    id: 1592411473724-31
+    id: 1592516982734-31
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1012,7 +1012,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1592411473724-32
+    id: 1592516982734-32
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1025,7 +1025,7 @@ databaseChangeLog:
         referencedTableName: account
         validate: true
 - changeSet:
-    id: 1592411473724-33
+    id: 1592516982734-33
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:
@@ -1038,7 +1038,7 @@ databaseChangeLog:
         referencedTableName: component
         validate: true
 - changeSet:
-    id: 1592411473724-34
+    id: 1592516982734-34
     author: julienherubel (generated)
     changes:
     - addForeignKeyConstraint:

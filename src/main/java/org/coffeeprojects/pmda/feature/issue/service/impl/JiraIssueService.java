@@ -49,12 +49,13 @@ public class JiraIssueService implements IssueService {
         issueJiraBeans.forEach(issueJiraBean -> issueEntities.stream()
                 .filter(issueEntity -> issueEntity.getId().getClientId().equalsIgnoreCase(issueJiraBean.getId()))
                 .forEach(issueEntity -> {
+                    issueEntity.setProject(projectEntity);
                     fillIssueCustomFields(issueEntity, projectEntity, issueJiraBean);
                     fillSprints(issueEntity, projectEntity, issueJiraBean);
                 }));
         SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities);
         TrackerUtils.fillIdsFromIssueEntities(projectEntity, issueEntities);
-        IssueUtils.removeDuplicateUsers(issueEntities, projectEntity);
+        IssueUtils.removeDuplicateUsers(issueEntities);
 
         try {
             this.issueRepository.saveAll(issueEntities);
@@ -68,8 +69,7 @@ public class JiraIssueService implements IssueService {
     public void deleteMissingIssues(ProjectEntity projectEntity) {
         String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
 
-        List<IssueEntity> unresolvedIssueEntities = this.issueRepository.findByIdTrackerTypeAndIdTrackerLocalIdAndResolutionDateIsNull(
-                projectEntity.getId().getTrackerType(), projectEntity.getId().getTrackerLocalId());
+        List<IssueEntity> unresolvedIssueEntities = this.issueRepository.findByProjectAndResolutionDateIsNull(projectEntity);
 
         if (!unresolvedIssueEntities.isEmpty()) {
             List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, IssueUtils.getKeysFromIssueEntities(unresolvedIssueEntities), projectFields);

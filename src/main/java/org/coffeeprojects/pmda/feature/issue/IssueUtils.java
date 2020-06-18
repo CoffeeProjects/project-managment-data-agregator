@@ -16,12 +16,12 @@ public class IssueUtils {
         throw new IllegalStateException("Utility class");
     }
     
-    public static void removeDuplicateUsers(List<IssueEntity> issueEntities, ProjectEntity projectEntity) {
+    public static void removeDuplicateUsers(List<IssueEntity> issueEntities) {
         Optional.ofNullable(issueEntities)
                 .orElse(Collections.emptyList())
                 .stream()
                 .forEach(i -> {
-                    UserEntity administrator = projectEntity.getAdministrator();
+                    UserEntity administrator = i.getProject().getAdministrator();
                     UserEntity creator = i.getCreator();
                     UserEntity assignee = i.getAssignee();
                     UserEntity reporter = i.getReporter();

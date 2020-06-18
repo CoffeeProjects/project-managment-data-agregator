@@ -50,6 +50,9 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private IssueTypeEntity issueType;
 
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    private ProjectEntity project;
+
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(
             name = "issue_version",
@@ -188,6 +191,15 @@ public class IssueEntity extends BaseEntity implements Serializable {
         return this;
     }
 
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public IssueEntity setProject(ProjectEntity project) {
+        this.project = project;
+        return this;
+    }
+
     public Set<VersionEntity> getFixVersions() {
         return fixVersions;
     }
@@ -266,6 +278,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
                 Objects.equals(resolutionDate, that.resolutionDate) &&
                 Objects.equals(priority, that.priority) &&
                 Objects.equals(issueType, that.issueType) &&
+                Objects.equals(project, that.project) &&
                 Objects.equals(fixVersions, that.fixVersions) &&
                 Objects.equals(labels, that.labels) &&
                 Objects.equals(components, that.components) &&
@@ -277,7 +290,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, fixVersions, labels, components, created, updated, sprints, issueCustomFields);
+        return Objects.hash(key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, sprints, issueCustomFields);
     }
 
     @Override
@@ -294,6 +307,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
                 ", resolutionDate=" + resolutionDate +
                 ", priority=" + priority +
                 ", issueType=" + issueType +
+                ", project=" + project +
                 ", fixVersions=" + fixVersions +
                 ", labels=" + labels +
                 ", components=" + components +

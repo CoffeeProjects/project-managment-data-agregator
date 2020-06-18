@@ -165,16 +165,18 @@ public class IssueUtilsTest {
         IssueEntity localIssueEntity1 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("1")))
                 .setCreator(creator1)
                 .setAssignee(assignee1)
-                .setReporter(reporter1);
+                .setReporter(reporter1)
+                .setProject(projectEntity);
         IssueEntity localIssueEntity2 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("2")))
                 .setCreator(creator2)
                 .setAssignee(assignee2)
-                .setReporter(reporter2);
+                .setReporter(reporter2)
+                .setProject(projectEntity);
         List<IssueEntity> localIssueEntities = new ArrayList();
         localIssueEntities.add(localIssueEntity1);
         localIssueEntities.add(localIssueEntity2);
 
-        IssueUtils.removeDuplicateUsers(localIssueEntities, projectEntity);
+        IssueUtils.removeDuplicateUsers(localIssueEntities);
         assertThat(localIssueEntity1.getCreator()).isEqualTo(creator1);
         assertThat(localIssueEntity1.getAssignee()).isEqualTo(assignee1);
         assertThat(localIssueEntity1.getReporter()).isEqualTo(reporter1);
@@ -199,16 +201,18 @@ public class IssueUtilsTest {
         IssueEntity localIssueEntity1 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("1")))
                 .setCreator(creator1)
                 .setAssignee(assignee1)
-                .setReporter(reporter1);
+                .setReporter(reporter1)
+                .setProject(projectEntity);
         IssueEntity localIssueEntity2 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("2")))
                 .setCreator(creator2)
                 .setAssignee(assignee2)
-                .setReporter(reporter2);
+                .setReporter(reporter2)
+                .setProject(projectEntity);
         List<IssueEntity> localIssueEntities = new ArrayList();
         localIssueEntities.add(localIssueEntity1);
         localIssueEntities.add(localIssueEntity2);
 
-        IssueUtils.removeDuplicateUsers(localIssueEntities, projectEntity);
+        IssueUtils.removeDuplicateUsers(localIssueEntities);
         assertThat(localIssueEntity1.getCreator()).isEqualTo(creator1);
         assertThat(localIssueEntity1.getAssignee()).isEqualTo(assignee1);
         assertThat(localIssueEntity1.getReporter()).isEqualTo(reporter1);
@@ -233,16 +237,18 @@ public class IssueUtilsTest {
         IssueEntity localIssueEntity1 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("1")))
                 .setCreator(creator1)
                 .setAssignee(assignee1)
-                .setReporter(reporter1);
+                .setReporter(reporter1)
+                .setProject(projectEntity);
         IssueEntity localIssueEntity2 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("2")))
                 .setCreator(creator2)
                 .setAssignee(assignee2)
-                .setReporter(reporter2);
+                .setReporter(reporter2)
+                .setProject(projectEntity);
         List<IssueEntity> localIssueEntities = new ArrayList();
         localIssueEntities.add(localIssueEntity1);
         localIssueEntities.add(localIssueEntity2);
 
-        IssueUtils.removeDuplicateUsers(localIssueEntities, projectEntity);
+        IssueUtils.removeDuplicateUsers(localIssueEntities);
         assertThat(localIssueEntity1.getCreator()).isEqualTo(reporter1);
         assertThat(localIssueEntity1.getAssignee()).isEqualTo(assignee1);
         assertThat(localIssueEntity1.getReporter()).isEqualTo(reporter1);
@@ -267,16 +273,18 @@ public class IssueUtilsTest {
         IssueEntity localIssueEntity1 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("1")))
                 .setCreator(creator1)
                 .setAssignee(assignee1)
-                .setReporter(reporter1);
+                .setReporter(reporter1)
+                .setProject(projectEntity);
         IssueEntity localIssueEntity2 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("2")))
                 .setCreator(creator2)
                 .setAssignee(assignee2)
-                .setReporter(reporter2);
+                .setReporter(reporter2)
+                .setProject(projectEntity);
         List<IssueEntity> localIssueEntities = new ArrayList();
         localIssueEntities.add(localIssueEntity1);
         localIssueEntities.add(localIssueEntity2);
 
-        IssueUtils.removeDuplicateUsers(localIssueEntities, projectEntity);
+        IssueUtils.removeDuplicateUsers(localIssueEntities);
         assertThat(localIssueEntity1.getCreator()).isEqualTo(reporter1);
         assertThat(localIssueEntity1.getAssignee()).isEqualTo(assignee1);
         assertThat(localIssueEntity1.getReporter()).isEqualTo(administrator);
@@ -298,16 +306,18 @@ public class IssueUtilsTest {
         IssueEntity localIssueEntity1 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("1")))
                 .setCreator(creator1)
                 .setAssignee(null)
-                .setReporter(reporter1);
+                .setReporter(reporter1)
+                .setProject(projectEntity);
         IssueEntity localIssueEntity2 = ((IssueEntity) new IssueEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setClientId("2")))
                 .setCreator(null)
                 .setAssignee(assignee2)
-                .setReporter(null);
+                .setReporter(null)
+                .setProject(projectEntity);
         List<IssueEntity> localIssueEntities = new ArrayList();
         localIssueEntities.add(localIssueEntity1);
         localIssueEntities.add(localIssueEntity2);
 
-        IssueUtils.removeDuplicateUsers(localIssueEntities, projectEntity);
+        IssueUtils.removeDuplicateUsers(localIssueEntities);
         assertThat(localIssueEntity1.getCreator()).isEqualTo(reporter1);
         assertThat(localIssueEntity1.getAssignee()).isNull();
         assertThat(localIssueEntity1.getReporter()).isEqualTo(administrator);
