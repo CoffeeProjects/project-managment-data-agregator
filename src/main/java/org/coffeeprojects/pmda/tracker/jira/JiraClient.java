@@ -5,7 +5,9 @@ import feign.RequestLine;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
+import org.springframework.cloud.openfeign.FeignClient;
 
+@FeignClient("jiraClient")
 public interface JiraClient {
 
     @RequestLine("GET project/{projectId}")

@@ -35,7 +35,7 @@ public class TrackerRouterTest {
 
     @BeforeEach
     public void setup() {
-        trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
+        trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
         assertThat(trackerRouter.getTracker(null)).isNull();
     }
@@ -72,7 +72,7 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
         // ProjectEntity
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
@@ -89,7 +89,7 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
         // ProjectEntity
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(TrackerTypeEnum.JIRA);
@@ -106,7 +106,7 @@ public class TrackerRouterTest {
         // Trackers
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean);
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties).setTrackerParametersBeans(trackerParametersBeans);
 
         // ProjectEntity
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("2").setTrackerType(TrackerTypeEnum.JIRA);
@@ -129,7 +129,7 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
         assertThat(trackerRouter.getTracker(null)).isNull();
@@ -147,7 +147,7 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
         assertThat(trackerRouter.getTracker(projectEntity)).isNull();
@@ -165,7 +165,7 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
         assertThat(trackerRouter.getTracker(projectEntity)).isNull();
@@ -183,7 +183,7 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
         assertThat(trackerRouter.getTracker(projectEntity)).isNull();
@@ -201,7 +201,7 @@ public class TrackerRouterTest {
         List<TrackerParametersBean> trackerParametersBeans = new ArrayList();
         trackerParametersBeans.add(trackerParametersBean1);
 
-        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, client, trackersProperties);
+        TrackerRouter trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties);
         trackerRouter.setTrackerParametersBeans(trackerParametersBeans);
 
         assertThat(trackerRouter.getTracker(projectEntity)).isNotNull();

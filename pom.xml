@@ -16,6 +16,7 @@
 	<description>Project Managment Data Agregator</description>
 
 	<properties>
+		<start-class>org.coffeeprojects.pmda.PmdaApplication</start-class>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -31,7 +32,6 @@
 			batch_step_execution,batch_step_execution_context</liquibase.diffExcludeObjects>
 		<liquibase-hibernate.version>3.8</liquibase-hibernate.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
-		<feign-httpclient.version>8.18.0</feign-httpclient.version>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 	</properties>
 
@@ -42,9 +42,8 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.netflix.feign</groupId>
-			<artifactId>feign-httpclient</artifactId>
-			<version>${feign-httpclient.version}</version>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-okhttp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

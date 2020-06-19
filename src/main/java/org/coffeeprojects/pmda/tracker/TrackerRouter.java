@@ -5,6 +5,8 @@ import feign.Feign;
 import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
+import feign.okhttp.OkHttpClient;
+import feign.slf4j.Slf4jLogger;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.tracker.jira.JiraClient;
 import org.coffeeprojects.pmda.tracker.mantis.MantisClient;
@@ -27,14 +29,15 @@ public class TrackerRouter {
 
     private List<TrackerParametersBean> trackerParametersBeans = new ArrayList<>();
 
+
     @Autowired
-    public TrackerRouter(Decoder decoder, Encoder encoder, Client client, TrackersProperties trackersProperties) {
+    public TrackerRouter(Decoder decoder, Encoder encoder, TrackersProperties trackersProperties) {
         trackersProperties.getTrackers().forEach(p -> {
             TrackerParametersBean trackerParametersBean = new TrackerParametersBean();
             trackerParametersBean.setType(TrackerTypeEnum.valueOf(p.getType().toUpperCase()));
             trackerParametersBean.setLocalId(p.getLocalId());
             trackerParametersBean.setClientId(p.getClientId());
-            trackerParametersBean.setClient(buildClient(decoder, encoder, client, getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
+            trackerParametersBean.setClient(buildClient(decoder, encoder, new OkHttpClient(), getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
             trackerParametersBeans.add(trackerParametersBean);
         });
     }
@@ -58,6 +61,8 @@ public class TrackerRouter {
         return Feign.builder().client(client)
                 .encoder(encoder)
                 .decoder(decoder)
+                .logger(new Slf4jLogger(TrackerRouter.class))
+                .logLevel(feign.Logger.Level.FULL)
                 .requestInterceptor(new BasicAuthRequestInterceptor(user, password))
                 .target(clientClass, url);
     }
