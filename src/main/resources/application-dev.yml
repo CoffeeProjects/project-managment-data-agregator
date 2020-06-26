@@ -14,31 +14,11 @@ spring:
     password: postgres123
     driver-class-name: org.postgresql.Driver
 
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: full
-
 trackers:
   -
     type: jira
     localId: 1
-    clientId: 10000
-    url:
-    user:
-    password:
-  -
-    type: jira
-    localId: 2
-    clientId: 50
-    url: https://test2.atlassian.net/rest/api/3/
-    user: "user2"
-    password: "user2"
-
-logging:
-  level:
-    root: INFO
-    liquibase: INFO
+    clientId: 10842
+    url: https://pmda-test.atlassian.net/rest/api/3/
+    user: "pmda@email.com"
+    password: "userToken"

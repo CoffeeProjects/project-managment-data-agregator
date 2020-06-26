@@ -13,7 +13,7 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa:
     hibernate:
-      show-sql: false
+      show-sql: true
       ddl-auto: none
 
 feign:
@@ -26,5 +26,5 @@ feign:
 
 logging:
   level:
-    root: ERROR
+    root: DEBUG
     liquibase: ERROR

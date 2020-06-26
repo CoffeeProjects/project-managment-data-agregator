@@ -11,6 +11,8 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.sprint.SprintUtils;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class JiraIssueService implements IssueService {
+
+    private static final Logger log = LoggerFactory.getLogger(MantisIssueService.class);
 
     private static final String SPRINTS_FIELD = "SPRINTS";
     private static final String JIRA_DEFAULT_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
@@ -78,6 +82,10 @@ public class JiraIssueService implements IssueService {
 
             if (!issueEntitiesDelta.isEmpty()) {
                 try {
+                    issueEntitiesDelta.stream()
+                            .forEach(p -> {
+                                log.info("Deleted issue : {}", p.getId());
+                            });
                     this.issueRepository.deleteAll(issueEntitiesDelta);
                 } catch (IllegalArgumentException e) {
                     throw new InvalidDataException(ExceptionConstant.ERROR_DELETE_ISSUES + issueEntitiesDelta + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
