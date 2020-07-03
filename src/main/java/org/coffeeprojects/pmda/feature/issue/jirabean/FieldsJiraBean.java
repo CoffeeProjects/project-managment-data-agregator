@@ -14,6 +14,7 @@ import org.coffeeprojects.pmda.feature.version.VersionJiraBean;
 import java.util.*;
 
 public class FieldsJiraBean {
+
     private UserJiraBean assignee;
 
     private UserJiraBean reporter;
@@ -37,6 +38,9 @@ public class FieldsJiraBean {
     private ProjectJiraBean project;
 
     private Set<VersionJiraBean> fixVersions;
+
+    @JsonProperty("timetracking")
+    private TimeTrackingJiraBean timeTracking;
 
     private List<String> labels;
 
@@ -147,6 +151,15 @@ public class FieldsJiraBean {
         return this;
     }
 
+    public TimeTrackingJiraBean getTimeTracking() {
+        return timeTracking;
+    }
+
+    public FieldsJiraBean setTimeTracking(TimeTrackingJiraBean timeTracking) {
+        this.timeTracking = timeTracking;
+        return this;
+    }
+
     public List<String> getLabels() {
         return labels;
     }
@@ -212,15 +225,17 @@ public class FieldsJiraBean {
                 Objects.equals(issueType, that.issueType) &&
                 Objects.equals(project, that.project) &&
                 Objects.equals(fixVersions, that.fixVersions) &&
+                Objects.equals(timeTracking, that.timeTracking) &&
                 Objects.equals(labels, that.labels) &&
                 Objects.equals(components, that.components) &&
                 Objects.equals(created, that.created) &&
-                Objects.equals(updated, that.updated);
+                Objects.equals(updated, that.updated) &&
+                Objects.equals(customFields, that.customFields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated);
+        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, timeTracking, labels, components, created, updated, customFields);
     }
 
     @Override
@@ -237,10 +252,12 @@ public class FieldsJiraBean {
                 ", issueType=" + issueType +
                 ", project=" + project +
                 ", fixVersions=" + fixVersions +
+                ", timeTracking=" + timeTracking +
                 ", labels=" + labels +
                 ", components=" + components +
                 ", created=" + created +
                 ", updated=" + updated +
+                ", customFields=" + customFields +
                 '}';
     }
 }
