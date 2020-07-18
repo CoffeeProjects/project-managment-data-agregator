@@ -64,6 +64,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
                     @JoinColumn(name = "version_tracker_type", referencedColumnName="trackerType")})
     private Set<VersionEntity> fixVersions;
 
+    private Integer originalEstimateSeconds;
+
+    private Integer remainingEstimateSeconds;
+
+    private Integer timeSpentSeconds;
+
     @ElementCollection
     private List<String> labels;
 
@@ -209,6 +215,33 @@ public class IssueEntity extends BaseEntity implements Serializable {
         return this;
     }
 
+    public Integer getOriginalEstimateSeconds() {
+        return originalEstimateSeconds;
+    }
+
+    public IssueEntity setOriginalEstimateSeconds(Integer originalEstimateSeconds) {
+        this.originalEstimateSeconds = originalEstimateSeconds;
+        return this;
+    }
+
+    public Integer getRemainingEstimateSeconds() {
+        return remainingEstimateSeconds;
+    }
+
+    public IssueEntity setRemainingEstimateSeconds(Integer remainingEstimateSeconds) {
+        this.remainingEstimateSeconds = remainingEstimateSeconds;
+        return this;
+    }
+
+    public Integer getTimeSpentSeconds() {
+        return timeSpentSeconds;
+    }
+
+    public IssueEntity setTimeSpentSeconds(Integer timeSpentSeconds) {
+        this.timeSpentSeconds = timeSpentSeconds;
+        return this;
+    }
+
     public List<String> getLabels() {
         return labels;
     }
@@ -267,6 +300,7 @@ public class IssueEntity extends BaseEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         IssueEntity that = (IssueEntity) o;
         return Objects.equals(key, that.key) &&
                 Objects.equals(assignee, that.assignee) &&
@@ -280,6 +314,9 @@ public class IssueEntity extends BaseEntity implements Serializable {
                 Objects.equals(issueType, that.issueType) &&
                 Objects.equals(project, that.project) &&
                 Objects.equals(fixVersions, that.fixVersions) &&
+                Objects.equals(originalEstimateSeconds, that.originalEstimateSeconds) &&
+                Objects.equals(remainingEstimateSeconds, that.remainingEstimateSeconds) &&
+                Objects.equals(timeSpentSeconds, that.timeSpentSeconds) &&
                 Objects.equals(labels, that.labels) &&
                 Objects.equals(components, that.components) &&
                 Objects.equals(created, that.created) &&
@@ -290,14 +327,13 @@ public class IssueEntity extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, labels, components, created, updated, sprints, issueCustomFields);
+        return Objects.hash(super.hashCode(), key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, originalEstimateSeconds, remainingEstimateSeconds, timeSpentSeconds, labels, components, created, updated, sprints, issueCustomFields);
     }
 
     @Override
     public String toString() {
         return "IssueEntity{" +
-                "id='" + getId() + '\'' +
-                ", key='" + key + '\'' +
+                "key='" + key + '\'' +
                 ", assignee=" + assignee +
                 ", reporter=" + reporter +
                 ", creator=" + creator +
@@ -309,6 +345,9 @@ public class IssueEntity extends BaseEntity implements Serializable {
                 ", issueType=" + issueType +
                 ", project=" + project +
                 ", fixVersions=" + fixVersions +
+                ", originalEstimateSeconds=" + originalEstimateSeconds +
+                ", remainingEstimateSeconds=" + remainingEstimateSeconds +
+                ", timeSpentSeconds=" + timeSpentSeconds +
                 ", labels=" + labels +
                 ", components=" + components +
                 ", created=" + created +

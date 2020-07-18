@@ -26,7 +26,7 @@ public class JiraIssueService implements IssueService {
 
     private static final String SPRINTS_FIELD = "SPRINTS";
     private static final String JIRA_DEFAULT_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
-            "updated,created,duedate,labels,fixVersions,components,issuelinks,fixversions,resolution,resolutiondate";
+            "updated,created,duedate,labels,fixVersions,timetracking,components,issuelinks,fixversions,resolution,resolutiondate";
 
     private final IssueRepository issueRepository;
 
