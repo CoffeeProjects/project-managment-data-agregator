@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity implements Serializable  {
+public abstract class BaseEntity<T> implements Serializable  {
 
     @EmbeddedId
     private CompositeIdBaseEntity id;
@@ -31,27 +31,27 @@ public abstract class BaseEntity implements Serializable  {
         return id;
     }
 
-    public BaseEntity setId(CompositeIdBaseEntity id) {
+    public T setId(CompositeIdBaseEntity id) {
         this.id = id;
-        return this;
+        return (T)this;
     }
 
     public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public BaseEntity setCreatedAt(Instant createdAt) {
+    public T setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
-        return this;
+        return (T)this;
     }
 
     public Instant getUpdatedAt() {
         return updatedAt;
     }
 
-    public BaseEntity setUpdatedAt(Instant updatedAt) {
+    public T setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
-        return this;
+        return (T)this;
     }
 
     @Override

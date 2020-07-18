@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "project")
-public class ProjectEntity extends BaseEntity implements Serializable {
+public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializable {
 
     private String key;
 
