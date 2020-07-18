@@ -67,23 +67,6 @@ public class VersionJiraBean {
         this.releaseDate = releaseDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        VersionJiraBean that = (VersionJiraBean) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(archived, that.archived) &&
-                Objects.equals(released, that.released) &&
-                Objects.equals(releaseDate, that.releaseDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, archived, released, releaseDate);
-    }
 
     @Override
     public String toString() {

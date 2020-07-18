@@ -1,24 +1,20 @@
 package org.coffeeprojects.pmda.feature.version;
 
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mapstruct.factory.Mappers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = VersionMapperImpl.class)
-@ExtendWith(SpringExtension.class)
-public class VersionMapperTest {
+class VersionMapperTest {
 
-    @Autowired
-    private VersionMapper versionMapper;
+    private final VersionMapper versionMapper = Mappers.getMapper(VersionMapper.class);
 
     @Test
-    public void test_to_entity_should_map_version_jira_bean_to_user_entity() {
+    void to_entity_should_map_version_jira_bean_to_user_entity() {
         // Given
         VersionJiraBean versionJiraBean = new VersionJiraBean()
+                .setId("123")
                 .setName("V1.1");
 
         // When
@@ -26,8 +22,9 @@ public class VersionMapperTest {
 
         // Then
         VersionEntity expectedVersionEntity = new VersionEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("123"))
                 .setName("V1.1");
 
-        assertThat(versionEntity.getName()).isEqualTo(expectedVersionEntity.getName());
+        assertThat(versionEntity).isEqualToComparingFieldByField(expectedVersionEntity);
     }
 }

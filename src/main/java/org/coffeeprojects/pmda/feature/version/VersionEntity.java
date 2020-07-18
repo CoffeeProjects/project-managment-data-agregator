@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "version")
-public class VersionEntity extends BaseEntity implements Serializable {
+public class VersionEntity extends BaseEntity<VersionEntity> implements Serializable {
 
     private String name;
 
@@ -64,24 +64,6 @@ public class VersionEntity extends BaseEntity implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        VersionEntity that = (VersionEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(archived, that.archived) &&
-                Objects.equals(released, that.released) &&
-                Objects.equals(releaseDate, that.releaseDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), name, description, archived, released, releaseDate);
-    }
-
-    @Override
     public String toString() {
         return "VersionEntity{" +
                 "name='" + name + '\'' +
@@ -89,6 +71,9 @@ public class VersionEntity extends BaseEntity implements Serializable {
                 ", archived=" + archived +
                 ", released=" + released +
                 ", releaseDate=" + releaseDate +
+                ", id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

@@ -34,7 +34,7 @@ public class TrackerRouter {
     public TrackerRouter(Decoder decoder, Encoder encoder, TrackersProperties trackersProperties) {
         trackersProperties.getTrackers().forEach(p -> {
             TrackerParametersBean trackerParametersBean = new TrackerParametersBean();
-            trackerParametersBean.setType(TrackerTypeEnum.valueOf(p.getType().toUpperCase()));
+            trackerParametersBean.setType(TrackerType.valueOf(p.getType().toUpperCase()));
             trackerParametersBean.setLocalId(p.getLocalId());
             trackerParametersBean.setClientId(p.getClientId());
             trackerParametersBean.setClient(buildClient(decoder, encoder, new OkHttpClient(), getClientInterface(p), p.getUrl(), p.getUser(), p.getPassword()));
@@ -43,7 +43,7 @@ public class TrackerRouter {
     }
 
     private Class getClientInterface(TrackerDataBean trackerDataBean) {
-        switch (TrackerTypeEnum.valueOf(trackerDataBean.getType().toUpperCase())) {
+        switch (TrackerType.valueOf(trackerDataBean.getType().toUpperCase())) {
             case JIRA:
                 return JiraClient.class;
             case MANTIS:

@@ -5,7 +5,7 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ public class JiraProjectServiceTest {
     @Test
     public void test_initialize_project_with_project_already_in_db() {
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity()
-            .setTrackerType(TrackerTypeEnum.JIRA)
+            .setTrackerType(TrackerType.JIRA)
             .setClientId("1")
             .setTrackerLocalId("1");
         ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);

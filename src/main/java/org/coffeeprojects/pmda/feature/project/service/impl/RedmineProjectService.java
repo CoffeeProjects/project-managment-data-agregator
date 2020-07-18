@@ -4,7 +4,7 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,6 @@ public class RedmineProjectService implements ProjectService {
     @Transactional
     public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean hasDeactivated) {
         log.debug("Redmine - initialize project");
-        return (ProjectEntity) new ProjectEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.REDMINE));
+        return (ProjectEntity) new ProjectEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.REDMINE));
     }
 }

@@ -59,16 +59,14 @@ public class UserEntity extends BaseEntity<UserEntity> implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         UserEntity that = (UserEntity) o;
-        return Objects.equals(emailAddress, that.emailAddress) &&
-                Objects.equals(displayName, that.displayName) &&
-                Objects.equals(timeZone, that.timeZone) &&
-                Objects.equals(active, that.active);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(emailAddress, displayName, timeZone, active);
+        return Objects.hash(id);
     }
 
     @Override

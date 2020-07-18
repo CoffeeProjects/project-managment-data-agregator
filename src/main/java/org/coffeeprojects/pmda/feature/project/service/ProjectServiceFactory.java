@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.feature.project.service;
 
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.coffeeprojects.pmda.feature.project.service.impl.JiraProjectService;
 import org.coffeeprojects.pmda.feature.project.service.impl.MantisProjectService;
 import org.coffeeprojects.pmda.feature.project.service.impl.RedmineProjectService;
@@ -21,9 +21,9 @@ public class ProjectServiceFactory {
         this.redmineProjectService = redmineProjectService;
     }
 
-    public ProjectService getService(TrackerTypeEnum trackerTypeEnum) {
-        if (trackerTypeEnum != null) {
-            switch (trackerTypeEnum) {
+    public ProjectService getService(TrackerType trackerType) {
+        if (trackerType != null) {
+            switch (trackerType) {
                 case JIRA:
                     return jiraProjectService;
                 case MANTIS:

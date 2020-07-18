@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MantisUserService implements UserService {
 
-    private static final Logger log = LoggerFactory.getLogger(MantisUserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MantisUserService.class);
 
+    @Override
     @Transactional
     public void update(ProjectEntity projectEntity) {
-        log.debug("Mantis - update user");
+        logger.info("Update mantis users of project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

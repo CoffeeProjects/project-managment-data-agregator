@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "sprint")
-public class SprintEntity extends BaseEntity implements Serializable {
+public class SprintEntity extends BaseEntity<SprintEntity> implements Serializable {
 
     private String rapidViewId;
 

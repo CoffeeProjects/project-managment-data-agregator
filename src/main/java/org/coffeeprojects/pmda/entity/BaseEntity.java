@@ -17,15 +17,15 @@ import java.util.Objects;
 public abstract class BaseEntity<T> implements Serializable  {
 
     @EmbeddedId
-    private CompositeIdBaseEntity id;
+    protected CompositeIdBaseEntity id;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
+    protected Instant createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
+    protected Instant updatedAt;
 
     public CompositeIdBaseEntity getId() {
         return id;
@@ -59,14 +59,12 @@ public abstract class BaseEntity<T> implements Serializable  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BaseEntity that = (BaseEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdAt, updatedAt);
+        return Objects.hash(id);
     }
 
     @Override

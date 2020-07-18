@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "status")
-public class StatusEntity extends BaseEntity implements Serializable {
+public class StatusEntity extends BaseEntity<StatusEntity> implements Serializable {
 
     private String name;
 

@@ -3,16 +3,16 @@ package org.coffeeprojects.pmda.tracker;
 import java.util.Objects;
 
 public class TrackerParametersBean {
-    TrackerTypeEnum type;
+    TrackerType type;
     String localId;
     String clientId;
     Object client;
 
-    public TrackerTypeEnum getType() {
+    public TrackerType getType() {
         return type;
     }
 
-    public TrackerParametersBean setType(TrackerTypeEnum type) {
+    public TrackerParametersBean setType(TrackerType type) {
         this.type = type;
         return this;
     }

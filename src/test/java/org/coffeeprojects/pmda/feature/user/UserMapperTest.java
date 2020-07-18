@@ -1,24 +1,20 @@
 package org.coffeeprojects.pmda.feature.user;
 
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mapstruct.factory.Mappers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = UserMapperImpl.class)
-@ExtendWith(SpringExtension.class)
-public class UserMapperTest {
+class UserMapperTest {
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     @Test
-    public void test_to_entity_should_map_user_jira_bean_to_user_entity() {
+    void to_entity_should_map_user_jira_bean_to_user_entity() {
         // Given
         UserJiraBean userJiraBean = new UserJiraBean()
+                .setAccountId("123")
                 .setEmailAddress("bruce_wayne@yopmail.com")
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);
@@ -28,12 +24,11 @@ public class UserMapperTest {
 
         // Then
         UserEntity expectedUserEntity = new UserEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("123"))
                 .setEmailAddress("bruce_wayne@yopmail.com")
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);
 
-        assertThat(userEntity.getEmailAddress()).isEqualTo(expectedUserEntity.getEmailAddress());
-        assertThat(userEntity.getDisplayName()).isEqualTo(expectedUserEntity.getDisplayName());
-        assertThat(userEntity.isActive()).isEqualTo(expectedUserEntity.isActive());
+        assertThat(userEntity).isEqualToComparingFieldByField(expectedUserEntity);
     }
 }
