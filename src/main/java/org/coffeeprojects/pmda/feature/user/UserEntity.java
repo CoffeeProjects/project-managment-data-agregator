@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "account")
-public class UserEntity extends BaseEntity implements Serializable {
+public class UserEntity extends BaseEntity<UserEntity> implements Serializable {
 
     private String emailAddress;
 
