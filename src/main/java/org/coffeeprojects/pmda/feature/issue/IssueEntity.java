@@ -21,47 +21,47 @@ import java.util.Set;
 
 @Entity
 @Table(name = "issue")
-public class IssueEntity extends BaseEntity implements Serializable {
+public class IssueEntity extends BaseEntity<IssueEntity> implements Serializable {
 
     private String key;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserEntity assignee;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserEntity reporter;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserEntity creator;
 
     private String summary;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private StatusEntity status;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private ResolutionEntity resolution;
 
     private Instant resolutionDate;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PriorityEntity priority;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private IssueTypeEntity issueType;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private ProjectEntity project;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "issue_version",
-            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
-                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
-                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
-            inverseJoinColumns = {@JoinColumn(name = "version_client_id", referencedColumnName="clientId"),
-                    @JoinColumn(name = "version_tracker_local_id", referencedColumnName="trackerLocalId"),
-                    @JoinColumn(name = "version_tracker_type", referencedColumnName="trackerType")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName = "clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName = "trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName = "trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "version_client_id", referencedColumnName = "clientId"),
+                    @JoinColumn(name = "version_tracker_local_id", referencedColumnName = "trackerLocalId"),
+                    @JoinColumn(name = "version_tracker_type", referencedColumnName = "trackerType")})
     private Set<VersionEntity> fixVersions;
 
     private Integer originalEstimateSeconds;
@@ -73,15 +73,15 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @ElementCollection
     private List<String> labels;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "issue_component",
-            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
-                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
-                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
-            inverseJoinColumns = {@JoinColumn(name = "component_client_id", referencedColumnName="clientId"),
-                    @JoinColumn(name = "component_tracker_local_id", referencedColumnName="trackerLocalId"),
-                    @JoinColumn(name = "component_tracker_type", referencedColumnName="trackerType")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName = "clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName = "trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName = "trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "component_client_id", referencedColumnName = "clientId"),
+                    @JoinColumn(name = "component_tracker_local_id", referencedColumnName = "trackerLocalId"),
+                    @JoinColumn(name = "component_tracker_type", referencedColumnName = "trackerType")})
     private Set<ComponentEntity> components;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -90,21 +90,21 @@ public class IssueEntity extends BaseEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "issue_sprint",
-            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName="clientId"),
-                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId"),
-                    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")},
-            inverseJoinColumns = {@JoinColumn(name = "sprint_client_id", referencedColumnName="clientId"),
-                    @JoinColumn(name = "sprint_tracker_local_id", referencedColumnName="trackerLocalId"),
-                    @JoinColumn(name = "sprint_tracker_type", referencedColumnName="trackerType")})
+            joinColumns = {@JoinColumn(name = "issue_client_id", referencedColumnName = "clientId"),
+                    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName = "trackerLocalId"),
+                    @JoinColumn(name = "issue_tracker_type", referencedColumnName = "trackerType")},
+            inverseJoinColumns = {@JoinColumn(name = "sprint_client_id", referencedColumnName = "clientId"),
+                    @JoinColumn(name = "sprint_tracker_local_id", referencedColumnName = "trackerLocalId"),
+                    @JoinColumn(name = "sprint_tracker_type", referencedColumnName = "trackerType")})
     private Set<SprintEntity> sprints;
 
-    @OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    @JoinColumn(name = "issue_client_id", referencedColumnName="clientId")
-    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName="trackerLocalId")
-    @JoinColumn(name = "issue_tracker_type", referencedColumnName="trackerType")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "issue_client_id", referencedColumnName = "clientId")
+    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName = "trackerLocalId")
+    @JoinColumn(name = "issue_tracker_type", referencedColumnName = "trackerType")
     private Set<IssueCustomField> issueCustomFields;
 
     public String getKey() {
@@ -302,32 +302,12 @@ public class IssueEntity extends BaseEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         IssueEntity that = (IssueEntity) o;
-        return Objects.equals(key, that.key) &&
-                Objects.equals(assignee, that.assignee) &&
-                Objects.equals(reporter, that.reporter) &&
-                Objects.equals(creator, that.creator) &&
-                Objects.equals(summary, that.summary) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(resolution, that.resolution) &&
-                Objects.equals(resolutionDate, that.resolutionDate) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(issueType, that.issueType) &&
-                Objects.equals(project, that.project) &&
-                Objects.equals(fixVersions, that.fixVersions) &&
-                Objects.equals(originalEstimateSeconds, that.originalEstimateSeconds) &&
-                Objects.equals(remainingEstimateSeconds, that.remainingEstimateSeconds) &&
-                Objects.equals(timeSpentSeconds, that.timeSpentSeconds) &&
-                Objects.equals(labels, that.labels) &&
-                Objects.equals(components, that.components) &&
-                Objects.equals(created, that.created) &&
-                Objects.equals(updated, that.updated) &&
-                Objects.equals(sprints, that.sprints) &&
-                Objects.equals(issueCustomFields, that.issueCustomFields);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, originalEstimateSeconds, remainingEstimateSeconds, timeSpentSeconds, labels, components, created, updated, sprints, issueCustomFields);
+        return Objects.hash(id);
     }
 
     @Override

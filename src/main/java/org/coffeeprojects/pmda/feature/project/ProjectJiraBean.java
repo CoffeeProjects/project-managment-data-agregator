@@ -45,24 +45,9 @@ public class ProjectJiraBean {
         return lead;
     }
 
-    public void setLead(UserJiraBean lead) {
+    public ProjectJiraBean setLead(UserJiraBean lead) {
         this.lead = lead;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProjectJiraBean that = (ProjectJiraBean) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(key, that.key) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(lead, that.lead);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, key, name, lead);
+        return this;
     }
 
     @Override

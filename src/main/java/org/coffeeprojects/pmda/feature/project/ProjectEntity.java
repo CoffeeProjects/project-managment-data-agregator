@@ -17,17 +17,17 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
 
     private String name;
 
-    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserEntity administrator;
 
     private Instant lastCheck;
 
     private Boolean active;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    @JoinColumn(name = "project_client_id", referencedColumnName="clientId")
-    @JoinColumn(name = "project_tracker_local_id", referencedColumnName="trackerLocalId")
-    @JoinColumn(name = "project_tracker_type", referencedColumnName="trackerType")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "project_client_id", referencedColumnName = "clientId")
+    @JoinColumn(name = "project_tracker_local_id", referencedColumnName = "trackerLocalId")
+    @JoinColumn(name = "project_tracker_type", referencedColumnName = "trackerType")
     private Set<ProjectCustomField> projectCustomFields;
 
     public String getKey() {
@@ -89,17 +89,12 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjectEntity that = (ProjectEntity) o;
-        return Objects.equals(key, that.key) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(administrator, that.administrator) &&
-                Objects.equals(lastCheck, that.lastCheck) &&
-                Objects.equals(active, that.active) &&
-                Objects.equals(projectCustomFields, that.projectCustomFields);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, name, administrator, lastCheck, active, projectCustomFields);
+        return Objects.hash(id);
     }
 
     @Override

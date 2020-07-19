@@ -22,12 +22,10 @@ import java.util.stream.Collectors;
 @Service
 public class JiraIssueService implements IssueService {
 
-    private static final Logger log = LoggerFactory.getLogger(MantisIssueService.class);
-
-    private static final String SPRINTS_FIELD = "SPRINTS";
-    private static final String JIRA_DEFAULT_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
+    protected static final String JIRA_DEFAULT_FIELDS = "key,project,issuetype,priority,summary,status,creator,reporter,assignee," +
             "updated,created,duedate,labels,fixVersions,timetracking,components,issuelinks,fixversions,resolution,resolutiondate";
-
+    private static final Logger logger = LoggerFactory.getLogger(JiraIssueService.class);
+    private static final String SPRINTS_FIELD = "SPRINTS";
     private final IssueRepository issueRepository;
 
     private final IssueMapper issueMapper;
@@ -45,6 +43,8 @@ public class JiraIssueService implements IssueService {
     @Transactional(noRollbackFor = InvalidDataException.class)
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
+        logger.info("Update last Jira modified issues of project: {}", projectEntity);
+
         String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
 
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, projectFields);
@@ -71,6 +71,8 @@ public class JiraIssueService implements IssueService {
     @Transactional(noRollbackFor = InvalidDataException.class)
     @Override
     public void deleteMissingIssues(ProjectEntity projectEntity) {
+        logger.info("Delete Jira missing issues of project: {}", projectEntity);
+
         String projectFields = IssueUtils.getFields(projectEntity, JIRA_DEFAULT_FIELDS);
 
         List<IssueEntity> unresolvedIssueEntities = this.issueRepository.findByProjectAndResolutionDateIsNull(projectEntity);
@@ -81,11 +83,8 @@ public class JiraIssueService implements IssueService {
             List<IssueEntity> issueEntitiesDelta = IssueUtils.getIssueEntitiesDelta(unresolvedIssueEntities, issueEntities);
 
             if (!issueEntitiesDelta.isEmpty()) {
+                logger.info("Issues to delete: {}", issueEntitiesDelta.stream().map(IssueEntity::getId).collect(Collectors.toList()));
                 try {
-                    issueEntitiesDelta.stream()
-                            .forEach(p -> {
-                                log.info("Deleted issue : {}", p.getId());
-                            });
                     this.issueRepository.deleteAll(issueEntitiesDelta);
                 } catch (IllegalArgumentException e) {
                     throw new InvalidDataException(ExceptionConstant.ERROR_DELETE_ISSUES + issueEntitiesDelta + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
@@ -96,7 +95,7 @@ public class JiraIssueService implements IssueService {
 
     private void fillSprints(IssueEntity issueEntity, ProjectEntity projectEntity, IssueJiraBean issueJiraBean) {
         ProjectCustomField projectCustomField = getProjectCustomField(projectEntity, SPRINTS_FIELD);
-        List<String> sprints = (ArrayList) getIssueCustomValue(issueJiraBean, projectCustomField);
+        List<String> sprints = (List<String>) getIssueCustomValue(issueJiraBean, projectCustomField);
         SprintUtils.toEntity(sprints, issueEntity);
     }
 
@@ -140,8 +139,8 @@ public class JiraIssueService implements IssueService {
     private Object getIssueCustomValue(IssueJiraBean issueJiraBean, ProjectCustomField projectCustomField) {
         if (projectCustomField != null && projectCustomField.getClientName() != null) {
             return issueJiraBean.getFields().getCustomFields().entrySet().stream()
-                    .filter(map -> projectCustomField.getClientName().equals(map.getKey()))
-                    .filter(map -> map.getValue() != null)
+                    .filter(customFieldEntry -> customFieldEntry.getKey().equals(projectCustomField.getClientName()))
+                    .filter(customFieldEntry -> customFieldEntry.getValue() != null)
                     .map(Map.Entry::getValue)
                     .findFirst()
                     .orElse(null);

@@ -16,16 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProjectUpdateService {
 
-    private static final Logger log = LoggerFactory.getLogger(ProjectUpdateService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProjectUpdateService.class);
 
-    private ProjectServiceFactory projectServiceFactory;
+    private final ProjectServiceFactory projectServiceFactory;
 
-    private UserServiceFactory userServiceFactory;
+    private final UserServiceFactory userServiceFactory;
 
-    private IssueServiceFactory issueServiceFactory;
+    private final IssueServiceFactory issueServiceFactory;
 
     public ProjectUpdateService(ProjectServiceFactory projectServiceFactory, UserServiceFactory userServiceFactory,
-                             IssueServiceFactory issueServiceFactory) {
+                                IssueServiceFactory issueServiceFactory) {
         this.projectServiceFactory = projectServiceFactory;
         this.userServiceFactory = userServiceFactory;
         this.issueServiceFactory = issueServiceFactory;
@@ -33,6 +33,7 @@ public class ProjectUpdateService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateProject(TrackerParametersBean tracker) throws CriticalDataException {
+        logger.info("Update project: {}", tracker);
         ProjectService projectService = projectServiceFactory.getService(tracker.getType());
         try {
             ProjectEntity projectEntity = projectService.initializeProject(tracker, false);
@@ -42,7 +43,7 @@ public class ProjectUpdateService {
                 userService.update(projectEntity);
 
                 // Update issues
-                IssueService issueService = issueServiceFactory.getService(projectEntity);
+                IssueService issueService = issueServiceFactory.getService(tracker.getType());
                 issueService.updateLastModifiedIssues(projectEntity);
 
                 // Delete missing issues
@@ -53,7 +54,7 @@ public class ProjectUpdateService {
             }
         } catch (RuntimeException e) {
             projectService.deactivateProject(tracker);
-            log.error("Error during script execution with this tracker: {}. Please check the errors before reactivating it in the database. Error details => {}", tracker, e.getMessage());
+            logger.error("Error during script execution with this tracker: {}. Please check the errors before reactivating it in the database. Error details => {}", tracker, e.getMessage());
         }
     }
 }

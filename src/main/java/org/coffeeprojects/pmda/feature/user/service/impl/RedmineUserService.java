@@ -15,7 +15,7 @@ public class RedmineUserService implements UserService {
     @Override
     @Transactional
     public void update(ProjectEntity projectEntity) {
-        logger.info("Update redmine users of project: {}", projectEntity);
+        logger.info("Update Redmine users of project: {}", projectEntity);
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

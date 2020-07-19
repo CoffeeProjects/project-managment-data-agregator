@@ -10,12 +10,13 @@ import org.coffeeprojects.pmda.feature.sprint.SprintMapper;
 import org.coffeeprojects.pmda.feature.status.StatusMapper;
 import org.coffeeprojects.pmda.feature.user.UserMapper;
 import org.coffeeprojects.pmda.feature.version.VersionMapper;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class, ResolutionMapper.class,
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,
-        ComponentMapper.class, SprintMapper.class})
+        ComponentMapper.class, SprintMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface IssueMapper {
 
     @Mapping(target = "id.clientId", source = "id")

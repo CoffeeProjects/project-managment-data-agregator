@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "priority")
-public class PriorityEntity extends BaseEntity implements Serializable {
+public class PriorityEntity extends BaseEntity<PriorityEntity> implements Serializable {
 
     private String name;
 
@@ -27,19 +27,21 @@ public class PriorityEntity extends BaseEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PriorityEntity that = (PriorityEntity) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "PriorityEntity{" +
-                "id='" + getId() + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

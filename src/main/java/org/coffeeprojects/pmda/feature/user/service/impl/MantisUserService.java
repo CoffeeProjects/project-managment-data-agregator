@@ -15,7 +15,7 @@ public class MantisUserService implements UserService {
     @Override
     @Transactional
     public void update(ProjectEntity projectEntity) {
-        logger.info("Update mantis users of project: {}", projectEntity);
+        logger.info("Update Mantis users of project: {}", projectEntity);
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

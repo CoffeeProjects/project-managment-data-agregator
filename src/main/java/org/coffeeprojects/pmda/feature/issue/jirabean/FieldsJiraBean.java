@@ -210,35 +210,6 @@ public class FieldsJiraBean {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FieldsJiraBean that = (FieldsJiraBean) o;
-        return Objects.equals(assignee, that.assignee) &&
-                Objects.equals(reporter, that.reporter) &&
-                Objects.equals(creator, that.creator) &&
-                Objects.equals(summary, that.summary) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(resolution, that.resolution) &&
-                Objects.equals(resolutionDate, that.resolutionDate) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(issueType, that.issueType) &&
-                Objects.equals(project, that.project) &&
-                Objects.equals(fixVersions, that.fixVersions) &&
-                Objects.equals(timeTracking, that.timeTracking) &&
-                Objects.equals(labels, that.labels) &&
-                Objects.equals(components, that.components) &&
-                Objects.equals(created, that.created) &&
-                Objects.equals(updated, that.updated) &&
-                Objects.equals(customFields, that.customFields);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, timeTracking, labels, components, created, updated, customFields);
-    }
-
-    @Override
     public String toString() {
         return "FieldsJiraBean{" +
                 "assignee=" + assignee +

@@ -1,7 +1,6 @@
 package org.coffeeprojects.pmda.feature.issue.jirabean;
 
 import java.util.List;
-import java.util.Objects;
 
 public class SearchIssuesResultJiraBean {
     private String expand;
@@ -57,23 +56,6 @@ public class SearchIssuesResultJiraBean {
     public SearchIssuesResultJiraBean setIssues(List<IssueJiraBean> issues) {
         this.issues = issues;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SearchIssuesResultJiraBean that = (SearchIssuesResultJiraBean) o;
-        return Objects.equals(expand, that.expand) &&
-                Objects.equals(startAt, that.startAt) &&
-                Objects.equals(maxResults, that.maxResults) &&
-                Objects.equals(total, that.total) &&
-                Objects.equals(issues, that.issues);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(expand, startAt, maxResults, total, issues);
     }
 
     @Override

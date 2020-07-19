@@ -63,6 +63,21 @@ public class VersionEntity extends BaseEntity<VersionEntity> implements Serializ
         this.releaseDate = releaseDate;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        VersionEntity that = (VersionEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     @Override
     public String toString() {
         return "VersionEntity{" +

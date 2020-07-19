@@ -1,25 +1,20 @@
 package org.coffeeprojects.pmda.feature.issuetype;
 
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mapstruct.factory.Mappers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = IssueTypeMapperImpl.class)
-@ExtendWith(SpringExtension.class)
-public class IssueTypeMapperTest {
+class IssueTypeMapperTest {
 
-    @Autowired
-    private IssueTypeMapper issueTypeMapper;
+    private final IssueTypeMapper issueTypeMapper = Mappers.getMapper(IssueTypeMapper.class);
 
     @Test
-    public void to_entity_should_map_issuetype_jira_bean_to_user_entity() {
-
+    void to_entity_should_map_issuetype_jira_bean_to_user_entity() {
         // Given
         IssueTypeJiraBean issueTypeJiraBean = new IssueTypeJiraBean()
+                .setId("id")
                 .setName("Name")
                 .setDescription("Description");
 
@@ -28,10 +23,10 @@ public class IssueTypeMapperTest {
 
         // Then
         IssueTypeEntity expectedIssueTypeEntity = new IssueTypeEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("id"))
                 .setName("Name")
                 .setDescription("Description");
 
-        assertThat(issueTypeEntity.getName()).isEqualTo(expectedIssueTypeEntity.getName());
-        assertThat(issueTypeEntity.getDescription()).isEqualTo(expectedIssueTypeEntity.getDescription());
+        assertThat(issueTypeEntity).isEqualToComparingFieldByField(expectedIssueTypeEntity);
     }
 }

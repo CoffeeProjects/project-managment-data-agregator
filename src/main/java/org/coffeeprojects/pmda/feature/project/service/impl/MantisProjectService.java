@@ -4,7 +4,6 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.service.ProjectService;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
-import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,30 +12,39 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MantisProjectService implements ProjectService {
 
-    private static final Logger log = LoggerFactory.getLogger(MantisProjectService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MantisProjectService.class);
 
+    @Override
     public ProjectEntity getProjectById(CompositeIdBaseEntity id) {
-        return new ProjectEntity();
+        logger.info("Get Mantis project by id: {}", id);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Transactional
+    @Override
     public void updateProject(ProjectEntity projectEntity) {
-        log.debug("Mantis - update project");
+        logger.info("Update Mantis project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Transactional
+    @Override
     public void updateLastCheckProject(ProjectEntity projectEntity) {
-        log.debug("Mantis - update last check project");
+        logger.info("Update last check of Mantis project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Transactional
+    @Override
     public void deactivateProject(TrackerParametersBean tracker) {
-        log.debug("Mantis - deactivate project");
+        logger.info("Deactivate Mantis project: {}", tracker);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Transactional
+    @Override
     public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean hasDeactivated) {
-        log.debug("Mantis - initialize project");
-        return (ProjectEntity) new ProjectEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.MANTIS));
+        logger.info("Initialize Mantis project: {}, hasDeactivated: {}", tracker, hasDeactivated);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

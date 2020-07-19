@@ -94,18 +94,12 @@ public class SprintEntity extends BaseEntity<SprintEntity> implements Serializab
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SprintEntity that = (SprintEntity) o;
-        return Objects.equals(rapidViewId, that.rapidViewId) &&
-                Objects.equals(state, that.state) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(goal, that.goal) &&
-                Objects.equals(startDate, that.startDate) &&
-                Objects.equals(endDate, that.endDate) &&
-                Objects.equals(completeDate, that.completeDate);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rapidViewId, state, name, goal, startDate, endDate, completeDate);
+        return Objects.hash(id);
     }
 
     @Override

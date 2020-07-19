@@ -10,17 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MantisIssueService implements IssueService {
 
-    private static final Logger log = LoggerFactory.getLogger(MantisIssueService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MantisIssueService.class);
 
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        log.info("Update from Mantis");
+        logger.info("Update last Mantis modified issues of project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Transactional
     @Override
     public void deleteMissingIssues(ProjectEntity projectEntity) {
-        log.info("Delete missing issues from Mantis");
+        logger.info("Delete Mantis missing issues of project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

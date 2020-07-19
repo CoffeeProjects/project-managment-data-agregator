@@ -1,5 +1,8 @@
 package org.coffeeprojects.pmda.feature.project;
 
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
+import org.coffeeprojects.pmda.feature.user.UserEntity;
+import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,36 +10,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Date;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {ProjectMapperImpl.class, UserMapperImpl.class})
 @ExtendWith(SpringExtension.class)
-public class ProjectMapperTest {
+class ProjectMapperTest {
 
     @Autowired
     private ProjectMapper projectMapper;
 
     @Test
-    public void test_to_entity_should_map_project_jira_bean_to_user_entity() {
-
-        Date date = new Date();
-
+    void to_entity_should_map_project_jira_bean_to_user_entity() {
         // Given
         ProjectJiraBean projectJiraBean = new ProjectJiraBean()
+                .setId("id")
                 .setKey("Key")
-                .setName("Name");
+                .setName("Name")
+                .setLead(new UserJiraBean().setDisplayName("Toto"));
 
         // When
         ProjectEntity projectEntity = projectMapper.toEntity(projectJiraBean);
 
         // Then
         ProjectEntity expectedProjectEntity = new ProjectEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("id"))
                 .setKey("Key")
-                .setName("Name");
+                .setName("Name")
+                .setAdministrator(new UserEntity().setId(new CompositeIdBaseEntity()).setDisplayName("Toto"));
 
-        assertThat(projectEntity.getKey()).isEqualTo(expectedProjectEntity.getKey());
-        assertThat(projectEntity.getName()).isEqualTo(expectedProjectEntity.getName());
+        assertThat(projectEntity).isEqualToComparingFieldByField(expectedProjectEntity);
     }
 }

@@ -13,6 +13,8 @@ import org.coffeeprojects.pmda.tracker.ExternalApiCallException;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import java.time.Instant;
 
 @Service
 public class JiraProjectService implements ProjectService {
+    private static final Logger logger = LoggerFactory.getLogger(JiraProjectService.class);
 
     private final ProjectRepository projectRepository;
 
@@ -40,13 +43,18 @@ public class JiraProjectService implements ProjectService {
         this.clock = clock;
     }
 
+    @Transactional(readOnly = true)
+    @Override
     public ProjectEntity getProjectById(CompositeIdBaseEntity id) {
+        logger.info("Get Jira project by id: {}", id);
         return this.projectRepository.findById(id)
                 .orElse(null);
     }
 
     @Transactional(noRollbackFor = InvalidDataException.class)
+    @Override
     public void updateProject(ProjectEntity projectEntity) {
+        logger.info("Update Jira project: {}", projectEntity);
         ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
         ProjectEntity projectEntityFromTracker = projectMapper.toEntity(projectJiraBean);
         TrackerUtils.fillIdsFromUserEntity(projectEntity, projectEntityFromTracker.getAdministrator());
@@ -63,7 +71,9 @@ public class JiraProjectService implements ProjectService {
     }
 
     @Transactional(noRollbackFor = InvalidDataException.class)
+    @Override
     public void updateLastCheckProject(ProjectEntity projectEntity) {
+        logger.info("Update last check of Jira project: {}", projectEntity);
         projectEntity.setLastCheck(Instant.now(clock));
 
         try {
@@ -74,7 +84,9 @@ public class JiraProjectService implements ProjectService {
     }
 
     @Transactional(noRollbackFor = InvalidDataException.class)
+    @Override
     public void deactivateProject(TrackerParametersBean tracker) throws CriticalDataException {
+        logger.info("Deactivate Jira project: {}", tracker);
         ProjectEntity projectEntity = this.initializeProject(tracker, true);
         projectEntity.setActive(Boolean.FALSE);
         try {
@@ -85,7 +97,9 @@ public class JiraProjectService implements ProjectService {
     }
 
     @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
+    @Override
     public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceDeactivate) {
+        logger.info("Initialize Jira project: {}, hasDeactivated: {}", tracker, forceDeactivate);
         ProjectEntity projectEntity = null;
 
         if (tracker != null) {

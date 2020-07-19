@@ -38,21 +38,22 @@ public class StatusEntity extends BaseEntity<StatusEntity> implements Serializab
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StatusEntity that = (StatusEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "StatusEntity{" +
-                "id='" + getId() + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
