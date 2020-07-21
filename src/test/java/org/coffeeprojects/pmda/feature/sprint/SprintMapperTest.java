@@ -16,9 +16,9 @@ class SprintMapperTest {
     private final SprintMapper sprintMapper = Mappers.getMapper(SprintMapper.class);
 
     @Test
-    void to_entity_should_map_sprint_jira_bean_to_user_entity() throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date date = simpleDateFormat.parse("2020-07-18 10:31:56");
+    void to_entity_should_map_sprint_jira_bean_to_user_entity() {
+        Instant instant = Instant.parse("2020-07-18T08:31:56.00Z");
+        Date date = Date.from(instant);
 
         // Given
         SprintJiraBean sprintJiraBean = new SprintJiraBean()
@@ -35,7 +35,6 @@ class SprintMapperTest {
         SprintEntity sprintEntity = sprintMapper.toEntity(sprintJiraBean);
 
         // Then
-        Instant instant = Instant.parse("2020-07-18T08:31:56.00Z");
         SprintEntity expectedSprintEntity = new SprintEntity()
                 .setId(new CompositeIdBaseEntity().setClientId("1"))
                 .setRapidViewId("1")
