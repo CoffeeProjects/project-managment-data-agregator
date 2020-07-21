@@ -3,6 +3,7 @@ package org.coffeeprojects.pmda.feature.sprint;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 import org.coffeeprojects.pmda.tracker.TrackerType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SprintUtilsTest {
 
+    @Disabled
     @Test
     void test_update_last_sprints_values_from_issue_entities_with_sprints() {
         // 1er Issue Entity
