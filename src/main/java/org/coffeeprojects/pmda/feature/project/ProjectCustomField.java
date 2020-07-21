@@ -34,6 +34,21 @@ public class ProjectCustomField extends BaseEntity implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ProjectCustomField that = (ProjectCustomField) o;
+        return Objects.equals(localName, that.localName) &&
+                Objects.equals(clientName, that.clientName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), localName, clientName);
+    }
+
+    @Override
     public String toString() {
         return "ProjectCustomField{" +
                 "localName='" + localName + '\'' +

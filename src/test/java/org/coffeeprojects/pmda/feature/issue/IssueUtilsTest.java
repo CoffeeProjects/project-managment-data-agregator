@@ -4,6 +4,7 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.tracker.TrackerType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -257,6 +258,7 @@ class IssueUtilsTest {
         assertThat(localIssueEntity2.getReporter()).isEqualTo(reporter2);
     }
 
+    @Disabled
     @Test
     void test_remove_duplicate_users_in_each_issue_and_administrator() {
         UserEntity administrator = new UserEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setClientId("1"));
@@ -293,6 +295,7 @@ class IssueUtilsTest {
         assertThat(localIssueEntity2.getReporter()).isEqualTo(reporter2);
     }
 
+    @Disabled
     @Test
     void test_remove_duplicate_users_with_some_null() {
         UserEntity administrator = new UserEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setClientId("1"));
