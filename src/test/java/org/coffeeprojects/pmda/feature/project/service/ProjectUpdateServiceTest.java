@@ -64,7 +64,7 @@ class ProjectUpdateServiceTest {
         verify(issueService, times(1)).updateLastModifiedIssues(projectEntity);
         verify(issueService, times(1)).deleteMissingIssues(projectEntity);
         verify(projectService, times(1)).updateLastCheckProject(projectEntity);
-        verify(projectService, never()).deactivateProject(any());
+        verify(projectService, never()).deactivateProjectOnError(any(), new RuntimeException());
     }
 
     @Test
@@ -87,6 +87,6 @@ class ProjectUpdateServiceTest {
         projectUpdateService.updateProject(trackerParametersBean);
 
         // Then
-        verify(projectService, times(1)).deactivateProject(trackerParametersBean);
+        verify(projectService, times(1)).deactivateProjectOnError(trackerParametersBean, new RuntimeException());
     }
 }

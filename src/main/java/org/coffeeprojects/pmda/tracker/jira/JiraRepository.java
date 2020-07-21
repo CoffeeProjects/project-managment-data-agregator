@@ -52,12 +52,12 @@ public class JiraRepository {
                 .map(ProjectEntity::getAdministrator)
                 .map(UserEntity::getId)
                 .map(CompositeIdBaseEntity::getClientId)
-                .orElseThrow(() -> new ExternalApiCallException(ExceptionConstant.ERROR_SET_ADMINISTRATOR + projectEntity.getKey()));
+                .orElseThrow(() -> new ExternalApiCallException(ExceptionConstant.ERROR_SET_ADMINISTRATOR + projectEntity.getId()));
 
         try {
             return ((JiraClient) trackerRouter.getTracker(projectEntity)).getUserById(clientId);
         } catch (FeignException e) {
-            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity.getId() + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
         }
     }
 
@@ -73,7 +73,7 @@ public class JiraRepository {
         try {
             return ((JiraClient) trackerRouter.getTracker(projectEntity)).getProjectById(projectEntity.getId().getClientId());
         } catch (FeignException e) {
-            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity.getKey(), e);
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity.getId() + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
         }
     }
 
@@ -119,7 +119,7 @@ public class JiraRepository {
         try {
             searchIssuesResultJiraBean = jiraClient.searchIssues(jql, EXPAND, fields, String.valueOf(MAX_RESULT), String.valueOf(startAt));
         } catch (FeignException e) {
-            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
+            throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity.getId() + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
         }
 
         if (searchIssuesResultJiraBean != null) {
@@ -131,7 +131,7 @@ public class JiraRepository {
                     try {
                         searchIssuesResultJiraBean = jiraClient.searchIssues(jql, EXPAND, fields, String.valueOf(MAX_RESULT), String.valueOf(startAt));
                     } catch (FeignException e) {
-                        throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity, e);
+                        throw new ExternalApiCallException(ExceptionConstant.ERROR_API_CALL + projectEntity.getId() + ExceptionConstant.ERROR_MORE_DETAILS + e.getMessage(), e);
                     }
                 }
                 issueJiraBeans.addAll(searchIssuesResultJiraBean.getIssues());

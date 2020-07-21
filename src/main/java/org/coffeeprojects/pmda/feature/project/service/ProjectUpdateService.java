@@ -53,7 +53,7 @@ public class ProjectUpdateService {
                 projectService.updateLastCheckProject(projectEntity);
             }
         } catch (RuntimeException e) {
-            projectService.deactivateProject(tracker);
+            projectService.deactivateProjectOnError(tracker, e);
             logger.error("Error during script execution with this tracker: {}. Please check the errors before reactivating it in the database. Error details => {}", tracker, e.getMessage());
         }
     }

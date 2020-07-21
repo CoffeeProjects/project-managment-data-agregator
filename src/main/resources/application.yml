@@ -26,5 +26,5 @@ feign:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
     liquibase: ERROR

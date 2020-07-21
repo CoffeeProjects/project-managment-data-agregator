@@ -22,6 +22,11 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
 
     private Instant lastCheck;
 
+    private Instant lastFailureDate;
+
+    @Column(columnDefinition="TEXT")
+    private String lastFailureMessage;
+
     private Boolean active;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -66,6 +71,22 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
         return this;
     }
 
+    public Instant getLastFailureDate() {
+        return lastFailureDate;
+    }
+
+    public void setLastFailureDate(Instant lastFailureDate) {
+        this.lastFailureDate = lastFailureDate;
+    }
+
+    public String getLastFailureMessage() {
+        return lastFailureMessage;
+    }
+
+    public void setLastFailureMessage(String lastFailureMessage) {
+        this.lastFailureMessage = lastFailureMessage;
+    }
+
     public Boolean isActive() {
         return active;
     }
@@ -100,11 +121,12 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
     @Override
     public String toString() {
         return "ProjectEntity{" +
-                "id='" + getId() + '\'' +
-                ", key='" + key + '\'' +
+                "key='" + key + '\'' +
                 ", name='" + name + '\'' +
                 ", administrator=" + administrator +
                 ", lastCheck=" + lastCheck +
+                ", lastFailureDate=" + lastFailureDate +
+                ", lastFailureMessage='" + lastFailureMessage + '\'' +
                 ", active=" + active +
                 ", projectCustomFields=" + projectCustomFields +
                 '}';
