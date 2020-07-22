@@ -53,7 +53,7 @@ public class JiraProjectService implements ProjectService {
                 .orElse(null);
     }
 
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     @Override
     public void updateProject(ProjectEntity projectEntity) {
         logger.info("Update Jira project: {}", projectEntity);
@@ -85,11 +85,14 @@ public class JiraProjectService implements ProjectService {
         }
     }
 
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     @Override
     public void deactivateProjectOnError(TrackerParametersBean tracker, RuntimeException error) throws CriticalDataException {
         logger.info("Deactivate Jira project: {}", tracker);
         ProjectEntity projectEntity = this.initializeProject(tracker, true);
+
+        Integer failureCounter = projectEntity.getFailureCounter() == null ? 0 : projectEntity.getFailureCounter();
+        projectEntity.setFailureCounter(failureCounter + 1);
         projectEntity.setLastFailureDate(Instant.now(clock));
         projectEntity.setLastFailureMessage(StringUtils.substring(error.getMessage() + " >> " + ExceptionUtils.getStackTrace(error), 0, 1000));
         projectEntity.setActive(Boolean.FALSE);
@@ -97,6 +100,21 @@ public class JiraProjectService implements ProjectService {
             this.projectRepository.save(projectEntity);
         } catch (Exception e) {
             throw new CriticalDataException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage(), e);
+        }
+    }
+
+    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Override
+    public void reactivateProject(ProjectEntity projectEntity) throws CriticalDataException {
+        logger.info("Reactivate Jira project: {}", projectEntity);
+        projectEntity.setFailureCounter(null);
+        projectEntity.setLastFailureDate(null);
+        projectEntity.setLastFailureMessage(null);
+        projectEntity.setActive(Boolean.TRUE);
+        try {
+            this.projectRepository.save(projectEntity);
+        } catch (Exception e) {
+            throw new CriticalDataException("Error during deactivation of this local project ID : " + projectEntity.getId() + " More Details => " + e.getMessage(), e);
         }
     }
 

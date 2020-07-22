@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.feature.project.quartz;
+package org.coffeeprojects.pmda.feature.project.quartz.retry;
 
 import org.coffeeprojects.pmda.batch.BatchEnum;
 import org.quartz.spi.JobFactory;
@@ -17,37 +17,37 @@ import java.util.Map;
 
 @Configuration
 @ConditionalOnExpression("'${scheduler.enabled}'=='true'")
-public class ProjectUpdateQuartzConfig {
+public class ProjectRetryQuartzConfig {
 
-    @Value("${scheduler.trigger.project-update-cron-expression}")
+    @Value("${scheduler.trigger.project-retry-cron-expression}")
     private String cronExpression;
 
     @Autowired
     private ApplicationContext applicationContext;
 
     @Bean
-    public JobDetailFactoryBean projectJobDetailFactoryBean() {
+    public JobDetailFactoryBean projectRetryJobDetailFactoryBean() {
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
-        jobDetailFactoryBean.setJobClass(ProjectUpdateQuartzJobLauncher.class);
+        jobDetailFactoryBean.setJobClass(ProjectRetryQuartzJobLauncher.class);
         Map<String, Object> map = new HashMap<>();
-        map.put("jobName", BatchEnum.JOB_PROJECT_UPDATE.toString());
+        map.put("jobName", BatchEnum.JOB_PROJECT_RETRY.toString());
         jobDetailFactoryBean.setJobDataAsMap(map);
         return jobDetailFactoryBean;
     }
 
     @Bean
-    public CronTriggerFactoryBean projectCronTriggerFactoryBean() {
+    public CronTriggerFactoryBean projectRetryCronTriggerFactoryBean() {
         CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-        cronTriggerFactoryBean.setJobDetail(projectJobDetailFactoryBean().getObject());
+        cronTriggerFactoryBean.setJobDetail(projectRetryJobDetailFactoryBean().getObject());
         cronTriggerFactoryBean.setCronExpression(this.cronExpression);
         return cronTriggerFactoryBean;
     }
 
-    @Bean(name = "projectScheduler")
+    @Bean(name = "projectRetryScheduler")
     public SchedulerFactoryBean projectSchedulerFactoryBean(JobFactory jobFactory) {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
         scheduler.setJobFactory(jobFactory);
-        scheduler.setTriggers(projectCronTriggerFactoryBean().getObject());
+        scheduler.setTriggers(projectRetryCronTriggerFactoryBean().getObject());
         scheduler.setApplicationContext(applicationContext);
         return scheduler;
     }

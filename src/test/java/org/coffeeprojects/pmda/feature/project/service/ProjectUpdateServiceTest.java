@@ -58,7 +58,7 @@ class ProjectUpdateServiceTest {
         when(issueServiceFactory.getService(TrackerType.JIRA)).thenReturn(issueService);
 
         // When
-        projectUpdateService.updateProject(trackerParametersBean);
+        projectUpdateService.updateProject(trackerParametersBean, false);
 
         // Then
         verify(userService, times(1)).update(projectEntity);
@@ -87,7 +87,7 @@ class ProjectUpdateServiceTest {
         doThrow(runtimeException).when(userService).update(projectEntity);
 
         // When
-        projectUpdateService.updateProject(trackerParametersBean);
+        projectUpdateService.updateProject(trackerParametersBean, false);
 
         // Then
         verify(projectService, times(1)).deactivateProjectOnError(trackerParametersBean, runtimeException);

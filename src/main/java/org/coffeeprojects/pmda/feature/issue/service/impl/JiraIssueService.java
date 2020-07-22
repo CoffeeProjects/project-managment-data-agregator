@@ -9,6 +9,7 @@ import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectCustomField;
 import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.sprint.SprintUtils;
+import org.coffeeprojects.pmda.tracker.ExternalApiCallException;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class JiraIssueService implements IssueService {
         this.jiraRepository = jiraRepository;
     }
 
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
         logger.info("Update last Jira modified issues of project: {}", projectEntity);
@@ -68,7 +69,7 @@ public class JiraIssueService implements IssueService {
         }
     }
 
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     @Override
     public void deleteMissingIssues(ProjectEntity projectEntity) {
         logger.info("Delete Jira missing issues of project: {}", projectEntity);

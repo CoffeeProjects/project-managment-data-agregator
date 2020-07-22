@@ -27,6 +27,8 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
     @Column(columnDefinition="TEXT")
     private String lastFailureMessage;
 
+    private Integer failureCounter;
+
     private Boolean active;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -87,6 +89,14 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
         this.lastFailureMessage = lastFailureMessage;
     }
 
+    public Integer getFailureCounter() {
+        return failureCounter;
+    }
+
+    public void setFailureCounter(Integer failureCounter) {
+        this.failureCounter = failureCounter;
+    }
+
     public Boolean isActive() {
         return active;
     }
@@ -127,6 +137,7 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
                 ", lastCheck=" + lastCheck +
                 ", lastFailureDate=" + lastFailureDate +
                 ", lastFailureMessage='" + lastFailureMessage + '\'' +
+                ", failureCounter=" + failureCounter +
                 ", active=" + active +
                 ", projectCustomFields=" + projectCustomFields +
                 '}';
