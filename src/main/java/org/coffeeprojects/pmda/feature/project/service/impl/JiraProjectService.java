@@ -1,5 +1,7 @@
 package org.coffeeprojects.pmda.feature.project.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.exception.CriticalDataException;
 import org.coffeeprojects.pmda.exception.ExceptionConstant;
@@ -51,7 +53,7 @@ public class JiraProjectService implements ProjectService {
                 .orElse(null);
     }
 
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     @Override
     public void updateProject(ProjectEntity projectEntity) {
         logger.info("Update Jira project: {}", projectEntity);
@@ -83,16 +85,36 @@ public class JiraProjectService implements ProjectService {
         }
     }
 
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     @Override
-    public void deactivateProject(TrackerParametersBean tracker) throws CriticalDataException {
+    public void deactivateProjectOnError(TrackerParametersBean tracker, RuntimeException error) throws CriticalDataException {
         logger.info("Deactivate Jira project: {}", tracker);
-        ProjectEntity projectEntity = this.initializeProject(tracker, true);
+        ProjectEntity projectEntity = initializeProject(tracker, true);
+
+        Integer failureCounter = projectEntity.getFailureCounter() == null ? 0 : projectEntity.getFailureCounter();
+        projectEntity.setFailureCounter(failureCounter + 1);
+        projectEntity.setLastFailureDate(Instant.now(clock));
+        projectEntity.setLastFailureMessage(StringUtils.substring(error.getMessage() + " >> " + ExceptionUtils.getStackTrace(error), 0, 1000));
         projectEntity.setActive(Boolean.FALSE);
         try {
             this.projectRepository.save(projectEntity);
         } catch (Exception e) {
             throw new CriticalDataException("Error during deactivation of this local project ID : " + tracker.getLocalId() + " More Details => " + e.getMessage(), e);
+        }
+    }
+
+    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Override
+    public void reactivateProject(ProjectEntity projectEntity) throws CriticalDataException {
+        logger.info("Reactivate Jira project: {}", projectEntity);
+        projectEntity.setFailureCounter(0);
+        projectEntity.setLastFailureDate(null);
+        projectEntity.setLastFailureMessage(null);
+        projectEntity.setActive(Boolean.TRUE);
+        try {
+            this.projectRepository.save(projectEntity);
+        } catch (Exception e) {
+            throw new CriticalDataException("Error during deactivation of this local project ID : " + projectEntity.getId() + " More Details => " + e.getMessage(), e);
         }
     }
 
@@ -109,7 +131,7 @@ public class JiraProjectService implements ProjectService {
                     .setClientId(tracker.getClientId()));
 
             if (projectEntity == null) {
-                projectEntity = ((ProjectEntity) new ProjectEntity().setId(new CompositeIdBaseEntity()
+                projectEntity = (new ProjectEntity().setId(new CompositeIdBaseEntity()
                         .setTrackerType(tracker.getType())
                         .setTrackerLocalId(tracker.getLocalId())
                         .setClientId(tracker.getClientId())))

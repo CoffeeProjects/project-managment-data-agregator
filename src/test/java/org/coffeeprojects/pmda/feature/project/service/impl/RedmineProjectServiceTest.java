@@ -37,6 +37,6 @@ class RedmineProjectServiceTest {
 
     @Test
     void deactivate_project_should_deactivate() {
-        assertThrows(UnsupportedOperationException.class, () -> redmineProjectService.deactivateProject(new TrackerParametersBean()));
+        assertThrows(UnsupportedOperationException.class, () -> redmineProjectService.deactivateProjectOnError(new TrackerParametersBean(), new RuntimeException()));
     }
 }

@@ -7,6 +7,7 @@ import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserMapper;
 import org.coffeeprojects.pmda.feature.user.UserRepository;
 import org.coffeeprojects.pmda.feature.user.service.UserService;
+import org.coffeeprojects.pmda.tracker.ExternalApiCallException;
 import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class JiraUserService implements UserService {
     }
 
     @Override
-    @Transactional(noRollbackFor = InvalidDataException.class)
+    @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     public void update(ProjectEntity projectEntity) {
         logger.info("Update Jira users of project: {}", projectEntity);
         UserJiraBean userJiraBean = jiraRepository.getUserDetails(projectEntity);

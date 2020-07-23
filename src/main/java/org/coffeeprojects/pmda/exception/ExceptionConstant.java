@@ -14,6 +14,8 @@ public class ExceptionConstant {
 
     public static final String ERROR_STOP_PROJECT_UPDATE = "Interruption of project update => ";
 
+    public static final String ERROR_STOP_PROJECT_RETRY = "Interruption of project retry => ";
+
     public static final String ERROR_UPDATE_ISSUES = "Error during update last modified issues with project : ";
     public static final String ERROR_DELETE_ISSUES = "Error during delete missing issues : ";
 }

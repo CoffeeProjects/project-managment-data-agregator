@@ -36,8 +36,15 @@ public class MantisProjectService implements ProjectService {
 
     @Transactional
     @Override
-    public void deactivateProject(TrackerParametersBean tracker) {
+    public void deactivateProjectOnError(TrackerParametersBean tracker, RuntimeException e) {
         logger.info("Deactivate Mantis project: {}", tracker);
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Transactional
+    @Override
+    public void reactivateProject(ProjectEntity projectEntity) {
+        logger.info("Reactivate Mantis project: {}", projectEntity);
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.feature.project.quartz;
+package org.coffeeprojects.pmda.feature.project.quartz.retry;
 
 import org.coffeeprojects.pmda.batch.JobFailingException;
 import org.coffeeprojects.pmda.exception.ExceptionConstant;
@@ -17,39 +17,39 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProjectUpdateStep implements Tasklet, StepExecutionListener {
+public class ProjectRetryStep implements Tasklet, StepExecutionListener {
 
-    private static final Logger log = LoggerFactory.getLogger(ProjectUpdateStep.class);
+    private static final Logger log = LoggerFactory.getLogger(ProjectRetryStep.class);
 
     TrackerRouter trackerRouter;
 
     ProjectUpdateService projectUpdateService;
 
-    public ProjectUpdateStep(TrackerRouter trackerRouter, ProjectUpdateService projectUpdateService) {
+    public ProjectRetryStep(TrackerRouter trackerRouter, ProjectUpdateService projectUpdateService) {
         this.trackerRouter = trackerRouter;
         this.projectUpdateService = projectUpdateService;
     }
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
-        log.debug("Project update step initialized.");
+        log.debug("Project retry step initialized.");
     }
 
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws JobFailingException {
         try {
             for (TrackerParametersBean tracker : trackerRouter.getTrackerParametersBeans()) {
-                projectUpdateService.updateProject(tracker);
+                projectUpdateService.updateProject(tracker, true);
             }
         } catch (Exception e) {
-            throw new JobFailingException(ExceptionConstant.ERROR_STOP_PROJECT_UPDATE + e.getMessage(), e);
+            throw new JobFailingException(ExceptionConstant.ERROR_STOP_PROJECT_RETRY + e.getMessage(), e);
         }
         return RepeatStatus.FINISHED;
     }
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
-        log.debug("Project update step ended.");
+        log.debug("Project retry step ended.");
         return ExitStatus.COMPLETED;
     }
 }

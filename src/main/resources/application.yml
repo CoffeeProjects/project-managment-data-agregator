@@ -2,6 +2,9 @@ scheduler:
   enabled: true
   trigger:
     project-update-cron-expression: "0 0/1 * 1/1 * ? *"
+    project-retry-cron-expression: "0 0/1 * 1/1 * ? *"
+    project-max-retry: 5
+    #project-retry-cron-expression: "0 0 0/1 1/1 * ? *"
 
 spring:
   batch:
@@ -26,5 +29,5 @@ feign:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
     liquibase: ERROR

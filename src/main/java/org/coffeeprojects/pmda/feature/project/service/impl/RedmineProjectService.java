@@ -37,8 +37,15 @@ public class RedmineProjectService implements ProjectService {
 
     @Transactional
     @Override
-    public void deactivateProject(TrackerParametersBean tracker) {
+    public void deactivateProjectOnError(TrackerParametersBean tracker, RuntimeException e) {
         logger.info("Deactivate Redmine project: {}", tracker);
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Transactional
+    @Override
+    public void reactivateProject(ProjectEntity projectEntity) {
+        logger.info("Reactivate Redmine project: {}", projectEntity);
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

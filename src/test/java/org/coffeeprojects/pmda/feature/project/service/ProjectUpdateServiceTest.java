@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.time.Instant;
 
 import static org.mockito.Mockito.*;
 
@@ -50,6 +53,7 @@ class ProjectUpdateServiceTest {
                 .setClient("client");
 
         ProjectEntity projectEntity = new ProjectEntity().setActive(true);
+
         when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
 
         when(userServiceFactory.getService(TrackerType.JIRA)).thenReturn(userService);
@@ -57,18 +61,18 @@ class ProjectUpdateServiceTest {
         when(issueServiceFactory.getService(TrackerType.JIRA)).thenReturn(issueService);
 
         // When
-        projectUpdateService.updateProject(trackerParametersBean);
+        projectUpdateService.updateProject(trackerParametersBean, false);
 
         // Then
         verify(userService, times(1)).update(projectEntity);
         verify(issueService, times(1)).updateLastModifiedIssues(projectEntity);
         verify(issueService, times(1)).deleteMissingIssues(projectEntity);
         verify(projectService, times(1)).updateLastCheckProject(projectEntity);
-        verify(projectService, never()).deactivateProject(any());
+        verify(projectService, never()).deactivateProjectOnError(any(), any());
     }
 
     @Test
-    void update_project_should_should_desactivate_project_on_runtime_exception() throws CriticalDataException {
+    void update_project_should_should_deactivate_project_on_runtime_exception() throws CriticalDataException {
         // Given
         TrackerParametersBean trackerParametersBean = new TrackerParametersBean()
                 .setType(TrackerType.JIRA)
@@ -76,17 +80,65 @@ class ProjectUpdateServiceTest {
                 .setClientId("clientId");
 
         ProjectEntity projectEntity = new ProjectEntity().setActive(true);
+        RuntimeException runtimeException = new RuntimeException();
+
         when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
 
         when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
         when(userServiceFactory.getService(TrackerType.JIRA)).thenReturn(userService);
 
-        doThrow(RuntimeException.class).when(userService).update(projectEntity);
+        doThrow(runtimeException).when(userService).update(projectEntity);
 
         // When
-        projectUpdateService.updateProject(trackerParametersBean);
+        projectUpdateService.updateProject(trackerParametersBean, false);
 
         // Then
-        verify(projectService, times(1)).deactivateProject(trackerParametersBean);
+        verify(projectService, times(1)).deactivateProjectOnError(trackerParametersBean, runtimeException);
+    }
+
+    @Test
+    void update_project_should_should_reactivate_project() throws CriticalDataException {
+        // Given
+
+        TrackerParametersBean trackerParametersBean = new TrackerParametersBean()
+                .setType(TrackerType.JIRA)
+                .setLocalId("localId")
+                .setClientId("clientId");
+
+        ProjectEntity projectEntity = new ProjectEntity().setActive(false).setLastCheck(Instant.now()).setLastFailureDate(Instant.now());
+        ReflectionTestUtils.setField(projectUpdateService, "projectMaxRetry", 5);
+
+        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(userServiceFactory.getService(TrackerType.JIRA)).thenReturn(userService);
+        when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
+        when(issueServiceFactory.getService(TrackerType.JIRA)).thenReturn(issueService);
+
+        // When
+        projectUpdateService.updateProject(trackerParametersBean, true);
+
+        // Then
+        verify(projectService, times(1)).reactivateProject(projectEntity);
+    }
+
+    @Test
+    void update_project_should_should_not_reactivate_project() throws CriticalDataException {
+        // Given
+
+        TrackerParametersBean trackerParametersBean = new TrackerParametersBean()
+                .setType(TrackerType.JIRA)
+                .setLocalId("localId")
+                .setClientId("clientId");
+
+        ProjectEntity projectEntity = new ProjectEntity().setActive(false).setLastCheck(Instant.now()).setLastFailureDate(Instant.now()).setFailureCounter(5);
+        ReflectionTestUtils.setField(projectUpdateService, "projectMaxRetry", 5);
+
+        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
+
+        // When
+        projectUpdateService.updateProject(trackerParametersBean, true);
+
+        // Then
+        verify(projectService, times(0)).reactivateProject(projectEntity);
     }
 }

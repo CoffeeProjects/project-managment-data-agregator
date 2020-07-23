@@ -35,7 +35,15 @@ public interface ProjectService {
      * @param tracker The tracker data
      * @throws CriticalDataException When the project cannot be deactivate
      */
-    void deactivateProject(TrackerParametersBean tracker) throws CriticalDataException;
+    void deactivateProjectOnError(TrackerParametersBean tracker, RuntimeException e) throws CriticalDataException;
+
+    /**
+     * Deactivate a project
+     *
+     * @param projectEntity The project
+     * @throws CriticalDataException When the project cannot be deactivate
+     */
+    void reactivateProject(ProjectEntity projectEntity) throws CriticalDataException;
 
     /**
      * Initialize a project

@@ -1,4 +1,4 @@
-package org.coffeeprojects.pmda.feature.project.quartz;
+package org.coffeeprojects.pmda.feature.project.quartz.update;
 
 import org.coffeeprojects.pmda.feature.project.service.impl.JiraProjectService;
 import org.quartz.DisallowConcurrentExecution;

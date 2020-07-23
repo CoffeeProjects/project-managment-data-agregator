@@ -33,7 +33,7 @@ class MantisProjectServiceTest {
 
     @Test
     void deactivate_project_should_deactivate() {
-        assertThrows(UnsupportedOperationException.class, () -> mantisProjectService.deactivateProject(new TrackerParametersBean()));
+        assertThrows(UnsupportedOperationException.class, () -> mantisProjectService.deactivateProjectOnError(new TrackerParametersBean(), new RuntimeException()));
     }
 
 }

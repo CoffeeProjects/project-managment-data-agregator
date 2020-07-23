@@ -22,6 +22,13 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
 
     private Instant lastCheck;
 
+    private Instant lastFailureDate;
+
+    @Column(columnDefinition="TEXT")
+    private String lastFailureMessage;
+
+    private Integer failureCounter;
+
     private Boolean active;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -66,6 +73,33 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
         return this;
     }
 
+    public Instant getLastFailureDate() {
+        return lastFailureDate;
+    }
+
+    public ProjectEntity setLastFailureDate(Instant lastFailureDate) {
+        this.lastFailureDate = lastFailureDate;
+        return this;
+    }
+
+    public String getLastFailureMessage() {
+        return lastFailureMessage;
+    }
+
+    public ProjectEntity setLastFailureMessage(String lastFailureMessage) {
+        this.lastFailureMessage = lastFailureMessage;
+        return this;
+    }
+
+    public Integer getFailureCounter() {
+        return failureCounter;
+    }
+
+    public ProjectEntity setFailureCounter(Integer failureCounter) {
+        this.failureCounter = failureCounter;
+        return this;
+    }
+
     public Boolean isActive() {
         return active;
     }
@@ -100,11 +134,13 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
     @Override
     public String toString() {
         return "ProjectEntity{" +
-                "id='" + getId() + '\'' +
-                ", key='" + key + '\'' +
+                "key='" + key + '\'' +
                 ", name='" + name + '\'' +
                 ", administrator=" + administrator +
                 ", lastCheck=" + lastCheck +
+                ", lastFailureDate=" + lastFailureDate +
+                ", lastFailureMessage='" + lastFailureMessage + '\'' +
+                ", failureCounter=" + failureCounter +
                 ", active=" + active +
                 ", projectCustomFields=" + projectCustomFields +
                 '}';
