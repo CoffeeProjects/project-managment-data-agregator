@@ -1,18 +1,16 @@
 package org.coffeeprojects.pmda.feature.issuetype;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
-import org.coffeeprojects.pmda.feature.project.ProjectCustomField;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "issue_type")
-public class IssueTypeEntity extends BaseEntity implements Serializable {
+public class IssueTypeEntity extends BaseEntity<IssueTypeEntity> implements Serializable {
 
     private String name;
 
@@ -42,21 +40,22 @@ public class IssueTypeEntity extends BaseEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IssueTypeEntity that = (IssueTypeEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "IssueTypeEntity{" +
-                "id='" + getId() + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

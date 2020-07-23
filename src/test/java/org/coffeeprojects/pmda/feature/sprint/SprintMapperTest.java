@@ -1,30 +1,28 @@
 package org.coffeeprojects.pmda.feature.sprint;
 
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mapstruct.factory.Mappers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = SprintMapperImpl.class)
-@ExtendWith(SpringExtension.class)
-public class SprintMapperTest {
+class SprintMapperTest {
 
-    @Autowired
-    private SprintMapper sprintMapper;
+    private final SprintMapper sprintMapper = Mappers.getMapper(SprintMapper.class);
 
     @Test
-    public void test_to_entity_should_map_sprint_jira_bean_to_user_entity() {
-
-        Date date = new Date();
+    void to_entity_should_map_sprint_jira_bean_to_user_entity() {
+        Instant instant = Instant.parse("2020-07-18T08:31:56.00Z");
+        Date date = Date.from(instant);
 
         // Given
         SprintJiraBean sprintJiraBean = new SprintJiraBean()
+                .setId("1")
                 .setRapidViewId("1")
                 .setState("State")
                 .setName("Name")
@@ -38,19 +36,15 @@ public class SprintMapperTest {
 
         // Then
         SprintEntity expectedSprintEntity = new SprintEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("1"))
                 .setRapidViewId("1")
                 .setState("State")
                 .setName("Name")
                 .setGoal("Goal")
-                .setStartDate(Instant.now())
-                .setEndDate(Instant.now())
-                .setCompleteDate(Instant.now());
+                .setStartDate(instant)
+                .setEndDate(instant)
+                .setCompleteDate(instant);
 
-        assertThat(sprintEntity.getRapidViewId()).isEqualTo(expectedSprintEntity.getRapidViewId());
-        assertThat(sprintEntity.getState()).isEqualTo(expectedSprintEntity.getState());
-        assertThat(sprintEntity.getName()).isEqualTo(expectedSprintEntity.getName());
-        assertThat(sprintEntity.getStartDate()).isNotNull();
-        assertThat(sprintEntity.getEndDate()).isNotNull();
-        assertThat(sprintEntity.getCompleteDate()).isNotNull();
+        assertThat(sprintEntity).isEqualToComparingFieldByField(expectedSprintEntity);
     }
 }

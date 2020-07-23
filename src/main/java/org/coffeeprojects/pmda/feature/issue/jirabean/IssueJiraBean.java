@@ -1,7 +1,5 @@
 package org.coffeeprojects.pmda.feature.issue.jirabean;
 
-import java.util.Objects;
-
 public class IssueJiraBean {
 
     private String id;
@@ -46,22 +44,6 @@ public class IssueJiraBean {
     public IssueJiraBean setFields(FieldsJiraBean fields) {
         this.fields = fields;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        IssueJiraBean that = (IssueJiraBean) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(key, that.key) &&
-                Objects.equals(expand, that.expand) &&
-                Objects.equals(fields, that.fields);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, key, expand, fields);
     }
 
     @Override

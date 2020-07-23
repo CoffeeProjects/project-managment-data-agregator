@@ -5,7 +5,7 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.project.ProjectRepository;
 import org.coffeeprojects.pmda.tracker.TrackerParametersBean;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.coffeeprojects.pmda.tracker.jira.JiraRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +17,7 @@ import java.time.Clock;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -36,26 +37,70 @@ public class JiraProjectServiceTest {
 
     private JiraProjectService jiraProjectService;
 
+
     @BeforeEach
     public void setup() {
         jiraProjectService = new JiraProjectService(projectRepository, projectMapper, jiraRepository, clock);
     }
 
+
     @Test
-    public void test_initialize_project_with_tracker_null() {
-        assertThat(jiraProjectService.initializeProject(null, false)).isNull();
+    void get_project_by_id_should_return_project() {
+        // Given
+        CompositeIdBaseEntity id = new CompositeIdBaseEntity()
+                .setClientId("1").setTrackerType(TrackerType.JIRA).setTrackerLocalId("1");
+
+        when(projectRepository.findById(id)).thenReturn(Optional.of(new ProjectEntity()));
+
+        // When
+        ProjectEntity projectEntity = jiraProjectService.getProjectById(id);
+
+        // Then
+        assertThat(projectEntity).isNotNull();
     }
 
     @Test
-    public void test_initialize_project_with_project_already_in_db() {
+    void update_project_should_update() {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    @Test
+    void update_last_check_project_should_update() {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    @Test
+    void deactivate_project_should_deactivate() {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    @Test
+    void initialize_project_should_initialize() {
+        // Given
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity()
-            .setTrackerType(TrackerTypeEnum.JIRA)
-            .setClientId("1")
-            .setTrackerLocalId("1");
-        ProjectEntity projectEntity = (ProjectEntity) new ProjectEntity().setId(projectId);
+                .setTrackerType(TrackerType.JIRA)
+                .setClientId("1")
+                .setTrackerLocalId("1");
+        ProjectEntity projectEntity = new ProjectEntity().setId(projectId);
 
         when(projectRepository.findById(any())).thenReturn(Optional.of(projectEntity));
 
-        assertThat(jiraProjectService.initializeProject(new TrackerParametersBean(),  false)).isEqualToComparingFieldByField(projectEntity);
+        // When
+        ProjectEntity actual = jiraProjectService.initializeProject(new TrackerParametersBean(), false);
+
+        // Then
+        assertThat(actual).isEqualToComparingFieldByField(projectEntity);
     }
 }

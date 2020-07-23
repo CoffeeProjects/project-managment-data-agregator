@@ -10,17 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RedmineIssueService implements IssueService {
 
-    private static final Logger log = LoggerFactory.getLogger(RedmineIssueService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedmineIssueService.class);
 
     @Transactional
     @Override
     public void updateLastModifiedIssues(ProjectEntity projectEntity) {
-        log.info("Update from Redmine");
+        logger.info("Update last Redmine modified issues of project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Transactional
     @Override
     public void deleteMissingIssues(ProjectEntity projectEntity) {
-        log.info("Delete missing issues from Redmine");
+        logger.info("Delete Redmine missing issues of project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

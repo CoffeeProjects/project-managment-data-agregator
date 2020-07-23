@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.tracker;
 
-public enum TrackerTypeEnum {
+public enum TrackerType {
     JIRA,
     REDMINE,
     MANTIS

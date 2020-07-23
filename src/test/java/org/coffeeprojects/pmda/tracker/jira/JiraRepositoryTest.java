@@ -8,7 +8,7 @@ import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -89,11 +89,11 @@ class JiraRepositoryTest {
         // Given
         Instant lastCheckDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
 
-        CompositeIdBaseEntity userId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
+        CompositeIdBaseEntity userId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA);
         UserEntity userEntity = new UserEntity().setId(userId)
                 .setTimeZone("Europe/Paris");
 
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA);
         ProjectEntity projectEntity = new ProjectEntity().setId(projectId)
                 .setLastCheck(lastCheckDate)
                 .setKey("pmda")
@@ -148,7 +148,7 @@ class JiraRepositoryTest {
         // Given
         Instant lastCheckDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
 
-        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerTypeEnum.JIRA);
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA);
         ProjectEntity projectEntity = new ProjectEntity().setId(projectId)
                 .setLastCheck(lastCheckDate)
                 .setKey("pmda");

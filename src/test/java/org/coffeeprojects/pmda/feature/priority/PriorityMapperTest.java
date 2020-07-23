@@ -1,25 +1,21 @@
 package org.coffeeprojects.pmda.feature.priority;
 
+import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mapstruct.factory.Mappers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = PriorityMapperImpl.class)
-@ExtendWith(SpringExtension.class)
-public class PriorityMapperTest {
+class PriorityMapperTest {
 
-    @Autowired
-    private PriorityMapper priorityMapper;
+    private final PriorityMapper priorityMapper = Mappers.getMapper(PriorityMapper.class);
 
     @Test
-    public void to_entity_should_map_priority_jira_bean_to_user_entity() {
+    void to_entity_should_map_priority_jira_bean_to_user_entity() {
 
         // Given
         PriorityJiraBean priorityJiraBean = new PriorityJiraBean()
+                .setId("id")
                 .setName("Name");
 
         // When
@@ -27,8 +23,9 @@ public class PriorityMapperTest {
 
         // Then
         PriorityEntity expectedPriorityEntity = new PriorityEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("id"))
                 .setName("Name");
 
-        assertThat(priorityEntity.getName()).isEqualTo(expectedPriorityEntity.getName());
+        assertThat(priorityEntity).isEqualToComparingFieldByField(expectedPriorityEntity);
     }
 }

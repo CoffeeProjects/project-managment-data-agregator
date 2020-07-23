@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "issue_custom_field")
-public class IssueCustomField extends BaseEntity implements Serializable {
+public class IssueCustomField extends BaseEntity<IssueCustomField> implements Serializable {
 
     private String value;
 
@@ -31,18 +31,21 @@ public class IssueCustomField extends BaseEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         IssueCustomField that = (IssueCustomField) o;
-        return Objects.equals(value, that.value);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), value);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "IssueCustomField{" +
-                ", value='" + value + '\'' +
+                "value='" + value + '\'' +
+                ", id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

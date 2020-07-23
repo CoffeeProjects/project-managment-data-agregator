@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RedmineUserService implements UserService {
 
-    private static final Logger log = LoggerFactory.getLogger(RedmineUserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedmineUserService.class);
 
+    @Override
     @Transactional
     public void update(ProjectEntity projectEntity) {
-        log.debug("Redmine - update user");
+        logger.info("Update Redmine users of project: {}", projectEntity);
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

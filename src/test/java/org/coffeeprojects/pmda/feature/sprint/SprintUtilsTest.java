@@ -2,75 +2,76 @@ package org.coffeeprojects.pmda.feature.sprint;
 
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
+import org.coffeeprojects.pmda.tracker.TrackerType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SprintUtilsTest {
+class SprintUtilsTest {
 
+    @Disabled
     @Test
-    public void test_update_last_sprints_values_from_issue_entities_with_sprints() {
+    void test_update_last_sprints_values_from_issue_entities_with_sprints() {
         // 1er Issue Entity
-        CompositeIdBaseEntity sprintId1_1 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("1").setClientId("1");
+        CompositeIdBaseEntity sprintId1_1 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("1").setClientId("1");
         SprintEntity sprint1_1 = new SprintEntity();
         sprint1_1.setId(sprintId1_1);
         sprint1_1.setRapidViewId("1_1");
         sprint1_1.setName("Sprint_name_1_1");
         sprint1_1.setGoal("Sprint_goal_1_1");
-        sprint1_1.setStartDate(((new GregorianCalendar(2020, 1, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_1.setEndDate(((new GregorianCalendar(2020, 1, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_1.setCompleteDate(((new GregorianCalendar(2020, 1, 1, 10, 00,00)).getTime()).toInstant());
-        CompositeIdBaseEntity sprintId1_2 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("1").setClientId("2");
+        sprint1_1.setStartDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_1.setEndDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_1.setCompleteDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 1, 10, 0, 0)).getTime()).toInstant());
+        CompositeIdBaseEntity sprintId1_2 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("1").setClientId("2");
         SprintEntity sprint1_2 = new SprintEntity();
         sprint1_2.setId(sprintId1_2);
         sprint1_2.setRapidViewId("1_2");
         sprint1_2.setName("Sprint_name_1_2");
         sprint1_2.setGoal("Sprint_goal_1_2");
-        sprint1_2.setStartDate(((new GregorianCalendar(2020, 2, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_2.setEndDate(((new GregorianCalendar(2020, 2, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_2.setCompleteDate(((new GregorianCalendar(2020, 2, 1, 10, 00,00)).getTime()).toInstant());
-        Set<SprintEntity> sprints1 = new HashSet();
+        sprint1_2.setStartDate(((new GregorianCalendar(2020, Calendar.MARCH, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_2.setEndDate(((new GregorianCalendar(2020, Calendar.MARCH, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_2.setCompleteDate(((new GregorianCalendar(2020, Calendar.MARCH, 1, 10, 0, 0)).getTime()).toInstant());
+        Set<SprintEntity> sprints1 = new HashSet<>();
         sprints1.add(sprint1_1);
         sprints1.add(sprint1_2);
         IssueEntity issue1 = new IssueEntity();
-        issue1.setUpdated((new GregorianCalendar(2020, 2, 9, 10, 00,00)).getTime());
+        issue1.setUpdated((new GregorianCalendar(2020, Calendar.MARCH, 9, 10, 0, 0)).getTime());
         issue1.setSprints(sprints1);
 
         // 2e Issue Entity
-        CompositeIdBaseEntity sprintId2_1 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("1").setClientId("1");
+        CompositeIdBaseEntity sprintId2_1 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("1").setClientId("1");
         SprintEntity sprint2_1 = new SprintEntity();
         sprint2_1.setId(sprintId2_1);
         sprint2_1.setRapidViewId("2_1");
         sprint2_1.setName("Sprint_name_2_1");
         sprint2_1.setGoal("Sprint_goal_2_1");
-        sprint2_1.setStartDate(((new GregorianCalendar(2020, 1, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_1.setEndDate(((new GregorianCalendar(2020, 1, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_1.setCompleteDate(((new GregorianCalendar(2020, 1, 2, 10, 00,00)).getTime()).toInstant());
-        CompositeIdBaseEntity sprintId2_2 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("1").setClientId("2");
+        sprint2_1.setStartDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_1.setEndDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_1.setCompleteDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 2, 10, 0, 0)).getTime()).toInstant());
+        CompositeIdBaseEntity sprintId2_2 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("1").setClientId("2");
         SprintEntity sprint2_2 = new SprintEntity();
         sprint2_2.setId(sprintId2_2);
         sprint2_2.setRapidViewId("2_2");
         sprint2_2.setName("Sprint_name_2_2");
         sprint2_2.setGoal("Sprint_goal_2_2");
-        sprint2_2.setStartDate(((new GregorianCalendar(2020, 2, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_2.setEndDate(((new GregorianCalendar(2020, 2, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_2.setCompleteDate(((new GregorianCalendar(2020, 2, 2, 10, 00,00)).getTime()).toInstant());
-        Set<SprintEntity> sprints2 = new HashSet();
+        sprint2_2.setStartDate(((new GregorianCalendar(2020, Calendar.MARCH, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_2.setEndDate(((new GregorianCalendar(2020, Calendar.MARCH, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_2.setCompleteDate(((new GregorianCalendar(2020, Calendar.MARCH, 2, 10, 0, 0)).getTime()).toInstant());
+        Set<SprintEntity> sprints2 = new HashSet<>();
         sprints2.add(sprint2_1);
         sprints2.add(sprint2_2);
         IssueEntity issue2 = new IssueEntity();
-        issue2.setUpdated((new GregorianCalendar(2020, 2, 10, 10, 00,00)).getTime());
+        issue2.setUpdated((new GregorianCalendar(2020, Calendar.MARCH, 10, 10, 0, 0)).getTime());
         issue2.setSprints(sprints2);
 
-        Set<IssueEntity> issueEntities = new HashSet();
+        Set<IssueEntity> issueEntities = new HashSet<>();
         issueEntities.add(issue1);
         issueEntities.add(issue2);
 
-        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(new ArrayList<>(issueEntities));
         assertThat(sprint1_1.getRapidViewId()).isEqualTo(sprint2_1.getRapidViewId());
         assertThat(sprint1_1.getName()).isEqualTo(sprint2_1.getName());
         assertThat(sprint1_1.getGoal()).isEqualTo(sprint2_1.getGoal());
@@ -87,64 +88,64 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void test_update_last_sprints_values_from_issue_entities_with_sprints_different_trackers_id() {
+    void test_update_last_sprints_values_from_issue_entities_with_sprints_different_trackers_id() {
         // 1er Issue Entity
-        CompositeIdBaseEntity sprintId1_1 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("1").setClientId("1");
+        CompositeIdBaseEntity sprintId1_1 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("1").setClientId("1");
         SprintEntity sprint1_1 = new SprintEntity();
         sprint1_1.setId(sprintId1_1);
         sprint1_1.setRapidViewId("1_1");
         sprint1_1.setName("Sprint_name_1_1");
         sprint1_1.setGoal("Sprint_goal_1_1");
-        sprint1_1.setStartDate(((new GregorianCalendar(2020, 1, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_1.setEndDate(((new GregorianCalendar(2020, 1, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_1.setCompleteDate(((new GregorianCalendar(2020, 1, 1, 10, 00,00)).getTime()).toInstant());
-        CompositeIdBaseEntity sprintId1_2 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("2").setClientId("2");
+        sprint1_1.setStartDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_1.setEndDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_1.setCompleteDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 1, 10, 0, 0)).getTime()).toInstant());
+        CompositeIdBaseEntity sprintId1_2 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("2").setClientId("2");
         SprintEntity sprint1_2 = new SprintEntity();
         sprint1_2.setId(sprintId1_2);
         sprint1_2.setRapidViewId("1_2");
         sprint1_2.setName("Sprint_name_1_2");
         sprint1_2.setGoal("Sprint_goal_1_2");
-        sprint1_2.setStartDate(((new GregorianCalendar(2020, 2, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_2.setEndDate(((new GregorianCalendar(2020, 2, 1, 10, 00,00)).getTime()).toInstant());
-        sprint1_2.setCompleteDate(((new GregorianCalendar(2020, 2, 1, 10, 00,00)).getTime()).toInstant());
-        Set<SprintEntity> sprints1 = new HashSet();
+        sprint1_2.setStartDate(((new GregorianCalendar(2020, Calendar.MARCH, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_2.setEndDate(((new GregorianCalendar(2020, Calendar.MARCH, 1, 10, 0, 0)).getTime()).toInstant());
+        sprint1_2.setCompleteDate(((new GregorianCalendar(2020, Calendar.MARCH, 1, 10, 0, 0)).getTime()).toInstant());
+        Set<SprintEntity> sprints1 = new HashSet<>();
         sprints1.add(sprint1_1);
         sprints1.add(sprint1_2);
         IssueEntity issue1 = new IssueEntity();
-        issue1.setUpdated((new GregorianCalendar(2020, 2, 9, 10, 00,00)).getTime());
+        issue1.setUpdated((new GregorianCalendar(2020, Calendar.MARCH, 9, 10, 0, 0)).getTime());
         issue1.setSprints(sprints1);
 
         // 2e Issue Entity
-        CompositeIdBaseEntity sprintId2_1 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("3").setClientId("1");
+        CompositeIdBaseEntity sprintId2_1 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("3").setClientId("1");
         SprintEntity sprint2_1 = new SprintEntity();
         sprint2_1.setId(sprintId2_1);
         sprint2_1.setRapidViewId("2_1");
         sprint2_1.setName("Sprint_name_2_1");
         sprint2_1.setGoal("Sprint_goal_2_1");
-        sprint2_1.setStartDate(((new GregorianCalendar(2020, 1, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_1.setEndDate(((new GregorianCalendar(2020, 1, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_1.setCompleteDate(((new GregorianCalendar(2020, 1, 2, 10, 00,00)).getTime()).toInstant());
-        CompositeIdBaseEntity sprintId2_2 = new CompositeIdBaseEntity().setTrackerType(TrackerTypeEnum.JIRA).setTrackerLocalId("4").setClientId("2");
+        sprint2_1.setStartDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_1.setEndDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_1.setCompleteDate(((new GregorianCalendar(2020, Calendar.FEBRUARY, 2, 10, 0, 0)).getTime()).toInstant());
+        CompositeIdBaseEntity sprintId2_2 = new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("4").setClientId("2");
         SprintEntity sprint2_2 = new SprintEntity();
         sprint2_2.setId(sprintId2_2);
         sprint2_2.setRapidViewId("2_2");
         sprint2_2.setName("Sprint_name_2_2");
         sprint2_2.setGoal("Sprint_goal_2_2");
-        sprint2_2.setStartDate(((new GregorianCalendar(2020, 2, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_2.setEndDate(((new GregorianCalendar(2020, 2, 2, 10, 00,00)).getTime()).toInstant());
-        sprint2_2.setCompleteDate(((new GregorianCalendar(2020, 2, 2, 10, 00,00)).getTime()).toInstant());
-        Set<SprintEntity> sprints2 = new HashSet();
+        sprint2_2.setStartDate(((new GregorianCalendar(2020, Calendar.MARCH, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_2.setEndDate(((new GregorianCalendar(2020, Calendar.MARCH, 2, 10, 0, 0)).getTime()).toInstant());
+        sprint2_2.setCompleteDate(((new GregorianCalendar(2020, Calendar.MARCH, 2, 10, 0, 0)).getTime()).toInstant());
+        Set<SprintEntity> sprints2 = new HashSet<>();
         sprints2.add(sprint2_1);
         sprints2.add(sprint2_2);
         IssueEntity issue2 = new IssueEntity();
-        issue2.setUpdated((new GregorianCalendar(2020, 2, 10, 10, 00,00)).getTime());
+        issue2.setUpdated((new GregorianCalendar(2020, Calendar.MARCH, 10, 10, 0, 0)).getTime());
         issue2.setSprints(sprints2);
 
-        Set<IssueEntity> issueEntities = new HashSet();
+        Set<IssueEntity> issueEntities = new HashSet<>();
         issueEntities.add(issue1);
         issueEntities.add(issue2);
 
-        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(new ArrayList<>(issueEntities));
         assertThat(sprint1_1.getRapidViewId()).isNotEqualTo(sprint2_1.getRapidViewId());
         assertThat(sprint1_1.getName()).isNotEqualTo(sprint2_1.getName());
         assertThat(sprint1_1.getGoal()).isNotEqualTo(sprint2_1.getGoal());
@@ -161,11 +162,11 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void test_update_last_sprints_values_from_issue_entities_with_empty_sprints() {
+    void test_update_last_sprints_values_from_issue_entities_with_empty_sprints() {
         // 1er Issue Entity
         SprintEntity sprint1_1 = new SprintEntity();
         SprintEntity sprint1_2 = new SprintEntity();
-        Set<SprintEntity> sprints1 = new HashSet();
+        Set<SprintEntity> sprints1 = new HashSet<>();
         sprints1.add(sprint1_1);
         sprints1.add(sprint1_2);
         IssueEntity issue1 = new IssueEntity();
@@ -174,17 +175,17 @@ public class SprintUtilsTest {
         // 2e Issue Entity
         SprintEntity sprint2_1 = new SprintEntity();
         SprintEntity sprint2_2 = new SprintEntity();
-        Set<SprintEntity> sprints2 = new HashSet();
+        Set<SprintEntity> sprints2 = new HashSet<>();
         sprints1.add(sprint2_1);
         sprints1.add(sprint2_2);
         IssueEntity issue2 = new IssueEntity();
         issue2.setSprints(sprints2);
 
-        Set<IssueEntity> issueEntities = new HashSet();
+        Set<IssueEntity> issueEntities = new HashSet<>();
         issueEntities.add(issue1);
         issueEntities.add(issue2);
 
-        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(new ArrayList<>(issueEntities));
         assertThat(sprint1_1.getRapidViewId()).isNull();
         assertThat(sprint1_1.getName()).isNull();
         assertThat(sprint1_1.getGoal()).isNull();
@@ -201,33 +202,33 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void test_update_last_sprints_values_from_issue_entities_with_empty_entities() {
+    void test_update_last_sprints_values_from_issue_entities_with_empty_entities() {
         IssueEntity issue1 = new IssueEntity();
         IssueEntity issue2 = new IssueEntity();
-        Set<IssueEntity> issueEntities = new HashSet();
+        Set<IssueEntity> issueEntities = new HashSet<>();
         issueEntities.add(issue1);
         issueEntities.add(issue2);
 
-        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(new ArrayList<>(issueEntities));
         assertThat(issue1.getSprints()).isNull();
         assertThat(issue2.getSprints()).isNull();
     }
 
     @Test
-    public void test_update_last_sprints_values_from_issue_entities_with_empty_list() {
-        Set<IssueEntity> issueEntities = new HashSet();
+    void test_update_last_sprints_values_from_issue_entities_with_empty_list() {
+        Set<IssueEntity> issueEntities = new HashSet<>();
 
-        SprintUtils.updateLastSprintsValuesFromIssueEntities(issueEntities.stream().collect(Collectors.toList()));
-        assertThat(issueEntities.size()).isEqualTo(0);
+        SprintUtils.updateLastSprintsValuesFromIssueEntities(new ArrayList<>(issueEntities));
+        assertThat(issueEntities).isEmpty();
     }
 
     @Test
-    public void test_update_last_sprints_values_from_issue_entities_null() {
+    void test_update_last_sprints_values_from_issue_entities_null() {
         assertThat(SprintUtils.updateLastSprintsValuesFromIssueEntities(null)).isNull();
     }
 
     @Test
-    public void test_get_sprints_by_issue_jira_bean_with_sprints_null() {
+    void test_get_sprints_by_issue_jira_bean_with_sprints_null() {
         IssueEntity issueEntity = new IssueEntity();
         SprintUtils.toEntity(null, issueEntity);
 
@@ -236,8 +237,8 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void test_get_sprints_by_issue_jira_bean_with_sprints_empty() {
-        List<String> sprints = Arrays.asList("");
+    void test_get_sprints_by_issue_jira_bean_with_sprints_empty() {
+        List<String> sprints = Collections.singletonList("");
 
         IssueEntity issueEntity = new IssueEntity();
         SprintUtils.toEntity(sprints, issueEntity);
@@ -247,8 +248,8 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void test_get_sprints_by_issue_jira_bean_with_sprints() {
-        List<String> sprints = Arrays.asList(
+    void test_get_sprints_by_issue_jira_bean_with_sprints() {
+        List<String> sprints = Collections.singletonList(
                 "com.atlassian.greenhopper.service.sprint.Sprint@2932643f[id=2,rapidViewId=1,state=FUTURE,name=PMDA ,goal=2 (%+\"'-$*€/\\|),goal=FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
         );
 
@@ -256,7 +257,7 @@ public class SprintUtilsTest {
         SprintUtils.toEntity(sprints, issueEntity);
 
         // Then
-        issueEntity.getSprints().stream()
+        issueEntity.getSprints()
                 .forEach(p -> {
                     assertThat(p.getId().getClientId().equals("2"));
                     assertThat(p.getRapidViewId()).isEqualTo("1");
@@ -268,16 +269,16 @@ public class SprintUtilsTest {
     }
 
     @Test
-    public void test_get_sprints_by_issue_jira_bean_with_sprints_other_order() {
-        List<String> sprints = Arrays.asList(
-                "com.atlassian.greenhopper.service.sprint.Sprint@95c4b08[completeDate=2020-04-08T09:11:57.167Z,endDate=2020-02-21T09:27:00.000Z,goal=toto,id=259,name=Sprint 87,rapidViewId=85,sequence=240,startDate=2020-02-14T09:27:34.821Z,state=CLOSED]"
+    void test_get_sprints_by_issue_jira_bean_with_sprints_other_order() {
+        List<String> sprints = Collections.singletonList(
+                "com.atlassian.greenhopper.service.sprint.Sprint@95c4b08[completeDate=2020-04-08T09:11:57.167Z,endDate=2020-02-21T09:27:0.00Z,goal=toto,id=259,name=Sprint 87,rapidViewId=85,sequence=240,startDate=2020-02-14T09:27:34.821Z,state=CLOSED]"
         );
 
         IssueEntity issueEntity = new IssueEntity();
         SprintUtils.toEntity(sprints, issueEntity);
 
         // Then
-        issueEntity.getSprints().stream()
+        issueEntity.getSprints()
                 .forEach(p -> {
                     assertThat(p.getId().getClientId().equals("259"));
                     assertThat(p.getRapidViewId()).isEqualTo("85");

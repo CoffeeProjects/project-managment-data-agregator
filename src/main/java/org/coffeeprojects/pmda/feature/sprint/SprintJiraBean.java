@@ -87,26 +87,6 @@ public class SprintJiraBean {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SprintJiraBean that = (SprintJiraBean) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(rapidViewId, that.rapidViewId) &&
-                Objects.equals(state, that.state) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(goal, that.goal) &&
-                Objects.equals(startDate, that.startDate) &&
-                Objects.equals(endDate, that.endDate) &&
-                Objects.equals(completeDate, that.completeDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, rapidViewId, state, name, goal, startDate, endDate, completeDate);
-    }
-
-    @Override
     public String toString() {
         return "SprintJiraBean{" +
                 "id='" + id + '\'' +

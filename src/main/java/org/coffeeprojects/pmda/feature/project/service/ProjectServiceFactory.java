@@ -1,37 +1,32 @@
 package org.coffeeprojects.pmda.feature.project.service;
 
-import org.coffeeprojects.pmda.tracker.TrackerTypeEnum;
 import org.coffeeprojects.pmda.feature.project.service.impl.JiraProjectService;
 import org.coffeeprojects.pmda.feature.project.service.impl.MantisProjectService;
 import org.coffeeprojects.pmda.feature.project.service.impl.RedmineProjectService;
+import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.springframework.stereotype.Service;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 @Service
 public class ProjectServiceFactory {
 
-    private final JiraProjectService jiraProjectService;
-
-    private final MantisProjectService mantisProjectService;
-
-    private final RedmineProjectService redmineProjectService;
+    private final Map<TrackerType, ProjectService> trackerProjectServiceMap = new EnumMap<>(TrackerType.class);
 
     public ProjectServiceFactory(JiraProjectService jiraProjectService, MantisProjectService mantisProjectService, RedmineProjectService redmineProjectService) {
-        this.jiraProjectService = jiraProjectService;
-        this.mantisProjectService = mantisProjectService;
-        this.redmineProjectService = redmineProjectService;
+        trackerProjectServiceMap.put(TrackerType.JIRA, jiraProjectService);
+        trackerProjectServiceMap.put(TrackerType.MANTIS, mantisProjectService);
+        trackerProjectServiceMap.put(TrackerType.REDMINE, redmineProjectService);
     }
 
-    public ProjectService getService(TrackerTypeEnum trackerTypeEnum) {
-        if (trackerTypeEnum != null) {
-            switch (trackerTypeEnum) {
-                case JIRA:
-                    return jiraProjectService;
-                case MANTIS:
-                    return mantisProjectService;
-                case REDMINE:
-                    return redmineProjectService;
-            }
-        }
-        return null;
+    /**
+     * Get project service by tracker type
+     *
+     * @param trackerType The tracker type
+     * @return The service or null
+     */
+    public ProjectService getService(TrackerType trackerType) {
+        return trackerProjectServiceMap.get(trackerType);
     }
 }

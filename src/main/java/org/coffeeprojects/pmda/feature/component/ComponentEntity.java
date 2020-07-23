@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Component")
-public class ComponentEntity extends BaseEntity implements Serializable {
+public class ComponentEntity extends BaseEntity<ComponentEntity> implements Serializable {
 
     private String name;
 
@@ -28,18 +28,21 @@ public class ComponentEntity extends BaseEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ComponentEntity that = (ComponentEntity) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "ComponentEntity{" +
                 "name='" + name + '\'' +
+                ", id=" + id +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
