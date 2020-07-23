@@ -89,7 +89,7 @@ public class JiraProjectService implements ProjectService {
     @Override
     public void deactivateProjectOnError(TrackerParametersBean tracker, RuntimeException error) throws CriticalDataException {
         logger.info("Deactivate Jira project: {}", tracker);
-        ProjectEntity projectEntity = this.initializeProject(tracker, true);
+        ProjectEntity projectEntity = initializeProject(tracker, true);
 
         Integer failureCounter = projectEntity.getFailureCounter() == null ? 0 : projectEntity.getFailureCounter();
         projectEntity.setFailureCounter(failureCounter + 1);
@@ -107,7 +107,7 @@ public class JiraProjectService implements ProjectService {
     @Override
     public void reactivateProject(ProjectEntity projectEntity) throws CriticalDataException {
         logger.info("Reactivate Jira project: {}", projectEntity);
-        projectEntity.setFailureCounter(null);
+        projectEntity.setFailureCounter(0);
         projectEntity.setLastFailureDate(null);
         projectEntity.setLastFailureMessage(null);
         projectEntity.setActive(Boolean.TRUE);
@@ -131,7 +131,7 @@ public class JiraProjectService implements ProjectService {
                     .setClientId(tracker.getClientId()));
 
             if (projectEntity == null) {
-                projectEntity = ((ProjectEntity) new ProjectEntity().setId(new CompositeIdBaseEntity()
+                projectEntity = (new ProjectEntity().setId(new CompositeIdBaseEntity()
                         .setTrackerType(tracker.getType())
                         .setTrackerLocalId(tracker.getLocalId())
                         .setClientId(tracker.getClientId())))

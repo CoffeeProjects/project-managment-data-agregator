@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.time.Instant;
 
 import static org.mockito.Mockito.*;
 
@@ -91,5 +94,51 @@ class ProjectUpdateServiceTest {
 
         // Then
         verify(projectService, times(1)).deactivateProjectOnError(trackerParametersBean, runtimeException);
+    }
+
+    @Test
+    void update_project_should_should_reactivate_project() throws CriticalDataException {
+        // Given
+
+        TrackerParametersBean trackerParametersBean = new TrackerParametersBean()
+                .setType(TrackerType.JIRA)
+                .setLocalId("localId")
+                .setClientId("clientId");
+
+        ProjectEntity projectEntity = new ProjectEntity().setActive(false).setLastCheck(Instant.now()).setLastFailureDate(Instant.now());
+        ReflectionTestUtils.setField(projectUpdateService, "projectMaxRetry", 5);
+
+        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(userServiceFactory.getService(TrackerType.JIRA)).thenReturn(userService);
+        when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
+        when(issueServiceFactory.getService(TrackerType.JIRA)).thenReturn(issueService);
+
+        // When
+        projectUpdateService.updateProject(trackerParametersBean, true);
+
+        // Then
+        verify(projectService, times(1)).reactivateProject(projectEntity);
+    }
+
+    @Test
+    void update_project_should_should_not_reactivate_project() throws CriticalDataException {
+        // Given
+
+        TrackerParametersBean trackerParametersBean = new TrackerParametersBean()
+                .setType(TrackerType.JIRA)
+                .setLocalId("localId")
+                .setClientId("clientId");
+
+        ProjectEntity projectEntity = new ProjectEntity().setActive(false).setLastCheck(Instant.now()).setLastFailureDate(Instant.now()).setFailureCounter(5);
+        ReflectionTestUtils.setField(projectUpdateService, "projectMaxRetry", 5);
+
+        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
+
+        // When
+        projectUpdateService.updateProject(trackerParametersBean, true);
+
+        // Then
+        verify(projectService, times(0)).reactivateProject(projectEntity);
     }
 }

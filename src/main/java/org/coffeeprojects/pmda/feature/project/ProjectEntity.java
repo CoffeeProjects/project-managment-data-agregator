@@ -77,24 +77,27 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
         return lastFailureDate;
     }
 
-    public void setLastFailureDate(Instant lastFailureDate) {
+    public ProjectEntity setLastFailureDate(Instant lastFailureDate) {
         this.lastFailureDate = lastFailureDate;
+        return this;
     }
 
     public String getLastFailureMessage() {
         return lastFailureMessage;
     }
 
-    public void setLastFailureMessage(String lastFailureMessage) {
+    public ProjectEntity setLastFailureMessage(String lastFailureMessage) {
         this.lastFailureMessage = lastFailureMessage;
+        return this;
     }
 
     public Integer getFailureCounter() {
         return failureCounter;
     }
 
-    public void setFailureCounter(Integer failureCounter) {
+    public ProjectEntity setFailureCounter(Integer failureCounter) {
         this.failureCounter = failureCounter;
+        return this;
     }
 
     public Boolean isActive() {
