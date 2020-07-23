@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.feature.project.quartz.retry;
 
-import org.coffeeprojects.pmda.batch.BatchEnum;
+import org.coffeeprojects.pmda.batch.BatchName;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -29,7 +29,7 @@ public class ProjectRetryJobConfig {
     @Bean
     public Job projectRetryJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
         return jobBuilders
-                .get(BatchEnum.JOB_PROJECT_RETRY.toString())
+                .get(BatchName.JOB_PROJECT_RETRY.toString())
                 .start(projectRetryConfigStep(stepBuilders))
                 .build();
     }

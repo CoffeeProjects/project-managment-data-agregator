@@ -1,6 +1,6 @@
 package org.coffeeprojects.pmda.feature.project.quartz.retry;
 
-import org.coffeeprojects.pmda.batch.BatchEnum;
+import org.coffeeprojects.pmda.batch.BatchName;
 import org.quartz.spi.JobFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ public class ProjectRetryQuartzConfig {
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
         jobDetailFactoryBean.setJobClass(ProjectRetryQuartzJobLauncher.class);
         Map<String, Object> map = new HashMap<>();
-        map.put("jobName", BatchEnum.JOB_PROJECT_RETRY.toString());
+        map.put("jobName", BatchName.JOB_PROJECT_RETRY.toString());
         jobDetailFactoryBean.setJobDataAsMap(map);
         return jobDetailFactoryBean;
     }
