@@ -35,7 +35,7 @@ public class ProjectUpdateService {
         this.issueServiceFactory = issueServiceFactory;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void updateProject(TrackerParametersBean tracker, boolean forceRetry) throws CriticalDataException {
         logger.info("Update project: {}", tracker);
         ProjectService projectService = projectServiceFactory.getService(tracker.getType());

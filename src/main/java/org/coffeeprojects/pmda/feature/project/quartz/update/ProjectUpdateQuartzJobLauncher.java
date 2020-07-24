@@ -33,7 +33,6 @@ public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
     private JiraProjectService projectService;
 
     @Override
-    @Transactional
     public void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
             JobLocator jobLocator = applicationContext.getBean(JobLocator.class);
@@ -49,7 +48,7 @@ public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
             log.info("########### Status: {}", jobExecution.getStatus());
         } catch (Exception e) {
-            log.error("Error during the execution of the Project Update Job");
+            log.error("Error during the execution of the Project Update Job >> Details : {}", e);
             throw new JobExecutionException("Interruption of Project Update Job");
         }
     }

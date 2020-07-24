@@ -33,7 +33,6 @@ public class ProjectRetryQuartzJobLauncher extends QuartzJobBean {
     private JiraProjectService projectService;
 
     @Override
-    @Transactional
     public void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
             JobLocator jobLocator = applicationContext.getBean(JobLocator.class);
