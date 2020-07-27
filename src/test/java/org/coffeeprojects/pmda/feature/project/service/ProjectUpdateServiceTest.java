@@ -54,7 +54,7 @@ class ProjectUpdateServiceTest {
 
         ProjectEntity projectEntity = new ProjectEntity().setActive(true);
 
-        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(projectService.initializeProject(trackerParametersBean, false, false)).thenReturn(projectEntity);
 
         when(userServiceFactory.getService(TrackerType.JIRA)).thenReturn(userService);
         when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
@@ -82,7 +82,7 @@ class ProjectUpdateServiceTest {
         ProjectEntity projectEntity = new ProjectEntity().setActive(true);
         RuntimeException runtimeException = new RuntimeException();
 
-        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(projectService.initializeProject(trackerParametersBean, false, false)).thenReturn(projectEntity);
 
         when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
         when(userServiceFactory.getService(TrackerType.JIRA)).thenReturn(userService);
@@ -97,7 +97,7 @@ class ProjectUpdateServiceTest {
     }
 
     @Test
-    void update_project_should_should_reactivate_project() throws CriticalDataException {
+    void update_project_should_reactivate_project() throws CriticalDataException {
         // Given
 
         TrackerParametersBean trackerParametersBean = new TrackerParametersBean()
@@ -108,7 +108,7 @@ class ProjectUpdateServiceTest {
         ProjectEntity projectEntity = new ProjectEntity().setActive(false).setLastCheck(Instant.now()).setLastFailureDate(Instant.now());
         ReflectionTestUtils.setField(projectUpdateService, "projectMaxRetry", 5);
 
-        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(projectService.initializeProject(trackerParametersBean, true, false)).thenReturn(projectEntity);
         when(userServiceFactory.getService(TrackerType.JIRA)).thenReturn(userService);
         when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
         when(issueServiceFactory.getService(TrackerType.JIRA)).thenReturn(issueService);
@@ -132,7 +132,7 @@ class ProjectUpdateServiceTest {
         ProjectEntity projectEntity = new ProjectEntity().setActive(false).setLastCheck(Instant.now()).setLastFailureDate(Instant.now()).setFailureCounter(5);
         ReflectionTestUtils.setField(projectUpdateService, "projectMaxRetry", 5);
 
-        when(projectService.initializeProject(trackerParametersBean, false)).thenReturn(projectEntity);
+        when(projectService.initializeProject(trackerParametersBean, true, false)).thenReturn(projectEntity);
         when(projectServiceFactory.getService(TrackerType.JIRA)).thenReturn(projectService);
 
         // When

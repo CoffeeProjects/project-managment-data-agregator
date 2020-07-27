@@ -157,7 +157,7 @@ public class JiraProjectServiceTest {
         when(projectRepository.findById(any())).thenReturn(Optional.of(projectEntity));
 
         // When
-        ProjectEntity actual = jiraProjectService.initializeProject(new TrackerParametersBean(), false);
+        ProjectEntity actual = jiraProjectService.initializeProject(new TrackerParametersBean(), false, false);
 
         // Then
         assertThat(actual).isEqualToComparingFieldByField(projectEntity);

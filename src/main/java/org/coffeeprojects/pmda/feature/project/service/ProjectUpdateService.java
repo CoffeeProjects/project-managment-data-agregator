@@ -41,9 +41,10 @@ public class ProjectUpdateService {
         ProjectService projectService = projectServiceFactory.getService(tracker.getType());
 
         try {
-            ProjectEntity projectEntity = projectService.initializeProject(tracker, false);
+            ProjectEntity projectEntity = projectService.initializeProject(tracker, forceRetry, false);
             Integer failureCounter = projectEntity.getFailureCounter() == null ? 0 : projectEntity.getFailureCounter();
-            if (Boolean.TRUE.equals(projectEntity.isActive()) || (forceRetry && failureCounter < projectMaxRetry)) {
+            if ((!forceRetry && Boolean.TRUE.equals(projectEntity.isActive())) ||
+                    (forceRetry && failureCounter < projectMaxRetry && projectEntity.getLastFailureDate() != null && Boolean.FALSE.equals(projectEntity.isActive()))) {
                 // Update administrator account
                 UserService userService = userServiceFactory.getService(tracker.getType());
                 userService.update(projectEntity);
