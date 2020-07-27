@@ -723,7 +723,7 @@ databaseChangeLog:
             type: TIMESTAMP WITHOUT TIME ZONE
         - column:
             name: goal
-            type: VARCHAR(255)
+            type: VARCHAR(500)
         - column:
             name: name
             type: VARCHAR(255)
