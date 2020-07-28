@@ -29,7 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-public class JiraProjectServiceTest {
+class JiraProjectServiceTest {
 
     @Mock
     private ProjectRepository projectRepository;
@@ -176,7 +176,7 @@ public class JiraProjectServiceTest {
         jiraProjectService.reactivateProject(projectEntity);
 
         // Then
-        assertThat(projectEntity.getFailureCounter()).isEqualTo(0);
+        assertThat(projectEntity.getFailureCounter()).isZero();
         assertThat(projectEntity.getLastFailureDate()).isNull();
         assertThat(projectEntity.getLastFailureMessage()).isNull();
         assertThat(projectEntity.isActive()).isTrue();

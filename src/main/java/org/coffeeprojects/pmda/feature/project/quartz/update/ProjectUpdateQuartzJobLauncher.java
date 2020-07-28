@@ -16,7 +16,6 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -48,7 +47,7 @@ public class ProjectUpdateQuartzJobLauncher extends QuartzJobBean {
 
             log.info("########### Status: {}", jobExecution.getStatus());
         } catch (Exception e) {
-            log.error("Error during the execution of the Project Update Job >> Details : {}", e);
+            log.error("Error during the execution of the Project Update Job >> Details : {}", e.getMessage());
             throw new JobExecutionException("Interruption of Project Update Job");
         }
     }

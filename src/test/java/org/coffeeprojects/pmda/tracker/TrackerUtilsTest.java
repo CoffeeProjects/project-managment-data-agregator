@@ -20,10 +20,10 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TrackerUtilsTest {
+class TrackerUtilsTest {
 
     @Test
-    public void test_fill_ids_from_issue_entities_null() {
+    void test_fill_ids_from_issue_entities_null() {
         // IssueEntity
         IssueEntity issueEntity = new IssueEntity();
         issueEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
@@ -37,7 +37,7 @@ public class TrackerUtilsTest {
     }
 
     @Test
-    public void test_fill_ids_from_issue_entity_field_by_field() {
+    void test_fill_ids_from_issue_entity_field_by_field() {
         // ProjectEntity
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA));
@@ -162,7 +162,7 @@ public class TrackerUtilsTest {
     }
 
     @Test
-    public void test_fill_ids_from_issue_entity() {
+    void test_fill_ids_from_issue_entity() {
         // ProjectEntity
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA));
@@ -176,7 +176,7 @@ public class TrackerUtilsTest {
     }
 
     @Test
-    public void test_fill_ids_from_issue_entity_without_tracker_id_or_tracker_type() {
+    void test_fill_ids_from_issue_entity_without_tracker_id_or_tracker_type() {
         // ProjectEntity
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
@@ -202,12 +202,12 @@ public class TrackerUtilsTest {
     }
 
     @Test
-    public void test_get_instant_from_timezone_null() {
+    void test_get_instant_from_timezone_null() {
         assertThat(TrackerUtils.getInstantFromTimezone(null)).isNull();
     }
 
     @Test
-    public void test_get_instant_from_bad_timezone() {
+    void test_get_instant_from_bad_timezone() {
         assertThat(TrackerUtils.getInstantFromTimezone("BAD_TIMEZONE")).isNull();
     }
 }

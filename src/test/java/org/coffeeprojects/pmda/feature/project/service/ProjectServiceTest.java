@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-public class ProjectServiceTest {
+class ProjectServiceTest {
 
     @Mock
     private JiraProjectService jiraProjectService;
@@ -24,25 +24,25 @@ public class ProjectServiceTest {
     private RedmineProjectService redmineProjectService;
 
     @Test
-    public void test_get_service_null() {
+    void test_get_service_null() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(null)).isNull();
     }
 
     @Test
-    public void test_get_service_with_jira_enum() {
+    void test_get_service_with_jira_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerType.JIRA)).isInstanceOf(JiraProjectService.class);
     }
 
     @Test
-    public void test_get_service_with_mantis_enum() {
+    void test_get_service_with_mantis_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerType.MANTIS)).isInstanceOf(MantisProjectService.class);
     }
 
     @Test
-    public void test_get_service_with_redmine_enum() {
+    void test_get_service_with_redmine_enum() {
         ProjectServiceFactory projectServiceFactory = new ProjectServiceFactory(jiraProjectService, mantisProjectService, redmineProjectService);
         assertThat(projectServiceFactory.getService(TrackerType.REDMINE)).isInstanceOf(RedmineProjectService.class);
     }

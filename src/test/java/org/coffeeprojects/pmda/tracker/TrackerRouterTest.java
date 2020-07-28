@@ -17,7 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-public class TrackerRouterTest {
+class TrackerRouterTest {
 
     @Mock
     private Decoder decoder;
@@ -34,17 +34,17 @@ public class TrackerRouterTest {
     private TrackerRouter trackerRouter;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         trackerRouter = new TrackerRouter(decoder, encoder, trackersProperties);
     }
 
     @Test
-    public void test_get_client_with_null_parameters() {
+    void test_get_client_with_null_parameters() {
         assertThat(trackerRouter.getTracker(null)).isNull();
     }
 
     @Test
-    public void test_get_client_with_projectentity_null() {
+    void test_get_client_with_projectentity_null() {
         // Tracker
         TrackerParametersBean trackerParametersBean = new TrackerParametersBean().setType(TrackerType.JIRA).setLocalId("1").setClient(new Object());
         // Trackers
@@ -56,7 +56,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_client_with_trackerrouter_null() {
+    void test_get_client_with_trackerrouter_null() {
         // ProjectEntity
         CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA);
         ProjectEntity projectEntity = ((ProjectEntity) new ProjectEntity().setId(projectId))
@@ -66,7 +66,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_client_with_trackerrouter_and_projectentity_match() {
+    void test_get_client_with_trackerrouter_and_projectentity_match() {
         // Tracker
         TrackerParametersBean trackerParametersBean = new TrackerParametersBean().setType(TrackerType.JIRA).setLocalId("1").setClientId("1").setClient(new Object());
         // Trackers
@@ -83,7 +83,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_client_with_trackerrouter_and_projectentity_trackerId_not_match() {
+    void test_get_client_with_trackerrouter_and_projectentity_trackerId_not_match() {
         // Tracker
         TrackerParametersBean trackerParametersBean = new TrackerParametersBean().setType(TrackerType.JIRA).setLocalId("1").setClient(new Object());
         // Trackers
@@ -100,7 +100,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_client_with_trackerrouter_and_projectentity_trackertype_not_match() {
+    void test_get_client_with_trackerrouter_and_projectentity_trackertype_not_match() {
         // Tracker
         TrackerParametersBean trackerParametersBean = new TrackerParametersBean().setType(TrackerType.JIRA).setLocalId("1").setClient(new Object());
         // Trackers
@@ -117,12 +117,12 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_tracker_null() {
+    void test_get_tracker_null() {
         assertThat(trackerRouter.getTracker(null)).isNull();
     }
 
     @Test
-    public void test_get_tracker_with_project_entity_null() {
+    void test_get_tracker_with_project_entity_null() {
         TrackerParametersBean trackerParametersBean1 = new TrackerParametersBean();
         trackerParametersBean1.setType(TrackerType.JIRA).setLocalId("1").setClientId("1");
 
@@ -136,7 +136,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_tracker_with_project_entity_client_id_not_match() {
+    void test_get_tracker_with_project_entity_client_id_not_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("1").setClientId("2"));
 
@@ -154,7 +154,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_tracker_with_project_entity_local_id_not_match() {
+    void test_get_tracker_with_project_entity_local_id_not_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("2").setClientId("1"));
 
@@ -172,7 +172,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_tracker_with_project_entity_type_not_match() {
+    void test_get_tracker_with_project_entity_type_not_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.MANTIS).setTrackerLocalId("1").setClientId("1"));
 
@@ -190,7 +190,7 @@ public class TrackerRouterTest {
     }
 
     @Test
-    public void test_get_tracker_with_trackers_and_project_entity_match() {
+    void test_get_tracker_with_trackers_and_project_entity_match() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setTrackerLocalId("1").setClientId("1"));
 

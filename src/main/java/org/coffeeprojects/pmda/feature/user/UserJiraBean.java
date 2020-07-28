@@ -1,7 +1,5 @@
 package org.coffeeprojects.pmda.feature.user;
 
-import java.util.Objects;
-
 public class UserJiraBean {
 
     private String accountId;
