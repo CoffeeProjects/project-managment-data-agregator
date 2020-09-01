@@ -18,15 +18,16 @@ public class SprintUtils {
     private static final Logger log = LoggerFactory.getLogger(SprintUtils.class);
 
     private static final String ID_FIELD_NAME = "id=";
-    private static final String RAPID_VIEW_FIELD_NAME = ",rapidViewId=";
-    private static final String STATE_FIELD_NAME = ",state=";
-    private static final String NAME_FIELD_NAME = ",name=";
-    private static final String GOAL_FIELD_NAME = ",goal=";
-    private static final String START_DATE_FIELD_NAME = ",startDate=";
-    private static final String END_DATE_FIELD_NAME = ",endDate=";
-    private static final String COMPLETE_DATE_FIELD_NAME = ",completeDate=";
+    private static final String RAPID_VIEW_FIELD_NAME = "rapidViewId=";
+    private static final String STATE_FIELD_NAME = "state=";
+    private static final String NAME_FIELD_NAME = "name=";
+    private static final String GOAL_FIELD_NAME = "goal=";
+    private static final String START_DATE_FIELD_NAME = "startDate=";
+    private static final String END_DATE_FIELD_NAME = "endDate=";
+    private static final String COMPLETE_DATE_FIELD_NAME = "completeDate=";
     private static final String COMMA = ",";
-    private static final String BRACKET = "]";
+    private static final String BRACKET_BEGIN = "[";
+    private static final String BRACKET_END = "]";
 
     private SprintUtils() {
         throw new IllegalStateException("Utility class");
@@ -88,23 +89,23 @@ public class SprintUtils {
                 .filter(StringUtils::isNotEmpty)
                 .forEach(p -> {
                     SprintEntity sprintEntity = new SprintEntity();
-                    String id = StringUtils.substringAfter(p, ID_FIELD_NAME);
-                    String rapidView = StringUtils.substringAfterLast(p, RAPID_VIEW_FIELD_NAME);
-                    String state = StringUtils.substringAfterLast(p, STATE_FIELD_NAME);
-                    String name = StringUtils.substringAfterLast(p, NAME_FIELD_NAME);
-                    String goal = StringUtils.substringAfterLast(p, GOAL_FIELD_NAME);
-                    String startDate = StringUtils.substringAfterLast(p, START_DATE_FIELD_NAME);
-                    String endDate = StringUtils.substringAfterLast(p, END_DATE_FIELD_NAME);
-                    String completeDate = StringUtils.substringAfterLast(p, COMPLETE_DATE_FIELD_NAME);
+                    String id = StringUtils.substringAfter(p, BRACKET_BEGIN + ID_FIELD_NAME).isBlank() ? StringUtils.substringAfter(p, COMMA + ID_FIELD_NAME) : StringUtils.substringAfter(p, ID_FIELD_NAME);
+                    String rapidView = StringUtils.substringAfter(p, BRACKET_BEGIN + RAPID_VIEW_FIELD_NAME).isBlank() ? StringUtils.substringAfterLast(p, COMMA + RAPID_VIEW_FIELD_NAME) : StringUtils.substringAfterLast(p, RAPID_VIEW_FIELD_NAME);
+                    String state = StringUtils.substringAfter(p, BRACKET_BEGIN + STATE_FIELD_NAME).isBlank() ? StringUtils.substringAfterLast(p, COMMA + STATE_FIELD_NAME) : StringUtils.substringAfterLast(p, STATE_FIELD_NAME);
+                    String name = StringUtils.substringAfter(p, BRACKET_BEGIN + NAME_FIELD_NAME).isBlank() ? StringUtils.substringAfterLast(p, COMMA + NAME_FIELD_NAME) : StringUtils.substringAfterLast(p, NAME_FIELD_NAME);
+                    String goal = StringUtils.substringAfter(p, BRACKET_BEGIN + GOAL_FIELD_NAME).isBlank() ? StringUtils.substringAfterLast(p, COMMA + GOAL_FIELD_NAME) : StringUtils.substringAfterLast(p, GOAL_FIELD_NAME);
+                    String startDate = StringUtils.substringAfter(p, BRACKET_BEGIN + START_DATE_FIELD_NAME).isBlank() ? StringUtils.substringAfterLast(p, COMMA + START_DATE_FIELD_NAME) : StringUtils.substringAfterLast(p, START_DATE_FIELD_NAME);
+                    String endDate = StringUtils.substringAfter(p, BRACKET_BEGIN + END_DATE_FIELD_NAME).isBlank() ? StringUtils.substringAfterLast(p, COMMA + END_DATE_FIELD_NAME) : StringUtils.substringAfterLast(p, END_DATE_FIELD_NAME);
+                    String completeDate = StringUtils.substringAfter(p, BRACKET_BEGIN + COMPLETE_DATE_FIELD_NAME).isBlank() ? StringUtils.substringAfterLast(p, COMMA + COMPLETE_DATE_FIELD_NAME) : StringUtils.substringAfterLast(p, COMPLETE_DATE_FIELD_NAME);
 
-                    sprintEntity.setId(new CompositeIdBaseEntity().setClientId(StringUtils.substringBefore(StringUtils.substringBefore(id, COMMA), BRACKET)));
-                    sprintEntity.setRapidViewId(StringUtils.substringBefore(StringUtils.substringBefore(rapidView, COMMA), BRACKET));
-                    sprintEntity.setState(StringUtils.substringBefore(StringUtils.substringBefore(state, COMMA), BRACKET));
+                    sprintEntity.setId(new CompositeIdBaseEntity().setClientId(StringUtils.substringBefore(StringUtils.substringBefore(id, COMMA), BRACKET_END)));
+                    sprintEntity.setRapidViewId(StringUtils.substringBefore(StringUtils.substringBefore(rapidView, COMMA), BRACKET_END));
+                    sprintEntity.setState(StringUtils.substringBefore(StringUtils.substringBefore(state, COMMA), BRACKET_END));
                     sprintEntity.setName(getFilteredTextField(name));
                     sprintEntity.setGoal(getFilteredTextField(goal));
-                    sprintEntity.setStartDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(startDate, COMMA), BRACKET)));
-                    sprintEntity.setEndDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(endDate, COMMA), BRACKET)));
-                    sprintEntity.setCompleteDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(completeDate, COMMA), BRACKET)));
+                    sprintEntity.setStartDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(startDate, COMMA), BRACKET_END)));
+                    sprintEntity.setEndDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(endDate, COMMA), BRACKET_END)));
+                    sprintEntity.setCompleteDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(completeDate, COMMA), BRACKET_END)));
 
                     sprintEntities.add(sprintEntity);
                 });
@@ -115,14 +116,14 @@ public class SprintUtils {
     }
 
     private static String getFilteredTextField(String value) {
-        String filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(value, COMMA + ID_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, RAPID_VIEW_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, STATE_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, NAME_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, GOAL_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, START_DATE_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, END_DATE_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMPLETE_DATE_FIELD_NAME), BRACKET);
+        String filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(value, COMMA + ID_FIELD_NAME), BRACKET_END);
+        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMMA + RAPID_VIEW_FIELD_NAME), BRACKET_END);
+        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMMA + STATE_FIELD_NAME), BRACKET_END);
+        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMMA + NAME_FIELD_NAME), BRACKET_END);
+        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMMA + GOAL_FIELD_NAME), BRACKET_END);
+        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMMA + START_DATE_FIELD_NAME), BRACKET_END);
+        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMMA + END_DATE_FIELD_NAME), BRACKET_END);
+        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMMA + COMPLETE_DATE_FIELD_NAME), BRACKET_END);
 
         return filteredValue;
     }
