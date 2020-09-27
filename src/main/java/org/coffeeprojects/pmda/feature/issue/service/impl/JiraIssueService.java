@@ -99,7 +99,7 @@ public class JiraIssueService implements IssueService {
 
     private void fillSprints(IssueEntity issueEntity, ProjectEntity projectEntity, IssueJiraBean issueJiraBean) {
         ProjectCustomField projectCustomField = getProjectCustomField(projectEntity, SPRINTS_FIELD);
-        List<String> sprints = (List<String>) getIssueCustomValue(issueJiraBean, projectCustomField);
+        List<LinkedHashMap> sprints = (List<LinkedHashMap>) getIssueCustomValue(issueJiraBean, projectCustomField);
         SprintUtils.toEntity(sprints, issueEntity);
     }
 
