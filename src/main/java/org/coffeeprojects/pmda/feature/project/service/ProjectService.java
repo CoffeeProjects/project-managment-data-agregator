@@ -52,5 +52,5 @@ public interface ProjectService {
      * @param forceDeactivate True if the project must no be updated ?? TODO: A verifier
      * @return The updated project
      */
-    ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceDeactivate);
+    ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceRetry, boolean forceDeactivate);
 }

@@ -12,10 +12,10 @@ import java.util.GregorianCalendar;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-public class IssueUpdateQuartzConfigTest {
+class IssueUpdateQuartzConfigTest {
 
     @Test
-    public void cron_expression_is_valid() throws ParseException {
+    void cron_expression_is_valid() throws ParseException {
         String exp = "0 0/1 * 1/1 * ? *";
         boolean isValidExpression = CronExpression.isValidExpression(exp);
 

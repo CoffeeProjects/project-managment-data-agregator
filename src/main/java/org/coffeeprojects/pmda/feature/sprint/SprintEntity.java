@@ -2,6 +2,7 @@ package org.coffeeprojects.pmda.feature.sprint;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class SprintEntity extends BaseEntity<SprintEntity> implements Serializab
 
     private String name;
 
+    @Column(length = 500)
     private String goal;
 
     private Instant startDate;

@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
 import feign.FeignException;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.exception.ExceptionConstant;
@@ -30,6 +31,7 @@ public class JiraRepository {
 
     private static final String EXPAND = "changelog";
     private static final int MAX_RESULT = 50;
+    public static final int MAX_ISSUES_IN_REQUEST = 200;
 
     private final TrackerRouter trackerRouter;
 
@@ -106,8 +108,15 @@ public class JiraRepository {
     public List<IssueJiraBean> getExistingIssues(ProjectEntity projectEntity, List<String> issuesKey, String fields) {
         logger.info("Get modified issues from Jira of project: {}, with issuesKey: {}, with fields: {}", projectEntity, issuesKey, fields);
 
-        String jql = String.format(SEARCH_WITH_ISSUES_QUERIES, StringUtils.join(issuesKey, "\",\""));
-        return getIssuesFromJira(projectEntity, jql, fields);
+        List<List<String>> IssuesKeyPartition = ListUtils.partition(issuesKey, MAX_ISSUES_IN_REQUEST);
+        List<IssueJiraBean> issueJiraBeans = new ArrayList<>();
+
+        IssuesKeyPartition.stream().forEach(i -> {
+            String jql = String.format(SEARCH_WITH_ISSUES_QUERIES, StringUtils.join(i, "\",\""));
+            issueJiraBeans.addAll(getIssuesFromJira(projectEntity, jql, fields));
+        });
+
+        return issueJiraBeans;
     }
 
     private List<IssueJiraBean> getIssuesFromJira(ProjectEntity projectEntity, String jql, String fields) {

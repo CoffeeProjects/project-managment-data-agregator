@@ -2,8 +2,6 @@ package org.coffeeprojects.pmda.feature.project;
 
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 
-import java.util.Objects;
-
 public class ProjectJiraBean {
 
     private String id;

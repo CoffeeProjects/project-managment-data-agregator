@@ -89,7 +89,7 @@ public class JiraProjectService implements ProjectService {
     @Override
     public void deactivateProjectOnError(TrackerParametersBean tracker, RuntimeException error) throws CriticalDataException {
         logger.info("Deactivate Jira project: {}", tracker);
-        ProjectEntity projectEntity = initializeProject(tracker, true);
+        ProjectEntity projectEntity = initializeProject(tracker, false, true);
 
         Integer failureCounter = projectEntity.getFailureCounter() == null ? 0 : projectEntity.getFailureCounter();
         projectEntity.setFailureCounter(failureCounter + 1);
@@ -120,7 +120,7 @@ public class JiraProjectService implements ProjectService {
 
     @Transactional(noRollbackFor = {ExternalApiCallException.class, InvalidDataException.class})
     @Override
-    public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceDeactivate) {
+    public ProjectEntity initializeProject(TrackerParametersBean tracker, boolean forceRetry, boolean forceDeactivate) {
         logger.info("Initialize Jira project: {}, hasDeactivated: {}", tracker, forceDeactivate);
         ProjectEntity projectEntity = null;
 
@@ -138,7 +138,7 @@ public class JiraProjectService implements ProjectService {
                         .setActive(Boolean.TRUE);
             }
 
-            if (Boolean.TRUE.equals(projectEntity.isActive()) && !forceDeactivate) {
+            if (Boolean.TRUE.equals(projectEntity.isActive()) && !forceRetry && !forceDeactivate) {
                 // Update project
                 this.updateProject(projectEntity);
 

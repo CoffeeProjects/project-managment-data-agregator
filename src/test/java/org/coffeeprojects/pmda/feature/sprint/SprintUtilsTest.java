@@ -237,21 +237,18 @@ class SprintUtilsTest {
     }
 
     @Test
-    void test_get_sprints_by_issue_jira_bean_with_sprints_empty() {
-        List<String> sprints = Collections.singletonList("");
-
-        IssueEntity issueEntity = new IssueEntity();
-        SprintUtils.toEntity(sprints, issueEntity);
-
-        // Then
-        assertThat(issueEntity.getSprints()).isEmpty();
-    }
-
-    @Test
     void test_get_sprints_by_issue_jira_bean_with_sprints() {
-        List<String> sprints = Collections.singletonList(
-                "com.atlassian.greenhopper.service.sprint.Sprint@2932643f[id=2,rapidViewId=1,state=FUTURE,name=PMDA ,goal=2 (%+\"'-$*€/\\|),goal=FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
-        );
+        LinkedHashMap<String, String> sprint = new LinkedHashMap<>();
+        sprint.put("id", "2");
+        sprint.put("boardId", "1");
+        sprint.put("state", "FUTURE");
+        sprint.put("name", "PMDA ,goal=2 (%+\"'-$*€/\\|)");
+        sprint.put("goal", "FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou");
+        sprint.put("sequence", "2");
+        List<LinkedHashMap> sprints = new ArrayList<>();
+        sprints.add(sprint);
+
+        SprintEntity expectedSprintEntity = new SprintEntity();
 
         IssueEntity issueEntity = new IssueEntity();
         SprintUtils.toEntity(sprints, issueEntity);
@@ -264,27 +261,6 @@ class SprintUtilsTest {
                     assertThat(p.getState()).isEqualTo("FUTURE");
                     assertThat(p.getName()).isEqualTo("PMDA ,goal=2 (%+\"'-$*€/\\|)");
                     assertThat(p.getGoal()).isEqualTo("FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou");
-                });
-
-    }
-
-    @Test
-    void test_get_sprints_by_issue_jira_bean_with_sprints_other_order() {
-        List<String> sprints = Collections.singletonList(
-                "com.atlassian.greenhopper.service.sprint.Sprint@95c4b08[completeDate=2020-04-08T09:11:57.167Z,endDate=2020-02-21T09:27:0.00Z,goal=toto,id=259,name=Sprint 87,rapidViewId=85,sequence=240,startDate=2020-02-14T09:27:34.821Z,state=CLOSED]"
-        );
-
-        IssueEntity issueEntity = new IssueEntity();
-        SprintUtils.toEntity(sprints, issueEntity);
-
-        // Then
-        issueEntity.getSprints()
-                .forEach(p -> {
-                    assertThat(p.getId().getClientId().equals("259"));
-                    assertThat(p.getRapidViewId()).isEqualTo("85");
-                    assertThat(p.getState()).isEqualTo("CLOSED");
-                    assertThat(p.getName()).isEqualTo("Sprint 87");
-                    assertThat(p.getGoal()).isEqualTo("toto");
                 });
 
     }

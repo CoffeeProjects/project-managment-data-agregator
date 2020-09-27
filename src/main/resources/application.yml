@@ -30,4 +30,4 @@ feign:
 logging:
   level:
     root: INFO
-    liquibase: ERROR
+    liquibase: INFO

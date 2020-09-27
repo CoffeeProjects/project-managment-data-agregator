@@ -2,6 +2,7 @@ package org.coffeeprojects.pmda.feature.resolution;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ public class ResolutionEntity extends BaseEntity<ResolutionEntity> implements Se
 
     private String name;
 
+    @Column(length = 500)
     private String description;
 
     public String getName() {

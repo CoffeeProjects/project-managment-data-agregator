@@ -7,26 +7,12 @@ import org.coffeeprojects.pmda.tracker.TrackerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SprintUtils {
 
     private static final Logger log = LoggerFactory.getLogger(SprintUtils.class);
-
-    private static final String ID_FIELD_NAME = "id=";
-    private static final String RAPID_VIEW_FIELD_NAME = ",rapidViewId=";
-    private static final String STATE_FIELD_NAME = ",state=";
-    private static final String NAME_FIELD_NAME = ",name=";
-    private static final String GOAL_FIELD_NAME = ",goal=";
-    private static final String START_DATE_FIELD_NAME = ",startDate=";
-    private static final String END_DATE_FIELD_NAME = ",endDate=";
-    private static final String COMPLETE_DATE_FIELD_NAME = ",completeDate=";
-    private static final String COMMA = ",";
-    private static final String BRACKET = "]";
 
     private SprintUtils() {
         throw new IllegalStateException("Utility class");
@@ -80,31 +66,31 @@ public class SprintUtils {
         sprint.setCompleteDate(sprintSorted.getCompleteDate());
     }
 
-    public static void toEntity(List<String> input, IssueEntity output) {
+    public static void toEntity(List<LinkedHashMap> input, IssueEntity output) {
         // Mapping des sprints
         if (input != null && !input.isEmpty()) {
             Set<SprintEntity> sprintEntities = new HashSet<>();
             input.stream()
-                .filter(StringUtils::isNotEmpty)
                 .forEach(p -> {
                     SprintEntity sprintEntity = new SprintEntity();
-                    String id = StringUtils.substringAfter(p, ID_FIELD_NAME);
-                    String rapidView = StringUtils.substringAfterLast(p, RAPID_VIEW_FIELD_NAME);
-                    String state = StringUtils.substringAfterLast(p, STATE_FIELD_NAME);
-                    String name = StringUtils.substringAfterLast(p, NAME_FIELD_NAME);
-                    String goal = StringUtils.substringAfterLast(p, GOAL_FIELD_NAME);
-                    String startDate = StringUtils.substringAfterLast(p, START_DATE_FIELD_NAME);
-                    String endDate = StringUtils.substringAfterLast(p, END_DATE_FIELD_NAME);
-                    String completeDate = StringUtils.substringAfterLast(p, COMPLETE_DATE_FIELD_NAME);
 
-                    sprintEntity.setId(new CompositeIdBaseEntity().setClientId(StringUtils.substringBefore(StringUtils.substringBefore(id, COMMA), BRACKET)));
-                    sprintEntity.setRapidViewId(StringUtils.substringBefore(StringUtils.substringBefore(rapidView, COMMA), BRACKET));
-                    sprintEntity.setState(StringUtils.substringBefore(StringUtils.substringBefore(state, COMMA), BRACKET));
-                    sprintEntity.setName(getFilteredTextField(name));
-                    sprintEntity.setGoal(getFilteredTextField(goal));
-                    sprintEntity.setStartDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(startDate, COMMA), BRACKET)));
-                    sprintEntity.setEndDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(endDate, COMMA), BRACKET)));
-                    sprintEntity.setCompleteDate(TrackerUtils.getInstantFromTimezone(StringUtils.substringBefore(StringUtils.substringBefore(completeDate, COMMA), BRACKET)));
+                    String id = p.get("id") != null ? p.get("id").toString() : StringUtils.EMPTY;
+                    String name = p.get("name") != null ? p.get("name").toString() : StringUtils.EMPTY;
+                    String state = p.get("state") != null ? p.get("state").toString() : StringUtils.EMPTY;
+                    String rapidViewId = p.get("boardId") != null ? p.get("boardId").toString() : StringUtils.EMPTY;
+                    String goal = p.get("goal") != null ? p.get("goal").toString() : StringUtils.EMPTY;
+                    String startDate = p.get("startDate") != null ? p.get("startDate").toString() : StringUtils.EMPTY;
+                    String endDate = p.get("endDate") != null ? p.get("endDate").toString() : StringUtils.EMPTY;
+                    String completeDate = p.get("completeDate") != null ? p.get("completeDate").toString() : StringUtils.EMPTY;
+
+                    sprintEntity.setId(new CompositeIdBaseEntity().setClientId(id));
+                    sprintEntity.setName(name);
+                    sprintEntity.setState(state);
+                    sprintEntity.setRapidViewId(rapidViewId);
+                    sprintEntity.setGoal(goal);
+                    sprintEntity.setStartDate(TrackerUtils.getInstantFromTimezone(startDate));
+                    sprintEntity.setEndDate(TrackerUtils.getInstantFromTimezone(endDate));
+                    sprintEntity.setCompleteDate(TrackerUtils.getInstantFromTimezone(completeDate));
 
                     sprintEntities.add(sprintEntity);
                 });
@@ -112,18 +98,5 @@ public class SprintUtils {
         } else {
             log.info("No sprint to fill for this issue : {}", output);
         }
-    }
-
-    private static String getFilteredTextField(String value) {
-        String filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(value, COMMA + ID_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, RAPID_VIEW_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, STATE_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, NAME_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, GOAL_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, START_DATE_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, END_DATE_FIELD_NAME), BRACKET);
-        filteredValue = StringUtils.substringBefore(StringUtils.substringBeforeLast(filteredValue, COMPLETE_DATE_FIELD_NAME), BRACKET);
-
-        return filteredValue;
     }
 }

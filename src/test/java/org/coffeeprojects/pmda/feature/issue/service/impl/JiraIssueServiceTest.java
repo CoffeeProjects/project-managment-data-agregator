@@ -19,10 +19,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,7 +27,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class JiraIssueServiceTest {
-    private static final String SPRINT = "com.atlassian.greenhopper.service.sprint.Sprint@2932643f[id=1,name=Sprint1]";
 
     @Mock
     private IssueRepository issueRepository;
@@ -59,6 +55,10 @@ class JiraIssueServiceTest {
 
     @Test
     void update_last_modified_issues_should_update_issues() {
+        LinkedHashMap<String, String> sprint = new LinkedHashMap<String, String>();
+        sprint.put("id", "1");
+        sprint.put("name", "Sprint1");
+
         // Given
         ProjectEntity projectEntity = new ProjectEntity()
                 .setId(new CompositeIdBaseEntity().setClientId("p1"))
@@ -70,8 +70,8 @@ class JiraIssueServiceTest {
                         )));
 
         List<IssueJiraBean> issueJiraBeans = Arrays.asList(
-                new IssueJiraBean().setId("i1").setKey("issue1").setFields(new FieldsJiraBean().setCustomFields("SPRINTS", Collections.singletonList(SPRINT)).setCustomFields("custom1Key", "custom1Value")),
-                new IssueJiraBean().setId("i2").setKey("issue2").setFields(new FieldsJiraBean().setCustomFields("SPRINTS", Collections.singletonList(SPRINT)).setCustomFields("custom2Key", "custom2Value"))
+                new IssueJiraBean().setId("i1").setKey("issue1").setFields(new FieldsJiraBean().setCustomFields("SPRINTS", Collections.singletonList(sprint)).setCustomFields("custom1Key", "custom1Value")),
+                new IssueJiraBean().setId("i2").setKey("issue2").setFields(new FieldsJiraBean().setCustomFields("SPRINTS", Collections.singletonList(sprint)).setCustomFields("custom2Key", "custom2Value"))
         );
         when(jiraRepository.getModifiedIssues(any(), any())).thenReturn(issueJiraBeans);
 

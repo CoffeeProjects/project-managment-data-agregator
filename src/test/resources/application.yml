@@ -6,6 +6,11 @@ spring:
     driver-class-name: org.h2.Driver
 
 feign:
+  httpclient:
+    disableSslValidation: true
+    enabled: false
+  okhttp:
+    enabled: true
   client:
     config:
       default:
