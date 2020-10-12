@@ -28,6 +28,8 @@ feign:
         loggerLevel: full
 
 logging:
+  path: ./logs
+  file: spring.log
   level:
     root: INFO
     liquibase: INFO

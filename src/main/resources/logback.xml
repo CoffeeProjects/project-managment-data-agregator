@@ -1,17 +1,17 @@
 <configuration>
 
-    <property name="HOME_LOG" value="logs/app.log"/>
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
 
     <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${HOME_LOG}</file>
+        <file>${LOG_FILE}</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/archived/app.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
-            <!-- each archived file, size max 10MB -->
-            <maxFileSize>10MB</maxFileSize>
-            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
-            <totalSizeCap>2GB</totalSizeCap>
-            <!-- 60 days to keep -->
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <!-- each archived file, size max xxMB -->
+            <maxFileSize>50MB</maxFileSize>
+            <!-- total size of all archive files, if total size > xxGB, it will delete old archived file -->
+            <totalSizeCap>1GB</totalSizeCap>
+            <!-- xx days to keep -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
 
@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.mkyong" level="debug" additivity="false">
+    <logger name="org.coffeeprojects" level="debug" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 
