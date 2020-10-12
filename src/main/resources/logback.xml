@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.coffeeprojects" level="debug" additivity="false">
+    <logger name="org.coffeeprojects" level="INFO" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 
