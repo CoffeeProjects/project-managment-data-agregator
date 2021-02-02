@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.feature.issue;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
+import org.coffeeprojects.pmda.feature.changelog.ChangelogEntity;
 import org.coffeeprojects.pmda.feature.component.ComponentEntity;
 import org.coffeeprojects.pmda.feature.issuetype.IssueTypeEntity;
 import org.coffeeprojects.pmda.feature.priority.PriorityEntity;
@@ -106,6 +107,12 @@ public class IssueEntity extends BaseEntity<IssueEntity> implements Serializable
     @JoinColumn(name = "issue_tracker_local_id", referencedColumnName = "trackerLocalId")
     @JoinColumn(name = "issue_tracker_type", referencedColumnName = "trackerType")
     private Set<IssueCustomField> issueCustomFields;
+
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "issue_client_id", referencedColumnName = "clientId")
+    @JoinColumn(name = "issue_tracker_local_id", referencedColumnName = "trackerLocalId")
+    @JoinColumn(name = "issue_tracker_type", referencedColumnName = "trackerType")
+    private Set<ChangelogEntity> changelog;
 
     public String getKey() {
         return key;
@@ -296,18 +303,27 @@ public class IssueEntity extends BaseEntity<IssueEntity> implements Serializable
         return this;
     }
 
+    public Set<ChangelogEntity> getChangelog() {
+        return changelog;
+    }
+
+    public IssueEntity setChangelog(Set<ChangelogEntity> changelog) {
+        this.changelog = changelog;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         IssueEntity that = (IssueEntity) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(key, that.key) && Objects.equals(assignee, that.assignee) && Objects.equals(reporter, that.reporter) && Objects.equals(creator, that.creator) && Objects.equals(summary, that.summary) && Objects.equals(status, that.status) && Objects.equals(resolution, that.resolution) && Objects.equals(resolutionDate, that.resolutionDate) && Objects.equals(priority, that.priority) && Objects.equals(issueType, that.issueType) && Objects.equals(project, that.project) && Objects.equals(fixVersions, that.fixVersions) && Objects.equals(originalEstimateSeconds, that.originalEstimateSeconds) && Objects.equals(remainingEstimateSeconds, that.remainingEstimateSeconds) && Objects.equals(timeSpentSeconds, that.timeSpentSeconds) && Objects.equals(labels, that.labels) && Objects.equals(components, that.components) && Objects.equals(created, that.created) && Objects.equals(updated, that.updated) && Objects.equals(sprints, that.sprints) && Objects.equals(issueCustomFields, that.issueCustomFields) && Objects.equals(changelog, that.changelog);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(super.hashCode(), key, assignee, reporter, creator, summary, status, resolution, resolutionDate, priority, issueType, project, fixVersions, originalEstimateSeconds, remainingEstimateSeconds, timeSpentSeconds, labels, components, created, updated, sprints, issueCustomFields, changelog);
     }
 
     @Override
@@ -334,6 +350,7 @@ public class IssueEntity extends BaseEntity<IssueEntity> implements Serializable
                 ", updated=" + updated +
                 ", sprints=" + sprints +
                 ", issueCustomFields=" + issueCustomFields +
+                ", changelog=" + changelog +
                 '}';
     }
 }

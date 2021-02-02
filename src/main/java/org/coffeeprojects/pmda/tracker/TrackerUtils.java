@@ -67,6 +67,9 @@ public class TrackerUtils {
             if (issueEntity.getSprints() != null) {
                 fillIds(projectEntity, issueEntity.getSprints());
             }
+            if (issueEntity.getChangelog() != null) {
+                fillIds(projectEntity, issueEntity.getChangelog());
+            }
         }
     }
 

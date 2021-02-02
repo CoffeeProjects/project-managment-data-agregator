@@ -52,7 +52,6 @@ class IssueMapperTest {
         IssueJiraBean issueJiraBean = new IssueJiraBean()
                 .setId("id")
                 .setKey("key1")
-                .setExpand("expand")
                 .setFields(
                         new FieldsJiraBean()
                                 .setSummary("summary")

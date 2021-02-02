@@ -1,12 +1,14 @@
 package org.coffeeprojects.pmda.feature.issue.jirabean;
 
+import org.coffeeprojects.pmda.feature.changelog.jirabean.ChangelogJiraBean;
+
 public class IssueJiraBean {
 
     private String id;
 
     private String key;
 
-    private String expand;
+    private ChangelogJiraBean changelog;
 
     private FieldsJiraBean fields;
 
@@ -28,12 +30,12 @@ public class IssueJiraBean {
         return this;
     }
 
-    public String getExpand() {
-        return expand;
+    public ChangelogJiraBean getChangelog() {
+        return changelog;
     }
 
-    public IssueJiraBean setExpand(String expand) {
-        this.expand = expand;
+    public IssueJiraBean setChangelog(ChangelogJiraBean changelog) {
+        this.changelog = changelog;
         return this;
     }
 
@@ -51,7 +53,7 @@ public class IssueJiraBean {
         return "IssueJiraBean{" +
                 "id='" + id + '\'' +
                 ", key='" + key + '\'' +
-                ", expand='" + expand + '\'' +
+                ", changelog='" + changelog + '\'' +
                 ", fields=" + fields +
                 '}';
     }
