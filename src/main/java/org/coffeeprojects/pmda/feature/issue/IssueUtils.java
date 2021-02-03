@@ -17,37 +17,44 @@ public class IssueUtils {
         Optional.ofNullable(issueEntities)
                 .orElse(Collections.emptyList())
                 .forEach(i -> {
-                    UserEntity administrator = i.getProject().getAdministrator();
+                    List<UserEntity> existingUsers = new ArrayList<>();
+                    existingUsers.add(i.getProject().getAdministrator());
 
-                    i.setAssignee(getNonDuplicateUser(i.getAssignee(), i.getCreator(), i.getReporter(), administrator));
-                    i.setCreator(getNonDuplicateUser(i.getCreator(), i.getReporter(), administrator, i.getAssignee()));
-                    i.setReporter(getNonDuplicateUser(i.getReporter(), administrator, i.getAssignee(), i.getCreator()));
+                    i.setAssignee(getNonDuplicateUser(existingUsers, i.getAssignee()));
+                    i.setCreator(getNonDuplicateUser(existingUsers, i.getCreator()));
+                    i.setReporter(getNonDuplicateUser(existingUsers, i.getReporter()));
 
                     Optional.ofNullable(i.getChangelog())
                             .orElse(Collections.emptySet())
                             .forEach(c -> {
-                                c.setAuthor(getNonDuplicateUser(c.getAuthor(), i.getAssignee(), i.getCreator(), i.getReporter(), administrator));
+                                c.setAuthor(getNonDuplicateUser(existingUsers, c.getAuthor()));
                             });
         });
     }
 
-    private static UserEntity getNonDuplicateUser(UserEntity current, UserEntity... user) {
-        for (UserEntity u : user) {
-            current = current != null && u != null && current.getId().getClientId().equals(u.getId().getClientId()) ? u : current;
+    private static UserEntity getNonDuplicateUser(List<UserEntity> existingUsers, UserEntity user) {
+        if (user == null) {
+            return null;
         }
-        return current;
+        for (UserEntity existingUser : existingUsers) {
+            if (user.getId().getClientId().equals(existingUser.getId().getClientId())) {
+                return existingUser;
+            }
+        }
+        existingUsers.add(user);
+        return user;
     }
 
     public static List<String> getKeysFromIssueEntities(List<IssueEntity> issueEntities) {
         List<String> issueEntitiesId = new ArrayList<>();
 
-            Optional.ofNullable(issueEntities)
-                    .orElse(Collections.emptyList())
-                    .stream()
-                    .filter(i -> i.getId() != null)
-                    .filter(i -> i.getId().getClientId() != null)
-                    .filter(i -> i.getKey() != null)
-                    .forEach(i -> issueEntitiesId.add(i.getKey()));
+        Optional.ofNullable(issueEntities)
+                .orElse(Collections.emptyList())
+                .stream()
+                .filter(i -> i.getId() != null)
+                .filter(i -> i.getId().getClientId() != null)
+                .filter(i -> i.getKey() != null)
+                .forEach(i -> issueEntitiesId.add(i.getKey()));
 
         return issueEntitiesId;
     }

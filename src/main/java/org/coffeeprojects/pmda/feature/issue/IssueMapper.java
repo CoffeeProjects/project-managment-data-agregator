@@ -20,6 +20,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,36 +53,41 @@ public interface IssueMapper {
 
     @Named("changelog")
     default Set<ChangelogEntity> changelog(ChangelogJiraBean changelogJiraBean) {
-        Set<ChangelogEntity> changelogEntities = new HashSet<>();
-        if (changelogJiraBean.getHistories() != null) {
-            changelogJiraBean.getHistories().stream().forEach(h -> {
-                UserJiraBean authorJiraBean = h.getAuthor();
-                if (authorJiraBean != null && h.getItems() != null) {
-                    UserEntity authorEntity = new UserEntity();
-                    authorEntity.setId(new CompositeIdBaseEntity().setClientId(authorJiraBean.getAccountId()));
-                    authorEntity.setEmailAddress(authorJiraBean.getEmailAddress());
-                    authorEntity.setDisplayName(authorJiraBean.getDisplayName());
-                    authorEntity.setTimeZone(authorJiraBean.getTimeZone());
-                    authorEntity.setActive(authorJiraBean.isActive());
-                    h.getItems().stream().forEach(i -> {
-                        if (i.getField() != null && i.getFieldType() != null) {
-                            ChangelogEntity changelogEntity = new ChangelogEntity();
-                            changelogEntity.setId(new CompositeIdBaseEntity().setClientId(h.getId() + "_" + i.getField().toUpperCase() + "_" + i.getFieldType().toUpperCase()));
-                            changelogEntity.setAuthor(authorEntity);
-                            changelogEntity.setField(i.getField());
-                            changelogEntity.setFieldType(i.getFieldType());
-                            changelogEntity.setFieldId(i.getFieldId());
-                            changelogEntity.setFrom(i.getFrom());
-                            changelogEntity.setFromString(i.getFromString());
-                            changelogEntity.setTo(i.getTo());
-                            changelogEntity.setToString(i.getToString());
-                            changelogEntity.setCreated(h.getCreated());
-                            changelogEntities.add(changelogEntity);
-                        }
-                    });
-                }
-            });
+        if (changelogJiraBean != null) {
+            Set<ChangelogEntity> changelogEntities = new HashSet<>();
+            if (changelogJiraBean.getHistories() != null) {
+                changelogJiraBean.getHistories().stream().forEach(h -> {
+                    UserJiraBean authorJiraBean = h.getAuthor();
+                    if (authorJiraBean != null && h.getItems() != null) {
+                        UserEntity authorEntity = new UserEntity();
+                        authorEntity.setId(new CompositeIdBaseEntity().setClientId(authorJiraBean.getAccountId()));
+                        authorEntity.setEmailAddress(authorJiraBean.getEmailAddress());
+                        authorEntity.setDisplayName(authorJiraBean.getDisplayName());
+                        authorEntity.setTimeZone(authorJiraBean.getTimeZone());
+                        authorEntity.setActive(authorJiraBean.isActive());
+                        h.getItems().stream().forEach(i -> {
+                            if (i.getField() != null && i.getFieldType() != null) {
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                                ChangelogEntity changelogEntity = new ChangelogEntity();
+                                changelogEntity.setId(new CompositeIdBaseEntity().setClientId(h.getId() + "_" + formatter.format(h.getCreated())));
+                                changelogEntity.setAuthor(authorEntity);
+                                changelogEntity.setField(i.getField());
+                                changelogEntity.setFieldType(i.getFieldType());
+                                changelogEntity.setFieldId(i.getFieldId());
+                                changelogEntity.setFrom(i.getFrom());
+                                changelogEntity.setFromString(i.getFromString());
+                                changelogEntity.setTo(i.getTo());
+                                changelogEntity.setToString(i.getToString());
+                                changelogEntity.setCreated(h.getCreated());
+                                changelogEntities.add(changelogEntity);
+                            }
+                        });
+                    }
+                });
+            }
+            return changelogEntities;
+        } else {
+            return null;
         }
-        return changelogEntities;
     }
 }
