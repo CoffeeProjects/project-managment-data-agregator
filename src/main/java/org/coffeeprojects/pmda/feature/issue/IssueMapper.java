@@ -23,6 +23,7 @@ import org.mapstruct.Named;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class, ResolutionMapper.class,
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,
@@ -57,6 +58,7 @@ public interface IssueMapper {
             Set<ChangelogEntity> changelogEntities = new HashSet<>();
             if (changelogJiraBean.getHistories() != null) {
                 changelogJiraBean.getHistories().stream().forEach(h -> {
+                    AtomicInteger count = new AtomicInteger();
                     UserJiraBean authorJiraBean = h.getAuthor();
                     if (authorJiraBean != null && h.getItems() != null) {
                         UserEntity authorEntity = new UserEntity();
@@ -67,9 +69,9 @@ public interface IssueMapper {
                         authorEntity.setActive(authorJiraBean.isActive());
                         h.getItems().stream().forEach(i -> {
                             if (i.getField() != null && i.getFieldType() != null) {
-                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
                                 ChangelogEntity changelogEntity = new ChangelogEntity();
-                                changelogEntity.setId(new CompositeIdBaseEntity().setClientId(h.getId() + "_" + formatter.format(h.getCreated())));
+                                changelogEntity.setId(new CompositeIdBaseEntity().setClientId(h.getId() + "_" + formatter.format(h.getCreated()) + "_" + count.getAndIncrement()));
                                 changelogEntity.setAuthor(authorEntity);
                                 changelogEntity.setField(i.getField());
                                 changelogEntity.setFieldType(i.getFieldType());

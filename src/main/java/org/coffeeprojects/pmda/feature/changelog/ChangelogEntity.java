@@ -122,7 +122,10 @@ public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Seri
     @Override
     public String toString() {
         return "ChangelogEntity{" +
-                "author=" + author +
+                "id=" + super.toString() +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", author=" + author +
                 ", field='" + field + '\'' +
                 ", fieldType='" + fieldType + '\'' +
                 ", fieldId='" + fieldId + '\'' +
