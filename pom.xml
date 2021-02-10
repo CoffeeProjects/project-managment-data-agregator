@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.6.RELEASE</version>
+		<version>2.3.8.RELEASE</version>
 		<relativePath/>
 	</parent>
 	<groupId>org.coffeeprojects</groupId>
@@ -18,23 +18,23 @@
 	<properties>
 		<start-class>org.coffeeprojects.pmda.PmdaApplication</start-class>
 		<java.version>11</java.version>
-		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+		<spring-cloud.version>Hoxton.SR9</spring-cloud.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-		<commons-lang3.version>3.10</commons-lang3.version>
+		<commons-lang3.version>3.11</commons-lang3.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
-		<junit.version>5.5.2</junit.version>
-		<maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+		<junit.version>5.7.1</junit.version>
+		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 		<h2.version>1.4.200</h2.version>
-		<liquibase.version>3.8.8</liquibase.version>
+		<liquibase.version>4.2.2</liquibase.version>
 		<liquibase.diffChangeLogFile>src/main/resources/db/changelog/to-be-changed.yml</liquibase.diffChangeLogFile>
 		<liquibase.diffExcludeObjects>batch_job_seq,batch_job_execution_seq,batch_step_execution_seq,
 			batch_job_execution,batch_job_execution_context,batch_job_execution_params,batch_job_instance,
 			batch_step_execution,batch_step_execution_context</liquibase.diffExcludeObjects>
-		<liquibase-hibernate.version>3.8</liquibase-hibernate.version>
+		<liquibase-hibernate5.version>4.2.2</liquibase-hibernate5.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
-		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-		<ojdbc.version>11.2.0</ojdbc.version>
+		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
+		<ojdbc6.version>11.2.0.4.0</ojdbc6.version>
 	</properties>
 
 	<dependencies>
@@ -67,15 +67,6 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.4.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>${liquibase.version}</version>
@@ -106,7 +97,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
+			<artifactId>junit-jupiter</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
@@ -177,7 +168,7 @@
 					<dependency>
 						<groupId>org.liquibase.ext</groupId>
 						<artifactId>liquibase-hibernate5</artifactId>
-						<version>${liquibase-hibernate.version}</version>
+						<version>${liquibase-hibernate5.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.springframework.boot</groupId>
@@ -225,6 +216,28 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+		<profile>
+			<id>postgresql</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.postgresql</groupId>
+					<artifactId>postgresql</artifactId>
+				</dependency>
+			</dependencies>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			<dependencies>
+				<dependency>
+					<groupId>com.oracle</groupId>
+					<artifactId>ojdbc6</artifactId>
+					<version>${ojdbc6.version}</version>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>
