@@ -2,6 +2,13 @@
 
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+
     <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE}</file>
 
@@ -20,7 +27,15 @@
         </encoder>
     </appender>
 
-    <logger name="org.coffeeprojects" level="INFO" additivity="false">
+    <logger name="org.coffeeprojects" level="ERROR" additivity="false">
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+
+    <logger name="org.hibernate.type" level="ERROR" additivity="false">
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+
+    <logger name="org.hibernate" level="ERROR" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 

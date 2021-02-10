@@ -22,12 +22,10 @@ public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Seri
 
     private String fieldId;
 
-    private String from;
-
+    @Column(columnDefinition="TEXT")
     private String fromString;
 
-    private String to;
-
+    @Column(columnDefinition="TEXT")
     private String toString;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,28 +63,12 @@ public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Seri
         this.fieldId = fieldId;
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
     public String getFromString() {
         return fromString;
     }
 
     public void setFromString(String fromString) {
         this.fromString = fromString;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
     }
 
     public String getToString() {
@@ -111,12 +93,12 @@ public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Seri
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ChangelogEntity that = (ChangelogEntity) o;
-        return Objects.equals(author, that.author) && Objects.equals(field, that.field) && Objects.equals(fieldType, that.fieldType) && Objects.equals(fieldId, that.fieldId) && Objects.equals(from, that.from) && Objects.equals(fromString, that.fromString) && Objects.equals(to, that.to) && Objects.equals(toString, that.toString) && Objects.equals(created, that.created);
+        return Objects.equals(author, that.author) && Objects.equals(field, that.field) && Objects.equals(fieldType, that.fieldType) && Objects.equals(fieldId, that.fieldId) && Objects.equals(fromString, that.fromString) && Objects.equals(toString, that.toString) && Objects.equals(created, that.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), author, field, fieldType, fieldId, from, fromString, to, toString, created);
+        return Objects.hash(super.hashCode(), author, field, fieldType, fieldId, fromString, toString, created);
     }
 
     @Override
@@ -129,9 +111,7 @@ public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Seri
                 ", field='" + field + '\'' +
                 ", fieldType='" + fieldType + '\'' +
                 ", fieldId='" + fieldId + '\'' +
-                ", from='" + from + '\'' +
                 ", fromString='" + fromString + '\'' +
-                ", to='" + to + '\'' +
                 ", toString='" + toString + '\'' +
                 ", created=" + created +
                 '}';

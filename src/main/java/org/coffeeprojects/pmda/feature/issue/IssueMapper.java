@@ -76,9 +76,7 @@ public interface IssueMapper {
                                 changelogEntity.setField(i.getField());
                                 changelogEntity.setFieldType(i.getFieldType());
                                 changelogEntity.setFieldId(i.getFieldId());
-                                changelogEntity.setFrom(i.getFrom());
                                 changelogEntity.setFromString(i.getFromString());
-                                changelogEntity.setTo(i.getTo());
                                 changelogEntity.setToString(i.getToString());
                                 changelogEntity.setCreated(h.getCreated());
                                 changelogEntities.add(changelogEntity);
