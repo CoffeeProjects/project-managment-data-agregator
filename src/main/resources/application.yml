@@ -16,7 +16,7 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa:
     hibernate:
-      show-sql: true
+      show-sql: false
       ddl-auto: none
 
 feign:
@@ -29,7 +29,8 @@ feign:
 
 logging:
   path: ./logs
-  file: spring.log
+  file:
+    name: spring.log
   level:
     root: INFO
     liquibase: INFO

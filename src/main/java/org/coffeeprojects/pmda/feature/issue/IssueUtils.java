@@ -5,10 +5,7 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectUtils;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class IssueUtils {
 
@@ -20,45 +17,44 @@ public class IssueUtils {
         Optional.ofNullable(issueEntities)
                 .orElse(Collections.emptyList())
                 .forEach(i -> {
-                    UserEntity administrator = i.getProject().getAdministrator();
-                    UserEntity creator = i.getCreator();
-                    UserEntity assignee = i.getAssignee();
-                    UserEntity reporter = i.getReporter();
+                    List<UserEntity> existingUsers = new ArrayList<>();
+                    existingUsers.add(i.getProject().getAdministrator());
 
-                    i.setAssignee(getNonDuplicateAssignee(assignee, administrator, creator, reporter));
-                    i.setCreator(removeDuplicateCreator(creator, administrator, reporter));
-                    i.setReporter(removeDuplicateReporter(reporter, administrator));
+                    i.setAssignee(getNonDuplicateUser(existingUsers, i.getAssignee()));
+                    i.setCreator(getNonDuplicateUser(existingUsers, i.getCreator()));
+                    i.setReporter(getNonDuplicateUser(existingUsers, i.getReporter()));
+
+                    Optional.ofNullable(i.getChangelog())
+                            .orElse(Collections.emptySet())
+                            .forEach(c -> {
+                                c.setAuthor(getNonDuplicateUser(existingUsers, c.getAuthor()));
+                            });
         });
     }
 
-    private static UserEntity getNonDuplicateAssignee(UserEntity assignee, UserEntity administrator, UserEntity creator, UserEntity reporter) {
-        assignee = assignee != null && creator != null && assignee.getId().getClientId().equals(creator.getId().getClientId()) ? creator : assignee;
-        assignee = assignee != null && reporter != null && assignee.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : assignee;
-        assignee = assignee != null && administrator != null && assignee.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : assignee;
-        return assignee;
-    }
-
-    private static UserEntity removeDuplicateCreator(UserEntity creator, UserEntity administrator, UserEntity reporter) {
-        creator = creator != null && reporter != null && creator.getId().getClientId().equals(reporter.getId().getClientId()) ? reporter : creator;
-        creator = creator != null && administrator != null && creator.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : creator;
-        return creator;
-    }
-
-    private static UserEntity removeDuplicateReporter(UserEntity reporter, UserEntity administrator) {
-        reporter = reporter != null && administrator != null && reporter.getId().getClientId().equals(administrator.getId().getClientId()) ? administrator : reporter;
-        return reporter;
+    private static UserEntity getNonDuplicateUser(List<UserEntity> existingUsers, UserEntity user) {
+        if (user == null) {
+            return null;
+        }
+        for (UserEntity existingUser : existingUsers) {
+            if (user.getId().getClientId().equals(existingUser.getId().getClientId())) {
+                return existingUser;
+            }
+        }
+        existingUsers.add(user);
+        return user;
     }
 
     public static List<String> getKeysFromIssueEntities(List<IssueEntity> issueEntities) {
         List<String> issueEntitiesId = new ArrayList<>();
 
-            Optional.ofNullable(issueEntities)
-                    .orElse(Collections.emptyList())
-                    .stream()
-                    .filter(i -> i.getId() != null)
-                    .filter(i -> i.getId().getClientId() != null)
-                    .filter(i -> i.getKey() != null)
-                    .forEach(i -> issueEntitiesId.add(i.getKey()));
+        Optional.ofNullable(issueEntities)
+                .orElse(Collections.emptyList())
+                .stream()
+                .filter(i -> i.getId() != null)
+                .filter(i -> i.getId().getClientId() != null)
+                .filter(i -> i.getKey() != null)
+                .forEach(i -> issueEntitiesId.add(i.getKey()));
 
         return issueEntitiesId;
     }

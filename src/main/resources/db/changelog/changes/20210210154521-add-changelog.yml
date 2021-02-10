@@ -1,0 +1,102 @@
+databaseChangeLog:
+- changeSet:
+    id: 1612968366138-1
+    author: p_jherubel (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: changelogPK
+            name: client_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: changelogPK
+            name: tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: changelogPK
+            name: tracker_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: created
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: field
+            type: VARCHAR(255)
+        - column:
+            name: field_id
+            type: VARCHAR(255)
+        - column:
+            name: field_type
+            type: VARCHAR(255)
+        - column:
+            name: from_string
+            type: TEXT
+        - column:
+            name: to_string
+            type: TEXT
+        - column:
+            name: author_client_id
+            type: VARCHAR(255)
+        - column:
+            name: author_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: author_tracker_type
+            type: INTEGER
+        - column:
+            name: issue_client_id
+            type: VARCHAR(255)
+        - column:
+            name: issue_tracker_local_id
+            type: VARCHAR(255)
+        - column:
+            name: issue_tracker_type
+            type: INTEGER
+        tableName: changelog
+- changeSet:
+    id: 1612968366138-2
+    author: p_jherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: author_client_id,author_tracker_local_id,author_tracker_type
+        baseTableName: changelog
+        constraintName: FKfelvdrgpq9vqbpu9as3mdqqeh
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1612968366138-3
+    author: p_jherubel (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: issue_client_id,issue_tracker_local_id,issue_tracker_type
+        baseTableName: changelog
+        constraintName: FKqghwdvc46dmig3t422y1pdwal
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: client_id,tracker_local_id,tracker_type
+        referencedTableName: issue
+        validate: true
+
