@@ -27,15 +27,15 @@
         </encoder>
     </appender>
 
-    <logger name="org.coffeeprojects" level="ERROR" additivity="false">
+    <logger name="org.coffeeprojects" level="INFO" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 
-    <logger name="org.hibernate.type" level="ERROR" additivity="false">
+    <logger name="org.hibernate.type" level="INFO" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 
-    <logger name="org.hibernate" level="ERROR" additivity="false">
+    <logger name="org.hibernate" level="INFO" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 
