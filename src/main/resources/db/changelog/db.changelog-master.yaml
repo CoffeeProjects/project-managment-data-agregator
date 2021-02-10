@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: classpath:db/changelog/changes/20200727131045-init.yml
+  - include:
+      file: classpath:db/changelog/changes/20210210154521-add-changelog.yml
