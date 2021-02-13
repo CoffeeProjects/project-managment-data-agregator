@@ -58,33 +58,31 @@ public interface IssueMapper {
     @Named("changelog")
     default Set<ChangelogEntity> changelog(ChangelogJiraBean changelogJiraBean) {
         Set<ChangelogEntity> changelogEntities = new HashSet<>();
-        if (changelogJiraBean != null) {
-            if (changelogJiraBean.getHistories() != null) {
-                changelogJiraBean.getHistories().forEach(h -> {
-                    AtomicInteger itemCount = new AtomicInteger();
-                    UserJiraBean authorJiraBean = h.getAuthor();
-                    if (authorJiraBean != null && h.getItems() != null) {
-                        UserEntity authorEntity = new UserEntity();
-                        authorEntity.setId(new CompositeIdBaseEntity().setClientId(authorJiraBean.getAccountId()));
-                        authorEntity.setEmailAddress(authorJiraBean.getEmailAddress());
-                        authorEntity.setDisplayName(authorJiraBean.getDisplayName());
-                        authorEntity.setTimeZone(authorJiraBean.getTimeZone());
-                        authorEntity.setActive(authorJiraBean.isActive());
-                        h.getItems().forEach(i -> {
-                            ChangelogEntity changelogEntity = new ChangelogEntity();
-                            changelogEntity.setId(generateChangelogId(h.getId(), h.getCreated(), itemCount.getAndIncrement()));
-                            changelogEntity.setAuthor(authorEntity);
-                            changelogEntity.setField(i.getField());
-                            changelogEntity.setFieldType(i.getFieldType());
-                            changelogEntity.setFieldId(i.getFieldId());
-                            changelogEntity.setFromString(i.getFromString());
-                            changelogEntity.setToString(i.getToString());
-                            changelogEntity.setCreated(h.getCreated());
-                            changelogEntities.add(changelogEntity);
-                        });
-                    }
-                });
-            }
+        if (changelogJiraBean != null && changelogJiraBean.getHistories() != null) {
+            changelogJiraBean.getHistories().forEach(h -> {
+                AtomicInteger itemCount = new AtomicInteger();
+                UserJiraBean authorJiraBean = h.getAuthor();
+                if (authorJiraBean != null && h.getItems() != null) {
+                    UserEntity authorEntity = new UserEntity();
+                    authorEntity.setId(new CompositeIdBaseEntity().setClientId(authorJiraBean.getAccountId()));
+                    authorEntity.setEmailAddress(authorJiraBean.getEmailAddress());
+                    authorEntity.setDisplayName(authorJiraBean.getDisplayName());
+                    authorEntity.setTimeZone(authorJiraBean.getTimeZone());
+                    authorEntity.setActive(authorJiraBean.isActive());
+                    h.getItems().forEach(i -> {
+                        ChangelogEntity changelogEntity = new ChangelogEntity();
+                        changelogEntity.setId(generateChangelogId(h.getId(), h.getCreated(), itemCount.getAndIncrement()));
+                        changelogEntity.setAuthor(authorEntity);
+                        changelogEntity.setField(i.getField());
+                        changelogEntity.setFieldType(i.getFieldType());
+                        changelogEntity.setFieldId(i.getFieldId());
+                        changelogEntity.setFromString(i.getFromString());
+                        changelogEntity.setToString(i.getToString());
+                        changelogEntity.setCreated(h.getCreated());
+                        changelogEntities.add(changelogEntity);
+                    });
+                }
+            });
         }
         return changelogEntities;
     }
