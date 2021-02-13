@@ -69,7 +69,7 @@ public class TrackerUtils {
             }
             if (issueEntity.getChangelog() != null) {
                 fillIds(projectEntity, issueEntity.getChangelog());
-                issueEntity.getChangelog().stream().forEach(i -> fillIds(projectEntity, i.getAuthor()));
+                issueEntity.getChangelog().forEach(i -> fillIds(projectEntity, i.getAuthor()));
             }
         }
     }

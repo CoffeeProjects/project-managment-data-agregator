@@ -21,6 +21,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,6 +30,8 @@ import java.util.concurrent.atomic.AtomicInteger;
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,
         ComponentMapper.class, SprintMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface IssueMapper {
+
+    String ID_DATE_FORMAT = "yyyyMMddHHmmss";
 
     @Mapping(target = "id.clientId", source = "id")
     @Mapping(target = "assignee", source = "fields.assignee")
@@ -54,11 +57,11 @@ public interface IssueMapper {
 
     @Named("changelog")
     default Set<ChangelogEntity> changelog(ChangelogJiraBean changelogJiraBean) {
+        Set<ChangelogEntity> changelogEntities = new HashSet<>();
         if (changelogJiraBean != null) {
-            Set<ChangelogEntity> changelogEntities = new HashSet<>();
             if (changelogJiraBean.getHistories() != null) {
-                changelogJiraBean.getHistories().stream().forEach(h -> {
-                    AtomicInteger count = new AtomicInteger();
+                changelogJiraBean.getHistories().forEach(h -> {
+                    AtomicInteger itemCount = new AtomicInteger();
                     UserJiraBean authorJiraBean = h.getAuthor();
                     if (authorJiraBean != null && h.getItems() != null) {
                         UserEntity authorEntity = new UserEntity();
@@ -67,27 +70,27 @@ public interface IssueMapper {
                         authorEntity.setDisplayName(authorJiraBean.getDisplayName());
                         authorEntity.setTimeZone(authorJiraBean.getTimeZone());
                         authorEntity.setActive(authorJiraBean.isActive());
-                        h.getItems().stream().forEach(i -> {
-                            if (i.getField() != null && i.getFieldType() != null) {
-                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-                                ChangelogEntity changelogEntity = new ChangelogEntity();
-                                changelogEntity.setId(new CompositeIdBaseEntity().setClientId(h.getId() + "_" + formatter.format(h.getCreated()) + "_" + count.getAndIncrement()));
-                                changelogEntity.setAuthor(authorEntity);
-                                changelogEntity.setField(i.getField());
-                                changelogEntity.setFieldType(i.getFieldType());
-                                changelogEntity.setFieldId(i.getFieldId());
-                                changelogEntity.setFromString(i.getFromString());
-                                changelogEntity.setToString(i.getToString());
-                                changelogEntity.setCreated(h.getCreated());
-                                changelogEntities.add(changelogEntity);
-                            }
+                        h.getItems().forEach(i -> {
+                            ChangelogEntity changelogEntity = new ChangelogEntity();
+                            changelogEntity.setId(generateChangelogId(h.getId(), h.getCreated(), itemCount.getAndIncrement()));
+                            changelogEntity.setAuthor(authorEntity);
+                            changelogEntity.setField(i.getField());
+                            changelogEntity.setFieldType(i.getFieldType());
+                            changelogEntity.setFieldId(i.getFieldId());
+                            changelogEntity.setFromString(i.getFromString());
+                            changelogEntity.setToString(i.getToString());
+                            changelogEntity.setCreated(h.getCreated());
+                            changelogEntities.add(changelogEntity);
                         });
                     }
                 });
             }
-            return changelogEntities;
-        } else {
-            return null;
         }
+        return changelogEntities;
+    }
+
+    private CompositeIdBaseEntity generateChangelogId(String id, Date date, int itemCount) {
+        SimpleDateFormat formatter = new SimpleDateFormat(ID_DATE_FORMAT);
+        return new CompositeIdBaseEntity().setClientId(id + "_" + formatter.format(date) + "_" + itemCount);
     }
 }

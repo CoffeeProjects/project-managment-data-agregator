@@ -6,10 +6,13 @@ import org.coffeeprojects.pmda.feature.project.service.impl.RedmineProjectServic
 import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(SpringExtension.class)
 class ProjectServiceFactoryTest {
 
     @Mock

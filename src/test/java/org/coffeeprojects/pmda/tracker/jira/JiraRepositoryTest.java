@@ -130,8 +130,8 @@ class JiraRepositoryTest {
         String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean1);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq("50"))).thenReturn(searchIssuesResultJiraBean2);
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean1);
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, "50")).thenReturn(searchIssuesResultJiraBean2);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
@@ -171,7 +171,7 @@ class JiraRepositoryTest {
         String jql = "key in (\"KEY-1\",\"KEY-2\")";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, Arrays.asList("KEY-1", "KEY-2"), fields);

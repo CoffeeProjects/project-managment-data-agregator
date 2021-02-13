@@ -99,7 +99,7 @@ public class JiraIssueService implements IssueService {
 
     private void fillSprints(IssueEntity issueEntity, ProjectEntity projectEntity, IssueJiraBean issueJiraBean) {
         ProjectCustomField projectCustomField = getProjectCustomField(projectEntity, SPRINTS_FIELD);
-        List<LinkedHashMap> sprints = (List<LinkedHashMap>) getIssueCustomValue(issueJiraBean, projectCustomField);
+        List<LinkedHashMap<Object, Object>> sprints = (List<LinkedHashMap<Object, Object>>) getIssueCustomValue(issueJiraBean, projectCustomField);
         SprintUtils.toEntity(sprints, issueEntity);
     }
 
@@ -127,8 +127,8 @@ public class JiraIssueService implements IssueService {
         }
     }
 
-    private void fillListOfCustomField(IssueEntity issueEntity, ProjectEntity projectEntity, Set<IssueCustomField> customFields, ProjectCustomField projectCustomField, ArrayList issueCustomFieldValues) {
-        issueCustomFieldValues.stream().forEach(i -> {
+    private void fillListOfCustomField(IssueEntity issueEntity, ProjectEntity projectEntity, Set<IssueCustomField> customFields, ProjectCustomField projectCustomField, ArrayList<Object> issueCustomFieldValues) {
+        issueCustomFieldValues.forEach(i -> {
             if (i instanceof HashMap) {
                 fillCustomField(issueEntity, projectEntity, customFields, projectCustomField, (HashMap) i);
             } else {
@@ -137,7 +137,7 @@ public class JiraIssueService implements IssueService {
         });
     }
 
-    private void fillCustomField(IssueEntity issueEntity, ProjectEntity projectEntity, Set<IssueCustomField> customFields, ProjectCustomField projectCustomField, HashMap issueCustomFieldValue) {
+    private void fillCustomField(IssueEntity issueEntity, ProjectEntity projectEntity, Set<IssueCustomField> customFields, ProjectCustomField projectCustomField, HashMap<Object, Object> issueCustomFieldValue) {
         IssueCustomField issueCustomField = new IssueCustomField();
         issueCustomField.setId(new CompositeIdBaseEntity()
                 .setClientId(issueEntity.getId().getClientId() + "_" + issueCustomFieldValue.get(ID) + "_" + projectCustomField.getLocalName())

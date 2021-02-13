@@ -35,32 +35,36 @@ public class VersionEntity extends BaseEntity<VersionEntity> implements Serializ
         return description;
     }
 
-    public void setDescription(String description) {
+    public VersionEntity setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public Boolean getArchived() {
         return archived;
     }
 
-    public void setArchived(Boolean archived) {
+    public VersionEntity setArchived(Boolean archived) {
         this.archived = archived;
+        return this;
     }
 
     public Boolean getReleased() {
         return released;
     }
 
-    public void setReleased(Boolean released) {
+    public VersionEntity setReleased(Boolean released) {
         this.released = released;
+        return this;
     }
 
     public Instant getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Instant releaseDate) {
+    public VersionEntity setReleaseDate(Instant releaseDate) {
         this.releaseDate = releaseDate;
+        return this;
     }
 
 
@@ -81,7 +85,8 @@ public class VersionEntity extends BaseEntity<VersionEntity> implements Serializ
     @Override
     public String toString() {
         return "VersionEntity{" +
-                "name='" + name + '\'' +
+                "id=" + super.toString() +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", archived=" + archived +
                 ", released=" + released +

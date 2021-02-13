@@ -66,7 +66,7 @@ public class SprintUtils {
         sprint.setCompleteDate(sprintSorted.getCompleteDate());
     }
 
-    public static void toEntity(List<LinkedHashMap> input, IssueEntity output) {
+    public static void toEntity(List<LinkedHashMap<Object, Object>> input, IssueEntity output) {
         // Mapping des sprints
         if (input != null && !input.isEmpty()) {
             Set<SprintEntity> sprintEntities = new HashSet<>();

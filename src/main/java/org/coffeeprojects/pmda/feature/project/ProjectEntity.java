@@ -134,7 +134,8 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> implements Serializ
     @Override
     public String toString() {
         return "ProjectEntity{" +
-                "key='" + key + '\'' +
+                "id=" + super.toString() +
+                ", key='" + key + '\'' +
                 ", name='" + name + '\'' +
                 ", administrator=" + administrator +
                 ", lastCheck=" + lastCheck +

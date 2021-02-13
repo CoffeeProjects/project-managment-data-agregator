@@ -51,7 +51,8 @@ public class ResolutionEntity extends BaseEntity<ResolutionEntity> implements Se
     @Override
     public String toString() {
         return "ResolutionEntity{" +
-                "name='" + name + '\'' +
+                "id=" + super.toString() +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", createdAt=" + createdAt +

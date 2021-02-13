@@ -108,10 +108,10 @@ public class JiraRepository {
     public List<IssueJiraBean> getExistingIssues(ProjectEntity projectEntity, List<String> issuesKey, String fields) {
         logger.info("Get modified issues from Jira of project: {}, with issuesKey: {}, with fields: {}", projectEntity, issuesKey, fields);
 
-        List<List<String>> IssuesKeyPartition = ListUtils.partition(issuesKey, MAX_ISSUES_IN_REQUEST);
+        List<List<String>> issuesKeyPartition = ListUtils.partition(issuesKey, MAX_ISSUES_IN_REQUEST);
         List<IssueJiraBean> issueJiraBeans = new ArrayList<>();
 
-        IssuesKeyPartition.stream().forEach(i -> {
+        issuesKeyPartition.forEach(i -> {
             String jql = String.format(SEARCH_WITH_ISSUES_QUERIES, StringUtils.join(i, "\",\""));
             issueJiraBeans.addAll(getIssuesFromJira(projectEntity, jql, fields));
         });

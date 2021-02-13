@@ -19,32 +19,36 @@ public class HistoryJiraBean {
         return id;
     }
 
-    public void setId(String id) {
+    public HistoryJiraBean setId(String id) {
         this.id = id;
+        return this;
     }
 
     public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public HistoryJiraBean setCreated(Date created) {
         this.created = created;
+        return this;
     }
 
     public UserJiraBean getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserJiraBean author) {
+    public HistoryJiraBean setAuthor(UserJiraBean author) {
         this.author = author;
+        return this;
     }
 
     public Set<ItemHistoryJiraBean> getItems() {
         return items;
     }
 
-    public void setItems(Set<ItemHistoryJiraBean> items) {
+    public HistoryJiraBean setItems(Set<ItemHistoryJiraBean> items) {
         this.items = items;
+        return this;
     }
 
     @Override

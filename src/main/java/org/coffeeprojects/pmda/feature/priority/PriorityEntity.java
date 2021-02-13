@@ -38,8 +38,8 @@ public class PriorityEntity extends BaseEntity<PriorityEntity> implements Serial
     @Override
     public String toString() {
         return "PriorityEntity{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
+                "id=" + super.toString() +
+                ", name='" + name + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
