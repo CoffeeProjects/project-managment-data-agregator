@@ -1,0 +1,12 @@
+postgres-pmda:
+  image: postgres:latest
+  container_name: postgres
+  restart: always
+  ports:
+    - 5432:5432
+  environment:
+    - POSTGRES_DB=pmda
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres123
+  volumes:
+    - /Users/pmda/docker/postgres/data:/var/lib/postgresql/data
