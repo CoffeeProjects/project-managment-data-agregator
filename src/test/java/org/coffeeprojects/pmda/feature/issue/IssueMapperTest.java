@@ -115,8 +115,8 @@ class IssueMapperTest {
         Set<HistoryJiraBean> historyJiraBeans = new HashSet<>();
 
         Set<ItemHistoryJiraBean> items1 = new HashSet<>();
-        items1.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromString1_1").setTo("to").setToString("toString1_1"));
-        items1.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromString1_2").setTo("to").setToString("toString1_2"));
+        items1.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromStringItem1").setTo("to").setToString("toStringItem1"));
+        items1.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromStringItem2").setTo("to").setToString("toStringItem2"));
 
         Set<ItemHistoryJiraBean> items2 = new HashSet<>();
         items2.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromString2_1").setTo("to").setToString("toString2_1"));
@@ -152,14 +152,18 @@ class IssueMapperTest {
         // Then
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         Set<ChangelogEntity> changelogEntities = new HashSet<>();
+        String fromStringChangelog1_1 = issueEntity.getChangelog().stream().filter(p -> p.getId().getClientId().equals("changelog1_" + formatter.format(dateCreated) + "_0")).findFirst().get().getFromString();
+        String toStringChangelog1_1 = issueEntity.getChangelog().stream().filter(p -> p.getId().getClientId().equals("changelog1_" + formatter.format(dateCreated) + "_0")).findFirst().get().getToString();
+        String fromStringChangelog1_2 = issueEntity.getChangelog().stream().filter(p -> p.getId().getClientId().equals("changelog1_" + formatter.format(dateCreated) + "_1")).findFirst().get().getFromString();
+        String toStringChangelog1_2 = issueEntity.getChangelog().stream().filter(p -> p.getId().getClientId().equals("changelog1_" + formatter.format(dateCreated) + "_1")).findFirst().get().getToString();
 
         changelogEntities.add(new ChangelogEntity().setId(new CompositeIdBaseEntity().setClientId("changelog1_" + formatter.format(dateCreated) + "_0"))
                 .setCreated(dateCreated)
-                .setField("field").setFieldType("fieldType").setFieldId("fieldId").setFromString("fromString1_1").setToString("toString1_1")
+                .setField("field").setFieldType("fieldType").setFieldId("fieldId").setFromString(fromStringChangelog1_1).setToString(toStringChangelog1_1)
                 .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("userAccount")).setActive(false)));
         changelogEntities.add(new ChangelogEntity().setId(new CompositeIdBaseEntity().setClientId("changelog1_" + formatter.format(dateCreated) + "_1"))
                 .setCreated(dateCreated)
-                .setField("field").setFieldType("fieldType").setFieldId("fieldId").setFromString("fromString1_2").setToString("toString1_2")
+                .setField("field").setFieldType("fieldType").setFieldId("fieldId").setFromString(fromStringChangelog1_2).setToString(toStringChangelog1_2)
                 .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("userAccount")).setActive(false)));
         changelogEntities.add(new ChangelogEntity().setId(new CompositeIdBaseEntity().setClientId("changelog2_" + formatter.format(dateCreated) + "_0"))
                 .setCreated(dateCreated)
