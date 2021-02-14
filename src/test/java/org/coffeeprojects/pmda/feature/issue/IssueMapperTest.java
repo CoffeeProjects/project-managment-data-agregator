@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -105,6 +106,29 @@ class IssueMapperTest {
                         .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity()).setActive(false))
                         .setCreated(dateCreated)
                 ));
+
+        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
+    }
+
+    @Test
+    void to_entity_should_map_issue_jira_bean_null() {
+        // When
+        IssueEntity issueEntity = issueMapper.toEntity(null);
+        assertThat(issueEntity).isNull();
+    }
+
+    @Test
+    void to_entity_should_map_issue_jira_bean_with_all_fields_null() {
+        // Given
+        IssueJiraBean issueJiraBean = new IssueJiraBean();
+
+        // When
+        IssueEntity issueEntity = issueMapper.toEntity(issueJiraBean);
+
+        // Then
+        IssueEntity expectedIssueEntity = new IssueEntity()
+                .setId(new CompositeIdBaseEntity())
+                .setChangelog(new HashSet<>());
 
         assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
     }

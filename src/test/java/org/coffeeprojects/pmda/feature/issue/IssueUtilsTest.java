@@ -258,7 +258,6 @@ class IssueUtilsTest {
         assertThat(localIssueEntity2.getReporter()).isEqualTo(reporter2);
     }
 
-    @Disabled
     @Test
     void test_remove_duplicate_users_in_each_issue_and_administrator() {
         UserEntity administrator = new UserEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setClientId("1"));
@@ -287,7 +286,7 @@ class IssueUtilsTest {
         localIssueEntities.add(localIssueEntity2);
 
         IssueUtils.removeDuplicateUsers(localIssueEntities);
-        assertThat(localIssueEntity1.getCreator()).isEqualTo(reporter1);
+        assertThat(localIssueEntity1.getCreator()).isEqualTo(creator1);
         assertThat(localIssueEntity1.getAssignee()).isEqualTo(assignee1);
         assertThat(localIssueEntity1.getReporter()).isEqualTo(administrator);
         assertThat(localIssueEntity2.getCreator()).isEqualTo(creator2);
@@ -295,7 +294,6 @@ class IssueUtilsTest {
         assertThat(localIssueEntity2.getReporter()).isEqualTo(reporter2);
     }
 
-    @Disabled
     @Test
     void test_remove_duplicate_users_with_some_null() {
         UserEntity administrator = new UserEntity().setId(new CompositeIdBaseEntity().setTrackerType(TrackerType.JIRA).setClientId("1"));
@@ -321,7 +319,7 @@ class IssueUtilsTest {
         localIssueEntities.add(localIssueEntity2);
 
         IssueUtils.removeDuplicateUsers(localIssueEntities);
-        assertThat(localIssueEntity1.getCreator()).isEqualTo(reporter1);
+        assertThat(localIssueEntity1.getCreator()).isEqualTo(creator1);
         assertThat(localIssueEntity1.getAssignee()).isNull();
         assertThat(localIssueEntity1.getReporter()).isEqualTo(administrator);
         assertThat(localIssueEntity2.getCreator()).isNull();

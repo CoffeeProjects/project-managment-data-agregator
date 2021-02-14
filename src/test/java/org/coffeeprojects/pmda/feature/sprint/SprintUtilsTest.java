@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SprintUtilsTest {
 
-    @Disabled
     @Test
     void test_update_last_sprints_values_from_issue_entities_with_sprints() {
         // 1er Issue Entity
