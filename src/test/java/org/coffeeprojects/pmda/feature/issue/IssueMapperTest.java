@@ -38,10 +38,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -106,6 +103,87 @@ class IssueMapperTest {
                         .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity()).setActive(false))
                         .setCreated(dateCreated)
                 ));
+
+        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
+    }
+
+    @Test
+    void to_entity_should_map_issue_jira_bean_to_issue_entity_changelog_field() {
+        // Given
+        Date dateCreated = new Date();
+
+        Set<HistoryJiraBean> historyJiraBeans = new HashSet<>();
+
+        Set<ItemHistoryJiraBean> items1 = new HashSet<>();
+        items1.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromString1_1").setTo("to").setToString("toString1_1"));
+        items1.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromString1_2").setTo("to").setToString("toString1_2"));
+
+        Set<ItemHistoryJiraBean> items2 = new HashSet<>();
+        items2.add(new ItemHistoryJiraBean().setField("field").setFieldType("fieldType").setFieldId("fieldId").setFrom("from").setFromString("fromString2_1").setTo("to").setToString("toString2_1"));
+
+        historyJiraBeans.add(new HistoryJiraBean().setId("changelog1").setCreated(dateCreated).setItems(items1).setAuthor(new UserJiraBean().setAccountId("userAccount")));
+        historyJiraBeans.add(new HistoryJiraBean().setId("changelog2").setCreated(dateCreated).setItems(items2).setAuthor(new UserJiraBean().setAccountId("userAccount")));
+
+        ChangelogJiraBean changelogJiraBean = new ChangelogJiraBean().setHistories(historyJiraBeans);
+
+        IssueJiraBean issueJiraBean = new IssueJiraBean()
+                .setId("id")
+                .setKey("key1")
+                .setChangelog(changelogJiraBean)
+                .setFields(
+                        new FieldsJiraBean()
+                                .setSummary("summary")
+                                .setLabels(Arrays.asList("test-label", "label2"))
+                                .setAssignee(new UserJiraBean().setAccountId("assigneeUserId"))
+                                .setReporter(new UserJiraBean().setAccountId("reporterUserId"))
+                                .setCreator(new UserJiraBean().setAccountId("creatorUserId"))
+                                .setResolution(new ResolutionJiraBean().setId("resolutionId"))
+                                .setPriority(new PriorityJiraBean().setId("priorityId"))
+                                .setIssueType(new IssueTypeJiraBean().setId("issueTypeId"))
+                                .setProject(new ProjectJiraBean().setId("projectId"))
+                                .setFixVersions(Collections.singleton(new VersionJiraBean().setId("versionId")))
+                                .setTimeTracking(new TimeTrackingJiraBean().setTimeSpentSeconds(1).setOriginalEstimateSeconds(2).setRemainingEstimateSeconds(3))
+                                .setComponents(Collections.singleton(new ComponentJiraBean().setId("componentId")))
+                );
+
+        // When
+        IssueEntity issueEntity = issueMapper.toEntity(issueJiraBean);
+
+        // Then
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        Set<ChangelogEntity> changelogEntities = new HashSet<>();
+
+        changelogEntities.add(new ChangelogEntity().setId(new CompositeIdBaseEntity().setClientId("changelog1_" + formatter.format(dateCreated) + "_0"))
+                .setCreated(dateCreated)
+                .setField("field").setFieldType("fieldType").setFieldId("fieldId").setFromString("fromString1_1").setToString("toString1_1")
+                .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("userAccount")).setActive(false)));
+        changelogEntities.add(new ChangelogEntity().setId(new CompositeIdBaseEntity().setClientId("changelog1_" + formatter.format(dateCreated) + "_1"))
+                .setCreated(dateCreated)
+                .setField("field").setFieldType("fieldType").setFieldId("fieldId").setFromString("fromString1_2").setToString("toString1_2")
+                .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("userAccount")).setActive(false)));
+        changelogEntities.add(new ChangelogEntity().setId(new CompositeIdBaseEntity().setClientId("changelog2_" + formatter.format(dateCreated) + "_0"))
+                .setCreated(dateCreated)
+                .setField("field").setFieldType("fieldType").setFieldId("fieldId").setFromString("fromString2_1").setToString("toString2_1")
+                .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("userAccount")).setActive(false)));
+
+        IssueEntity expectedIssueEntity = new IssueEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("id"))
+                .setKey("key1")
+                .setSummary("summary")
+                .setLabels(Arrays.asList("test-label", "label2"))
+                .setAssignee(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("assigneeUserId")))
+                .setReporter(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("reporterUserId")))
+                .setCreator(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("creatorUserId")))
+                .setResolution(new ResolutionEntity().setId(new CompositeIdBaseEntity().setClientId("resolutionId")))
+                .setPriority(new PriorityEntity().setId(new CompositeIdBaseEntity().setClientId("priorityId")))
+                .setIssueType(new IssueTypeEntity().setId(new CompositeIdBaseEntity().setClientId("issueTypeId")))
+                .setProject(new ProjectEntity().setId(new CompositeIdBaseEntity().setClientId("projectId")))
+                .setFixVersions(Collections.singleton(new VersionEntity().setId(new CompositeIdBaseEntity().setClientId("versionId"))))
+                .setTimeSpentSeconds(1)
+                .setOriginalEstimateSeconds(2)
+                .setRemainingEstimateSeconds(3)
+                .setComponents(Collections.singleton(new ComponentEntity().setId(new CompositeIdBaseEntity().setClientId("componentId"))))
+                .setChangelog(changelogEntities);
 
         assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
     }

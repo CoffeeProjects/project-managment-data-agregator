@@ -23,56 +23,63 @@ public class ItemHistoryJiraBean {
         return field;
     }
 
-    public void setField(String field) {
+    public ItemHistoryJiraBean setField(String field) {
         this.field = field;
+        return this;
     }
 
     public String getFieldType() {
         return fieldType;
     }
 
-    public void setFieldType(String fieldType) {
+    public ItemHistoryJiraBean setFieldType(String fieldType) {
         this.fieldType = fieldType;
+        return this;
     }
 
     public String getFieldId() {
         return fieldId;
     }
 
-    public void setFieldId(String fieldId) {
+    public ItemHistoryJiraBean setFieldId(String fieldId) {
         this.fieldId = fieldId;
+        return this;
     }
 
     public String getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public ItemHistoryJiraBean setFrom(String from) {
         this.from = from;
+        return this;
     }
 
     public String getFromString() {
         return fromString;
     }
 
-    public void setFromString(String fromString) {
+    public ItemHistoryJiraBean setFromString(String fromString) {
         this.fromString = fromString;
+        return this;
     }
 
     public String getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public ItemHistoryJiraBean setTo(String to) {
         this.to = to;
+        return this;
     }
 
     public String getToString() {
         return toString;
     }
 
-    public void setToString(String toString) {
+    public ItemHistoryJiraBean setToString(String toString) {
         this.toString = toString;
+        return this;
     }
 
     @Override
