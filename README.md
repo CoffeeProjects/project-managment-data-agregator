@@ -13,7 +13,7 @@ This project is compiled & run with classic Maven commands :
     
 During the build, you can add the DB connector library to include in the package, via the following profiles :
 - postgresql (default)
-- ocrale
+- oracle
 
 This repo includes a file allowing to mount the postgreSQL database via docker, in resources (docker-compose.yml)
 
