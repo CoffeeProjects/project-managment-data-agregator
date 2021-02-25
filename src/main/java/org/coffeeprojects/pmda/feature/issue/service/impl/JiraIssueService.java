@@ -4,6 +4,7 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.exception.ExceptionConstant;
 import org.coffeeprojects.pmda.exception.InvalidDataException;
 import org.coffeeprojects.pmda.feature.issue.*;
+import org.coffeeprojects.pmda.feature.issue.jirabean.FieldsJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.service.IssueService;
 import org.coffeeprojects.pmda.feature.project.ProjectCustomField;
@@ -174,9 +175,13 @@ public class JiraIssueService implements IssueService {
                 .orElse(null);
     }
 
-    private Object getIssueCustomValue(IssueJiraBean issueJiraBean, ProjectCustomField projectCustomField) {
-        String projectCustomFieldClientName = Optional.ofNullable(projectCustomField).orElse(new ProjectCustomField()).getClientName();
-        return issueJiraBean.getFields().getCustomFields().entrySet().stream()
+    protected Object getIssueCustomValue(IssueJiraBean issueJiraBean, ProjectCustomField projectCustomField) {
+        String projectCustomFieldClientName = Optional.ofNullable(projectCustomField).map(ProjectCustomField::getClientName).orElse("");
+        return Optional.ofNullable(issueJiraBean.getFields())
+                .map(FieldsJiraBean::getCustomFields)
+                .orElse(new HashMap<>())
+                .entrySet()
+                .stream()
                 .filter(customFieldEntry -> customFieldEntry.getKey().equals(projectCustomFieldClientName))
                 .filter(customFieldEntry -> customFieldEntry.getValue() != null)
                 .map(Map.Entry::getValue)
