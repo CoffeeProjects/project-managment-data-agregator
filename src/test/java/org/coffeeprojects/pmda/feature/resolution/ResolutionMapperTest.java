@@ -29,4 +29,10 @@ class ResolutionMapperTest {
 
         assertThat(resolutionEntity).isEqualToComparingFieldByField(expectedResolutionEntity);
     }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(resolutionMapper.toEntity(null)).isNull();
+    }
 }

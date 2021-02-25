@@ -106,25 +106,25 @@ public class JiraIssueService implements IssueService {
     private void fillIssueCustomFields(IssueEntity issueEntity, ProjectEntity projectEntity, IssueJiraBean issueJiraBean) {
         Set<IssueCustomField> customFields = new HashSet<>();
 
-        if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
-            projectEntity.getProjectCustomFields().stream()
-                    .filter(projectCustomField -> !SPRINTS_FIELD.equalsIgnoreCase(projectCustomField.getLocalName()))
-                    .forEach(projectCustomField -> {
-                        Object issueCustomFieldValue = getIssueCustomValue(issueJiraBean, projectCustomField);
+        Optional.ofNullable(projectEntity)
+                .map(ProjectEntity::getProjectCustomFields)
+                .orElse(new HashSet<>())
+                .stream()
+                .filter(projectCustomField -> !SPRINTS_FIELD.equalsIgnoreCase(projectCustomField.getLocalName()))
+                .forEach(projectCustomField -> {
+                    Object issueCustomFieldValue = getIssueCustomValue(issueJiraBean, projectCustomField);
 
-                        if (issueCustomFieldValue != null) {
-                            if (issueCustomFieldValue instanceof ArrayList) {
-                                fillListOfCustomField(issueEntity, projectEntity, customFields, projectCustomField, (ArrayList) issueCustomFieldValue);
-                            } else if (issueCustomFieldValue instanceof HashMap) {
-                                fillCustomField(issueEntity, projectEntity, customFields, projectCustomField, (HashMap) issueCustomFieldValue);
-                            } else {
-                                fillDefaultCustomField(issueEntity, projectEntity, customFields, projectCustomField, issueCustomFieldValue);
-                            }
+                    if (issueCustomFieldValue != null) {
+                        if (issueCustomFieldValue instanceof ArrayList) {
+                            fillListOfCustomField(issueEntity, projectEntity, customFields, projectCustomField, (ArrayList) issueCustomFieldValue);
+                        } else if (issueCustomFieldValue instanceof HashMap) {
+                            fillCustomField(issueEntity, projectEntity, customFields, projectCustomField, (HashMap) issueCustomFieldValue);
+                        } else {
+                            fillDefaultCustomField(issueEntity, projectEntity, customFields, projectCustomField, issueCustomFieldValue);
                         }
-                    });
-
-            issueEntity.setIssueCustomFields(customFields);
-        }
+                    }
+                    issueEntity.setIssueCustomFields(customFields);
+                });
     }
 
     private void fillListOfCustomField(IssueEntity issueEntity, ProjectEntity projectEntity, Set<IssueCustomField> customFields, ProjectCustomField projectCustomField, ArrayList<Object> issueCustomFieldValues) {
@@ -132,7 +132,7 @@ public class JiraIssueService implements IssueService {
             if (i instanceof HashMap) {
                 fillCustomField(issueEntity, projectEntity, customFields, projectCustomField, (HashMap) i);
             } else {
-                fillDefaultCustomField(issueEntity, projectEntity, customFields, projectCustomField, issueCustomFieldValues);
+                fillDefaultCustomField(issueEntity, projectEntity, customFields, projectCustomField, i);
             }
         });
     }
@@ -144,7 +144,10 @@ public class JiraIssueService implements IssueService {
                 .setTrackerType(projectEntity.getId().getTrackerType())
                 .setTrackerLocalId(projectEntity.getId().getTrackerLocalId()));
 
-        issueCustomField.setValue(issueCustomFieldValue.get(VALUE).toString());
+        issueCustomField.setValue(Optional.ofNullable(issueCustomFieldValue
+                .get(VALUE))
+                .map(Object::toString)
+                .orElse(""));
         customFields.add(issueCustomField);
     }
 
@@ -155,30 +158,29 @@ public class JiraIssueService implements IssueService {
                 .setTrackerType(projectEntity.getId().getTrackerType())
                 .setTrackerLocalId(projectEntity.getId().getTrackerLocalId()));
 
-        issueCustomField.setValue(issueCustomFieldValue.toString());
+        issueCustomField.setValue(Optional.ofNullable(issueCustomFieldValue)
+                .map(Object::toString)
+                .orElse(""));
         customFields.add(issueCustomField);
     }
 
     private ProjectCustomField getProjectCustomField(ProjectEntity projectEntity, String field) {
-        if (projectEntity != null && projectEntity.getProjectCustomFields() != null) {
-            return projectEntity.getProjectCustomFields().stream()
-                    .filter(p -> field.equalsIgnoreCase(p.getLocalName()))
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
+        return Optional.ofNullable(projectEntity)
+                .map(ProjectEntity::getProjectCustomFields)
+                .orElse(Collections.emptySet())
+                .stream()
+                .filter(p -> p.getLocalName().equalsIgnoreCase(field))
+                .findFirst()
+                .orElse(null);
     }
 
     private Object getIssueCustomValue(IssueJiraBean issueJiraBean, ProjectCustomField projectCustomField) {
-        if (projectCustomField != null && projectCustomField.getClientName() != null) {
-            return issueJiraBean.getFields().getCustomFields().entrySet().stream()
-                    .filter(customFieldEntry -> customFieldEntry.getKey().equals(projectCustomField.getClientName()))
-                    .filter(customFieldEntry -> customFieldEntry.getValue() != null)
-                    .map(Map.Entry::getValue)
-                    .findFirst()
-                    .orElse(null);
-
-        }
-        return null;
+        String projectCustomFieldClientName = Optional.ofNullable(projectCustomField).orElse(new ProjectCustomField()).getClientName();
+        return issueJiraBean.getFields().getCustomFields().entrySet().stream()
+                .filter(customFieldEntry -> customFieldEntry.getKey().equals(projectCustomFieldClientName))
+                .filter(customFieldEntry -> customFieldEntry.getValue() != null)
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElse(null);
     }
 }

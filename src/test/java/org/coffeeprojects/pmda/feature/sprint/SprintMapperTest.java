@@ -4,8 +4,6 @@ import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
@@ -46,5 +44,11 @@ class SprintMapperTest {
                 .setCompleteDate(instant);
 
         assertThat(sprintEntity).isEqualToComparingFieldByField(expectedSprintEntity);
+    }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(sprintMapper.toEntity(null)).isNull();
     }
 }

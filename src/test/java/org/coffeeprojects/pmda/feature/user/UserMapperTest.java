@@ -31,4 +31,10 @@ class UserMapperTest {
 
         assertThat(userEntity).isEqualToComparingFieldByField(expectedUserEntity);
     }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(userMapper.toEntity(null)).isNull();
+    }
 }

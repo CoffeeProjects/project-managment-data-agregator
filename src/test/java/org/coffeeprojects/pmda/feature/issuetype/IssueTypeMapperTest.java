@@ -29,4 +29,10 @@ class IssueTypeMapperTest {
 
         assertThat(issueTypeEntity).isEqualToComparingFieldByField(expectedIssueTypeEntity);
     }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(issueTypeMapper.toEntity(null)).isNull();
+    }
 }

@@ -28,4 +28,10 @@ class PriorityMapperTest {
 
         assertThat(priorityEntity).isEqualToComparingFieldByField(expectedPriorityEntity);
     }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(priorityMapper.toEntity(null)).isNull();
+    }
 }

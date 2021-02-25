@@ -40,4 +40,10 @@ class ProjectMapperTest {
 
         assertThat(projectEntity).isEqualToComparingFieldByField(expectedProjectEntity);
     }
+
+    @Test
+    void to_entity_with_project_jira_bean_null() {
+        // Given / When / Then
+        assertThat(projectMapper.toEntity(null)).isNull();
+    }
 }
