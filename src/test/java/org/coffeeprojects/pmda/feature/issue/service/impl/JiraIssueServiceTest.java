@@ -57,7 +57,7 @@ class JiraIssueServiceTest {
 
     @Test
     void update_last_modified_issues_should_update_issues() {
-        LinkedHashMap<String, String> sprint = new LinkedHashMap<String, String>();
+        LinkedHashMap<String, String> sprint = new LinkedHashMap<>();
         sprint.put("id", "1");
         sprint.put("name", "Sprint1");
 
@@ -86,7 +86,7 @@ class JiraIssueServiceTest {
                 .setKey("issue1")
                 .setId(new CompositeIdBaseEntity().setClientId("i1"))
                 .setProject(projectEntity)
-                .setSprints(Collections.singleton(new SprintEntity().setName("Sprint1").setId(new CompositeIdBaseEntity().setClientId("1"))))
+                .setSprints(Collections.singleton(new SprintEntity().setName("Sprint1").setId(new CompositeIdBaseEntity().setClientId("1")).setRapidViewId("").setState("").setGoal("")))
                 .setIssueCustomFields(Collections.singleton(
                         new IssueCustomField().setId(new CompositeIdBaseEntity().setClientId("i1_custom1key")).setValue("custom1Value")
                 ));
@@ -95,15 +95,15 @@ class JiraIssueServiceTest {
                 .setKey("issue2")
                 .setId(new CompositeIdBaseEntity().setClientId("i2"))
                 .setProject(projectEntity)
-                .setSprints(Collections.singleton(new SprintEntity().setName("Sprint1").setId(new CompositeIdBaseEntity().setClientId("1"))))
+                .setSprints(Collections.singleton(new SprintEntity().setName("Sprint1").setId(new CompositeIdBaseEntity().setClientId("1")).setRapidViewId("").setState("").setGoal("")))
                 .setIssueCustomFields(Collections.singleton(
                         new IssueCustomField().setId(new CompositeIdBaseEntity().setClientId("i2_custom2key")).setValue("custom2Value")
                 ));
 
         List<IssueEntity> issueEntities = issueEntitiesArgumentCaptor.getValue();
         assertThat(issueEntities).hasSize(2);
-        assertThat(issueEntities.get(0)).isEqualToComparingFieldByField(expectedIssueEntity1);
-        assertThat(issueEntities.get(1)).isEqualToComparingFieldByField(expectedIssueEntity2);
+        assertThat(issueEntities.get(0)).usingRecursiveComparison().isEqualTo(expectedIssueEntity1);
+        assertThat(issueEntities.get(1)).usingRecursiveComparison().isEqualTo(expectedIssueEntity2);
     }
 
     @Test
@@ -164,7 +164,7 @@ class JiraIssueServiceTest {
 
         List<IssueEntity> issueEntities = issueEntitiesArgumentCaptor.getValue();
         assertThat(issueEntities).hasSize(1);
-        assertThat(issueEntities.get(0)).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntities.get(0)).usingRecursiveComparison().isEqualTo(expectedIssueEntity);
     }
 
     @Test
@@ -205,7 +205,7 @@ class JiraIssueServiceTest {
 
         List<IssueEntity> issueEntities = issueEntitiesArgumentCaptor.getValue();
         assertThat(issueEntities).hasSize(1);
-        assertThat(issueEntities.get(0)).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntities.get(0)).usingRecursiveComparison().isEqualTo(expectedIssueEntity);
     }
 
     @Test
@@ -254,7 +254,7 @@ class JiraIssueServiceTest {
 
         List<IssueEntity> issueEntities = issueEntitiesArgumentCaptor.getValue();
         assertThat(issueEntities).hasSize(1);
-        assertThat(issueEntities.get(0)).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntities.get(0)).usingRecursiveComparison().isEqualTo(expectedIssueEntity);
     }
 
     @Test

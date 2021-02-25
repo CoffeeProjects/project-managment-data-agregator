@@ -27,6 +27,6 @@ class StatusMapperTest {
                 .setName("KO")
                 .setDescription("Nom KO");
 
-        assertThat(statusEntity).isEqualToComparingFieldByField(expectedStatusEntity);
+        assertThat(statusEntity).usingRecursiveComparison().isEqualTo(expectedStatusEntity);
     }
 }

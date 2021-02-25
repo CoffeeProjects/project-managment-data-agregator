@@ -27,7 +27,7 @@ class ResolutionMapperTest {
                 .setName("KO")
                 .setDescription("Nom KO");
 
-        assertThat(resolutionEntity).isEqualToComparingFieldByField(expectedResolutionEntity);
+        assertThat(resolutionEntity).usingRecursiveComparison().isEqualTo(expectedResolutionEntity);
     }
 
     @Test

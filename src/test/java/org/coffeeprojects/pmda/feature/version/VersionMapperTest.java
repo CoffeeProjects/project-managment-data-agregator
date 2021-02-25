@@ -27,7 +27,7 @@ class VersionMapperTest {
                 .setId(new CompositeIdBaseEntity().setClientId("123"))
                 .setName("V1.1");
 
-        assertThat(versionEntity).isEqualToComparingFieldByField(expectedVersionEntity);
+        assertThat(versionEntity).usingRecursiveComparison().isEqualTo(expectedVersionEntity);
     }
 
     @Test
@@ -50,7 +50,7 @@ class VersionMapperTest {
                 .setReleased(Boolean.TRUE)
                 .setReleaseDate(releasedDate.toInstant());
 
-        assertThat(versionEntity).isEqualToComparingFieldByField(expectedVersionEntity);
+        assertThat(versionEntity).usingRecursiveComparison().isEqualTo(expectedVersionEntity);
     }
 
     @Test

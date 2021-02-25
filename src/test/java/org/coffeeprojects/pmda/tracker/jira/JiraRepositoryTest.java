@@ -60,7 +60,7 @@ class JiraRepositoryTest {
         UserJiraBean userJiraBean = jiraRepository.getUserDetails(projectEntity);
 
         // Then
-        assertThat(userJiraBean).isEqualToComparingFieldByField(expectedUserJiraBean);
+        assertThat(userJiraBean).usingRecursiveComparison().isEqualTo(expectedUserJiraBean);
     }
 
     @Test
@@ -103,7 +103,7 @@ class JiraRepositoryTest {
         ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
 
         // Then
-        assertThat(projectJiraBean).isEqualToComparingFieldByField(expectedProjectJiraBean);
+        assertThat(projectJiraBean).usingRecursiveComparison().isEqualTo(projectJiraBean);
     }
 
     @Test

@@ -86,9 +86,9 @@ class IssueMapperTest {
                 .setKey("key1")
                 .setSummary("summary")
                 .setLabels(Arrays.asList("test-label", "label2"))
-                .setAssignee(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("assigneeUserId")))
-                .setReporter(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("reporterUserId")))
-                .setCreator(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("creatorUserId")))
+                .setAssignee(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("assigneeUserId")).setActive(false))
+                .setReporter(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("reporterUserId")).setActive(false))
+                .setCreator(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("creatorUserId")).setActive(false))
                 .setResolution(new ResolutionEntity().setId(new CompositeIdBaseEntity().setClientId("resolutionId")))
                 .setPriority(new PriorityEntity().setId(new CompositeIdBaseEntity().setClientId("priorityId")))
                 .setIssueType(new IssueTypeEntity().setId(new CompositeIdBaseEntity().setClientId("issueTypeId")))
@@ -104,7 +104,7 @@ class IssueMapperTest {
                         .setCreated(dateCreated)
                 ));
 
-        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntity).usingRecursiveComparison().isEqualTo(expectedIssueEntity);
     }
 
     @Test
@@ -175,9 +175,9 @@ class IssueMapperTest {
                 .setKey("key1")
                 .setSummary("summary")
                 .setLabels(Arrays.asList("test-label", "label2"))
-                .setAssignee(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("assigneeUserId")))
-                .setReporter(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("reporterUserId")))
-                .setCreator(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("creatorUserId")))
+                .setAssignee(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("assigneeUserId")).setActive(false))
+                .setReporter(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("reporterUserId")).setActive(false))
+                .setCreator(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("creatorUserId")).setActive(false))
                 .setResolution(new ResolutionEntity().setId(new CompositeIdBaseEntity().setClientId("resolutionId")))
                 .setPriority(new PriorityEntity().setId(new CompositeIdBaseEntity().setClientId("priorityId")))
                 .setIssueType(new IssueTypeEntity().setId(new CompositeIdBaseEntity().setClientId("issueTypeId")))
@@ -189,7 +189,7 @@ class IssueMapperTest {
                 .setComponents(Collections.singleton(new ComponentEntity().setId(new CompositeIdBaseEntity().setClientId("componentId"))))
                 .setChangelog(changelogEntities);
 
-        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntity).usingRecursiveComparison().isEqualTo(expectedIssueEntity);
     }
 
     @Test
@@ -212,7 +212,7 @@ class IssueMapperTest {
                 .setId(new CompositeIdBaseEntity())
                 .setChangelog(new HashSet<>());
 
-        assertThat(issueEntity).isEqualToComparingFieldByField(expectedIssueEntity);
+        assertThat(issueEntity).usingRecursiveComparison().isEqualTo(expectedIssueEntity);
     }
 
     @Test

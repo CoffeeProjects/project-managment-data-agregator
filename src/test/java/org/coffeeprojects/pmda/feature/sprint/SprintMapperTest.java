@@ -43,7 +43,7 @@ class SprintMapperTest {
                 .setEndDate(instant)
                 .setCompleteDate(instant);
 
-        assertThat(sprintEntity).isEqualToComparingFieldByField(expectedSprintEntity);
+        assertThat(sprintEntity).usingRecursiveComparison().isEqualTo(expectedSprintEntity);
     }
 
     @Test

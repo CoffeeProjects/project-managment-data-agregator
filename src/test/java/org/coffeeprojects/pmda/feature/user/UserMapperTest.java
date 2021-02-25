@@ -29,7 +29,7 @@ class UserMapperTest {
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);
 
-        assertThat(userEntity).isEqualToComparingFieldByField(expectedUserEntity);
+        assertThat(userEntity).usingRecursiveComparison().isEqualTo(expectedUserEntity);
     }
 
     @Test

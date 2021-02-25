@@ -36,9 +36,9 @@ class ProjectMapperTest {
                 .setId(new CompositeIdBaseEntity().setClientId("id"))
                 .setKey("Key")
                 .setName("Name")
-                .setAdministrator(new UserEntity().setId(new CompositeIdBaseEntity()).setDisplayName("Toto"));
+                .setAdministrator(new UserEntity().setId(new CompositeIdBaseEntity()).setDisplayName("Toto").setActive(false));
 
-        assertThat(projectEntity).isEqualToComparingFieldByField(expectedProjectEntity);
+        assertThat(projectEntity).usingRecursiveComparison().isEqualTo(expectedProjectEntity);
     }
 
     @Test

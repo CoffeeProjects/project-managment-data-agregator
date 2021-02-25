@@ -27,7 +27,7 @@ class IssueTypeMapperTest {
                 .setName("Name")
                 .setDescription("Description");
 
-        assertThat(issueTypeEntity).isEqualToComparingFieldByField(expectedIssueTypeEntity);
+        assertThat(issueTypeEntity).usingRecursiveComparison().isEqualTo(expectedIssueTypeEntity);
     }
 
     @Test

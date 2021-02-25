@@ -160,7 +160,7 @@ class JiraProjectServiceTest {
         ProjectEntity actual = jiraProjectService.initializeProject(new TrackerParametersBean(), false, false);
 
         // Then
-        assertThat(actual).isEqualToComparingFieldByField(projectEntity);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(projectEntity);
     }
 
     @Test
