@@ -1,6 +1,7 @@
 package org.coffeeprojects.pmda.tracker;
 
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
+import org.coffeeprojects.pmda.feature.changelog.ChangelogEntity;
 import org.coffeeprojects.pmda.feature.component.ComponentEntity;
 import org.coffeeprojects.pmda.feature.issue.IssueEntity;
 import org.coffeeprojects.pmda.feature.issuetype.IssueTypeEntity;
@@ -159,6 +160,20 @@ class TrackerUtilsTest {
                     assertThat(p.getId().getTrackerType()).isEqualTo(TrackerType.JIRA);
                     assertThat(p.getId().getTrackerLocalId()).isEqualTo("1");
                 });
+
+        // Changelog
+        Set<ChangelogEntity> changelogs = new HashSet<>();
+        ChangelogEntity changelog = new ChangelogEntity()
+                .setId(new CompositeIdBaseEntity().setClientId("1"))
+                .setAuthor(new UserEntity().setId(new CompositeIdBaseEntity().setClientId("1")));
+        changelogs.add(changelog);
+        issueEntity.setChangelog(changelogs);
+        TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
+        issueEntity.getChangelog().stream()
+                .forEach(p -> {
+                    assertThat(p.getId().getTrackerType()).isEqualTo(TrackerType.JIRA);
+                    assertThat(p.getId().getTrackerLocalId()).isEqualTo("1");
+                });
     }
 
     @Test
@@ -209,5 +224,9 @@ class TrackerUtilsTest {
     @Test
     void test_get_instant_from_bad_timezone() {
         assertThat(TrackerUtils.getInstantFromTimezone("BAD_TIMEZONE")).isNull();
+    }
+    @Test
+    void test_get_instant_from_null_timezone() {
+        assertThat(TrackerUtils.getInstantFromTimezone("<null>")).isNull();
     }
 }
