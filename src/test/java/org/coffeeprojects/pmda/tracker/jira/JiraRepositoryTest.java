@@ -251,7 +251,8 @@ class JiraRepositoryTest {
         when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAt)).thenThrow(FeignException.errorStatus("Error", response));
 
         // When / Then
-        assertThatThrownBy(() -> jiraRepository.getExistingIssues(projectEntity, Arrays.asList("KEY-1", "KEY-2"), fields)).isInstanceOf(ExternalApiCallException.class);
+        List issueKeys = Arrays.asList("KEY-1", "KEY-2");
+        assertThatThrownBy(() -> jiraRepository.getExistingIssues(projectEntity, issueKeys, fields)).isInstanceOf(ExternalApiCallException.class);
     }
 
     @Test
@@ -294,6 +295,7 @@ class JiraRepositoryTest {
         when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAtError)).thenThrow(FeignException.errorStatus("Error", response));
 
         // When / Then
-        assertThatThrownBy(() -> jiraRepository.getExistingIssues(projectEntity, Arrays.asList("KEY-1", "KEY-2"), fields)).isInstanceOf(ExternalApiCallException.class);
+        List issueKeys = Arrays.asList("KEY-1", "KEY-2");
+        assertThatThrownBy(() -> jiraRepository.getExistingIssues(projectEntity, issueKeys, fields)).isInstanceOf(ExternalApiCallException.class);
     }
 }
