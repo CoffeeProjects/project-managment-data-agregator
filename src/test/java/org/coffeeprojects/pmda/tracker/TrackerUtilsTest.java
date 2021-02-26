@@ -287,7 +287,7 @@ class TrackerUtilsTest {
     }
 
     @Test
-    void test_should_not_fill_ids_from_issue_entity_without_tracker_id_or_tracker_type() {
+    void test_should_not_fill_ids_from_issue_entity_without_tracker_id_and_tracker_type() {
         // ProjectEntity
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
@@ -298,12 +298,32 @@ class TrackerUtilsTest {
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
         assertThat(issueEntity.getId().getTrackerType()).isNull();
         assertThat(issueEntity.getId().getTrackerLocalId()).isNull();
+    }
+
+    @Test
+    void test_should_not_fill_ids_from_issue_entity_without_tracker_id() {
+        // ProjectEntity
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
+        // IssueEntity
+        IssueEntity issueEntity = new IssueEntity();
+        issueEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
 
         projectEntity.getId().setTrackerType(TrackerType.JIRA);
         projectEntity.getId().setTrackerLocalId(null);
         TrackerUtils.fillIdsFromIssueEntity(projectEntity, issueEntity);
         assertThat(issueEntity.getId().getTrackerType()).isNull();
         assertThat(issueEntity.getId().getTrackerLocalId()).isNull();
+    }
+
+    @Test
+    void test_should_not_fill_ids_from_issue_entity_without_tracker_type() {
+        // ProjectEntity
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
+        // IssueEntity
+        IssueEntity issueEntity = new IssueEntity();
+        issueEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
 
         projectEntity.getId().setTrackerType(null);
         projectEntity.getId().setTrackerLocalId("1");
