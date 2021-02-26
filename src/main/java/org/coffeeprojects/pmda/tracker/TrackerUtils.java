@@ -37,18 +37,18 @@ public class TrackerUtils {
     public static void fillIdsFromIssueEntity(ProjectEntity projectEntity, IssueEntity issueEntity) {
         fillIds(projectEntity, issueEntity);
         Optional.ofNullable(issueEntity).ifPresent(i -> {
-            Optional.ofNullable(i.getAssignee()).ifPresent((assignee) -> fillIds(projectEntity, assignee));
-            Optional.ofNullable(i.getCreator()).ifPresent((creator) -> fillIds(projectEntity, creator));
-            Optional.ofNullable(i.getReporter()).ifPresent((reporter) -> fillIds(projectEntity, reporter));
-            Optional.ofNullable(i.getStatus()).ifPresent((status) -> fillIds(projectEntity, status));
-            Optional.ofNullable(i.getResolution()).ifPresent((resolution) -> fillIds(projectEntity, resolution));
-            Optional.ofNullable(i.getPriority()).ifPresent((priority) -> fillIds(projectEntity, priority));
-            Optional.ofNullable(i.getIssueType()).ifPresent((issueType) -> fillIds(projectEntity, issueType));
-            Optional.ofNullable(i.getProject()).ifPresent((project) -> fillIds(projectEntity, project));
-            Optional.ofNullable(i.getFixVersions()).ifPresent((fixVersions) -> fillIds(projectEntity, fixVersions));
-            Optional.ofNullable(i.getComponents()).ifPresent((components) -> fillIds(projectEntity, components));
-            Optional.ofNullable(i.getSprints()).ifPresent((sprints) -> fillIds(projectEntity, sprints));
-            Optional.ofNullable(i.getChangelog()).ifPresent((changelog) -> {
+            Optional.ofNullable(i.getAssignee()).ifPresent(assignee -> fillIds(projectEntity, assignee));
+            Optional.ofNullable(i.getCreator()).ifPresent(creator -> fillIds(projectEntity, creator));
+            Optional.ofNullable(i.getReporter()).ifPresent(reporter -> fillIds(projectEntity, reporter));
+            Optional.ofNullable(i.getStatus()).ifPresent(status -> fillIds(projectEntity, status));
+            Optional.ofNullable(i.getResolution()).ifPresent(resolution -> fillIds(projectEntity, resolution));
+            Optional.ofNullable(i.getPriority()).ifPresent(priority -> fillIds(projectEntity, priority));
+            Optional.ofNullable(i.getIssueType()).ifPresent(issueType -> fillIds(projectEntity, issueType));
+            Optional.ofNullable(i.getProject()).ifPresent(project -> fillIds(projectEntity, project));
+            Optional.ofNullable(i.getFixVersions()).ifPresent(fixVersions -> fillIds(projectEntity, fixVersions));
+            Optional.ofNullable(i.getComponents()).ifPresent(components -> fillIds(projectEntity, components));
+            Optional.ofNullable(i.getSprints()).ifPresent(sprints -> fillIds(projectEntity, sprints));
+            Optional.ofNullable(i.getChangelog()).ifPresent(changelog -> {
                 fillIds(projectEntity, changelog);
                 changelog.forEach(c -> fillIds(projectEntity, c.getAuthor()));
             });
@@ -62,15 +62,14 @@ public class TrackerUtils {
     private static void fillIds(ProjectEntity projectEntity, BaseEntity baseEntity) {
         Optional.ofNullable(baseEntity)
                 .map(BaseEntity::getId)
-                .ifPresentOrElse(bId -> {
-                    Optional.ofNullable(projectEntity)
-                            .map(ProjectEntity::getId)
-                            .filter(p -> p.getTrackerLocalId() != null && p.getTrackerType() != null)
-                            .ifPresentOrElse(pId -> {
-                                bId.setTrackerType(pId.getTrackerType());
-                                bId.setTrackerLocalId(pId.getTrackerLocalId());
-                            }, () -> log.error("trackerId and / or trackerType not entered for this project : {}", projectEntity));
-                }, () -> log.error("BaseEntity or ProjectEntity could not be null"));
+                .ifPresentOrElse(bId -> Optional.ofNullable(projectEntity)
+                        .map(ProjectEntity::getId)
+                        .filter(p -> p.getTrackerLocalId() != null && p.getTrackerType() != null)
+                        .ifPresentOrElse(pId -> {
+                            bId.setTrackerType(pId.getTrackerType());
+                            bId.setTrackerLocalId(pId.getTrackerLocalId());
+                        }, () -> log.error("trackerId and / or trackerType not entered for this project : {}", projectEntity)),
+                        () -> log.error("BaseEntity or ProjectEntity could not be null"));
     }
 
     public static Instant getInstantFromTimezone(String timezone) {
