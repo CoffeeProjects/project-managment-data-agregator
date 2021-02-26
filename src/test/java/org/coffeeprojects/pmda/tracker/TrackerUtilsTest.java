@@ -176,7 +176,7 @@ class TrackerUtilsTest {
     }
 
     @Test
-    void test_fill_ids_from_issue_entity_without_tracker_id_or_tracker_type() {
+    void test_should_not_fill_ids_from_issue_entity_without_tracker_id_or_tracker_type() {
         // ProjectEntity
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(new CompositeIdBaseEntity().setClientId("1"));
