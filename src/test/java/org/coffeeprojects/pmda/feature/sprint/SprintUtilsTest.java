@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SprintUtilsTest {
 
-    @Disabled
     @Test
     void test_update_last_sprints_values_from_issue_entities_with_sprints() {
         // 1er Issue Entity
@@ -238,14 +237,14 @@ class SprintUtilsTest {
 
     @Test
     void test_get_sprints_by_issue_jira_bean_with_sprints() {
-        LinkedHashMap<String, String> sprint = new LinkedHashMap<>();
+        LinkedHashMap<Object, Object> sprint = new LinkedHashMap<>();
         sprint.put("id", "2");
         sprint.put("boardId", "1");
         sprint.put("state", "FUTURE");
         sprint.put("name", "PMDA ,goal=2 (%+\"'-$*€/\\|)");
         sprint.put("goal", "FPEfzefoç !!çà) ù%% ==+\nLoL \"'-$*€  ,\n/   \\ | Test( coucou");
         sprint.put("sequence", "2");
-        List<LinkedHashMap> sprints = new ArrayList<>();
+        List<LinkedHashMap<Object, Object>> sprints = new ArrayList<>();
         sprints.add(sprint);
 
         SprintEntity expectedSprintEntity = new SprintEntity();

@@ -1,7 +1,6 @@
 package org.coffeeprojects.pmda.feature.changelog;
 
 import org.coffeeprojects.pmda.entity.BaseEntity;
-import org.coffeeprojects.pmda.feature.component.ComponentEntity;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 
 import javax.persistence.*;
@@ -11,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "changelog")
-public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Serializable {
+public class ChangelogEntity extends BaseEntity<ChangelogEntity> implements Serializable {
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserEntity author;
@@ -35,56 +34,63 @@ public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Seri
         return author;
     }
 
-    public void setAuthor(UserEntity author) {
+    public ChangelogEntity setAuthor(UserEntity author) {
         this.author = author;
+        return this;
     }
 
     public String getField() {
         return field;
     }
 
-    public void setField(String field) {
+    public ChangelogEntity setField(String field) {
         this.field = field;
+        return this;
     }
 
     public String getFieldType() {
         return fieldType;
     }
 
-    public void setFieldType(String fieldType) {
+    public ChangelogEntity setFieldType(String fieldType) {
         this.fieldType = fieldType;
+        return this;
     }
 
     public String getFieldId() {
         return fieldId;
     }
 
-    public void setFieldId(String fieldId) {
+    public ChangelogEntity setFieldId(String fieldId) {
         this.fieldId = fieldId;
+        return this;
     }
 
     public String getFromString() {
         return fromString;
     }
 
-    public void setFromString(String fromString) {
+    public ChangelogEntity setFromString(String fromString) {
         this.fromString = fromString;
+        return this;
     }
 
     public String getToString() {
         return toString;
     }
 
-    public void setToString(String toString) {
+    public ChangelogEntity setToString(String toString) {
         this.toString = toString;
+        return this;
     }
 
     public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public ChangelogEntity setCreated(Date created) {
         this.created = created;
+        return this;
     }
 
     @Override
@@ -93,7 +99,7 @@ public class ChangelogEntity extends BaseEntity<ComponentEntity> implements Seri
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ChangelogEntity that = (ChangelogEntity) o;
-        return Objects.equals(author, that.author) && Objects.equals(field, that.field) && Objects.equals(fieldType, that.fieldType) && Objects.equals(fieldId, that.fieldId) && Objects.equals(fromString, that.fromString) && Objects.equals(toString, that.toString) && Objects.equals(created, that.created);
+        return Objects.equals(id, that.id) && Objects.equals(author, that.author) && Objects.equals(field, that.field) && Objects.equals(fieldType, that.fieldType) && Objects.equals(fieldId, that.fieldId) && Objects.equals(fromString, that.fromString) && Objects.equals(toString, that.toString) && Objects.equals(created, that.created);
     }
 
     @Override

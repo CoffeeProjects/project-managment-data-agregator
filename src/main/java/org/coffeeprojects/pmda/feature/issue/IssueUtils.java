@@ -17,7 +17,7 @@ public class IssueUtils {
         Optional.ofNullable(issueEntities)
                 .orElse(Collections.emptyList())
                 .forEach(i -> {
-                    List<UserEntity> existingUsers = new ArrayList<>();
+                    Set<UserEntity> existingUsers = new HashSet<>();
                     existingUsers.add(i.getProject().getAdministrator());
 
                     i.setAssignee(getNonDuplicateUser(existingUsers, i.getAssignee()));
@@ -26,13 +26,11 @@ public class IssueUtils {
 
                     Optional.ofNullable(i.getChangelog())
                             .orElse(Collections.emptySet())
-                            .forEach(c -> {
-                                c.setAuthor(getNonDuplicateUser(existingUsers, c.getAuthor()));
-                            });
+                            .forEach(c -> c.setAuthor(getNonDuplicateUser(existingUsers, c.getAuthor())));
         });
     }
 
-    private static UserEntity getNonDuplicateUser(List<UserEntity> existingUsers, UserEntity user) {
+    private static UserEntity getNonDuplicateUser(Set<UserEntity> existingUsers, UserEntity user) {
         if (user == null) {
             return null;
         }

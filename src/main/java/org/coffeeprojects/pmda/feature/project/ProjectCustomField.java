@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "project_custom_field")
-public class ProjectCustomField extends BaseEntity implements Serializable {
+public class ProjectCustomField extends BaseEntity<ProjectCustomField> implements Serializable {
 
     String localName;
 
@@ -51,7 +51,8 @@ public class ProjectCustomField extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "ProjectCustomField{" +
-                "localName='" + localName + '\'' +
+                "id=" + super.toString() +
+                ", localName='" + localName + '\'' +
                 ", clientName='" + clientName + '\'' +
                 '}';
     }

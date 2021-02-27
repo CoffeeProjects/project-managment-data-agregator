@@ -29,6 +29,12 @@ class UserMapperTest {
                 .setDisplayName("Bruce Wayne")
                 .setActive(true);
 
-        assertThat(userEntity).isEqualToComparingFieldByField(expectedUserEntity);
+        assertThat(userEntity).usingRecursiveComparison().isEqualTo(expectedUserEntity);
+    }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(userMapper.toEntity(null)).isNull();
     }
 }

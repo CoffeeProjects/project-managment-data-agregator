@@ -2,11 +2,7 @@ package org.coffeeprojects.pmda.feature.component;
 
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,5 +26,11 @@ class ComponentMapperTest {
                 .setName("Name");
 
         assertThat(componentEntity).isEqualToIgnoringGivenFields(expectedComponentEntity);
+    }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(componentMapper.toEntity(null)).isNull();
     }
 }

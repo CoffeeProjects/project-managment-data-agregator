@@ -39,8 +39,8 @@ public class ComponentEntity extends BaseEntity<ComponentEntity> implements Seri
     @Override
     public String toString() {
         return "ComponentEntity{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
+                "id=" + super.toString() +
+                ", name='" + name + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

@@ -107,7 +107,7 @@ public class SprintEntity extends BaseEntity<SprintEntity> implements Serializab
     @Override
     public String toString() {
         return "SprintEntity{" +
-                "id='" + getId() + '\'' +
+                "id=" + super.toString() +
                 ", rapidViewId='" + rapidViewId + '\'' +
                 ", state='" + state + '\'' +
                 ", name='" + name + '\'' +

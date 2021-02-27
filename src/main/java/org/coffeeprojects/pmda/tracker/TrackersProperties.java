@@ -27,7 +27,6 @@ public class TrackersProperties {
 
                 if (StringUtils.isEmpty(type) || StringUtils.isEmpty(localId) || StringUtils.isEmpty(clientId) ||
                         StringUtils.isEmpty(url) || StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
-                    // TODO: j aurai levé une exception avec un message : ta conf des trackers est pourries, verifie (CF : ajouté ci-dessous ?)
                     throw new ExceptionInInitializerError("Unable to initialize the list of trackers. Please check your configuration file");
                 }
             });

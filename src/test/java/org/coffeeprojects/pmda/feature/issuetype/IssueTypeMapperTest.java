@@ -27,6 +27,12 @@ class IssueTypeMapperTest {
                 .setName("Name")
                 .setDescription("Description");
 
-        assertThat(issueTypeEntity).isEqualToComparingFieldByField(expectedIssueTypeEntity);
+        assertThat(issueTypeEntity).usingRecursiveComparison().isEqualTo(expectedIssueTypeEntity);
+    }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(issueTypeMapper.toEntity(null)).isNull();
     }
 }

@@ -54,16 +54,18 @@ public class VersionJiraBean {
         return released;
     }
 
-    public void setReleased(Boolean released) {
+    public VersionJiraBean setReleased(Boolean released) {
         this.released = released;
+        return this;
     }
 
     public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public VersionJiraBean setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+        return this;
     }
 
 

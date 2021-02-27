@@ -72,7 +72,7 @@ public class UserEntity extends BaseEntity<UserEntity> implements Serializable {
     @Override
     public String toString() {
         return "UserEntity{" +
-                "id='" + getId() + '\'' +
+                "id=" + super.toString() +
                 ", emailAddress='" + emailAddress + '\'' +
                 ", displayName='" + displayName + '\'' +
                 ", timeZone='" + timeZone + '\'' +

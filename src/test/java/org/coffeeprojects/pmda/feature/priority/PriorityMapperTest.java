@@ -26,6 +26,12 @@ class PriorityMapperTest {
                 .setId(new CompositeIdBaseEntity().setClientId("id"))
                 .setName("Name");
 
-        assertThat(priorityEntity).isEqualToComparingFieldByField(expectedPriorityEntity);
+        assertThat(priorityEntity).usingRecursiveComparison().isEqualTo(expectedPriorityEntity);
+    }
+
+    @Test
+    void to_entity_with_version_jira_bean_null() {
+        // Given / When / Then
+        assertThat(priorityMapper.toEntity(null)).isNull();
     }
 }

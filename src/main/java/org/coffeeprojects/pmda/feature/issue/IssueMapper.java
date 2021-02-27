@@ -1,7 +1,7 @@
 package org.coffeeprojects.pmda.feature.issue;
 
-import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.changelog.ChangelogEntity;
+import org.coffeeprojects.pmda.feature.changelog.ChangelogMapper;
 import org.coffeeprojects.pmda.feature.changelog.jirabean.ChangelogJiraBean;
 import org.coffeeprojects.pmda.feature.component.ComponentMapper;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
@@ -11,24 +11,22 @@ import org.coffeeprojects.pmda.feature.project.ProjectMapper;
 import org.coffeeprojects.pmda.feature.resolution.ResolutionMapper;
 import org.coffeeprojects.pmda.feature.sprint.SprintMapper;
 import org.coffeeprojects.pmda.feature.status.StatusMapper;
-import org.coffeeprojects.pmda.feature.user.UserEntity;
-import org.coffeeprojects.pmda.feature.user.UserJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserMapper;
 import org.coffeeprojects.pmda.feature.version.VersionMapper;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class, ResolutionMapper.class,
         PriorityMapper.class, IssueTypeMapper.class, ProjectMapper.class, VersionMapper.class,
         ComponentMapper.class, SprintMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface IssueMapper {
+
+    ChangelogMapper CHANGELOG_MAPPER = Mappers.getMapper(ChangelogMapper.class);
 
     @Mapping(target = "id.clientId", source = "id")
     @Mapping(target = "assignee", source = "fields.assignee")
@@ -54,40 +52,6 @@ public interface IssueMapper {
 
     @Named("changelog")
     default Set<ChangelogEntity> changelog(ChangelogJiraBean changelogJiraBean) {
-        if (changelogJiraBean != null) {
-            Set<ChangelogEntity> changelogEntities = new HashSet<>();
-            if (changelogJiraBean.getHistories() != null) {
-                changelogJiraBean.getHistories().stream().forEach(h -> {
-                    AtomicInteger count = new AtomicInteger();
-                    UserJiraBean authorJiraBean = h.getAuthor();
-                    if (authorJiraBean != null && h.getItems() != null) {
-                        UserEntity authorEntity = new UserEntity();
-                        authorEntity.setId(new CompositeIdBaseEntity().setClientId(authorJiraBean.getAccountId()));
-                        authorEntity.setEmailAddress(authorJiraBean.getEmailAddress());
-                        authorEntity.setDisplayName(authorJiraBean.getDisplayName());
-                        authorEntity.setTimeZone(authorJiraBean.getTimeZone());
-                        authorEntity.setActive(authorJiraBean.isActive());
-                        h.getItems().stream().forEach(i -> {
-                            if (i.getField() != null && i.getFieldType() != null) {
-                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-                                ChangelogEntity changelogEntity = new ChangelogEntity();
-                                changelogEntity.setId(new CompositeIdBaseEntity().setClientId(h.getId() + "_" + formatter.format(h.getCreated()) + "_" + count.getAndIncrement()));
-                                changelogEntity.setAuthor(authorEntity);
-                                changelogEntity.setField(i.getField());
-                                changelogEntity.setFieldType(i.getFieldType());
-                                changelogEntity.setFieldId(i.getFieldId());
-                                changelogEntity.setFromString(i.getFromString());
-                                changelogEntity.setToString(i.getToString());
-                                changelogEntity.setCreated(h.getCreated());
-                                changelogEntities.add(changelogEntity);
-                            }
-                        });
-                    }
-                });
-            }
-            return changelogEntities;
-        } else {
-            return null;
-        }
+        return CHANGELOG_MAPPER.toEntities(changelogJiraBean);
     }
 }

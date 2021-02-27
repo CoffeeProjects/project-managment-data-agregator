@@ -13,11 +13,14 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class TrackerUtils {
 
     private static final Logger log = LoggerFactory.getLogger(TrackerUtils.class);
+    public static final String NULL = "<null>";
+    public static final String DATETIME_FORMATTER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     private TrackerUtils() {
         throw new IllegalStateException("Utility class");
@@ -33,45 +36,23 @@ public class TrackerUtils {
 
     public static void fillIdsFromIssueEntity(ProjectEntity projectEntity, IssueEntity issueEntity) {
         fillIds(projectEntity, issueEntity);
-        if (issueEntity != null) {
-            if (issueEntity.getAssignee() != null) {
-                fillIds(projectEntity, issueEntity.getAssignee());
-            }
-            if (issueEntity.getCreator() != null) {
-                fillIds(projectEntity, issueEntity.getCreator());
-            }
-            if (issueEntity.getReporter() != null) {
-                fillIds(projectEntity, issueEntity.getReporter());
-            }
-            if (issueEntity.getStatus() != null) {
-                fillIds(projectEntity, issueEntity.getStatus());
-            }
-            if (issueEntity.getResolution() != null) {
-                fillIds(projectEntity, issueEntity.getResolution());
-            }
-            if (issueEntity.getPriority() != null) {
-                fillIds(projectEntity, issueEntity.getPriority());
-            }
-            if (issueEntity.getIssueType() != null) {
-                fillIds(projectEntity, issueEntity.getIssueType());
-            }
-            if (issueEntity.getProject() != null) {
-                fillIds(projectEntity, issueEntity.getProject());
-            }
-            if (issueEntity.getFixVersions() != null) {
-                fillIds(projectEntity, issueEntity.getFixVersions());
-            }
-            if (issueEntity.getComponents() != null) {
-                fillIds(projectEntity, issueEntity.getComponents());
-            }
-            if (issueEntity.getSprints() != null) {
-                fillIds(projectEntity, issueEntity.getSprints());
-            }
-            if (issueEntity.getChangelog() != null) {
-                fillIds(projectEntity, issueEntity.getChangelog());
-                issueEntity.getChangelog().stream().forEach(i -> fillIds(projectEntity, i.getAuthor()));
-            }
-        }
+        Optional.ofNullable(issueEntity).ifPresent(i -> {
+            Optional.ofNullable(i.getAssignee()).ifPresent(assignee -> fillIds(projectEntity, assignee));
+            Optional.ofNullable(i.getCreator()).ifPresent(creator -> fillIds(projectEntity, creator));
+            Optional.ofNullable(i.getReporter()).ifPresent(reporter -> fillIds(projectEntity, reporter));
+            Optional.ofNullable(i.getStatus()).ifPresent(status -> fillIds(projectEntity, status));
+            Optional.ofNullable(i.getResolution()).ifPresent(resolution -> fillIds(projectEntity, resolution));
+            Optional.ofNullable(i.getPriority()).ifPresent(priority -> fillIds(projectEntity, priority));
+            Optional.ofNullable(i.getIssueType()).ifPresent(issueType -> fillIds(projectEntity, issueType));
+            Optional.ofNullable(i.getProject()).ifPresent(project -> fillIds(projectEntity, project));
+            Optional.ofNullable(i.getFixVersions()).ifPresent(fixVersions -> fillIds(projectEntity, fixVersions));
+            Optional.ofNullable(i.getComponents()).ifPresent(components -> fillIds(projectEntity, components));
+            Optional.ofNullable(i.getSprints()).ifPresent(sprints -> fillIds(projectEntity, sprints));
+            Optional.ofNullable(i.getChangelog()).ifPresent(changelog -> {
+                fillIds(projectEntity, changelog);
+                changelog.forEach(c -> fillIds(projectEntity, c.getAuthor()));
+            });
+        });
     }
 
     private static <T extends BaseEntity> void fillIds(ProjectEntity projectEntity, Set<T> baseEntities) {
@@ -79,27 +60,28 @@ public class TrackerUtils {
     }
 
     private static void fillIds(ProjectEntity projectEntity, BaseEntity baseEntity) {
-        if (baseEntity != null && baseEntity.getId() != null && projectEntity != null && projectEntity.getId() != null) {
-            if (projectEntity.getId().getTrackerLocalId() != null && projectEntity.getId().getTrackerType() != null) {
-                baseEntity.getId().setTrackerType(projectEntity.getId().getTrackerType());
-                baseEntity.getId().setTrackerLocalId(projectEntity.getId().getTrackerLocalId());
-            } else
-                log.error("trackerId and / or trackerType not entered for this projet : {}", projectEntity);
-        } else {
-            log.error("baseEntity or projectEntity could not be null");
-        }
+        Optional.ofNullable(baseEntity)
+                .map(BaseEntity::getId)
+                .ifPresentOrElse(bId -> Optional.ofNullable(projectEntity)
+                        .map(ProjectEntity::getId)
+                        .filter(p -> p.getTrackerLocalId() != null && p.getTrackerType() != null)
+                        .ifPresentOrElse(pId -> {
+                            bId.setTrackerType(pId.getTrackerType());
+                            bId.setTrackerLocalId(pId.getTrackerLocalId());
+                        }, () -> log.error("trackerId and / or trackerType not entered for this project : {}", projectEntity)),
+                        () -> log.error("BaseEntity or ProjectEntity could not be null"));
     }
 
     public static Instant getInstantFromTimezone(String timezone) {
-        if (timezone != null && !timezone.isBlank() && !"<null>".equals(timezone)) {
-            try {
-                return LocalDateTime.parse(timezone, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
-                        .atZone(ZoneId.systemDefault()).toInstant();
-            } catch (DateTimeParseException e) {
-                log.error("Unable to parse in Instant with timezone : {}", timezone);
-                return null;
-            }
+        try {
+            return Optional.ofNullable(timezone)
+                    .filter(s -> !s.isBlank())
+                    .filter(s -> !NULL.equals(s))
+                    .map(s -> LocalDateTime.parse(s, DateTimeFormatter.ofPattern(DATETIME_FORMATTER)).atZone(ZoneId.systemDefault()).toInstant())
+                    .orElse(null);
+        } catch (DateTimeParseException e) {
+            log.error("Unable to parse in Instant with timezone : {}", timezone);
+            return null;
         }
-        return null;
     }
 }

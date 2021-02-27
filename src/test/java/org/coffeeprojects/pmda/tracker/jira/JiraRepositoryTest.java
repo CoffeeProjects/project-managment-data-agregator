@@ -1,5 +1,6 @@
 package org.coffeeprojects.pmda.tracker.jira;
 
+import feign.*;
 import org.coffeeprojects.pmda.entity.CompositeIdBaseEntity;
 import org.coffeeprojects.pmda.feature.issue.jirabean.IssueJiraBean;
 import org.coffeeprojects.pmda.feature.issue.jirabean.SearchIssuesResultJiraBean;
@@ -7,6 +8,7 @@ import org.coffeeprojects.pmda.feature.project.ProjectEntity;
 import org.coffeeprojects.pmda.feature.project.ProjectJiraBean;
 import org.coffeeprojects.pmda.feature.user.UserEntity;
 import org.coffeeprojects.pmda.feature.user.UserJiraBean;
+import org.coffeeprojects.pmda.tracker.ExternalApiCallException;
 import org.coffeeprojects.pmda.tracker.TrackerRouter;
 import org.coffeeprojects.pmda.tracker.TrackerType;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,12 +18,10 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -60,7 +60,30 @@ class JiraRepositoryTest {
         UserJiraBean userJiraBean = jiraRepository.getUserDetails(projectEntity);
 
         // Then
-        assertThat(userJiraBean).isEqualToComparingFieldByField(expectedUserJiraBean);
+        assertThat(userJiraBean).usingRecursiveComparison().isEqualTo(expectedUserJiraBean);
+    }
+
+    @Test
+    void get_user_detail_should_return_exception() {
+        // Given
+        String clientId = "999";
+        ProjectEntity projectEntity = new ProjectEntity()
+                .setAdministrator(new UserEntity()
+                        .setId(new CompositeIdBaseEntity().setClientId(clientId)));
+
+        when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
+
+        Map<String, Collection<String>> headers = new LinkedHashMap<>();
+        Response response = Response.builder()
+                .status(500)
+                .reason("Internal server error")
+                .request(Request.create(Request.HttpMethod.GET, "/api", Collections.emptyMap(), null, Util.UTF_8, new RequestTemplate()))
+                .headers(headers)
+                .build();
+        when(jiraClient.getUserById(clientId)).thenThrow(FeignException.errorStatus("Error", response));
+
+        // When / Then
+        assertThatThrownBy(() -> jiraRepository.getUserDetails(projectEntity)).isInstanceOf(ExternalApiCallException.class);
     }
 
     @Test
@@ -80,9 +103,29 @@ class JiraRepositoryTest {
         ProjectJiraBean projectJiraBean = jiraRepository.getProjectDetails(projectEntity);
 
         // Then
-        assertThat(projectJiraBean).isEqualToComparingFieldByField(expectedProjectJiraBean);
+        assertThat(projectJiraBean).usingRecursiveComparison().isEqualTo(projectJiraBean);
     }
 
+    @Test
+    void get_project_details_should_return_exception() {
+        // Given
+        String clientId = "123";
+        ProjectEntity projectEntity = new ProjectEntity()
+                .setId(new CompositeIdBaseEntity().setClientId(clientId));
+
+        when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
+        Map<String, Collection<String>> headers = new LinkedHashMap<>();
+        Response response = Response.builder()
+                .status(500)
+                .reason("Internal server error")
+                .request(Request.create(Request.HttpMethod.GET, "/api", Collections.emptyMap(), null, Util.UTF_8, new RequestTemplate()))
+                .headers(headers)
+                .build();
+        when(jiraClient.getProjectById(clientId)).thenThrow(FeignException.errorStatus("Error", response));
+
+        // When / Then
+        assertThatThrownBy(() -> jiraRepository.getProjectDetails(projectEntity)).isInstanceOf(ExternalApiCallException.class);
+    }
 
     @Test
     void get_modified_issues_should_return_issues() {
@@ -130,8 +173,8 @@ class JiraRepositoryTest {
         String jql = "project = \"pmda\" AND updated >= \"2020-03-29 11:15\"";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean1);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq("50"))).thenReturn(searchIssuesResultJiraBean2);
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean1);
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, "50")).thenReturn(searchIssuesResultJiraBean2);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getModifiedIssues(projectEntity, fields);
@@ -141,7 +184,6 @@ class JiraRepositoryTest {
         assertThat(issueJiraBeans.get(0).getId()).isEqualTo("id0");
         assertThat(issueJiraBeans.get(51).getId()).isEqualTo("id51");
     }
-
 
     @Test
     void get_existing_issues_should_return_issues() {
@@ -171,7 +213,7 @@ class JiraRepositoryTest {
         String jql = "key in (\"KEY-1\",\"KEY-2\")";
 
         when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
-        when(jiraClient.searchIssues(eq(jql), eq(expand), eq(fields), eq(maxResults), eq(startAt))).thenReturn(searchIssuesResultJiraBean);
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean);
 
         // When
         List<IssueJiraBean> issueJiraBeans = jiraRepository.getExistingIssues(projectEntity, Arrays.asList("KEY-1", "KEY-2"), fields);
@@ -179,5 +221,81 @@ class JiraRepositoryTest {
         // Then
         assertThat(issueJiraBeans).isNotNull();
         assertThat(issueJiraBeans).usingRecursiveFieldByFieldElementComparator().isEqualTo(searchIssuesResultJiraBean.getIssues());
+    }
+
+    @Test
+    void get_existing_issues_should_return_exception() {
+        // Given
+        Instant lastCheckDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
+
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA);
+        ProjectEntity projectEntity = new ProjectEntity().setId(projectId)
+                .setLastCheck(lastCheckDate)
+                .setKey("pmda");
+
+        String expand = "changelog";
+        String fields = "summary,issuetype";
+        String maxResults = "50";
+        String startAt = "0";
+
+        String jql = "key in (\"KEY-1\",\"KEY-2\")";
+
+        when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
+        Map<String, Collection<String>> headers = new LinkedHashMap<>();
+        Response response = Response.builder()
+                .status(500)
+                .reason("Internal server error")
+                .request(Request.create(Request.HttpMethod.GET, "/api", Collections.emptyMap(), null, Util.UTF_8, new RequestTemplate()))
+                .headers(headers)
+                .build();
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAt)).thenThrow(FeignException.errorStatus("Error", response));
+
+        // When / Then
+        List issueKeys = Arrays.asList("KEY-1", "KEY-2");
+        assertThatThrownBy(() -> jiraRepository.getExistingIssues(projectEntity, issueKeys, fields)).isInstanceOf(ExternalApiCallException.class);
+    }
+
+    @Test
+    void get_existing_issues_should_return_exception_with_paging() {
+        // Given
+        Instant lastCheckDate = Instant.parse("2020-03-29T09:15:24.00Z"); // = 11h15 fr
+
+        CompositeIdBaseEntity projectId = new CompositeIdBaseEntity().setClientId("1").setTrackerLocalId("1").setTrackerType(TrackerType.JIRA);
+        ProjectEntity projectEntity = new ProjectEntity().setId(projectId)
+                .setLastCheck(lastCheckDate)
+                .setKey("pmda");
+
+        String expand = "changelog";
+        String fields = "summary,issuetype";
+        String maxResults = "50";
+        String startAt = "0";
+        String startAtError = "50";
+
+        List<IssueJiraBean> issues = Arrays.asList(
+                new IssueJiraBean().setId("id1").setKey("key1"),
+                new IssueJiraBean().setId("id2").setKey("key2")
+        );
+        SearchIssuesResultJiraBean searchIssuesResultJiraBean = new SearchIssuesResultJiraBean()
+                .setTotal(51L)
+                .setMaxResults(2L)
+                .setStartAt(0L)
+                .setIssues(issues);
+
+        String jql = "key in (\"KEY-1\",\"KEY-2\")";
+
+        when(trackerRouter.getTracker(projectEntity)).thenReturn(jiraClient);
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAt)).thenReturn(searchIssuesResultJiraBean);
+        Map<String, Collection<String>> headers = new LinkedHashMap<>();
+        Response response = Response.builder()
+                .status(500)
+                .reason("Internal server error")
+                .request(Request.create(Request.HttpMethod.GET, "/api", Collections.emptyMap(), null, Util.UTF_8, new RequestTemplate()))
+                .headers(headers)
+                .build();
+        when(jiraClient.searchIssues(jql, expand, fields, maxResults, startAtError)).thenThrow(FeignException.errorStatus("Error", response));
+
+        // When / Then
+        List issueKeys = Arrays.asList("KEY-1", "KEY-2");
+        assertThatThrownBy(() -> jiraRepository.getExistingIssues(projectEntity, issueKeys, fields)).isInstanceOf(ExternalApiCallException.class);
     }
 }
