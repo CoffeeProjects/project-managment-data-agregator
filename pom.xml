@@ -26,7 +26,7 @@
 		<junit.version>5.7.1</junit.version>
 		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 		<h2.version>1.4.200</h2.version>
-		<liquibase.version>4.2.2</liquibase.version>
+		<liquibase.version>4.8.0</liquibase.version>
 		<liquibase.diffChangeLogFile>src/main/resources/db/changelog/to-be-changed.yml</liquibase.diffChangeLogFile>
 		<liquibase.diffExcludeObjects>batch_job_seq,batch_job_execution_seq,batch_step_execution_seq,
 			batch_job_execution,batch_job_execution_context,batch_job_execution_params,batch_job_instance,
